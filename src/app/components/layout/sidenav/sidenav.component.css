@@ -1,6 +1,6 @@
 /* sidebar.component.css */
 .sidebar {
-  width: 230px;
+  width: 250px;
   height: 100%;
   background-color: rgb(129, 129, 215);
   color: #fff;
@@ -42,4 +42,14 @@
 .nav-links a.active:hover,
 .nav-links a.active:focus {
   background-color: #555;
+}
+
+.nav_icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Optional: Add spacing between icon and link */
+.nav_icon app-icon {
+  margin-right: 10px;
 }
