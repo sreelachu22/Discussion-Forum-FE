@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { navigationData } from './sidenav_data';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   faBell,
   faBook,
@@ -18,6 +16,5 @@ import {
 })
 export class SidenavComponent {
   navigationOptions = navigationData;
-
   iconItems_list = [faHome, faSearch, faClock, faBell, faTrophy, faBook];
 }

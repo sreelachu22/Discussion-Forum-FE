@@ -1,7 +1,7 @@
-<aside class="sidebar">
-  <div class="logo">Hi, there!</div>
-  <nav class="nav-links">
-    <ng-container class="nav_icon" *ngFor="let option of navigationOptions">
+<aside class="sidenav">
+  <div class="sidenav_heading"></div>
+  <nav class="sidenav_items">
+    <ng-container class="sidenav_icon" *ngFor="let option of navigationOptions">
       <!-- <app-icon [iconName]="option.icon"></app-icon> -->
       <a [routerLink]="option.link" routerLinkActive="active">{{
         option.label
