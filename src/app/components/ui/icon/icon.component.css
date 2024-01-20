@@ -9,9 +9,11 @@
     text-align: center;
     border-radius: 10px;
     box-shadow:rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
   .icon_container:hover{
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+    transform: scale(1.2);
   }
   
   .icon_component {
