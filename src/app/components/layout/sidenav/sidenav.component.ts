@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { navigationData } from './sidenav_data';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent {
-
+  navigationOptions = navigationData;
 }
