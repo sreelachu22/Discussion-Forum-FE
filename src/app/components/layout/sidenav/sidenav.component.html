@@ -1,0 +1,10 @@
+<aside class="sidebar">
+  <div class="logo">Hi, there!</div>
+  <nav class="nav-links">
+    <ng-container *ngFor="let option of navigationOptions">
+      <a [routerLink]="option.link" routerLinkActive="active">{{
+        option.label
+      }}</a>
+    </ng-container>
+  </nav>
+</aside>
