@@ -1,10 +1,10 @@
 .sidenav {
   width: 190px;
   height: 100%;
-  background-color: rgb(129, 129, 215);
+  background-color: rgb(217, 224, 224);
   color: #fff;
   padding: 20px;
-  margin-top: 89px;
+  margin-top: 40px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 /* ng-bootstrap styling for links */
 .sidenav_items a {
   text-decoration: none;
-  color: #fff;
+  color: rgb(31, 151, 145);
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
@@ -36,14 +36,16 @@
 .sidenav_items a:hover,
 .sidenav_items a:focus {
   /* Updated selector */
-  background-color: #555;
+  color: #fff;
+  background-color: rgb(31, 151, 145);
 }
 
 /* ng-bootstrap styling for active link */
 .sidenav_items a.active,
 .sidenav_items a.active:hover,
 .sidenav_items a.active:focus {
-  background-color: #555;
+  color: white;
+  background-color: rgb(31, 151, 145);
 }
 
 .sidenav_icon {

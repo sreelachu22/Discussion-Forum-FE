@@ -8,17 +8,31 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
+import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpService } from './service/http.service';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
-  declarations: [AppComponent, IconComponent, SidenavComponent, CardComponent,HeaderComponent],
+  declarations: [
+    AppComponent,
+    IconComponent,
+    SidenavComponent,
+    CardComponent,
+    HeaderComponent,
+    CommunityPageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    
+    HttpClientModule,
+    BsDatepickerModule,
+    TooltipModule,
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
