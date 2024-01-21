@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from './service/http.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     CardComponent,
     HeaderComponent,
     CommunityPageComponent,
+    CategoryManagementComponent,
   ],
   imports: [
     BrowserModule,

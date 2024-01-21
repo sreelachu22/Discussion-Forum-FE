@@ -1,0 +1,46 @@
+<p>category-management works!</p>
+<div class="container">
+  <div class="top_nav">
+    <a href="">{{ community_name }}</a
+    ><span> > </span><span><a href="">Category Management</a></span>
+  </div>
+  <h2>Category Management</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Sl No:</th>
+        <th>Category Name</th>
+        <th>Description</th>
+        <th>Created Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let category of categories;
+          let oddValue = odd;
+          let evenValue = even;
+          let i = index
+        "
+        [ngClass]="oddValue ? 'odd_value' : 'even_value'"
+        [ngClass]="{ 'row-hovered': isRowHovered === i }"
+        (mouseenter)="onMouseEnter(i)"
+        (mouseleave)="onMouseLeave()"
+      >
+        <td>{{ i + 1 }}</td>
+        <td>{{ category.communityCategoryName }}</td>
+        <td>{{ category.description }}</td>
+        <td>
+          {{ category.createdAt }}
+          <span
+            triggers="mouseenter"
+            placement="top"
+            *ngIf="isRowHovered === i"
+          >
+            <app-icon [iconName]="faIcon" class="edit_icon"></app-icon>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
