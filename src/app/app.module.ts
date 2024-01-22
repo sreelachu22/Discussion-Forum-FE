@@ -8,10 +8,20 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
-import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
+
+import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpService } from './service/http.service';
+import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
+
+  
+
+import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
+
+import { HttpService } from './service/http.service';
+
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -23,9 +33,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     SidenavComponent,
     CardComponent,
     HeaderComponent,
+    NoticesComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
   ],
+
   imports: [
     ModalModule.forRoot(),
     BrowserModule,
@@ -33,8 +45,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FontAwesomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    BsDatepickerModule,
+
+    FormsModule,
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+
+
     TooltipModule,
+
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],
