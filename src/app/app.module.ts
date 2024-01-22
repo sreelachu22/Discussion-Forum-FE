@@ -14,6 +14,7 @@ import { HttpService } from './service/http.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CategoryManagementComponent } from './components/layout/category-manage
     CategoryManagementComponent,
   ],
   imports: [
+    ModalModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,

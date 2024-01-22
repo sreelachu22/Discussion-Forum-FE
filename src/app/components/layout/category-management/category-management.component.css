@@ -10,6 +10,12 @@
     padding-top: 5%;
     padding-bottom: 10%;
 }
+.top_nav{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 
 .top_nav a{
     text-decoration: none;
@@ -27,7 +33,6 @@
   th, td {
     padding: 15px;
     text-align: left;
-    border: 1px solid #ddd;
   }
   
   th {

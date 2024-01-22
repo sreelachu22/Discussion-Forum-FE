@@ -8,9 +8,31 @@ import { Observable } from 'rxjs';
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  getData(id: number): Observable<any> {
+  getCategories(id: number): Observable<any> {
     return this.http.get(
       `https://localhost:7160/api/CommunityCategoryMapping/InCommunity/${id}`
+    );
+  }
+
+  updateCategoryDescription(
+    id: number,
+    description: string,
+    modifiedBy: string
+  ): Observable<any> {
+    const body = {
+      description: description,
+      modifiedBy: modifiedBy,
+    };
+
+    return this.http.put(
+      `https://localhost:7160/api/CommunityCategoryMapping/UpdateCategoryDescription/${id}`,
+      body
+    );
+  }
+
+  deleteCategoryMapping(id: number): Observable<any> {
+    return this.http.delete(
+      `https://localhost:7160/api/CommunityCategoryMapping/${id}`
     );
   }
 }

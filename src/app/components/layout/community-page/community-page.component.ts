@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpService } from 'src/app/service/http.service';
 
 @Component({
   selector: 'app-community-page',
@@ -6,31 +7,38 @@ import { Component } from '@angular/core';
   styleUrls: ['./community-page.component.css'],
 })
 export class CommunityPageComponent {
-  cardsData: { title: string; content: string; numberOfPosts: number }[] = [
-    {
-      title: 'Card 1',
-      content:
-        "Some quick example text to build on the card title and make up the bulk of the card's content.",
-      numberOfPosts: 100,
-    },
-    {
-      title: 'Card 1',
-      content:
-        "Some quick example text to build on the card title and make up the bulk of the card's content.",
-      numberOfPosts: 100,
-    },
-    {
-      title: 'Card 1',
-      content:
-        "Some quick example text to build on the card title and make up the bulk of the card's content.",
-      numberOfPosts: 100,
-    },
-    {
-      title: 'Card 1',
-      content:
-        "Some quick example text to build on the card title and make up the bulk of the card's content.",
-      numberOfPosts: 100,
-    },
-    // Add more data as needed
-  ];
+  constructor(private httpService: HttpService) {}
+  categories: {
+    communityCategoryMappingID: number;
+    communityID: number;
+    communityCategoryID: number;
+    communityCategoryName: string;
+    description: string;
+    isDeleted: boolean;
+    createdAt: Date;
+    modifiedAt: Date;
+    threadCount: number;
+  }[] = [];
+
+  ngOnInit(): void {
+    this.getDatas();
+  }
+
+  id: number = 1;
+  getDatas() {
+    this.httpService.getCategories(this.id).subscribe({
+      next: (data: any) => {
+        this.categories = data;
+        console.log(data);
+      },
+      error: (error: Error) => {
+        alert('Error has occured, ' + error.message);
+      },
+      complete: () => {
+        console.log('Completed');
+      },
+    });
+  }
+
+  sendCategoryDetails(detailsToSend: { communityCategoryMappingID: number }) {}
 }
