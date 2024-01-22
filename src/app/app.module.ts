@@ -12,11 +12,11 @@ import { CommunityPageComponent } from './features/community-page/community-page
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap/modal';
+//import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HttpService } from './service/http.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-//import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ListComponent } from './components/ui/list/list.component';
 import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
 import { ButtonComponent } from './components/ui/button/button.component';
@@ -36,7 +36,7 @@ import { UserManagementComponent } from './features/user-management/user-managem
     CategoryManagementComponent,
     ListComponent,
     CategoryThreadsComponent,
-    ButtonComponent
+    ButtonComponent,
     CategoryCreateModalComponent,
     UserManagementComponent,
   ],
@@ -51,6 +51,7 @@ import { UserManagementComponent } from './features/user-management/user-managem
     FormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+
     TooltipModule,
     FormsModule,
   ],
