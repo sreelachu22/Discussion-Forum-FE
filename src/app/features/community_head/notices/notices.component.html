@@ -1,54 +1,72 @@
 <!-- notices.component.html -->
 <div class="container">
+  <a href="" class="breadcrumb_navigation">Community management</a>  <span> > </span> <span><a href="" class="breadcrumb_navigation">Notice management</a></span><br><br>
   <div class="row">
     <div class="col-8">
       <h1>Notices</h1>
     </div>
     <div class="col-4 text-right">
       <!-- <button class="btn btn-primary" (click)="addNotice()">Create Notice</button> -->
-      <button class="btn btn-primary" (click)="openModal(openmodalTemplate)">Create Notice</button>
+      <!-- <button class="btn btn-primary notices_body_create_button" (click)="openModal(openmodalTemplate)">Create Notice</button> -->
+      <app-button buttonClass="btn btn-primary notices_body_create_button" buttonName="Create Notice" (buttonClick)="openModal(openmodalTemplate)"></app-button>
     </div>
   </div>
 
   <div *ngFor="let notice of notices">
     <div class="card">
       <div class="card-body">
-        <b><p>Notice ID: {{ notice.noticeID }}</p></b>
-        <h3 class="card-title">{{ notice.title }}</h3>
+          <b><span class="notice_id">Notice ID: {{ notice.noticeID }}</span></b><br><br>
+        <h3 class="card-title notice_title">{{ notice.title }}</h3>
         <p class="card-text">{{ notice.content }}</p>
-        <p class="card-text">Created At: {{ notice.createdAt }}</p>
-        <p *ngIf="notice.modifiedAt" class="card-text">Modified At: {{ notice.modifiedAt }}</p>
-        <p class="card-text">Expires At: {{ notice.expiresAt }}</p>
+        <!-- <p class="card-text">Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}</p>
+        <p *ngIf="notice.modifiedAt" class="card-text">Modified At: {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</p>
+        <p class="card-text">Expires At: {{ notice.expiresAt | date : "dd-MM-yyyy"}}</p> -->
+        <p class="card-text">
+          Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}
+          <ng-container *ngIf="notice.modifiedAt"> &nbsp;&nbsp;|&nbsp;&nbsp; Modified At: {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</ng-container>
+          &nbsp;&nbsp;|&nbsp;&nbsp; Expires At: {{ notice.expiresAt | date : "dd-MM-yyyy"}}
+        </p>
+        
         <!-- <button class="btn btn-primary notices_body_edit_button" (click)="updateNotice(notice)">Edit</button> -->
-        <button class="btn btn-warning" (click)="openUpdateModal(updatemodalTemplate, notice)">Edit</button>
-        <button class="btn btn-danger notices_body_delete_button" (click)="deleteNotice(notice.noticeID)">Delete</button>
+        <!-- <button class="btn btn-warning notices_body_edit_button" (click)="openUpdateModal(updatemodalTemplate, notice)">Edit</button> -->
+        <!-- <button class="btn btn-danger notices_body_delete_button" (click)="deleteNotice(notice.noticeID)">Delete</button> -->
+        <app-icon class="notices_body_edit_icon"
+        [iconName]="faEdit"
+        (click)="openUpdateModal(updatemodalTemplate, notice)"></app-icon>
+        <app-icon class="notices_body_delete_icon"
+              [iconName]="faDelete"
+              (click)="deleteNotice(notice.noticeID)"></app-icon>
       </div>
     </div>
-    <hr />
+    <hr/>
   </div><!-- Your existing button to open the modal -->
   
+
+  
+
+
+
+
+
+
+
+
+
+
 
   <!-- Add this modal template at the end of your HTML file -->
 <ng-template #openmodalTemplate>
   <div class="modal-header">
     <h4 class="modal-title">Create Notice</h4>
-    <button type="button" class="close" (click)="modalRef?.hide()">
+    <button type="button" class="close notice_modal_header_close" (click)="modalRef?.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <!-- Add input fields for dynamic user input -->
     <div class="form-group">
-      <label for="communityID">Community ID</label>
-      <input type="text" class="form-control" [(ngModel)]="newNotice.communityID" name="communityID" required>
-    </div>
-    <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" [(ngModel)]="newNotice.title" name="title" required>
-    </div>
-    <div class="form-group">
-      <label for="content">Content</label>
-      <textarea class="form-control" [(ngModel)]="newNotice.content" name="content" required></textarea>
     </div>
     <!-- <div class="form-group">
       <label for="expiresAt">Expires At</label>
@@ -57,7 +75,15 @@
     <div class="form-group">
       <label for="expiresAt">Expires At</label>
       <input type="text" class="form-control" [(ngModel)]="newNotice.expiresAt" name="expiresAt" required
-      autocomplete="off" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS' }" >
+      autocomplete="off" bsDatepicker [bsConfig]="bsDatepickerConfig" >
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea class="form-control" [(ngModel)]="newNotice.content" name="content" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="communityID">Community ID</label>
+      <input type="text" class="form-control" [(ngModel)]="newNotice.communityID" name="communityID" required>
     </div>
     <div class="form-group">
       <label for="createdBy">Created By</label>
@@ -65,17 +91,12 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="addNotice()">Add Notice</button>
-    <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
+    <!-- <button type="button" class="btn btn-primary" (click)="addNotice()">Add Notice</button> -->
+    <app-button buttonClass="btn btn-primary" buttonName="Add Notice" (buttonClick)="addNotice()"></app-button>
+    <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
+    <!-- <app-button buttonClass="btn btn-secondary modal_close_button" buttonName="Close" (buttonClick)="modalRef?.hide()"></app-button> -->
   </div>
 </ng-template>
-
-
-
-
-
-
-
 
 
 
@@ -83,7 +104,7 @@
 <ng-template #updatemodalTemplate>
   <div class="modal-header">
     <h4 class="modal-title">Edit Notice</h4>
-    <button type="button" class="close" (click)="modalRef?.hide()">
+    <button type="button" class="close notice_modal_header_close" (click)="modalRef?.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -121,38 +142,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="updateNotice()">Update Notice</button>
-    <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
+    <!-- <button type="button" class="btn btn-primary" (click)="updateNotice()">Update Notice</button>-->
+      <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button>
+    <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
+    <!-- <app-button buttonClass="btn btn-secondary modal_close_button" buttonName="Close" (buttonClick)="modalRef?.hide()"></app-button> -->
   </div>
 </ng-template>
 
   
-  <!-- Modal template -->
-  
-<!-- <div>
-  <form (submit)="addNotice()">
-    <label for="communityID">Community ID:</label>
-    <input type="number" id="communityID" [(ngModel)]="newNotice.communityID" required>
-  
-    <label for="title">Title:</label>
-    <input type="text" id="title" [(ngModel)]="newNotice.title" required>
-    
-    <label for="content">Content:</label>
-    <textarea id="content" [(ngModel)]="newNotice.content" required></textarea>
-    
-    <label for="expiresAt">Expires At:</label>
-    <input type="text" id="expiresAt" [(ngModel)]="newNotice.expiresAt" required>
-  
-    <label for="createdBy">Created By:</label>
-    <input type="text" id="createdBy" [(ngModel)]="newNotice.createdBy" required>
-  
-    <label for="modifiedBy">Modified By:</label>
-    <input type="text" id="modifiedBy" [(ngModel)]="newNotice.modifiedBy" required>
-  
-    <button type="submit">Add Notice</button>
-  </form>
-  
-</div>
-
-</div>
- <button class="btn btn-primary" (click)="createNotice()">Create Notice</button>-->

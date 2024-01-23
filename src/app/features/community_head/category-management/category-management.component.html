@@ -1,0 +1,163 @@
+<p>category-management works!</p>
+<div class="container">
+  <div class="top_nav">
+    <div>
+      <a href="">{{ community_name }}</a
+      ><span> > </span><span><a href="">Category Management</a></span>
+    </div>
+    <button class="btn btn-success" (click)="openCreateCategoryModal()">
+      Create Category
+    </button>
+  </div>
+
+  <h2>Category Management</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Sl No:</th>
+        <th>Category Name</th>
+        <th>Description</th>
+        <th>Created Date</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let category of categories;
+          let oddValue = odd;
+          let evenValue = even;
+          let i = index
+        "
+        [ngClass]="oddValue ? 'odd_value' : 'even_value'"
+        [ngClass]="{ 'row-hovered': isRowHovered === i }"
+        (mouseenter)="onMouseEnter(i)"
+        (mouseleave)="onMouseLeave()"
+      >
+        <td>{{ i + 1 }}</td>
+        <td>{{ category.communityCategoryName }}</td>
+        <td>{{ category.description }}</td>
+        <td>{{ category.createdAt | date : "dd-MM-yyyy" }}</td>
+        <td>
+          <span
+            triggers="mouseenter"
+            placement="top"
+            *ngIf="isRowHovered === i"
+          >
+            <app-icon
+              [iconName]="faDelete"
+              (click)="openDeleteModal(delete)"
+            ></app-icon>
+          </span>
+
+          <ng-template #delete>
+            <div class="modal-body text-center">
+              <p>Do you want to confirm?</p>
+              <button
+                type="button"
+                class="btn btn-default"
+                (click)="confirm(category.communityCategoryID)"
+              >
+                Yes
+              </button>
+              <button type="button" class="btn btn-primary" (click)="decline()">
+                No
+              </button>
+            </div>
+          </ng-template>
+        </td>
+        <td>
+          <span
+            triggers="mouseenter"
+            placement="top"
+            *ngIf="isRowHovered === i"
+          >
+            <app-icon
+              [iconName]="faEdit"
+              class="edit_icon"
+              (click)="openUpdateModal(update)"
+            ></app-icon>
+          </span>
+
+          <ng-template #update>
+            <div class="modal-header">
+              <h4 class="modal-title">Update Category Description</h4>
+            </div>
+            <div class="modal-body">
+              <form
+                (ngSubmit)="
+                  updateCategoryDescription(category.communityCategoryMappingID)
+                "
+                #categoryForm="ngForm"
+              >
+                <div class="form-group">
+                  <label for="oldDescription">Old Description:</label>
+                  <textarea
+                    class="form-control"
+                    name="oldDescription"
+                    [(ngModel)]="category.description"
+                    readonly
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="newDescription">New Description:</label>
+                  <textarea
+                    class="form-control"
+                    name="newDescription"
+                    [(ngModel)]="newDescription"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="modifiedBy">Modified By:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modifiedBy"
+                    [(ngModel)]="modifiedBy"
+                    required
+                    #modifiedByField="ngModel"
+                  />
+                  <span
+                    class="form_error"
+                    *ngIf="modifiedByField.invalid && modifiedByField.touched"
+                  >
+                    *Modified By is required
+                  </span>
+                </div>
+
+                <br />
+                <div class="buttons">
+                  <button
+                    type="submit"
+                    class="btn btn-primary custom-btn"
+                    [disabled]="categoryForm.invalid"
+                    (click)="
+                      updateCategoryDescription(
+                        category.communityCategoryMappingID
+                      )
+                    "
+                  >
+                    Update</button
+                  ><span></span>
+                  <span
+                    ><button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="decline()"
+                    >
+                      Close
+                    </button></span
+                  >
+                </div>
+              </form>
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

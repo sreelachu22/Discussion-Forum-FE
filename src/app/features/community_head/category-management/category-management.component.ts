@@ -4,7 +4,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { query } from '@angular/animations';
-
+import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
 @Component({
   selector: 'app-category-management',
   templateUrl: './category-management.component.html',
@@ -19,16 +19,37 @@ export class CategoryManagementComponent implements OnInit {
   community_name: string = 'Experion Discussion';
 
   modalRef?: BsModalRef;
+
   openDeleteModal(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
-  openCreateModal(template: TemplateRef<void>) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  openCreateCategoryModal() {
+    this.modalRef = this.modalService.show(CategoryCreateModalComponent);
   }
+
+  communityCategoryMappingID: number = 0;
+  oldDescription: string = '';
+  newDescription: string = '';
+  modifiedBy: string = '';
 
   openUpdateModal(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  updateCategoryDescription(id: number) {
+    this.httpService
+      .updateCategoryDescription(id, this.newDescription, this.modifiedBy)
+      .subscribe({
+        next: (data: any) => {
+          alert('Category updated successfully');
+          this.modalRef?.hide; // Close the modal after updating
+        },
+        error: (error: any) => {
+          console.error('Error updating category:', error);
+          // Handle error as needed
+        },
+      });
   }
 
   categoryID = 4;
@@ -72,7 +93,7 @@ export class CategoryManagementComponent implements OnInit {
   }[] = [];
 
   ngOnInit(): void {
-    this.getDatas();
+    this.getCategoriesInCommunity();
   }
 
   faEdit = faEdit;
@@ -80,7 +101,7 @@ export class CategoryManagementComponent implements OnInit {
 
   id: number = 1;
 
-  getDatas() {
+  getCategoriesInCommunity() {
     this.httpService.getCategories(this.id).subscribe({
       next: (data: any) => {
         this.categories = data;
