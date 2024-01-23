@@ -75,6 +75,9 @@
     padding-left:5px;
 }
 
+.breadcrumb_navigation{
+    text-decoration: none;
+}
 .card-container {
     display: flex;
     flex-wrap: wrap;
