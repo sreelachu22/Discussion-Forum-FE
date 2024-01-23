@@ -14,6 +14,12 @@ export class HttpService {
     );
   }
 
+  getCategoriesNotInCommunity(id: number): Observable<any> {
+    return this.http.get(
+      `https://localhost:7160/api/CommunityCategoryMapping/GetCategoriesNotInCommunity/${id}`
+    );
+  }
+
   updateCategoryDescription(
     id: number,
     description: string,
@@ -26,6 +32,24 @@ export class HttpService {
 
     return this.http.put(
       `https://localhost:7160/api/CommunityCategoryMapping/UpdateCategoryDescription/${id}`,
+      body
+    );
+  }
+
+  createCategoryDescription(
+    id: number,
+    description: string,
+    communityCategoryId: number,
+    createdBy: string
+  ): Observable<any> {
+    const body = {
+      communityCategoryId: communityCategoryId,
+      description: description,
+      createdBy: createdBy,
+    };
+
+    return this.http.post(
+      `https://localhost:7160/api/CommunityCategoryMapping/CreateWithCategoryName/${id}`,
       body
     );
   }

@@ -8,15 +8,18 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
+import { CommunityPageComponent } from './features/community-page/community-page.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
 import { HttpService } from './service/http.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
+import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
+import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { CategoryManagementComponent } from './components/layout/category-manage
     NoticesComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
+    CategoryCreateModalComponent,
   ],
 
   imports: [
@@ -41,6 +45,7 @@ import { CategoryManagementComponent } from './components/layout/category-manage
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     TooltipModule,
+    FormsModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],

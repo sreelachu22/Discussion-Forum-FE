@@ -21,11 +21,11 @@ export class CommunityPageComponent {
   }[] = [];
 
   ngOnInit(): void {
-    this.getDatas();
+    this.getCategoriesInCommunity();
   }
 
   id: number = 1;
-  getDatas() {
+  getCategoriesInCommunity() {
     this.httpService.getCategories(this.id).subscribe({
       next: (data: any) => {
         this.categories = data;
