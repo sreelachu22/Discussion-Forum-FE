@@ -18,7 +18,7 @@ import { HttpService } from './service/http.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
-import { FormsModule } from '@angular/forms';
+import { UserManagementComponent } from './features/user-management/user-management.component';
 
 
 @NgModule({
@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     CommunityPageComponent,
     CategoryManagementComponent,
     CategoryCreateModalComponent,
+    UserManagementComponent,
   ],
 
   imports: [
