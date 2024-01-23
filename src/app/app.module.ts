@@ -15,16 +15,15 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
-
-  
-
 import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
 
 import { HttpService } from './service/http.service';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
+//import { ModalModule } from 'ngx-bootstrap/modal';
+import { ListComponent } from './components/ui/list/list.component';
+import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +35,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NoticesComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
+    ListComponent,
+    CategoryThreadsComponent,
   ],
 
   imports: [
@@ -50,9 +51,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
 
-
     TooltipModule,
-
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],
