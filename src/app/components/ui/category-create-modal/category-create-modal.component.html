@@ -1,0 +1,76 @@
+<div class="modal-body custom-modal-body">
+  <form (ngSubmit)="createCategory()" #categoryForm="ngForm">
+    <div class="form-group">
+      <label for="communityCategory">Community Category:</label>
+      <select
+        class="form-control"
+        name="communityCategory"
+        [(ngModel)]="selectedCommunityCategory"
+        required
+        #communityCategoryField="ngModel"
+      >
+        <option
+          *ngFor="let category of categoriesNotInCommunity"
+          [value]="category.communityCategoryID"
+        >
+          {{ category.communityCategoryName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea
+        class="form-control"
+        name="description"
+        [(ngModel)]="description"
+        required
+        #descriptionField="ngModel"
+      ></textarea>
+      <span
+        class="form_error"
+        *ngIf="descriptionField.invalid && descriptionField.touched"
+      >
+        *Description is required
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="createdBy">Created By:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="createdBy"
+        [(ngModel)]="createdBy"
+        required
+        #createdByField="ngModel"
+      />
+      <span
+        class="form_error"
+        *ngIf="createdByField.invalid && createdByField.touched"
+      >
+        *Created By is required
+      </span>
+    </div>
+
+    <br />
+    <div class="buttons">
+      <button
+        type="submit"
+        class="btn btn-primary custom-btn"
+        [disabled]="categoryForm.invalid"
+      >
+        Create Category</button
+      ><span></span>
+      <span
+        ><button
+          type="button"
+          class="btn btn-secondary"
+          (click)="bsModalRef.hide()"
+        >
+          Close
+        </button></span
+      >
+    </div>
+  </form>
+</div>
