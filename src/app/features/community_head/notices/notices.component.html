@@ -1,5 +1,6 @@
 <!-- notices.component.html -->
 <div class="container">
+  <a href="" class="breadcrumb_navigation">Community management</a>  <span> > </span> <span><a href="" class="breadcrumb_navigation">Notice management</a></span><br><br>
   <div class="row">
     <div class="col-8">
       <h1>Notices</h1>
@@ -16,9 +17,15 @@
           <b><span class="notice_id">Notice ID: {{ notice.noticeID }}</span></b><br><br>
         <h3 class="card-title notice_title">{{ notice.title }}</h3>
         <p class="card-text">{{ notice.content }}</p>
-        <p class="card-text">Created At: {{ notice.createdAt }}</p>
-        <p *ngIf="notice.modifiedAt" class="card-text">Modified At: {{ notice.modifiedAt }}</p>
-        <p class="card-text">Expires At: {{ notice.expiresAt }}</p>
+        <!-- <p class="card-text">Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}</p>
+        <p *ngIf="notice.modifiedAt" class="card-text">Modified At: {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</p>
+        <p class="card-text">Expires At: {{ notice.expiresAt | date : "dd-MM-yyyy"}}</p> -->
+        <p class="card-text">
+          Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}
+          <ng-container *ngIf="notice.modifiedAt"> &nbsp;&nbsp;|&nbsp;&nbsp; Modified At: {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</ng-container>
+          &nbsp;&nbsp;|&nbsp;&nbsp; Expires At: {{ notice.expiresAt | date : "dd-MM-yyyy"}}
+        </p>
+        
         <!-- <button class="btn btn-primary notices_body_edit_button" (click)="updateNotice(notice)">Edit</button> -->
         <!-- <button class="btn btn-warning notices_body_edit_button" (click)="openUpdateModal(updatemodalTemplate, notice)">Edit</button> -->
         <!-- <button class="btn btn-danger notices_body_delete_button" (click)="deleteNotice(notice.noticeID)">Delete</button> -->
@@ -35,6 +42,17 @@
   
 
   
+
+
+
+
+
+
+
+
+
+
+
   <!-- Add this modal template at the end of your HTML file -->
 <ng-template #openmodalTemplate>
   <div class="modal-header">
