@@ -8,14 +8,15 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
-import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
+import { CommunityPageComponent } from './features/community-page/community-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from './service/http.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
+import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HeaderComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
+    CategoryCreateModalComponent,
   ],
   imports: [
     ModalModule.forRoot(),
@@ -35,6 +37,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HttpClientModule,
     BsDatepickerModule,
     TooltipModule,
+    FormsModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],
