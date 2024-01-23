@@ -4,6 +4,8 @@ import { Component, TemplateRef} from '@angular/core';
 import { NoticesService } from 'src/app/service/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 
 
@@ -25,9 +27,14 @@ export class NoticesComponent {
 
   modalRef?: BsModalRef;
 
+  bsDatepickerConfig: any = {
+    dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS'
+  };
+
   constructor(private noticesService: NoticesService, private modalService: BsModalService,private datePipe: DatePipe) {}
 
-
+  faEdit = faEdit;
+  faDelete = faTrash;
 
   ngOnInit(): void {
     this.getValues();
@@ -227,9 +234,6 @@ private formatBackendDate(date: Date | null): string | null {
     }
   }
   
- 
-  
-
   deleteNotice(noticeId: number) {
     this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
       (response) => {
