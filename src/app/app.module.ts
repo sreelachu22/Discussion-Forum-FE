@@ -17,6 +17,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HttpService } from './service/http.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
 import { ListComponent } from './components/ui/list/list.component';
 import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
 import { ButtonComponent } from './components/ui/button/button.component';
@@ -39,6 +40,7 @@ import { UserManagementComponent } from './features/user-management/user-managem
     ButtonComponent,
     CategoryCreateModalComponent,
     UserManagementComponent,
+    CommunityManagementDashboardComponent,
   ],
 
   imports: [
