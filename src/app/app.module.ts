@@ -24,7 +24,6 @@ import { HttpService } from './service/http.service';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
