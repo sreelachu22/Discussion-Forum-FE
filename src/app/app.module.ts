@@ -17,6 +17,7 @@ import { CommunityPageComponent } from './components/layout/community-page/commu
 import { HttpService } from './service/http.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
+import { ButtonComponent } from './components/ui/button/button.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CategoryManagementComponent } from './components/layout/category-manage
     NoticesComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
+    ButtonComponent
   ],
 
   imports: [
