@@ -1,7 +1,20 @@
 <div class="container">
+  <div>
+    <a href="/home_page" class="breadcrumb_navigation">Home</a>
+    <span> > </span>
+    <span
+      ><a href="/community_page" class="breadcrumb_navigation"
+        >Community</a
+      ></span
+    >
+  </div>
   <div class="page_top">
     <h1>Experion Discussion</h1>
-    <button class="btn btn-success">Community Management</button>
+    <app-button
+      buttonClass="btn btn-primary"
+      buttonName="Community Management"
+      (buttonClick)="navigateToCommunityManagement(communityID)"
+    ></app-button>
   </div>
   <div class="page_body">
     <div
@@ -11,12 +24,14 @@
     >
       <div
         class="card-body"
-        (onclick)="sendCategoryDetails({
-        communityCategoryMappingID : category.communityCategoryMappingID,
-
-      })"
+        (click)="navigateToPosts(category.communityCategoryMappingID)"
       >
-        <h3 class="card-title">{{ category.communityCategoryName }}</h3>
+        <p class="card-text">
+          Category ID : {{ category.communityCategoryMappingID }}
+        </p>
+        <h3 class="card-title" style="font-weight: bold">
+          {{ category.communityCategoryName }}
+        </h3>
         <p class="card-text">
           {{ category.description }}
         </p>

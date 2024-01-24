@@ -1,5 +1,6 @@
 // category-threads.component.ts
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from 'src/app/thread.service';
 
 interface Value {
@@ -17,10 +18,22 @@ interface Value {
 export class CategoryThreadsComponent implements OnInit {
   value!: Value[];
 
-  constructor(private threadService: ThreadService) {}
+  constructor(
+    private threadService: ThreadService,
+    private activateRoute: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  communityCategoryMappingID: number = 0;
 
   ngOnInit() {
-    this.threadService.getThread(4).subscribe({
+    this.activateRoute.queryParams.subscribe((params) => {
+      this.communityCategoryMappingID = params['communityCategoryMappingID'];
+      // Now you have access to communityCategoryMappingID
+      // Use it as needed in your component logic.
+    });
+
+    this.threadService.getThread(this.communityCategoryMappingID).subscribe({
       next: (data: Value[]) => {
         this.value = data;
         console.log(this.value);

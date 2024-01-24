@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="page_top">
+    <h1>Communities</h1>
+    <!-- <button class="btn btn-success">Community Management</button> -->
+  </div>
+  <div class="page_body">
+    <div class="card" style="width: 15rem; height: fit-content">
+      <div class="card-body">
+        <h3 class="card-title">Experion Discussion</h3>
+        <!-- <p class="card-text">
+            {{ category.description }}
+          </p> -->
+        <!-- <p>
+            number of posts: <span>{{ category.threadCount }}</span>
+          </p> -->
+        <app-button
+          buttonClass="btn btn-primary"
+          buttonName="View Community"
+          (buttonClick)="navigateToCommunity()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+</div>
