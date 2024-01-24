@@ -1,0 +1,50 @@
+<aside class="sidenav" [ngClass]="{ sidenav_collapsed: collapsed }">
+  <!-- The [ngClass] directive is used to conditionally apply the 'sidenav_collapsed' class based on the collapsed property. -->
+  <div class="sidenav_heading">
+    <!-- Toggle button -->
+    <button class="sidenav_logo" (click)="toggleCollapse()">
+      <span *ngIf="collapsed">></span>
+      <span *ngIf="!collapsed">X</span>
+    </button>
+
+    <!-- Close button -->
+    <!-- <button
+      class="sidenav_btn_close"
+      @rotate
+      *ngIf="collapsed"
+      (click)="closeSidenav()"
+    ></button> -->
+  </div>
+
+  <!-- Navigation items -->
+  <nav class="sidenav_items">
+    <ng-container *ngIf="!collapsed; else collapsedContent">
+      <!-- Only render if sidenav is not collapsed -->
+      <ng-container *ngFor="let data of sidenavData" class="sidenav_icon">
+        <a
+          [routerLink]="[data.routeLink]"
+          routerLinkActive="sidenav_active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="sidenav_link"
+        >
+          <span class="sidenav_link_text">{{ data.label }}</span>
+        </a>
+      </ng-container>
+    </ng-container>
+    <ng-template #collapsedContent>
+      <!-- Render this if sidenav is collapsed -->
+      <ng-container *ngFor="let data of sidenavData" class="sidenav_icon">
+        <a
+          [routerLink]="[data.routeLink]"
+          routerLinkActive="sidenav_active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="sidenav_link"
+        >
+          <span class="sidenav_link_icon">
+            <app-icon [iconName]="data.icon"></app-icon
+          ></span>
+        </a>
+      </ng-container>
+    </ng-template>
+  </nav>
+</aside>
