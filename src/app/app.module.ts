@@ -54,9 +54,7 @@ import { UserManagementComponent } from './features/user-management/user-managem
     FormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-
     TooltipModule,
-    FormsModule,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],

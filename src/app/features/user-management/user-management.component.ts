@@ -24,7 +24,8 @@ export class UserManagementComponent implements OnInit {
       this.loadUsers();
     }
     this.userService.getAUser(this.searchText, this.currentPage).subscribe((data) => {
-      this.users = data.users;      
+      this.users = data.users;
+      this.pageCount = data.totalPages;      
     });
   }
 
@@ -34,10 +35,7 @@ export class UserManagementComponent implements OnInit {
       this.pageCount = data.totalPages;  
       console.log(this.pageCount)  ;
     });
-    // this.http.get('https://localhost:7160/api/users', { observe: 'response' }).subscribe(response => {
-    //   // const xTotalCount = response.headers.get('X-Total-Count');
-    //   console.log(response.headers.get('X-Total-Count'));
-    // });
+    
   } 
 
   nextPage() {
