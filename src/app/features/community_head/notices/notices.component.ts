@@ -234,17 +234,44 @@ private formatBackendDate(date: Date | null): string | null {
     }
   }
   
-  deleteNotice(noticeId: number) {
-    this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
-      (response) => {
-        console.log('DELETE Request Successful:', response);
-        this.getValues();
-      },
-      (error) => {
-        console.error('DELETE Request Failed:', error);
-      }
-    );
+
+  openDeleteModal(deleteModalTemplate: TemplateRef<any>, notice: any): void {
+    // Set the notice to be deleted
+    this.selectedNotice = notice;
+
+    // Open the modal
+    this.modalRef = this.modalService.show(deleteModalTemplate);
   }
+  
+  deleteNotice(): void {
+    if (this.selectedNotice) {
+      const noticeId = this.selectedNotice.noticeID;
+
+      this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
+        (response) => {
+          console.log('DELETE Request Successful:', response);
+          this.getValues();
+        },
+        (error) => {
+          console.error('DELETE Request Failed:', error);
+        }
+      );
+    }
+    // Close the modal after deleting the notice
+    this.modalRef?.hide();
+  }
+
+  // deleteNotice(noticeId: number) {
+  //   this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
+  //     (response) => {
+  //       console.log('DELETE Request Successful:', response);
+  //       this.getValues();
+  //     },
+  //     (error) => {
+  //       console.error('DELETE Request Failed:', error);
+  //     }
+  //   );
+  // }
 
 
   // private formatDate(dateString: string): string {
