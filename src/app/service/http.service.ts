@@ -14,6 +14,10 @@ export class HttpService {
     );
   }
 
+  getCommunities(): Observable<any> {
+    return this.http.get(`https://localhost:7160/api/Community`);
+  }
+
   getCategoriesNotInCommunity(id: number): Observable<any> {
     return this.http.get(
       `https://localhost:7160/api/CommunityCategoryMapping/GetCategoriesNotInCommunity/${id}`
