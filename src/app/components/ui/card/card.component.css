@@ -1,5 +1,5 @@
 /* card.component.css */
-.card {
+/* .card {
   border: 1px solid #ccc;
   padding: 20px;
   min-width: 200px;
@@ -14,6 +14,33 @@
 
 .card:hover {
   transform: scale(1.05);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+} */
+
+/* card.component.css */
+.card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  min-width: 200px;
+  min-height: 150px;
+  text-align: center;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.4s, background-color 0.5s; /* Add smooth transition effect */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Increase size on hover */
+  color: white; /* Change text color to white on hover */
+  background: linear-gradient(135deg, #46e8e0, #1d8d87);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  /* background-color: rgb(31, 151, 145); Change background color on hover */
 }
 
 .card-title {

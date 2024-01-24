@@ -7,7 +7,8 @@
     </div>
     <div class="col-4 text-right">
       <!-- <button class="btn btn-primary" (click)="addNotice()">Create Notice</button> -->
-      <button class="btn btn-primary notices_body_create_button" (click)="openModal(openmodalTemplate)">Create Notice</button>
+      <!-- <button class="btn btn-primary notices_body_create_button" (click)="openModal(openmodalTemplate)">Create Notice</button> -->
+      <app-button buttonClass="btn btn-primary notices_body_create_button" buttonName="Create Notice" (buttonClick)="openModal(openmodalTemplate)"></app-button>
     </div>
   </div>
 
@@ -90,8 +91,10 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary modal_close_button" (click)="addNotice()">Add Notice</button>
-    <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
+    <!-- <button type="button" class="btn btn-primary" (click)="addNotice()">Add Notice</button> -->
+    <app-button buttonClass="btn btn-primary" buttonName="Add Notice" (buttonClick)="addNotice()"></app-button>
+    <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
+    <!-- <app-button buttonClass="btn btn-secondary modal_close_button" buttonName="Close" (buttonClick)="modalRef?.hide()"></app-button> -->
   </div>
 </ng-template>
 
@@ -139,8 +142,10 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary modal_close_button" (click)="updateNotice()">Update Notice</button>
-    <button type="button" class="btn btn-secondary notice_modal_close" (click)="modalRef?.hide()">Close</button>
+    <!-- <button type="button" class="btn btn-primary" (click)="updateNotice()">Update Notice</button>-->
+      <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button>
+    <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
+    <!-- <app-button buttonClass="btn btn-secondary modal_close_button" buttonName="Close" (buttonClick)="modalRef?.hide()"></app-button> -->
   </div>
 </ng-template>
 

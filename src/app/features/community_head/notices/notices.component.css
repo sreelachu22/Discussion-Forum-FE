@@ -26,32 +26,32 @@
     }
 }
 
-.notices_body_create_button{
+/* .notices_body_create_button{
     color: #fff;
     background-color: rgb(31, 151, 145);
     border-radius: 5px;
-    border: 1px solid rgb(31, 151, 145); /* Added border style */
+    border: 1px solid rgb(31, 151, 145); 
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 
   .notices_body_create_button:hover {
-    background-color: rgb(51, 171, 165); /* New background color on hover */
-    border-color: rgb(51, 171, 165); /* New border color on hover */
-    color: #fff; /* New text color on hover */
-}
+    background-color: rgb(51, 171, 165); 
+    border-color: rgb(51, 171, 165); 
+    color: #fff; 
+} */
 
 .modal_close_button{
-    color: #fff;
-    background-color: rgb(31, 151, 145);
+    color: grey;
+    background-color: rgb(217, 224, 224);
     border-radius: 5px;
-    border: 1px solid rgb(31, 151, 145); /* Added border style */
+    border: 1px solid rgb(217, 224, 224); /* Added border style */
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 
-  .modal_close_button:hover {
-    background-color: rgb(51, 171, 165); /* New background color on hover */
-    border-color: rgb(51, 171, 165); /* New border color on hover */
-    color: #fff; /* New text color on hover */
+.modal_close_button:hover {
+    background-color: rgb(217, 224, 224); /* New background color on hover */
+    border-color: rgb(217, 224, 224); /* New border color on hover */
+    color: grey; /* New text color on hover */
 }
 
 .notice_title{
@@ -99,4 +99,3 @@
     transform: scale(1.05);
     background-color: rgb(217, 224, 224);
 }
-
