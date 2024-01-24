@@ -199,7 +199,7 @@ private formatBackendDate(date: Date | null): string | null {
   updateNotice() {
     // Ensure all required fields are provided for update
     if (
-      this.selectedNotice.id &&
+      this.selectedNotice.noticeID &&
       this.selectedNotice.communityID &&
       this.selectedNotice.title &&
       this.selectedNotice.content &&
@@ -209,7 +209,7 @@ private formatBackendDate(date: Date | null): string | null {
     ) {
       // Create a new object with only the required properties
       const requestData = {
-        id: this.selectedNotice.id,
+        noticeID: this.selectedNotice.noticeID,
         communityID: this.selectedNotice.communityID,
         title: this.selectedNotice.title,
         content: this.selectedNotice.content,
@@ -218,7 +218,7 @@ private formatBackendDate(date: Date | null): string | null {
         modifiedBy: this.selectedNotice.modifiedBy
       };
   
-      this.noticesService.updateData(this.apiUrl, this.selectedNotice.id, requestData).subscribe(
+      this.noticesService.updateData(this.apiUrl, this.selectedNotice.noticeID, requestData).subscribe(
         (response) => {
           console.log('PUT Request Successful:', response);
           this.getValues();

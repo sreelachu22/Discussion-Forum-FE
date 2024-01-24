@@ -112,8 +112,8 @@
   <div class="modal-body">
     <!-- Add input fields for dynamic user input -->
     <div class="form-group">
-      <label for="id">Notice ID</label>
-      <input type="text" class="form-control" [(ngModel)]="selectedNotice.id" name="id" id="id" required>
+      <label for="noticeID">Notice ID</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedNotice.noticeID" name="noticeID" id="noticeID" required>
     </div>
     <div class="form-group">
       <label for="communityID">Community ID</label>
@@ -132,10 +132,10 @@
       <input type="text" class="form-control" [(ngModel)]="selectedNotice.expiresAt" name="expiresAt" id="expiresAt">
     </div>
     
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="createdBy">Created By</label>
       <input type="text" class="form-control" [(ngModel)]="selectedNotice.createdBy" name="createdBy">
-    </div>
+    </div> -->
     <div class="form-group">
       <label for="modifiedBy">Modified By</label>
       <input type="text" class="form-control" [(ngModel)]="selectedNotice.modifiedBy" name="modifiedBy">
