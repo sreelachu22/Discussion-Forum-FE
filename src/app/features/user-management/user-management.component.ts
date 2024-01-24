@@ -5,44 +5,45 @@ import { UserService } from './users.service';
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.css']
+  styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-
   title = 'usersPage';
-  searchText:string = '';
+  searchText: string = '';
   users: any[] = [];
-  currentPage = 1; 
-  pageCount:number = 1;
-  constructor(private userService: UserService, private http:HttpClient) {}
+  currentPage = 1;
+  pageCount: number = 1;
+  constructor(private userService: UserService, private http: HttpClient) {}
 
   ngOnInit() {
     this.loadUsers();
   }
   getSingleUser() {
-    if (this.searchText == ""){
+    if (this.searchText == '') {
       this.loadUsers();
     }
-    this.userService.getAUser(this.searchText, this.currentPage).subscribe((data) => {
-      this.users = data.users;
-      this.pageCount = data.totalPages;      
-    });
+    this.userService
+      .getAUser(this.searchText, this.currentPage)
+      .subscribe((data) => {
+        this.users = data.users;
+        this.pageCount = data.totalPages;
+      });
   }
 
   loadUsers() {
     this.userService.getUsers(this.currentPage).subscribe((data) => {
-      this.users = data.users;  
-      this.pageCount = data.totalPages;  
-      console.log(this.pageCount)  ;
+      console.log(data);
+      this.users = data.users;
+      this.pageCount = data.totalPages;
+      // console.log('HELLO' + this.pageCount);
     });
-    
-  } 
+  }
 
   nextPage() {
-    if (this.currentPage <= this.pageCount-1){
-    this.currentPage++;
-    this.loadUsers();
-  }
+    if (this.currentPage <= this.pageCount - 1) {
+      this.currentPage++;
+      this.loadUsers();
+    }
   }
 
   prevPage() {
@@ -52,4 +53,3 @@ export class UserManagementComponent implements OnInit {
     }
   }
 }
-

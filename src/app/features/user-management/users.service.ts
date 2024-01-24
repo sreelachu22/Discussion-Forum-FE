@@ -30,7 +30,7 @@ export class UserService {
   BASE_URL = 'https://localhost:7160/api/users';
   getUsers(page: number): Observable<AllUsers> {
     const startIndex = page;
-    const url = `${this.BASE_URL}?term=a&sort=Name&page=${startIndex}&limit=10`;
+    const url = `${this.BASE_URL}?term=a&sort=name&page=1&limit=10`;
     console.log(this.http.get(url));
     return this.http.get<AllUsers>(url);
   }
