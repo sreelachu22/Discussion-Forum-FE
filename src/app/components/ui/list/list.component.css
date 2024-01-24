@@ -1,0 +1,38 @@
+/* list.component.css */
+.list {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 10px 0;
+  width: calc(100% - 20px);
+  transition: background-color 0.3s ease, transform 0.5s ease,
+    box-shadow 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.list:hover {
+  background-color: rgb(217, 224, 224);
+  transform: scale(1.01);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.metadata {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.created-by,
+.is-active-now,
+.created-on {
+  display: inline-block;
+}
+
+.is-active-now {
+  text-align: center;
+  flex-grow: 1;
+}

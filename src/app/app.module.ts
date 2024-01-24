@@ -11,13 +11,19 @@ import { CardComponent } from './components/ui/card/card.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap/modal';
+//import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CommunityPageComponent } from './components/layout/community-page/community-page.component';
+import { CommunityPageComponent } from './features/community-page/community-page.component';
 import { HttpService } from './service/http.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { CategoryManagementComponent } from './components/layout/category-management/category-management.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
+import { ListComponent } from './components/ui/list/list.component';
+import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
 import { ButtonComponent } from './components/ui/button/button.component';
+import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
+import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
+import { UserManagementComponent } from './features/user-management/user-management.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,13 @@ import { ButtonComponent } from './components/ui/button/button.component';
     NoticesComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
-    ButtonComponent
+    CommunityManagementDashboardComponent,
+    ListComponent,
+    CategoryThreadsComponent,
+    ButtonComponent,
+    CategoryCreateModalComponent,
+    UserManagementComponent,
+    CommunityManagementDashboardComponent,
   ],
 
   imports: [
