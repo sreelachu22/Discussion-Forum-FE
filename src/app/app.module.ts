@@ -23,6 +23,7 @@ import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
 import { UserManagementComponent } from './features/user-management/user-management.component';
+import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +37,10 @@ import { UserManagementComponent } from './features/user-management/user-managem
     CategoryManagementComponent,
     ListComponent,
     CategoryThreadsComponent,
-    ButtonComponent
+    ButtonComponent,
     CategoryCreateModalComponent,
     UserManagementComponent,
+    UserEditComponent,
   ],
 
   imports: [
