@@ -41,8 +41,7 @@
 
 .edit_icon {
     font-size: 10px;
-    cursor: pointer;
-    color: #007bff; /* Blue color for the edit icon */
+    cursor: pointer; /* Blue color for the edit icon */
   }
   
   /* Optional: Add some spacing for the icon */
@@ -56,3 +55,36 @@
     right: 10px;
     transform: translateY(-50%);
   }
+
+  /* Add some custom styles to improve appearance */
+.modal-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.buttons {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.form_error {
+  color: red;
+}
+
+.custom-btn {
+  background-color: rgb(31, 151, 145);
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-around;
+}
+/* Optional: You can add more styles based on your preferences */
+

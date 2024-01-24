@@ -20,7 +20,7 @@ export class CategoryThreadsComponent implements OnInit {
   constructor(private threadService: ThreadService) {}
 
   ngOnInit() {
-    this.threadService.getThread(1).subscribe({
+    this.threadService.getThread(4).subscribe({
       next: (data: Value[]) => {
         this.value = data;
         console.log(this.value);
