@@ -5,7 +5,10 @@
       <a href="">{{ community_name }}</a
       ><span> > </span><span><a href="">Category Management</a></span>
     </div>
-    <button class="btn btn-success" (click)="openCreateCategoryModal()">
+    <button
+      class="btn btn-success custom-btn"
+      (click)="openCreateCategoryModal()"
+    >
       Create Category
     </button>
   </div>
@@ -135,23 +138,19 @@
                     type="submit"
                     class="btn btn-primary custom-btn"
                     [disabled]="categoryForm.invalid"
-                    (click)="
-                      updateCategoryDescription(
-                        category.communityCategoryMappingID
-                      )
-                    "
                   >
-                    Update</button
-                  ><span></span>
-                  <span
-                    ><button
+                    Update
+                  </button>
+                  <span></span>
+                  <span>
+                    <button
                       type="button"
                       class="btn btn-secondary"
                       (click)="decline()"
                     >
                       Close
-                    </button></span
-                  >
+                    </button>
+                  </span>
                 </div>
               </form>
             </div>

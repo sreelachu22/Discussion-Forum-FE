@@ -4,6 +4,7 @@ body {
   margin: 0;
   height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: aliceblue;
 }
 .container {
   width: 80%;
@@ -16,4 +17,13 @@ body {
   margin-bottom: 20%;
   padding-top: 5%;
   padding-bottom: 10%;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
