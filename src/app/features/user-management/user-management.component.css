@@ -1,11 +1,23 @@
 .user_container {
-  margin-left: 89px;
+  margin-left: 80px;
   margin-top: 55px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.header_text {
+  font-weight: 500;
+  font-size: x-large;
+  padding-left: 30px;
+  color: #ffffff;
+}
+.navbar {
+  border-radius: 5px;
 }
 .user_search {
   display: inline-block;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .search_input {
@@ -17,7 +29,7 @@
 }
 
 .search_button {
-  background-color: #4e99e9;
+  background-color: rgb(31, 151, 145);
   border: none;
   color: #fff;
   cursor: pointer;
@@ -43,7 +55,7 @@
 .prevButton {
   display: inline-block;
   border-radius: 4px;
-  background-color: #2e649d;
+  background-color: rgb(31, 151, 145);
   border: none;
   color: #ffffff;
   text-align: center;
@@ -57,7 +69,7 @@
 .nextButton {
   display: inline-block;
   border-radius: 4px;
-  background-color: #2e649d;
+  background-color: rgb(31, 151, 145);
   border: none;
   color: #ffffff;
   text-align: center;

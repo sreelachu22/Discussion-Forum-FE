@@ -21,34 +21,35 @@ import { CategoryCreateModalComponent } from './components/ui/category-create-mo
 import { UserManagementComponent } from './features/user-management/user-management.component';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    IconComponent,
-    SidenavComponent,
-    CardComponent,
-    HeaderComponent,
-    NoticesComponent,
-    CommunityPageComponent,
-    CategoryManagementComponent,
-    CategoryCreateModalComponent,
-    UserManagementComponent,
-  ],
 
-  imports: [
-    ModalModule.forRoot(),
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    ModalModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    TooltipModule,
-    FormsModule,
-  ],
-  providers: [HttpService],
-  bootstrap: [AppComponent],
+@NgModule({
+    declarations: [
+        AppComponent,
+        IconComponent,
+        SidenavComponent,
+        CardComponent,
+        HeaderComponent,
+        NoticesComponent,
+        CommunityPageComponent,
+        CategoryManagementComponent,
+        CategoryCreateModalComponent,
+        UserManagementComponent,
+        
+    ],
+    providers: [HttpService],
+    bootstrap: [AppComponent],
+    imports: [
+        ModalModule.forRoot(),
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        FormsModule,
+        ModalModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        TooltipModule,
+        FormsModule,        
+    ]
 })
 export class AppModule {}

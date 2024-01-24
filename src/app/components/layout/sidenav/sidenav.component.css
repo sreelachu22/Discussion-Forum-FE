@@ -9,13 +9,13 @@
   transition: width 0.3s ease-in-out;
   overflow-x: hidden;
   padding-top: 20px;
-  margin-top: 89px;
+  margin-top: 55px;
   color: white; /* Set your desired text color */
 }
 
 /* Collapsed state */
 .sidenav_collapsed {
-  width: 70px; /* Adjust width for collapsed state */
+  width: 80px; /* Adjust width for collapsed state */
 }
 
 /* Sidenav heading */
