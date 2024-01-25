@@ -8,19 +8,22 @@
       ></span
     >
   </div>
-  <div class="page_top">
-    <h1>Experion Discussion</h1>
-    <app-button
-      buttonClass="btn btn-primary"
-      buttonName="Community Management"
-      (buttonClick)="navigateToCommunityManagement(communityID)"
-    ></app-button>
-  </div>
+  <nav class="navbar navbar-dark bg-secondary">
+    <p class="header_text">Experion Discussion</p>
+    <div class="create_button">
+      <app-button
+        buttonClass="btn btn-primary"
+        buttonName="Community Management"
+        (buttonClick)="navigateToCommunityManagement(communityID)"
+      ></app-button>
+    </div>
+  </nav>
+  <br />
   <div class="page_body">
     <div
       class="card"
-      style="width: 50rem; height: fit-content"
-      *ngFor="let category of categories"
+      style="width: 18.5rem; height: fit-content"
+      *ngFor="let category of categoriesList"
     >
       <div
         class="card-body"
@@ -32,13 +35,28 @@
         <h3 class="card-title" style="font-weight: bold">
           {{ category.communityCategoryName }}
         </h3>
-        <p class="card-text">
-          {{ category.description }}
+
+        <p>
+          Description :
+          <span
+            ><p class="card-text">
+              {{ category.description }}
+            </p></span
+          >
         </p>
         <p>
           number of posts: <span>{{ category.threadCount }}</span>
         </p>
       </div>
     </div>
+  </div>
+  <br /><br />
+  <div class="pagination mt-3">
+    <button (click)="prevPage()" class="prevButton">
+      <span>Back</span>
+    </button>
+    <button (click)="nextPage()" class="nextButton">
+      <span>Next</span>
+    </button>
   </div>
 </div>

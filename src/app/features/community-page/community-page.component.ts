@@ -13,6 +13,68 @@ export class CommunityPageComponent {
     private router: Router,
     private activateRoute: ActivatedRoute
   ) {}
+
+  communityID: number = 0;
+  ngOnInit(): void {
+    // this.getCategoriesInCommunity();
+    this.loadCategories();
+    this.activateRoute.queryParams.subscribe((params) => {
+      this.communityID = params['communityID'];
+      // Now you have access to communityCategoryMappingID
+      // Use it as needed in your component logic.
+    });
+  }
+  sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
+  sortType: string = 'communityCategoryName';
+  title: string = 'categoryPage';
+  searchText: string = '';
+  categoriesList: any[] = [];
+  currentPage: number = 1;
+  pageCount: number = 1;
+
+  getSingleCategory() {
+    if (this.searchText == '') {
+      this.loadCategories();
+    } else {
+      this.httpService
+        .getPagedCategories(this.currentPage, this.searchText)
+        .subscribe((data) => {
+          this.categoriesList = data.categories;
+          this.pageCount = data.totalPages;
+        });
+    }
+  }
+
+  loadCategories() {
+    this.httpService
+      .getPagedCategories(this.currentPage, this.sortType)
+      .subscribe((data) => {
+        this.categoriesList = data.categories;
+
+        this.pageCount = data.totalPages;
+        console.log(this.pageCount);
+      });
+  }
+
+  nextPage() {
+    if (this.currentPage <= this.pageCount - 1) {
+      this.currentPage++;
+      this.loadCategories();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadCategories();
+    }
+  }
+
+  onSortSelectionChange(selectedValue: string) {
+    this.sortType = selectedValue;
+    this.loadCategories();
+  }
+
   categories: {
     communityCategoryMappingID: number;
     communityID: number;
@@ -24,16 +86,6 @@ export class CommunityPageComponent {
     modifiedAt: Date;
     threadCount: number;
   }[] = [];
-
-  communityID: number = 0;
-  ngOnInit(): void {
-    this.getCategoriesInCommunity();
-    this.activateRoute.queryParams.subscribe((params) => {
-      this.communityID = params['communityID'];
-      // Now you have access to communityCategoryMappingID
-      // Use it as needed in your component logic.
-    });
-  }
 
   id: number = 1;
   getCategoriesInCommunity() {
