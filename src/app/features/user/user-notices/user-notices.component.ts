@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { NoticesService } from 'src/app/service/notices.service';
+import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 
 
 @Component({
