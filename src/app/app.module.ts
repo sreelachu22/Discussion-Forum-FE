@@ -26,6 +26,7 @@ import { UserManagementComponent } from './features/user-management/user-managem
 import { ButtonToggleComponent } from './components/ui/button-toggle/button-toggle.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
+import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { UserEditComponent } from './components/layout/user-edit/user-edit.compo
     UserManagementComponent, 
     HomePageComponent,
     UserEditComponent,
+    UserNoticesComponent,
   ],
 
   imports: [
