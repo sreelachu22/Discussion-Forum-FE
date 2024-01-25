@@ -9,10 +9,12 @@ import { UserService } from './users.service';
 })
 export class UserManagementComponent implements OnInit {
 
-  title = 'usersPage';
+  sortOptions= ['Name','Score', 'Department', 'Designation', 'CreatedAt'];
+  sortType:string = 'name';
+  title:string = 'usersPage';
   searchText:string = '';
   users: any[] = [];
-  currentPage = 1; 
+  currentPage:number = 1; 
   pageCount:number = 1;
   constructor(private userService: UserService, private http:HttpClient) {}
 
@@ -23,14 +25,15 @@ export class UserManagementComponent implements OnInit {
     if (this.searchText == ""){
       this.loadUsers();
     }
-    this.userService.getAUser(this.searchText, this.currentPage).subscribe((data) => {
+    else{
+    this.userService.getAUser( this.currentPage,this.searchText,).subscribe((data) => {
       this.users = data.users;
       this.pageCount = data.totalPages;      
     });
-  }
+  }}
 
   loadUsers() {
-    this.userService.getUsers(this.currentPage).subscribe((data) => {
+    this.userService.getUsers(this.currentPage, this.sortType).subscribe((data) => {
       this.users = data.users;  
       this.pageCount = data.totalPages;  
       console.log(this.pageCount)  ;
@@ -51,5 +54,14 @@ export class UserManagementComponent implements OnInit {
       this.loadUsers();
     }
   }
+  displayUserName(name:string):void{
+    window.alert("go to "+name+"'s page");
+  }
+  
+    onSortSelectionChange(selectedValue: string) {           
+      this.sortType = selectedValue;
+      this.loadUsers();
+    }
+  
 }
 
