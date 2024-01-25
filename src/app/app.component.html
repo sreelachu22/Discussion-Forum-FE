@@ -1,11 +1,11 @@
 <app-header></app-header>
 <app-sidenav class="sidenav_component"></app-sidenav>
-<app-user-edit></app-user-edit>
-<!--<app-notices></app-notices> -->
 <!-- <app-community-page></app-community-page> -->
 <!-- <app-category-threads></app-category-threads> -->
 <!-- <app-category-management></app-category-management> -->
 <!-- <app-user-management></app-user-management> -->
 <!-- <app-community-management-dashboard></app-community-management-dashboard> -->
-
+<div *ngIf="enableLoader">
+  <h4>Loading...</h4>
+</div>
 <router-outlet></router-outlet>

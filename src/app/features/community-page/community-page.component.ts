@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from 'src/app/service/http.service';
+import { CategoryService } from 'src/app/service/HttpServices/category.service';
 
 @Component({
   selector: 'app-community-page',
@@ -9,7 +9,7 @@ import { HttpService } from 'src/app/service/http.service';
 })
 export class CommunityPageComponent {
   constructor(
-    private httpService: HttpService,
+    private httpService: CategoryService,
     private router: Router,
     private activateRoute: ActivatedRoute
   ) {}

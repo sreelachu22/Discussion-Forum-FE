@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { HttpService } from 'src/app/service/http.service';
+import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -12,7 +12,7 @@ import { CategoryCreateModalComponent } from 'src/app/components/ui/category-cre
 })
 export class CategoryManagementComponent implements OnInit {
   constructor(
-    private httpService: HttpService,
+    private httpService: CategoryService,
     private modalService: BsModalService
   ) {}
 
