@@ -1,7 +1,7 @@
 // category-threads.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ThreadService } from 'src/app/thread.service';
+import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
 interface Value {
   createdBy: string;

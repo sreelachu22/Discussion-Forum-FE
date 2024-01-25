@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 //import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommunityPageComponent } from './features/community-page/community-page.component';
-import { HttpService } from './service/http.service';
+import { CategoryService } from './service/HttpServices/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
@@ -59,7 +59,7 @@ import { UserEditComponent } from './components/layout/user-edit/user-edit.compo
     BsDatepickerModule.forRoot(),
     TooltipModule,
   ],
-  providers: [HttpService],
+  providers: [CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

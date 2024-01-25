@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { HttpService } from 'src/app/service/http.service';
+import { CategoryService } from 'src/app/service/HttpServices/category.service';
 
 @Component({
   selector: 'app-category-create-modal',
@@ -20,7 +20,7 @@ export class CategoryCreateModalComponent implements OnInit {
 
   constructor(
     public bsModalRef: BsModalRef,
-    private httpService: HttpService
+    private httpService: CategoryService
   ) {}
 
   ngOnInit() {
