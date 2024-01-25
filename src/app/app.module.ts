@@ -26,6 +26,7 @@ import { CategoryCreateModalComponent } from './components/ui/category-create-mo
 import { UserManagementComponent } from './features/user-management/user-management.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
+import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { UserEditComponent } from './components/layout/user-edit/user-edit.compo
     UserManagementComponent,
     HomePageComponent,
     UserEditComponent,
+    UserNoticesComponent,
   ],
 
   imports: [

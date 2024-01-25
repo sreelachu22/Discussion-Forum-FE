@@ -1,0 +1,35 @@
+<!-- notices.component.html -->
+<div class="container">
+    <a href="" class="breadcrumb_navigation">User Side</a>
+    <span> > </span>
+    <span><a href="" class="breadcrumb_navigation">View Notice</a></span><br /><br />
+
+    <div class="row">
+        <div class="col-8">
+            <h1>Notices</h1>
+        </div>
+        <div class="col-4 text-right">
+        </div>
+    </div>
+
+    <div class="row">
+        <div *ngFor="let notice of notices" class="col-md-6">
+            <div class="card">
+                <div class="card-body d-flex flex-column">
+                    <b><span class="notice_id">Notice ID: {{ notice.noticeID }}</span></b><br /><br />
+                    <h3 class="card-title notice_title">{{ notice.title }}</h3>
+                    <p class="card-text flex-grow-1">{{ notice.content }}</p>
+                    <p class="card-text">
+                        Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}
+                        <ng-container *ngIf="notice.modifiedAt">
+                            &nbsp;&nbsp;|&nbsp;&nbsp; Modified At: {{ notice.modifiedAt | date : "dd-MM-yyyy" }}
+                        </ng-container>
+                        &nbsp;&nbsp;|&nbsp;&nbsp; Expires At: {{ notice.expiresAt | date : "dd-MM-yyyy" }}
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div *ngIf="notices.indexOf(notice) % 2 !== 0 && notices.indexOf(notice) !== notices.length - 1"></div>
+        </div>
+    </div>
+</div>
