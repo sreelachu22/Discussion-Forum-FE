@@ -1,0 +1,9 @@
+<!-- community-management.component.html -->
+<div class="row container">
+  <div *ngFor="let titles of cardTitles" class="col-md-4">
+    <app-card
+      [title]="titles.title"
+      (click)="navigateToCard(titles.path)"
+    ></app-card>
+  </div>
+</div>

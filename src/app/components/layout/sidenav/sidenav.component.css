@@ -1,46 +1,104 @@
+/* Sidenav container */
 .sidenav {
-  width: 190px;
-  height: 100%;
-  background-color: rgb(217, 224, 224);
-  color: #fff;
-  padding: 20px;
-  margin-top: 40px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   position: fixed;
-  align-items: left; /*to left align the items */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px; /* Adjust width as needed */
+  background-color: rgb(217, 224, 224); /* Set your desired background color */
+  transition: width 0.3s ease-in-out;
+  overflow-x: hidden;
+  padding-top: 20px;
+  margin-top: 40px;
+  color: white; /* Set your desired text color */
 }
 
+/* Collapsed state */
+.sidenav_collapsed {
+  width: 80px; /* Adjust width for collapsed state */
+}
+
+/* Sidenav heading */
 .sidenav_heading {
-  font-size: 1.5em;
-  margin-bottom: 40px;
-}
-
-.sidenav_items {
   display: flex;
-  flex-direction: column;
-}
-
-/* ng-bootstrap styling for links */
-.sidenav_items a {
-  text-decoration: none;
-  color: rgb(31, 151, 145);
+  align-items: center;
+  justify-content: space-between;
   padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  border-bottom: 1px solid #ffffff; /* Set border color */
 }
 
-/* ng-bootstrap styling for hover effect */
+/* Sidenav logo */
+.sidenav_logo {
+  background: none;
+  border: none;
+  color: rgb(31, 151, 145);
+  font-size: 20px;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+/* Close button */
+.sidenav_btn_close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: white; /* Set icon color */
+}
+
+/* Navigation item link */
+.sidenav_items a {
+  display: flex;
+  align-items: center; /* Align items vertically in the link */
+  padding-top: 15px;
+  text-decoration: none; /* Set text color */
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Active link style */
+.sidenav_items a.sidenav_active {
+  background-color: #555; /* Set active link background color */
+}
+
 .sidenav_items a:hover,
 .sidenav_items a:focus {
   /* Updated selector */
   color: #fff;
   background-color: rgb(31, 151, 145);
 }
+.sidenav_link_icon {
+  padding: 5px;
+  padding-left: 30px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  transition: opacity 0.3s ease-in-out;
+  color: bisque;
+}
 
-/* ng-bootstrap styling for active link */
+/* Sidenav link text */
+.sidenav_link_text {
+  padding: 5px;
+  padding-left: 30px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  transition: opacity 0.3s ease-in-out;
+  color: rgb(31, 151, 145);
+}
+
+.sidenav_link_text:hover {
+  color: #ffffff;
+  opacity: 0.8; /* Reduced opacity on hover for a subtle effect */
+  text-decoration: solid; /* Underline the text on hover for a clear indication */
+}
+
+.sidenav_items:hover {
+  color: #ffffff;
+  opacity: 0.8; /* Reduced opacity on hover for a subtle effect */
+  text-decoration: solid; /* Underline the text on hover for a clear indication */
+}
+
 .sidenav_items a.active,
 .sidenav_items a.active:hover,
 .sidenav_items a.active:focus {
@@ -48,12 +106,22 @@
   background-color: rgb(31, 151, 145);
 }
 
-.sidenav_icon {
-  display: flex;
-  align-items: center;
+/* Example fade-in/fade-out animation */
+@keyframes fadeInOut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Optional: Add spacing between icon and item */
-.sidenav_icon app-icon {
-  margin-right: 10px;
+/* Sidenav link */
+.sidenav-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white; /* Set text color */
+  padding: 10px;
+  transition: background-color 0.3s ease-in-out;
 }

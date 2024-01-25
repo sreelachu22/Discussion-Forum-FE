@@ -1,0 +1,28 @@
+.form_error{
+    color: rgb(214, 114, 114);
+}
+
+/* Add this to your component's style file or a global style file */
+.custom-modal-body {
+    padding: 30px; /* Adjust the padding as needed */
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+  }
+  
+  .form_error {
+    color: #dc3545; /* Bootstrap's danger color */
+    font-size: 0.875rem; /* Bootstrap's small text size */
+    margin-top: 5px;
+    display: block;
+  }
+  
+  .buttons{
+    display: flex;
+    justify-content: space-evenly;
+  }
