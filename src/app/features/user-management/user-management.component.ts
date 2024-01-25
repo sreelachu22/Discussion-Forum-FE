@@ -5,7 +5,7 @@ import { UserService } from './users.service';
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.css']
+  styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
 
@@ -22,7 +22,7 @@ export class UserManagementComponent implements OnInit {
     this.loadUsers();
   }
   getSingleUser() {
-    if (this.searchText == ""){
+    if (this.searchText == '') {
       this.loadUsers();
     }
     else{
@@ -38,14 +38,13 @@ export class UserManagementComponent implements OnInit {
       this.pageCount = data.totalPages;  
       console.log(this.pageCount)  ;
     });
-    
-  } 
+  }
 
   nextPage() {
-    if (this.currentPage <= this.pageCount-1){
-    this.currentPage++;
-    this.loadUsers();
-  }
+    if (this.currentPage <= this.pageCount - 1) {
+      this.currentPage++;
+      this.loadUsers();
+    }
   }
 
   prevPage() {
@@ -64,4 +63,3 @@ export class UserManagementComponent implements OnInit {
     }
   
 }
-

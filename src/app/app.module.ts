@@ -24,6 +24,8 @@ import { CategoryManagementComponent } from './features/community_head/category-
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
 import { UserManagementComponent } from './features/user-management/user-management.component';
 import { ButtonToggleComponent } from './components/ui/button-toggle/button-toggle.component';
+import { HomePageComponent } from './features/home-page/home-page.component';
+import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +41,9 @@ import { ButtonToggleComponent } from './components/ui/button-toggle/button-togg
     CategoryThreadsComponent,
     ButtonComponent,
     CategoryCreateModalComponent,
-    UserManagementComponent,
-    CommunityManagementDashboardComponent, 
-           
+    UserManagementComponent, 
+    HomePageComponent,
+    UserEditComponent,
   ],
 
   imports: [
