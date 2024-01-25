@@ -1,9 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { query } from '@angular/animations';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
 @Component({
   selector: 'app-category-management',
@@ -11,10 +9,67 @@ import { CategoryCreateModalComponent } from 'src/app/components/ui/category-cre
   styleUrls: ['./category-management.component.css'],
 })
 export class CategoryManagementComponent implements OnInit {
+  sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
+  sortType: string = 'communityCategoryName';
+  title: string = 'categoryPage';
+  searchText: string = '';
+  categoriesList: any[] = [];
+  currentPage: number = 1;
+  pageCount: number = 1;
   constructor(
     private httpService: CategoryService,
     private modalService: BsModalService
   ) {}
+
+  ngOnInit(): void {
+    this.loadCategories();
+    // this.getCategoriesInCommunity();
+  }
+
+  getSingleCategory() {
+    if (this.searchText == '') {
+      this.loadCategories();
+    } else {
+      this.httpService
+        .getPagedCategories(this.currentPage, this.searchText)
+        .subscribe((data) => {
+          this.categoriesList = data.categories;
+          this.pageCount = data.totalPages;
+        });
+    }
+  }
+
+  loadCategories() {
+    this.httpService
+      .getPagedCategories(this.currentPage, this.sortType)
+      .subscribe((data) => {
+        this.categoriesList = data.categories;
+
+        this.pageCount = data.totalPages;
+        console.log(this.pageCount);
+      });
+  }
+
+  nextPage() {
+    if (this.currentPage <= this.pageCount - 1) {
+      this.currentPage++;
+      this.loadCategories();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadCategories();
+    }
+  }
+
+  onSortSelectionChange(selectedValue: string) {
+    this.sortType = selectedValue;
+    this.loadCategories();
+  }
+
+  //---------------------------------------------
 
   community_name: string = 'Experion Discussion';
 
@@ -91,10 +146,6 @@ export class CategoryManagementComponent implements OnInit {
     createdAt: Date;
     modifiedAt: Date;
   }[] = [];
-
-  ngOnInit(): void {
-    this.getCategoriesInCommunity();
-  }
 
   faEdit = faEdit;
   faDelete = faTrash;
