@@ -11,7 +11,6 @@ import { CardComponent } from './components/ui/card/card.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-//import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommunityPageComponent } from './features/community-page/community-page.component';
 import { HttpService } from './service/http.service';
@@ -24,9 +23,9 @@ import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
 import { UserManagementComponent } from './features/user-management/user-management.component';
+import { ButtonToggleComponent } from './components/ui/button-toggle/button-toggle.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +41,7 @@ import { UserEditComponent } from './components/layout/user-edit/user-edit.compo
     CategoryThreadsComponent,
     ButtonComponent,
     CategoryCreateModalComponent,
-    UserManagementComponent,
+    UserManagementComponent, 
     HomePageComponent,
     UserEditComponent,
   ],
@@ -57,7 +56,8 @@ import { UserEditComponent } from './components/layout/user-edit/user-edit.compo
     FormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    TooltipModule,
+    TooltipModule,        
+    ButtonToggleComponent,
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],
