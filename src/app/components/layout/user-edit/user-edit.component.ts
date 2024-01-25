@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserEditService } from 'src/app/user-edit.service';
+import { UserEditService } from 'src/app/service/HttpServices/user-edit.service';
 
 interface User {
   email: string;

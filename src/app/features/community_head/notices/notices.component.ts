@@ -1,13 +1,11 @@
-
 // Import necessary modules and components
-import { Component, TemplateRef} from '@angular/core';
-import { NoticesService } from 'src/app/service/notices.service';
+import { Component, TemplateRef } from '@angular/core';
+import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
-
 
 // Decorate the component with @Component
 @Component({
@@ -17,8 +15,6 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class NoticesComponent {
-
-
   public notices: any[] = [];
   public newNotice: any = {};
   public selectedNotice: any = {};
@@ -28,10 +24,14 @@ export class NoticesComponent {
   modalRef?: BsModalRef;
 
   bsDatepickerConfig: any = {
-    dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS'
+    dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS',
   };
 
-  constructor(private noticesService: NoticesService, private modalService: BsModalService,private datePipe: DatePipe) {}
+  constructor(
+    private noticesService: NoticesService,
+    private modalService: BsModalService,
+    private datePipe: DatePipe
+  ) {}
 
   faEdit = faEdit;
   faDelete = faTrash;
@@ -71,114 +71,112 @@ export class NoticesComponent {
   //   }
   // }
 
-//   addNotice() {
+  //   addNotice() {
 
-//     // dummy for testing purposes
+  //     // dummy for testing purposes
 
-//     const newNotice = {
-//       communityID: 1, 
-//       title: 'This is a notice',
-//       content: 'Quick Announcement',
-//       expiresAt: '2024-02-04T12:33:23.713', // replace with an appropriate expiration date
-//       createdBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177',
-//       modifiedBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177'
-//     };
+  //     const newNotice = {
+  //       communityID: 1,
+  //       title: 'This is a notice',
+  //       content: 'Quick Announcement',
+  //       expiresAt: '2024-02-04T12:33:23.713', // replace with an appropriate expiration date
+  //       createdBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177',
+  //       modifiedBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177'
+  //     };
 
-//     // Ensure all required fields are provided
-//     if (newNotice.title && newNotice.content && newNotice.expiresAt) {
-//       this.noticesService.addData(this.apiUrl, newNotice).subscribe(
-//         (response) => {
-//           console.log('POST Request Successful:', response);
-//           this.getValues();
-//         },
-//         (error) => {
-//           console.error('POST Request Failed:', error);
-//         }
-//       );
-//     } else {
-//       console.error('Please provide all required fields.');
-//       // You might want to display an error message to the user
-//     }
-// }
+  //     // Ensure all required fields are provided
+  //     if (newNotice.title && newNotice.content && newNotice.expiresAt) {
+  //       this.noticesService.addData(this.apiUrl, newNotice).subscribe(
+  //         (response) => {
+  //           console.log('POST Request Successful:', response);
+  //           this.getValues();
+  //         },
+  //         (error) => {
+  //           console.error('POST Request Failed:', error);
+  //         }
+  //       );
+  //     } else {
+  //       console.error('Please provide all required fields.');
+  //       // You might want to display an error message to the user
+  //     }
+  // }
 
-
-
-
-openModal(template: TemplateRef<any>) {
-  // Reset selectedNotice for creating a new notice
-  this.newNotice = {};
-  this.modalRef = this.modalService.show(template);
-}
-
-openUpdateModal(template: TemplateRef<any>, notice: any) {
-  // Set selectedNotice with existing data for updating
-  // Make sure 'notice' has the necessary properties
-  this.selectedNotice = { ...notice }; // Use spread operator to create a copy
-  console.log(this.selectedNotice);
-  this.modalRef = this.modalService.show(template);
-}
-
-
-addNotice() {
-  // Ensure all required fields are provided
-  if (this.newNotice.communityID && this.newNotice.title && this.newNotice.content && this.newNotice.expiresAt && this.newNotice.createdBy) {
-    
-    // Format the expiresAt property before sending it to the backend
-    this.newNotice.expiresAt = this.formatBackendDate(this.newNotice.expiresAt);
-
-    this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
-      (response) => {
-        console.log('POST Request Successful:', response);
-        this.getValues();
-      },
-      (error) => {
-        console.error('POST Request Failed:', error);
-      }
-    );
-
-    // Close the modal after adding the notice
-    this.modalRef?.hide();
-  } else {
-    console.error('Please provide all required fields.');
-    // You might want to display an error message to the user
+  openModal(template: TemplateRef<any>) {
+    // Reset selectedNotice for creating a new notice
+    this.newNotice = {};
+    this.modalRef = this.modalService.show(template);
   }
-}
 
-// Function to format the date in the desired format
-private formatBackendDate(date: Date | null): string | null {
-  return date !== null ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS') : null;
-}
+  openUpdateModal(template: TemplateRef<any>, notice: any) {
+    // Set selectedNotice with existing data for updating
+    // Make sure 'notice' has the necessary properties
+    this.selectedNotice = { ...notice }; // Use spread operator to create a copy
+    console.log(this.selectedNotice);
+    this.modalRef = this.modalService.show(template);
+  }
 
+  addNotice() {
+    // Ensure all required fields are provided
+    if (
+      this.newNotice.communityID &&
+      this.newNotice.title &&
+      this.newNotice.content &&
+      this.newNotice.expiresAt &&
+      this.newNotice.createdBy
+    ) {
+      // Format the expiresAt property before sending it to the backend
+      this.newNotice.expiresAt = this.formatBackendDate(
+        this.newNotice.expiresAt
+      );
 
+      this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
+        (response) => {
+          console.log('POST Request Successful:', response);
+          this.getValues();
+        },
+        (error) => {
+          console.error('POST Request Failed:', error);
+        }
+      );
 
+      // Close the modal after adding the notice
+      this.modalRef?.hide();
+    } else {
+      console.error('Please provide all required fields.');
+      // You might want to display an error message to the user
+    }
+  }
 
-
-
+  // Function to format the date in the desired format
+  private formatBackendDate(date: Date | null): string | null {
+    return date !== null
+      ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS')
+      : null;
+  }
 
   // updateNotice(notice: any) {
- 
-   // // const updatedNotice = {
-    //   communityID: notice.communityID,
-    //   title: notice.title,
-    //   content: notice.content,
-    //   expiresAt: notice.expiresAt,
-    //   createdBy: notice.createdBy,
-    //   modifiedBy: notice.modifiedBy
-//    // };
 
+  // // const updatedNotice = {
+  //   communityID: notice.communityID,
+  //   title: notice.title,
+  //   content: notice.content,
+  //   expiresAt: notice.expiresAt,
+  //   createdBy: notice.createdBy,
+  //   modifiedBy: notice.modifiedBy
+  //    // };
 
-    // dummy for testing purposes
-    // const noticeID = 3;
-    // const updatedNotice = {
-    //   communityID: 1, 
-    //   title: 'Sample Title',
-    //   content: 'This is a sample notice content.',
-    //   expiresAt: '2024-02-04T12:33:23.713', // replace with an appropriate expiration date
-    //   createdBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177',
-    //   modifiedBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177'
-    // };
-  
-    ////notice.noticeID
+  // dummy for testing purposes
+  // const noticeID = 3;
+  // const updatedNotice = {
+  //   communityID: 1,
+  //   title: 'Sample Title',
+  //   content: 'This is a sample notice content.',
+  //   expiresAt: '2024-02-04T12:33:23.713', // replace with an appropriate expiration date
+  //   createdBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177',
+  //   modifiedBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177'
+  // };
+
+  ////notice.noticeID
 
   //   this.noticesService.updateData(this.apiUrl, noticeID, updatedNotice).subscribe(
   //     (response) => {
@@ -191,10 +189,6 @@ private formatBackendDate(date: Date | null): string | null {
   //     }
   //   );
   // }
-
-
-
-
 
   updateNotice() {
     // Ensure all required fields are provided for update
@@ -215,25 +209,26 @@ private formatBackendDate(date: Date | null): string | null {
         content: this.selectedNotice.content,
         expiresAt: this.selectedNotice.expiresAt,
         createdBy: this.selectedNotice.createdBy,
-        modifiedBy: this.selectedNotice.modifiedBy
+        modifiedBy: this.selectedNotice.modifiedBy,
       };
-  
-      this.noticesService.updateData(this.apiUrl, this.selectedNotice.noticeID, requestData).subscribe(
-        (response) => {
-          console.log('PUT Request Successful:', response);
-          this.getValues();
-          this.modalRef?.hide(); // Close the modal after updating the notice
-        },
-        (error) => {
-          console.error('PUT Request Failed:', error);
-        }
-      );
+
+      this.noticesService
+        .updateData(this.apiUrl, this.selectedNotice.noticeID, requestData)
+        .subscribe(
+          (response) => {
+            console.log('PUT Request Successful:', response);
+            this.getValues();
+            this.modalRef?.hide(); // Close the modal after updating the notice
+          },
+          (error) => {
+            console.error('PUT Request Failed:', error);
+          }
+        );
     } else {
       console.error('Please provide all required fields.');
       // You might want to display an error message to the user
     }
   }
-  
 
   openDeleteModal(deleteModalTemplate: TemplateRef<any>, notice: any): void {
     // Set the notice to be deleted
@@ -242,7 +237,7 @@ private formatBackendDate(date: Date | null): string | null {
     // Open the modal
     this.modalRef = this.modalService.show(deleteModalTemplate);
   }
-  
+
   deleteNotice(): void {
     if (this.selectedNotice) {
       const noticeId = this.selectedNotice.noticeID;
@@ -273,7 +268,6 @@ private formatBackendDate(date: Date | null): string | null {
   //   );
   // }
 
-
   // private formatDate(dateString: string): string {
   //   const options: Intl.DateTimeFormatOptions = {
   //     year: 'numeric',
@@ -283,13 +277,7 @@ private formatBackendDate(date: Date | null): string | null {
   //     minute: 'numeric',
   //     second: 'numeric'
   //   };
-  
+
   //   return new Date(dateString).toLocaleDateString(undefined, options);
   // }
-
-
-
-
-  
 }
-

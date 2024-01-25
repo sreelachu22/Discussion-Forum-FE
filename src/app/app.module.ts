@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommunityPageComponent } from './features/community-page/community-page.component';
-import { HttpService } from './service/http.service';
+import { CategoryService } from './service/HttpServices/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
@@ -61,7 +61,7 @@ import { UserNoticesComponent } from './features/user/user-notices/user-notices.
     TooltipModule,        
     ButtonToggleComponent,
   ],
-  providers: [HttpService],
+  providers: [CategoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './users.service';
+import { UserService } from '../../service/HttpServices/users.service';
 
 @Component({
   selector: 'app-user-management',

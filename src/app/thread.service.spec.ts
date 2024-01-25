@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ThreadService } from './thread.service';
+import { ThreadService } from './service/HttpServices/thread.service';
 
 describe('ThreadService', () => {
   let service: ThreadService;
