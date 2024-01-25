@@ -7,6 +7,7 @@ import { CommunityManagementDashboardComponent } from './components/layout/commu
 import { UserManagementComponent } from './features/user-management/user-management.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
+import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     component: NoticesComponent,
     path: 'community-management/notice-management',
+  },
+  {
+    component: UserNoticesComponent,
+    path: 'user-notices',
   },
   {
     component: HomePageComponent,

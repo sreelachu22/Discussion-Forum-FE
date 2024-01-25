@@ -9,6 +9,7 @@ import {
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
 import { trigger, transition, style, animate, keyframes } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 interface SideNavToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -45,6 +46,9 @@ export class SidenavComponent {
   screenWidth = 0;
   sidenavData = navbarData;
 
+  constructor(private activateRoute: ActivatedRoute, private router: Router) {}
+  communityID: number = 1;
+  
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
   }
@@ -74,4 +78,30 @@ export class SidenavComponent {
     if (this.screenWidth <= 768) {
       // Adjust behavior for smaller screens if needed
     }
-}}          
+  }
+
+  navigateToUserNotices() {
+    this.router.navigate(['user-notices'], {
+      queryParams: {
+        communityID: this.communityID,
+      },
+    });
+  } 
+
+  handleItemClick(label: string): void {
+    if (label === 'Notifications') {
+      this.navigateToUserNotices();
+    }
+    else if (label === 'Home') {
+      this.navigateToHome();
+    }
+  }
+
+  navigateToHome() {
+    this.router.navigate(['home_page'], {
+      queryParams: {
+        communityID: this.communityID,
+      },
+    });
+  }
+}
