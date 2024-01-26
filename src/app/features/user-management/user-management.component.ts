@@ -36,7 +36,7 @@ export class UserManagementComponent implements OnInit {
     this.userService.getUsers(this.currentPage, this.sortType).subscribe((data) => {
       this.users = data.users;  
       this.pageCount = data.totalPages;  
-      console.log(this.pageCount)  ;
+        ;
     });
   }
 

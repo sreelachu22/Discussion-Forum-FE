@@ -27,6 +27,18 @@ import { ButtonToggleComponent } from './components/ui/button-toggle/button-togg
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
+
+import { computed, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import {MatListModule} from '@angular/material/list'
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidenavigationComponent } from './components/layout/sidenavigation/sidenavigation.component';
+import { SidenavCustomComponent } from './components/layout/sidenavigation/sidenav-custom/sidenav-custom.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +58,8 @@ import { UserNoticesComponent } from './features/user/user-notices/user-notices.
     HomePageComponent,
     UserEditComponent,
     UserNoticesComponent,
+    SidenavigationComponent,
+    SidenavCustomComponent
   ],
 
   imports: [
@@ -60,6 +74,12 @@ import { UserNoticesComponent } from './features/user/user-notices/user-notices.
     BsDatepickerModule.forRoot(),
     TooltipModule,        
     ButtonToggleComponent,
+    CommonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+MatListModule,
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent],
