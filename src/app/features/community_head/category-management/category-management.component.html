@@ -9,15 +9,40 @@
         ></span
       >
     </div>
-    <button
-      class="btn btn-success custom-btn"
-      (click)="openCreateCategoryModal()"
-    >
-      Create Category
-    </button>
   </div>
-
-  <h2>Category Management</h2>
+  <br />
+  <nav class="navbar navbar-dark bg-secondary">
+    <p class="header_text">Manage Categories</p>
+    <!-- <form class="form-inline"></form>
+    <div class="category_search">
+      <input
+        type="text"
+        placeholder="Search"
+        class="search_input"
+        [(ngModel)]="searchText"
+      />
+      <button type="submit" class="search_button" (click)="getSingleCategory()">
+        Search
+      </button>
+    </div> -->
+  </nav>
+  <div class="buttons_arrangement">
+    <div class="button_toggle">
+      <button-toggle
+        [sortOptions]="sortOptions"
+        (sortSelectionChange)="onSortSelectionChange($event)"
+      ></button-toggle>
+    </div>
+    <div>
+      <button
+        class="btn btn-success custom-btn"
+        (click)="openCreateCategoryModal()"
+      >
+        Create Category
+      </button>
+    </div>
+  </div>
+  <br />
   <table class="table table-striped">
     <thead>
       <tr>
@@ -32,7 +57,7 @@
     <tbody>
       <tr
         *ngFor="
-          let category of categories;
+          let category of categoriesList;
           let oddValue = odd;
           let evenValue = even;
           let i = index
@@ -163,4 +188,12 @@
       </tr>
     </tbody>
   </table>
+  <div class="pagination mt-3">
+    <button (click)="prevPage()" class="prevButton">
+      <span>Back</span>
+    </button>
+    <button (click)="nextPage()" class="nextButton">
+      <span>Next</span>
+    </button>
+  </div>
 </div>
