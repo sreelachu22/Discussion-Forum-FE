@@ -1,4 +1,4 @@
-.container{
+/* .container{
     width: 80%;
     position: absolute;
     left: 20%;
@@ -9,6 +9,9 @@
     margin-bottom: 20%;
     padding-top: 5%;
     padding-bottom: 10%;
+} */
+.container{
+  width: 96%;
 }
 .top_nav{
   display: flex;
