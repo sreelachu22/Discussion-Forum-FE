@@ -202,7 +202,6 @@
 
 .prevButton span:after {
   content: "«";
-  color: white;
   position: absolute;
   opacity: 0;
   top: 0;
@@ -212,7 +211,6 @@
 
 .nextButton span:after {
   content: "»";
-  color: white;
   position: absolute;
   opacity: 0;
   top: 0;

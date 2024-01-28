@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="top_nav">
+    <div>
+      <a href="/admin_dashboard_page" class="breadcrumb_navigation"
+        >Admin Dashboard</a
+      ><span> > </span
+      ><span
+        ><a
+          href="/admin_dashboard_page/:superadmin_category_management"
+          class="breadcrumb_navigation"
+          >Category Management</a
+        ></span
+      >
+    </div>
+  </div>
+  <br />
+  <nav class="navbar navbar-dark bg-secondary">
+    <p class="header_text">Category Management</p>
+  </nav>
+  <br />
+  <!-- Display Category Cards -->
+  <div class="card-container">
+    <div
+      *ngFor="let category of categories"
+      class="card"
+      (mouseover)="setHoveredCategoryId(category.communityCategoryID)"
+      (mouseout)="setHoveredCategoryId(null)"
+    >
+      <div class="card-body">
+        <p class="card-text">{{ category.communityCategoryName }}</p>
+        <span
+          class="icon-container"
+          [ngClass]="{
+            hovered: isCategoryOrIconsHovered(category.communityCategoryID)
+          }"
+          *ngIf="isCategoryOrIconsHovered(category.communityCategoryID)"
+        >
+          <app-icon [iconName]="faEdit"></app-icon>
+          <app-icon
+            [iconName]="faDelete"
+            (click)="openDeleteModal(delete)"
+          ></app-icon>
+          <ng-template #delete>
+            <div class="modal-body text-center">
+              <p>Do you want to confirm?</p>
+              <button type="button" class="btn btn-default">Yes</button>
+              <button type="button" class="btn btn-primary" (click)="decline()">
+                No
+              </button>
+            </div>
+          </ng-template>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

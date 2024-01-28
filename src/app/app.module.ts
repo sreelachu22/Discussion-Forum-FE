@@ -35,10 +35,12 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatListModule} from '@angular/material/list'
+import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavigationComponent } from './components/layout/sidenavigation/sidenavigation.component';
 import { SidenavCustomComponent } from './components/layout/sidenavigation/sidenav-custom/sidenav-custom.component';
+import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
+import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,12 +56,14 @@ import { SidenavCustomComponent } from './components/layout/sidenavigation/siden
     CategoryThreadsComponent,
     ButtonComponent,
     CategoryCreateModalComponent,
-    UserManagementComponent, 
+    UserManagementComponent,
     HomePageComponent,
     UserEditComponent,
     UserNoticesComponent,
     SidenavigationComponent,
-    SidenavCustomComponent
+    SidenavCustomComponent,
+    AdminDashboardComponent,
+    SuperadminCategoryManagementComponent,
   ],
 
   imports: [
@@ -72,14 +76,14 @@ import { SidenavCustomComponent } from './components/layout/sidenavigation/siden
     FormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    TooltipModule,        
+    TooltipModule,
     ButtonToggleComponent,
     CommonModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
-MatListModule,
+    MatListModule,
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent],

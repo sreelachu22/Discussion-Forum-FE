@@ -10,6 +10,11 @@
     padding-top: 5%;
     padding-bottom: 10%;
 } */
+.container{
+    /* width: 61rem; */
+    width: 96%;
+}
+
 .page_top{
     display: flex;
     flex-direction: row;
@@ -49,7 +54,7 @@
 
 .page_body {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
   }
 
@@ -57,7 +62,7 @@
     width: 30%;
     margin-top: 2rem;
     /* margin: 0.5rem; */
-    margin-left: 2rem;
+    margin-left: 1rem;
     transition: box-shadow 0.2s ease-in-out, transform 0.3s ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }

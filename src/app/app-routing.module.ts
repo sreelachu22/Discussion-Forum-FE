@@ -8,11 +8,21 @@ import { UserManagementComponent } from './features/user-management/user-managem
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
+import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
+import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 
 const routes: Routes = [
   {
     component: HomePageComponent,
     path: 'home_page',
+  },
+  {
+    component: AdminDashboardComponent,
+    path: 'admin_dashboard_page',
+  },
+  {
+    component: SuperadminCategoryManagementComponent,
+    path: 'admin_dashboard_page/superadmin_category_management',
   },
   {
     component: CommunityPageComponent,
