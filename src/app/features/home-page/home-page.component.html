@@ -1,8 +1,15 @@
 <div class="container">
-  <div class="page_top">
-    <h1>Communities</h1>
-    <!-- <button class="btn btn-success">Community Management</button> -->
-  </div>
+  <nav class="navbar navbar-dark bg-secondary">
+    <p class="header_text">Communities</p>
+    <div class="create_button">
+      <app-button
+        buttonClass="btn btn-primary"
+        buttonName="Admin Dashboard"
+        (buttonClick)="navigateToAdminDashboard()"
+      ></app-button>
+    </div>
+  </nav>
+  <br />
   <div class="page_body">
     <div class="card" style="width: 15rem; height: fit-content">
       <div class="card-body">

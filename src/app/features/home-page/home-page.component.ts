@@ -19,4 +19,8 @@ export class HomePageComponent {
       },
     });
   }
+
+  navigateToAdminDashboard() {
+    this.router.navigate(['admin_dashboard_page']);
+  }
 }

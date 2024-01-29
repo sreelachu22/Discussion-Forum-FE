@@ -20,17 +20,3 @@
     border-radius: 5px;
     height: 100px;
   }
-
-.btn{
-    size: 3rem;
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-    background-color: rgb(31, 151, 145);
-}
-
-.btn:hover{
-    transform: scale(0.9);
-}
-
-.create_button{
-    margin-right: 3%;
-}
