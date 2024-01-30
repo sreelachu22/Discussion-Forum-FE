@@ -33,6 +33,6 @@ mat-nav-list {
 }
 
 .selected_menu_item {
-  border-left-color: blue;
+  border-left-color: rgba(51, 171, 165,0.8);
   background: rgba(0, 0, 0, 0.05);
 }
