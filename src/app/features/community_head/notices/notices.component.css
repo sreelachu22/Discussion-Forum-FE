@@ -1,6 +1,10 @@
-/* .container{
-    width: 80%;
-    position: absolute;
+ .container{
+    width: 100%;
+}
+hr{
+    width: 90%;
+}
+/*    position: absolute;
     left: 20%;
     width: 75%;
     margin-top: 7%;
