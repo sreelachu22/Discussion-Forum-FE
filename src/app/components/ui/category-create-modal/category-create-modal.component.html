@@ -15,7 +15,27 @@
         >
           {{ category.communityCategoryName }}
         </option>
+        <option [value]="-1">Other</option>
       </select>
+    </div>
+    <div *ngIf="selectedCommunityCategory == -1">
+      <div class="form-group">
+        <label for="newCategoryName">New Category Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          name="newCategoryName"
+          [(ngModel)]="newCategoryName"
+          required
+          #newCategoryNameField="ngModel"
+        />
+        <span
+          class="form_error"
+          *ngIf="newCategoryNameField.invalid && newCategoryNameField.touched"
+        >
+          *New Category Name is required
+        </span>
+      </div>
     </div>
 
     <div class="form-group">
@@ -60,8 +80,9 @@
         class="btn btn-primary custom-btn"
         [disabled]="categoryForm.invalid"
       >
-        Create Category</button
-      ><span></span>
+        Create Category
+      </button>
+      <span></span>
       <span
         ><button
           type="button"

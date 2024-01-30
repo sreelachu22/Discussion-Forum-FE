@@ -76,16 +76,27 @@ export class CategoryService {
     id: number,
     description: string,
     communityCategoryId: number,
+    communityCategoryName: string,
     createdBy: string
   ): Observable<any> {
     const body = {
       communityCategoryId: communityCategoryId,
+      communityCategoryName: communityCategoryName,
       description: description,
       createdBy: createdBy,
     };
 
     return this.http.post(
-      `https://localhost:7160/api/CommunityCategoryMapping/CreateWithCategoryName/${id}`,
+      `https://localhost:7160/api/CommunityCategoryMapping/CreateCategoryMapping/${id}`,
+      body
+    );
+  }
+
+  createCategory(communityCategoryName: string): Observable<any> {
+    const body = {};
+
+    return this.http.post(
+      `https://localhost:7160/api/CommunityCategory/${communityCategoryName}`,
       body
     );
   }
