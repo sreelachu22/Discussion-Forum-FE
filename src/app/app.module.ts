@@ -42,6 +42,9 @@ import { SidenavCustomComponent } from './components/layout/sidenavigation/siden
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
+import { CreatePostComponent } from './features/user/create-post/create-post.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +69,7 @@ import { GuidelinesComponent } from './features/guidelines/guidelines.component'
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
+    CreatePostComponent,
   ],
 
   imports: [
@@ -86,6 +90,8 @@ import { GuidelinesComponent } from './features/guidelines/guidelines.component'
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    EditorModule
+
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent],

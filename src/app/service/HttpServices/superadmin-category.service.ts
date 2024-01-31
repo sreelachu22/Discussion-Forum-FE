@@ -44,43 +44,34 @@ export class superAdminCategoryService {
     return this.http.get(`https://localhost:7160/api/CommunityCategory`);
   }
 
-  updateCategoryDescription(
+  createCategory(communityCategoryName: string): Observable<any> {
+    const body = {};
+
+    return this.http.post(
+      `https://localhost:7160/api/CommunityCategory/${communityCategoryName}`,
+      body
+    );
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete(
+      `https://localhost:7160/api/CommunityCategory/${id}`
+    );
+  }
+
+  updateCategory(
     id: number,
-    description: string,
-    modifiedBy: string
+    communityCategoryName: string,
+    isDeleted: boolean
   ): Observable<any> {
     const body = {
-      description: description,
-      modifiedBy: modifiedBy,
+      communityCategoryName: communityCategoryName,
+      isDeleted: isDeleted,
     };
 
     return this.http.put(
-      `https://localhost:7160/api/CommunityCategoryMapping/UpdateCategoryDescription/${id}`,
+      `https://localhost:7160/api/CommunityCategory/${id}`,
       body
-    );
-  }
-
-  createCategoryDescription(
-    id: number,
-    description: string,
-    communityCategoryId: number,
-    createdBy: string
-  ): Observable<any> {
-    const body = {
-      communityCategoryId: communityCategoryId,
-      description: description,
-      createdBy: createdBy,
-    };
-
-    return this.http.post(
-      `https://localhost:7160/api/CommunityCategoryMapping/CreateWithCategoryName/${id}`,
-      body
-    );
-  }
-
-  deleteCategoryMapping(id: number): Observable<any> {
-    return this.http.delete(
-      `https://localhost:7160/api/CommunityCategoryMapping/${id}`
     );
   }
 }

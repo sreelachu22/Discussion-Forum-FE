@@ -108,4 +108,8 @@ export class CategoryThreadsComponent implements OnInit {
   formatDate(date: string | null): string {
     return date ? new Date(date).toLocaleDateString() : 'N/A';
   }
+
+  createPost() {
+    this.router.navigate(['category_threads/create_posts'], {});
+  }
 }
