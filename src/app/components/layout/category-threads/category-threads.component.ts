@@ -52,4 +52,9 @@ export class CategoryThreadsComponent implements OnInit {
       return 'N/A';
     }
   }
+
+  createPost() {
+    this.router.navigate(['category_threads/create_posts'], {
+    });
+  }
 }

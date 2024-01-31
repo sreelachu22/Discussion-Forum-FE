@@ -17,6 +17,7 @@
   <br />
   <h1>Category Name : Web Design</h1>
   <h3>Category Description : Discussion on web development</h3>
+  <app-button buttonClass="btn btn-primary" buttonName="Create Post" (buttonClick)="createPost()"></app-button>
   <app-list
     *ngFor="let val of value"
     [createdBy]="val.createdBy"
