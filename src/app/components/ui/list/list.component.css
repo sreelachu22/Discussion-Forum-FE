@@ -26,10 +26,15 @@
   margin-bottom: 10px;
 }
 
-.created-by,
-.is-active-now,
-.created-on {
-  display: inline-block;
+.metadata-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.metadata-item {
+  margin-bottom: 5px;
 }
 
 .is-active-now {
