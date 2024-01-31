@@ -1,4 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -11,7 +12,7 @@ export class GuidelinesComponent {
   modalRef?: BsModalRef;
   guidelines: string[]; 
 
-  constructor(private modalService: BsModalService) {
+  constructor(private modalService: BsModalService,private router: Router) {
    
     this.guidelines = [
       'Respectful Communication: Ensure that your words and tone are respectful and considerate towards fellow forum members. Disagreements are natural, but express your opinions in a constructive and courteous manner.',
@@ -39,5 +40,11 @@ export class GuidelinesComponent {
 
   ngAfterViewInit(): void { 
     this.modalRef = this.modalService.show(this.template, { class: 'modal-lg' }); // Use 'modal-lg' for a large modal
+  }
+
+  close() {
+    this.modalRef?.hide();
+    this.router.navigate([''], {
+    });
   }
 }

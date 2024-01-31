@@ -44,6 +44,7 @@ import { SuperadminCategoryManagementComponent } from './features/super_admin/su
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
     CreatePostComponent,
+    SuccessPopupComponent,
   ],
 
   imports: [
