@@ -1,0 +1,79 @@
+/* category-threads.component.css */
+
+.container {
+  width: 95%;
+}
+
+/* CSS for categorythreads_header */
+.categorythreads_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 10px; /* Rounded corners */
+  padding: 30px 10px 30px 10px;
+}
+
+.navbar_container {
+  flex: 80%;
+}
+
+.navbar_buttons {
+  flex: 20%; /* 20% of the parent's width */
+}
+
+.header_text,
+.header_description,
+.navbar_buttons p {
+  padding-left: 30px;
+  color: white;
+  margin: 0;
+}
+
+.header_text {
+  font-weight: 500;
+  font-size: x-large;
+  margin-bottom: 10px;
+}
+
+.header_description {
+  font-size: small;
+}
+
+/* pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: rgba(
+    var(--bs-secondary-rgb),
+    var(--bs-bg-opacity)
+  ) !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+/* Styles for disabled buttons */
+.pagination button:disabled {
+  background-color: rgba(var(--bs-secondary-rgb), 0.6);
+  cursor: default;
+}
+
+/* Styles for active button (current page) */
+.pagination button.active {
+  background-color: rgb(
+    31,
+    151,
+    145
+  ) !important; /* Ensure specificity and override */
+  color: white;
+}
