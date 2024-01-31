@@ -11,6 +11,7 @@ import { UserNoticesComponent } from './features/user/user-notices/user-notices.
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
+import { CreatePostComponent } from './features/user/create-post/create-post.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     component: GuidelinesComponent,
     path: 'guidelines',
+  },
+  {
+    component: CreatePostComponent,
+    path: 'category_threads/create_posts',
   },
   {
     component: HomePageComponent,
