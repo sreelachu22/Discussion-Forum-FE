@@ -30,7 +30,7 @@ export class CategoryService {
     page: number,
     sortType: string
   ): Observable<AllCategories> {
-    const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=9`;
+    const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=6`;
     console.log(this.http.get(url));
     return this.http.get<AllCategories>(url);
   }

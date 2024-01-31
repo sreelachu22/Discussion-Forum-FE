@@ -46,6 +46,7 @@ import { SearchResultComponent } from './features/user/search-result/search-resu
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { SuccessPopupComponent } from './components/ui/success-popup/success-pop
     SearchResultComponent,
     CreatePostComponent,
     SuccessPopupComponent,
+    LeaderboardComponent,
   ],
 
   imports: [
