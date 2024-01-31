@@ -37,6 +37,10 @@ export class CommunityPageComponent {
   currentPage: number = 1;
   pageCount: number = 1;
 
+  pages: number[] = [];
+  pageSize: number = 6;
+  totalPages: number = 0;
+
   getSingleCategory() {
     if (this.searchText == '') {
       this.loadCategories();
@@ -45,8 +49,27 @@ export class CommunityPageComponent {
         .getPagedCategories(this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categoriesList = data.categories;
-          this.pageCount = data.totalPages;
+          this.totalPages = Math.ceil(data.totalCount / this.pageSize); // Calculate totalPages
+          this.updatePageNumbers();
         });
+    }
+  }
+
+  updatePageNumbers() {
+    const pagesToShow = Math.min(this.totalPages, 3);
+    const startPage = Math.max(1, this.currentPage - 1);
+    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
+
+    this.pages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadCategories();
     }
   }
 
