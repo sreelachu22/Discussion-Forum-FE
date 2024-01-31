@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="top_nav">
+    <div>
+      <a href="/home_page" class="breadcrumb_navigation">Home</a>
+      <span> > </span>
+      <span
+        ><a href="/community_page" class="breadcrumb_navigation"
+          >Community</a
+        ></span
+      >
+      <span> > </span>
+      <span
+        ><a href="/search-result" class="breadcrumb_navigation"
+          >Search Results</a
+        ></span
+      >
+    </div>
+  </div>
+  <br />
+  <nav class="navbar navbar-dark bg-secondary">
+    <p class="header_text">Search Results</p>
+    <div class="user_search">
+      <input
+        type="text"
+        placeholder="Search"
+        class="search_input"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="searchResult(searchTerm)"
+      />
+      <button
+        type="submit"
+        class="search_button"
+        (click)="searchResult(searchTerm)"
+      >
+        Search
+      </button>
+    </div>
+  </nav>
+  <br />
+
+  <div class="page_body mt-3">
+    <div *ngIf="threads.length > 0">
+      <div class="card-deck">
+        <div *ngFor="let thread of threads" class="card mb-3">
+          <div class="card-body">
+            <!-- (click)="navigateToThread(thread.threadID)" -->
+            <span
+              ><p class="card-text">
+                Thread ID: {{ thread.threadID }} &nbsp; | &nbsp;Category ID:
+                {{ thread.communityCategoryMappingID }}
+              </p>
+            </span>
+            <h2 class="card-title">{{ thread.content }}</h2>
+            <p>Created Date: {{ thread.createdAt | date : "dd-mm-yyyy" }}</p>
+            <!-- Add other properties as needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="threads.length === 0">
+      <p>No search results found.</p>
+    </div>
+  </div>
+</div>

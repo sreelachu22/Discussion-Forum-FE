@@ -12,9 +12,14 @@ export class searchService {
     return this.http.get(`https://localhost:7160/api/CommunityCategory`);
   }
 
-  searchResult(term: string): Observable<any> {
+  searchThreads(term: string): Observable<any> {
     return this.http.get(
       `https://localhost:7160/api/Thread/SearchThreads?searchTerm=${term}`
+    );
+  }
+  searchReplies(term: string): Observable<any> {
+    return this.http.get(
+      `https://localhost:7160/api/Reply/SearchReplies?searchTerm=${term}`
     );
   }
 }
