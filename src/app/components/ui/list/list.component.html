@@ -1,8 +1,23 @@
+<!-- list.component.html -->
 <div class="list" (click)="onClick()">
   <div class="metadata">
-    <div class="created-by">Created by: {{ createdBy }}</div>
-    <div class="is-active-now">{{ status }}</div>
-    <div class="created-on">Created on: {{ createdOn }}</div>
+    <!-- 1st div with 4 vertical divs -->
+    <div class="metadata-column">
+      <div class="metadata-item">Created by: {{ createdBy }}</div>
+      <div class="metadata-item">Created on: {{ createdOn }}</div>
+      <div class="metadata-item">Status: {{ status }}</div>
+      <div class="metadata-item">Votes: {{ votes }}</div>
+    </div>
+
+    <!-- 2nd div with 2 vertical divs -->
+    <div class="metadata-column">
+      <div class="metadata-item">Posts: {{ post }}</div>
+      <div class="metadata-item">Tags: {{ tags }}</div>
+    </div>
+
+    <!-- 3rd div with 1 div -->
+    <div class="metadata-column">
+      <div class="metadata-item">Is Answered: {{ isAnswered }}</div>
+    </div>
   </div>
-  <h2><b>P:</b> {{ post }}</h2>
 </div>

@@ -1,3 +1,4 @@
+// list.component.ts
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -10,11 +11,11 @@ export class ListComponent {
   @Input() status: string = '';
   @Input() createdOn: string = '';
   @Input() post: string = '';
+  @Input() votes: number = 0;
+  @Input() tags: string = '';
+  @Input() isAnswered: boolean = false;
 
-  value = 'shankar';
-
-  @Input()
-  click!: () => void;
+  @Input() click!: () => void;
 
   onClick() {
     this.click();
