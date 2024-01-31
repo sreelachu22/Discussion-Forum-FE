@@ -12,7 +12,7 @@ import { NoticesComponent } from './features/community_head/notices/notices.comp
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CommunityPageComponent } from './features/community-page/community-page.component';
+import { CommunityPageComponent } from './features/user/community-page/community-page.component';
 import { CategoryService } from './service/HttpServices/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -42,6 +42,7 @@ import { SidenavCustomComponent } from './components/layout/sidenavigation/siden
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
+import { SearchResultComponent } from './features/user/search-result/search-result.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +67,7 @@ import { GuidelinesComponent } from './features/guidelines/guidelines.component'
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
+    SearchResultComponent,
   ],
 
   imports: [

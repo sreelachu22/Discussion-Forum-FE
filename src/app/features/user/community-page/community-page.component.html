@@ -26,11 +26,12 @@
         placeholder="Search"
         class="search_input"
         [(ngModel)]="searchTerm"
+        (keyup.enter)="searchResult(searchTerm)"
       />
       <button
         type="submit"
         class="search_button"
-        (click)="searchResult(result)"
+        (click)="searchResult(searchTerm)"
       >
         Search
       </button>

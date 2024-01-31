@@ -37,8 +37,6 @@ export class CommunityPageComponent {
   currentPage: number = 1;
   pageCount: number = 1;
 
-  isResultFound: boolean = false;
-
   getSingleCategory() {
     if (this.searchText == '') {
       this.loadCategories();
@@ -90,7 +88,6 @@ export class CommunityPageComponent {
 
   closeModal() {
     this.modalRef?.hide();
-    this.isResultFound = false;
   }
 
   categories: {
@@ -139,25 +136,9 @@ export class CommunityPageComponent {
     });
   }
 
-  searchResult(template: TemplateRef<void>) {
-    this.searchService.searchResult(this.searchTerm).subscribe({
-      next: (data: any) => {
-        this.threads = data;
-        this.isResultFound = true;
-        if (this.isResultFound && data.length > 0) {
-          this.openSearchModal(template);
-        } else if (this.isResultFound && data.length <= 0) {
-          alert('No search result found');
-        }
-        console.log(this.threads);
-        console.log(this.isResultFound);
-      },
-      error: (error: Error) => {
-        alert('Error has occured, ' + error.message);
-      },
-      complete: () => {
-        console.log('Completed');
-      },
+  searchResult(searchTerm: string) {
+    this.router.navigate(['/search-result'], {
+      queryParams: { searchTerm: this.searchTerm },
     });
   }
 
