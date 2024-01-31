@@ -17,6 +17,7 @@ export class CategoryCreateModalComponent implements OnInit {
   selectedCommunityCategory: number = 0;
   description: string = '';
   createdBy: string = '';
+  newCategoryName: string = '';
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -46,10 +47,32 @@ export class CategoryCreateModalComponent implements OnInit {
   @Output() categoryCreated: EventEmitter<any> = new EventEmitter<any>();
 
   createCategory() {
-    const id = 1; // Adjust the id as needed
+    const id = 1;
+    // console.log('function called');
+    // if (this.selectedCommunityCategory == -1) {
+    //   const community = {
+    //     communityCategoryName: this.newCategoryName,
+    //   };
 
+    //   this.httpService
+    //     .createCategory(community.communityCategoryName)
+    //     .subscribe({
+    //       next: (data: any) => {
+    //         console.log('Category created successfully:', data);
+    //         this.selectedCommunityCategory = data.communityCategoryID;
+    //         console.log('inside' + this.selectedCommunityCategory);
+    //       },
+    //       error: (error: any) => {
+    //         console.error('Error creating category:', error);
+    //         // Handle error as needed
+    //       },
+    //     });
+    // }
+
+    // console.log('outside' + this.selectedCommunityCategory);
     const body = {
       communityCategoryId: this.selectedCommunityCategory,
+      communitCategoryName: this.newCategoryName,
       description: this.description,
       createdBy: this.createdBy,
     };
@@ -59,6 +82,7 @@ export class CategoryCreateModalComponent implements OnInit {
         id,
         body.description,
         body.communityCategoryId,
+        body.communitCategoryName,
         body.createdBy
       )
       .subscribe({

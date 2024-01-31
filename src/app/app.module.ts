@@ -41,6 +41,7 @@ import { SidenavigationComponent } from './components/layout/sidenavigation/side
 import { SidenavCustomComponent } from './components/layout/sidenavigation/sidenav-custom/sidenav-custom.component';
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
+import { GuidelinesComponent } from './features/guidelines/guidelines.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { SuperadminCategoryManagementComponent } from './features/super_admin/su
     SidenavCustomComponent,
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
+    GuidelinesComponent,
   ],
 
   imports: [

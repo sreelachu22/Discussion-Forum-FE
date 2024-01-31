@@ -10,6 +10,7 @@ import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
+import { GuidelinesComponent } from './features/guidelines/guidelines.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     component: UserNoticesComponent,
     path: 'user-notices',
+  },
+  {
+    component: GuidelinesComponent,
+    path: 'guidelines',
   },
   {
     component: HomePageComponent,

@@ -92,6 +92,10 @@ export class SidenavComponent {
     if (label === 'Notifications') {
       this.navigateToUserNotices();
     }
+    else if (label === 'Guidelines') {
+      console.log("helllooo");
+      this.navigateToGuidelines();
+    }
     else if (label === 'Home') {
       this.navigateToHome();
     }
@@ -103,5 +107,9 @@ export class SidenavComponent {
         communityID: this.communityID,
       },
     });
+  }
+
+  navigateToGuidelines() {
+    this.router.navigate(['guidelines']);
   }
 }
