@@ -16,9 +16,9 @@ import { CommunityPageComponent } from './features/community-page/community-page
 import { CategoryService } from './service/HttpServices/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
+import { CommunityManagementDashboardComponent } from './features/community_head/community-management-dashboard/community-management-dashboard.component';
 import { ListComponent } from './components/ui/list/list.component';
-import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
+import { CategoryThreadsComponent } from './features/user/category-threads/category-threads.component';
 import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';

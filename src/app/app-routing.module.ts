@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
-import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
+import { CategoryThreadsComponent } from './features/user/category-threads/category-threads.component';
 import { CommunityPageComponent } from './features/community-page/community-page.component';
-import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
+import { CommunityManagementDashboardComponent } from './features/community_head/community-management-dashboard/community-management-dashboard.component';
 import { UserManagementComponent } from './features/user-management/user-management.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
