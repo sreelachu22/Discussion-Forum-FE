@@ -75,65 +75,27 @@ export class SuperadminCategoryManagementComponent {
 
   modalRef?: BsModalRef;
 
-  openDeleteModal(template: TemplateRef<void>) {
+  bsmodalRef?: BsModalRef;
+
+  openDeleteCategoryModal(template: TemplateRef<void>) {
+    console.log('modal called');
+    this.bsmodalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  openCreateCategoryModal(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
-  openCreateCategoryModal() {
-    this.modalRef = this.modalService.show(CategoryCreateModalComponent);
-  }
-
-  communityCategoryMappingID: number = 0;
-  oldDescription: string = '';
-  newDescription: string = '';
-  modifiedBy: string = '';
+  communityCategoryID: number = 0;
+  oldCategoryName: string = '';
+  newCategoryName: string = '';
 
   openUpdateModal(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
-  updateCategoryDescription(id: number) {
-    this.httpService
-      .updateCategoryDescription(id, this.newDescription, this.modifiedBy)
-      .subscribe({
-        next: (data: any) => {
-          alert('Category updated successfully');
-          this.modalRef?.hide; // Close the modal after updating
-        },
-        error: (error: any) => {
-          console.error('Error updating category:', error);
-          // Handle error as needed
-        },
-      });
-  }
-
-  categoryID = 4;
-  confirm(categoryID: number): void {
-    this.httpService.deleteCategoryMapping(categoryID).subscribe({
-      next: (data: any) => {
-        alert('deleted');
-        console.log(data);
-      },
-      error: (error: Error) => {
-        alert('Error has occured, ' + error.message);
-      },
-      complete: () => {
-        console.log('Completed');
-      },
-    });
+  closeModal(): void {
     this.modalRef?.hide();
-  }
-
-  decline(): void {
-    this.modalRef?.hide();
-  }
-
-  isRowHovered: number | null = null;
-  onMouseEnter(index: number) {
-    this.isRowHovered = index;
-  }
-  onMouseLeave() {
-    this.isRowHovered = null;
   }
 
   categories: {
@@ -161,7 +123,7 @@ export class SuperadminCategoryManagementComponent {
     this.httpService.getCategories().subscribe({
       next: (data: any) => {
         this.categories = data;
-        console.log(data);
+        // console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
@@ -170,5 +132,54 @@ export class SuperadminCategoryManagementComponent {
         console.log('Completed');
       },
     });
+  }
+
+  createCategory() {
+    this.httpService.createCategory(this.newCategoryName).subscribe({
+      next: (data: any) => {
+        // alert('Category created');
+        this.modalRef?.hide();
+      },
+      error: (error: Error) => {
+        alert('Error has occured, ' + error.message);
+      },
+      complete: () => {
+        console.log('Completed');
+      },
+    });
+  }
+
+  updateCategory(id: number) {
+    this.httpService.updateCategory(id, this.newCategoryName, false).subscribe({
+      next: (data: any) => {
+        alert('Category updated successfully');
+        this.modalRef?.hide; // Close the modal after updating
+      },
+      error: (error: any) => {
+        console.error('Error updating category:', error);
+        // Handle error as needed
+      },
+    });
+  }
+
+  confirm(categoryID: number): void {
+    this.httpService.deleteCategory(categoryID).subscribe({
+      next: (data: any) => {
+        // alert('deleted ');
+        this.bsmodalRef?.hide();
+        // console.log('deleted ' + data);
+      },
+      error: (error: Error) => {
+        alert('Error has occured, ' + error.message);
+      },
+      complete: () => {
+        console.log('Completed');
+      },
+    });
+    this.modalRef?.hide();
+  }
+
+  decline(): void {
+    this.bsmodalRef?.hide();
   }
 }
