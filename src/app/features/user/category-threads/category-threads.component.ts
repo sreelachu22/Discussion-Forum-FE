@@ -130,4 +130,11 @@ export class CategoryThreadsComponent implements OnInit {
       queryParams: { threadID: threadID },
     });
   }
+
+  searchTerm: string = '';
+  searchResult(searchTerm: string) {
+    this.router.navigate(['/search-result'], {
+      queryParams: { searchTerm: this.searchTerm },
+    });
+  }
 }

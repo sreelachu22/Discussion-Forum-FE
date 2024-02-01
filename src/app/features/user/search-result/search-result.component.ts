@@ -70,4 +70,10 @@ export class SearchResultComponent {
       });
     }
   }
+
+  navigateToThreadReplies(threadID: number) {
+    this.router.navigate(['/thread-replies'], {
+      queryParams: { threadID: threadID },
+    });
+  }
 }
