@@ -15,6 +15,7 @@ import { CreatePostComponent } from './features/user/create-post/create-post.com
 import { SearchResultComponent } from './features/user/search-result/search-result.component';
 import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
+import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
 
 const routes: Routes = [
   {
@@ -92,6 +93,10 @@ const routes: Routes = [
   {
     component: HomePageComponent,
     path: '',
+  },
+  {
+    component: SuperCategoryManagementComponent,
+    path:'super-catMgmt'
   },
 ];
 

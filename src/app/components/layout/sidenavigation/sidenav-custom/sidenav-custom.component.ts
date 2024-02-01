@@ -47,7 +47,7 @@ export class SidenavCustomComponent {
 {
   icon: 'flag',
   label: 'Guidelines',
-  routes: '/guidelines',
+  routes: 'super-catMgmt',
 },
   ]);
   
