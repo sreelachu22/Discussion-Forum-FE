@@ -24,23 +24,23 @@ export class CreatePostComponent {
     suffix: '.min',
     plugins: 'lists link image table code help wordcount', // List of plugins to include in the editor
     placeholder: 'Type your content here...',
-    file_picker_callback: (callback: any, value: any, meta: any) => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
+    file_picker_callback: (callback: any, value: any, meta: any) => {  //to attach images directly from system
+      const input = document.createElement('input'); // Create a new input element of type 'file'
+      input.setAttribute('type', 'file'); // Set the type attribute of the input element to 'file'
+      input.setAttribute('accept', 'image/*'); // Set the accept attribute to allow only image files
   
-      input.onchange = () => {
-        const file = (input.files as FileList)[0];
-        const reader = new FileReader();
+      input.onchange = () => { // Attach an onchange event handler to the input element
+        const file = (input.files as FileList)[0]; // Retrieve the selected file from the input element
+        const reader = new FileReader(); // Create a new FileReader to read the file content
   
-        reader.onload = () => {
-          const base64 = reader.result as string;
-          callback(base64, { alt: file.name });
+        reader.onload = () => {// Set up a callback for when the FileReader has loaded the file content
+          const base64 = reader.result as string;  // Convert the file content to base64 encoding
+          callback(base64, { alt: file.name });  // Call the TinyMCE callback with the base64-encoded data and file metadata
         };
-  
+        // Read the file content as a data URL
         reader.readAsDataURL(file);
       };
-  
+      // Programmatically trigger a click event on the input element to open the file picker dialog
       input.click();
     },
     setup: (editor: { on: (arg0: string, arg1: () => void) => void; getContent: () => any; }) => {
