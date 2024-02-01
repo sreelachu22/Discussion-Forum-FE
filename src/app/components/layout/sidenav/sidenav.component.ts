@@ -88,6 +88,7 @@ export class SidenavComponent {
     });
   } 
 
+  // in sidenav_data.ts - label for each icon used for navigation
   handleItemClick(label: string): void {
     if (label === 'Notifications') {
       this.navigateToUserNotices();

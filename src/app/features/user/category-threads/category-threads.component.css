@@ -77,3 +77,7 @@
   ) !important; /* Ensure specificity and override */
   color: white;
 }
+
+#createpost_btn {
+  float: right;
+}

@@ -27,7 +27,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           class="sidenav_link"
           (click)="handleItemClick(data.label)"
-        >
+        ><!-- handleItemClick(data.label) used for routing -->
           <span class="sidenav_link_text">{{ data.label }}</span>
         </a>
       </ng-container>
