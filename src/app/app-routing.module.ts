@@ -43,20 +43,35 @@ const routes: Routes = [
     path: 'community_management_dashboard',
   },
   {
-    component: CategoryManagementComponent,
-    path: 'community-management/category-management',
+    path: 'community-management',
+    children: [
+      {
+        path: 'category-management',
+        component: CategoryManagementComponent,
+      },
+    ],
   },
   {
-    component: UserManagementComponent,
-    path: 'community-management/user-management',
+    path: 'community-management',
+    children: [
+      {
+        path: 'user-management',
+        component: UserManagementComponent,
+      },
+      {
+        path: 'user-management/user-edit/:userID',
+        component: UserEditComponent,
+      },
+    ],
   },
   {
-    component: UserEditComponent,
-    path: 'community-management/user-management/user-edit/:userID',
-  },
-  {
-    component: NoticesComponent,
-    path: 'community-management/notice-management',
+    path: 'community-management',
+    children: [
+      {
+        path: 'notice-management',
+        component: NoticesComponent,
+      },
+    ],
   },
   {
     component: UserNoticesComponent,

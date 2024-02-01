@@ -16,6 +16,7 @@ export class LeaderboardComponent implements OnInit {
     this.getTopUsers(4);
   }
 
+  //get top users based on score.
   getTopUsers(limit: number) {
     this.leaderboardService.getTopUsers(limit).subscribe({
       next: (data: TopUsers[]) => {
@@ -23,11 +24,11 @@ export class LeaderboardComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error getting top users:', error);
-        // Handle error as needed
       },
     });
   }
 
+  //assign badges based on levels
   getBadgeName(index: number): string {
     if (index === 0) {
       return 'Elite Contributor';

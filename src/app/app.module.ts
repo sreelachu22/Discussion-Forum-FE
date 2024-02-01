@@ -9,7 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommunityPageComponent } from './features/user/community-page/community-page.component';
@@ -45,7 +45,9 @@ import { CreatePostComponent } from './features/user/create-post/create-post.com
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
-
+import { LoaderComponent } from './features/loader/loader.component';
+import { LoaderInterceptor } from './interceptor/loader.interceptor';
+import { LoaderService } from './service/HttpServices/loader.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +76,7 @@ import { LeaderboardComponent } from './features/leaderboard/leaderboard.compone
     CreatePostComponent,
     SuccessPopupComponent,
     LeaderboardComponent,
+    LoaderComponent,
   ],
 
   imports: [
@@ -96,7 +99,15 @@ import { LeaderboardComponent } from './features/leaderboard/leaderboard.compone
     MatListModule,
     EditorModule,
   ],
-  providers: [CategoryService],
+  providers: [
+    CategoryService,
+    LoaderService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

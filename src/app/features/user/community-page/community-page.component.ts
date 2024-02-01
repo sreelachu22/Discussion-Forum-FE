@@ -2,7 +2,9 @@ import { Component, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
+import { Thread } from 'src/app/service/HttpServices/thread.service';
 
 @Component({
   selector: 'app-community-page',
@@ -10,22 +12,23 @@ import { searchService } from 'src/app/service/HttpServices/search.service';
   styleUrls: ['./community-page.component.css'],
 })
 export class CommunityPageComponent {
+  isLoading = false;
   constructor(
     private httpService: CategoryService,
-    private searchService: searchService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private loaderService: LoaderService
   ) {}
 
   communityID: number = 0;
   ngOnInit(): void {
-    // this.getCategoriesInCommunity();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.loadCategories();
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
-      // Now you have access to communityCategoryMappingID
-      // Use it as needed in your component logic.
     });
   }
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
@@ -49,7 +52,7 @@ export class CommunityPageComponent {
         .getPagedCategories(this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categoriesList = data.categories;
-          this.totalPages = Math.ceil(data.totalCount / this.pageSize); // Calculate totalPages
+          this.totalPages = Math.ceil(data.totalCount / this.pageSize);
           this.updatePageNumbers();
         });
     }
@@ -105,14 +108,6 @@ export class CommunityPageComponent {
 
   modalRef?: BsModalRef;
 
-  openSearchModal(template: TemplateRef<void>) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  }
-
-  closeModal() {
-    this.modalRef?.hide();
-  }
-
   categories: {
     communityCategoryMappingID: number;
     communityID: number;
@@ -125,23 +120,7 @@ export class CommunityPageComponent {
     threadCount: number;
   }[] = [];
 
-  threads: {
-    threadID: number;
-    communityCategoryMappingID: number;
-    content: string;
-    threadStatusID: number;
-    isAnswered: boolean;
-    isDeleted: boolean;
-    createdBy: string;
-    createdAt: string;
-    modifiedBy: Date;
-    modifiedAt: Date;
-    communityCategoryMapping: any;
-    threadStatus: any;
-    createdByUser: any;
-    modifiedByUser: any;
-    threadVotes: any;
-  }[] = [];
+  threads: Thread[] = [];
 
   id: number = 1;
   getCategoriesInCommunity() {
