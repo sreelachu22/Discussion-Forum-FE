@@ -99,7 +99,7 @@
 .navbar {
   align-items: center;
   border-radius: 5px;
-  /* height: 100px; */
+  height: 100px;
 }
 
 .user_search {
