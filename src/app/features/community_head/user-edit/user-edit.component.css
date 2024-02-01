@@ -1,0 +1,89 @@
+/* Add your global styling here */
+
+.container {
+  width: 95%;
+  margin: 20px auto 0;
+  padding: 20px;
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.useredit_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  padding: 30px 10px 30px 10px;
+}
+
+h1 {
+  margin-left: 25px;
+  color: #ffffff;
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.user-details {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(211, 211, 211, 0.7);
+}
+
+.detail-group {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.detail {
+  margin-bottom: 10px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+p {
+  margin: 0;
+}
+
+.user-role {
+  margin-top: 30px;
+  margin-left: 10px;
+  padding-bottom: 20px;
+}
+
+/* Add your global styling here */
+.select-container {
+  width: 25%;
+  position: relative;
+}
+
+select {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  appearance: none; /* Remove default arrow in some browsers */
+  cursor: pointer;
+}
+
+/* Style the arrow icon */
+.select-arrow {
+  position: absolute;
+  top: 70%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Optional: Style for selected option */
+select:focus {
+  outline: none;
+  border-color: #5b9dd9; /* Add a focus border color */
+}

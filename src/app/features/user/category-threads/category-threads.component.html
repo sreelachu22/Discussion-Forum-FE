@@ -1,5 +1,12 @@
 <!-- category-threads.component.html -->
 <div class="container">
+  <!-- bread crumbs -->
+  <div>
+    <a href="/home_page" class="breadcrumb_navigation">Home</a>
+    <span> > </span>
+    <a href="/community_page" class="breadcrumb_navigation">Community</a>
+  </div>
+  <!-- nav bar -->
   <div class="navbar navbar-dark bg-secondary categorythreads_header">
     <div class="navbar_container">
       <h1 class="header_text">{{ CategoryThreads.categoryName }}</h1>
@@ -16,6 +23,7 @@
     </div>
   </div>
 
+  <!-- post displayed here -->
   <app-list
     *ngFor="let thread of CategoryThreads.threads"
     [createdBy]="thread.createdBy"
@@ -26,6 +34,8 @@
     [tags]="thread.tagNames.join(', ')"
     [isAnswered]="thread.isAnswered"
   ></app-list>
+
+  <!-- pagination ui -->
 
   <div class="pagination">
     <button

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
+// interface for response data
 interface ThreadResponse {
   threads: Thread[];
   totalCount: number;
@@ -31,11 +32,12 @@ interface Thread {
   styleUrls: ['./category-threads.component.css'],
 })
 export class CategoryThreadsComponent implements OnInit {
+  // templete variables
   CategoryThreads!: ThreadResponse;
   pages: number[] = [];
   communityCategoryMappingID!: number;
   currentPage: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 8;
   totalPages: number = 0;
 
   constructor(
@@ -44,6 +46,7 @@ export class CategoryThreadsComponent implements OnInit {
     private router: Router
   ) {}
 
+  // ng init with method to get url params and display content based on it
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityCategoryMappingID = params['communityCategoryMappingID'];
@@ -56,7 +59,7 @@ export class CategoryThreadsComponent implements OnInit {
     this.threadService
       .getThread(
         this.communityCategoryMappingID,
-        this.currentPage, // Use currentPage for consistency
+        this.currentPage,
         this.pageSize
       )
       .subscribe({
@@ -73,6 +76,7 @@ export class CategoryThreadsComponent implements OnInit {
       });
   }
 
+  // paginations logics
   updatePageNumbers() {
     const pagesToShow = Math.min(this.totalPages, 3);
     const startPage = Math.max(1, this.currentPage - 1);
@@ -105,10 +109,12 @@ export class CategoryThreadsComponent implements OnInit {
     }
   }
 
+  // user friendly data format
   formatDate(date: string | null): string {
     return date ? new Date(date).toLocaleDateString() : 'N/A';
   }
 
+  // create a post
   createPost() {
     this.router.navigate(['category_threads/create_posts'], {});
   }

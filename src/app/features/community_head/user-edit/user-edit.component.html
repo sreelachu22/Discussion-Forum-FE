@@ -1,0 +1,86 @@
+<div class="container" *ngIf="user">
+  <!-- breadcrumb navigation-->
+  <div>
+    <a href="/home_page" class="breadcrumb_navigation">Home</a>
+    <span> > </span>
+    <a href="/community_management_dashboard" class="breadcrumb_navigation"
+      >Community Management</a
+    >
+    <span> > </span>
+    <a
+      href="/community-management/user-management"
+      class="breadcrumb_navigation"
+      >User Management</a
+    >
+  </div>
+  <br />
+
+  <!-- nav bar -->
+  <div class="navbar navbar-dark bg-secondary useredit_header">
+    <div class="navbar_container">
+      <h1 class="header_text">User Details</h1>
+    </div>
+    <div class="navbar_buttons">
+      <app-button
+        buttonClass="btn btn-primary"
+        buttonName="Change User Role"
+        (buttonClick)="editUserRole()"
+        *ngIf="!userRoleToggle; else saveChangesButton"
+      ></app-button>
+      <ng-template #saveChangesButton>
+        <app-button
+          buttonClass="btn btn-success"
+          buttonName="Save Change"
+          (buttonClick)="saveChanges()"
+        ></app-button>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- user details displayed here -->
+  <div class="user-details">
+    <div class="detail-group">
+      <div class="detail">
+        <label>Email:</label>
+        <p>{{ user.email }}</p>
+      </div>
+      <div class="detail">
+        <label>Name:</label>
+        <p>{{ user.name }}</p>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail">
+        <label>Designation:</label>
+        <p>{{ user.designationName }}</p>
+      </div>
+      <div class="detail">
+        <label>Department ID:</label>
+        <p>{{ user.departmentName }}</p>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <div class="detail">
+        <label>Score:</label>
+        <p>{{ user.score }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- user role changes here when edit button is clicked -->
+  <div class="user-role" *ngIf="!userRoleToggle; else userRoleSelecter">
+    <p><b>Role: </b>{{ user.roleName }}</p>
+  </div>
+  <ng-template #userRoleSelecter>
+    <div class="select-container">
+      <select [(ngModel)]="selectedRoleID">
+        <option *ngFor="let role of userRoles" [value]="role.roleID">
+          {{ role.roleName }}
+        </option>
+      </select>
+      <div class="select-arrow">&#9660;</div>
+    </div>
+  </ng-template>
+</div>

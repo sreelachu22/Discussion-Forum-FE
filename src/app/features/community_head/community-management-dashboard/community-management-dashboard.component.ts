@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class CommunityManagementDashboardComponent {
   constructor(private router: Router) {}
 
+  // array for card data in ui
+
   cardTitles: { title: string; path: string }[] = [
     { title: 'User Management', path: 'user-management' },
     { title: 'Category Management', path: 'category-management' },
@@ -17,10 +19,7 @@ export class CommunityManagementDashboardComponent {
   ];
 
   navigateToCard(path: string) {
-    // Define your route based on the card title or any other logic
     const route = `community-management/${path}`;
-
-    // Use the router to navigate
     this.router.navigate([route]);
   }
 }
