@@ -38,10 +38,11 @@ export class GuidelinesComponent {
     ];
   }
 
+  // Open the modal when the view is initialized
   ngAfterViewInit(): void { 
     this.modalRef = this.modalService.show(this.template, { class: 'modal-lg' }); // Use 'modal-lg' for a large modal
   }
-
+  // Close the modal and navigate to the home route
   close() {
     this.modalRef?.hide();
     this.router.navigate([''], {

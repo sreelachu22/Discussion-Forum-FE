@@ -48,7 +48,7 @@ import { LeaderboardComponent } from './features/leaderboard/leaderboard.compone
 import { LoaderComponent } from './features/loader/loader.component';
 import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { LoaderService } from './service/HttpServices/loader.service';
-import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +70,6 @@ import { SuperCategoryManagementComponent } from './features/super_admin/super-c
     UserNoticesComponent,
     SidenavigationComponent,
     SidenavCustomComponent,
-    SuperCategoryManagementComponent,
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,

@@ -21,10 +21,12 @@ export class NoticesComponent {
 
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
 
+  // variable to hold a reference to the modal
   modalRef?: BsModalRef;
 
+  // Configuration object for the ngx-bootstrap datepicker
   bsDatepickerConfig: any = {
-    dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS',
+    dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS', // Specifies the date input format for the datepicker
   };
 
   constructor(
@@ -51,65 +53,16 @@ export class NoticesComponent {
     );
   }
 
-  // addNotice() {
-
-  //   // Ensure all required fields are provided
-  //   if (this.newNotice.title && this.newNotice.content && this.newNotice.expiresAt) {
-  //     this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
-  //       (response) => {
-  //         console.log('POST Request Successful:', response);
-  //         this.getValues();
-  //         this.newNotice = {}; // Clear the form
-  //       },
-  //       (error) => {
-  //         console.error('POST Request Failed:', error);
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Please provide all required fields.');
-  //     // You might want to display an error message to the user
-  //   }
-  // }
-
-  //   addNotice() {
-
-  //     // dummy for testing purposes
-
-  //     const newNotice = {
-  //       communityID: 1,
-  //       title: 'This is a notice',
-  //       content: 'Quick Announcement',
-  //       expiresAt: '2024-02-04T12:33:23.713', // replace with an appropriate expiration date
-  //       createdBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177',
-  //       modifiedBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177'
-  //     };
-
-  //     // Ensure all required fields are provided
-  //     if (newNotice.title && newNotice.content && newNotice.expiresAt) {
-  //       this.noticesService.addData(this.apiUrl, newNotice).subscribe(
-  //         (response) => {
-  //           console.log('POST Request Successful:', response);
-  //           this.getValues();
-  //         },
-  //         (error) => {
-  //           console.error('POST Request Failed:', error);
-  //         }
-  //       );
-  //     } else {
-  //       console.error('Please provide all required fields.');
-  //       // You might want to display an error message to the user
-  //     }
-  // }
-
+  //pass the reference to the template we use for the modal
   openModal(template: TemplateRef<any>) {
-    // Reset selectedNotice for creating a new notice
+    // Reset newNotice for creating a new notice
     this.newNotice = {};
     this.modalRef = this.modalService.show(template);
+    // Display the modal using the provided template
   }
 
   openUpdateModal(template: TemplateRef<any>, notice: any) {
     // Set selectedNotice with existing data for updating
-    // Make sure 'notice' has the necessary properties
     this.selectedNotice = { ...notice }; // Use spread operator to create a copy
     console.log(this.selectedNotice);
     this.modalRef = this.modalService.show(template);
@@ -143,7 +96,6 @@ export class NoticesComponent {
       this.modalRef?.hide();
     } else {
       console.error('Please provide all required fields.');
-      // You might want to display an error message to the user
     }
   }
 
@@ -154,41 +106,6 @@ export class NoticesComponent {
       : null;
   }
 
-  // updateNotice(notice: any) {
-
-  // // const updatedNotice = {
-  //   communityID: notice.communityID,
-  //   title: notice.title,
-  //   content: notice.content,
-  //   expiresAt: notice.expiresAt,
-  //   createdBy: notice.createdBy,
-  //   modifiedBy: notice.modifiedBy
-  //    // };
-
-  // dummy for testing purposes
-  // const noticeID = 3;
-  // const updatedNotice = {
-  //   communityID: 1,
-  //   title: 'Sample Title',
-  //   content: 'This is a sample notice content.',
-  //   expiresAt: '2024-02-04T12:33:23.713', // replace with an appropriate expiration date
-  //   createdBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177',
-  //   modifiedBy: 'c9b6c549-9e79-4ad4-99cd-28bab5927177'
-  // };
-
-  ////notice.noticeID
-
-  //   this.noticesService.updateData(this.apiUrl, noticeID, updatedNotice).subscribe(
-  //     (response) => {
-  //       console.log('PUT Request Successful:', response);
-  //       this.getValues();
-  //       this.selectedNotice = {};
-  //     },
-  //     (error) => {
-  //       console.error('PUT Request Failed:', error);
-  //     }
-  //   );
-  // }
 
   updateNotice() {
     // Ensure all required fields are provided for update
@@ -226,7 +143,6 @@ export class NoticesComponent {
         );
     } else {
       console.error('Please provide all required fields.');
-      // You might want to display an error message to the user
     }
   }
 
@@ -256,28 +172,4 @@ export class NoticesComponent {
     this.modalRef?.hide();
   }
 
-  // deleteNotice(noticeId: number) {
-  //   this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
-  //     (response) => {
-  //       console.log('DELETE Request Successful:', response);
-  //       this.getValues();
-  //     },
-  //     (error) => {
-  //       console.error('DELETE Request Failed:', error);
-  //     }
-  //   );
-  // }
-
-  // private formatDate(dateString: string): string {
-  //   const options: Intl.DateTimeFormatOptions = {
-  //     year: 'numeric',
-  //     month: 'long',
-  //     day: 'numeric',
-  //     hour: 'numeric',
-  //     minute: 'numeric',
-  //     second: 'numeric'
-  //   };
-
-  //   return new Date(dateString).toLocaleDateString(undefined, options);
-  // }
 }
