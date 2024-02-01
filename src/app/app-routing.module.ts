@@ -14,6 +14,7 @@ import { GuidelinesComponent } from './features/guidelines/guidelines.component'
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { SearchResultComponent } from './features/user/search-result/search-result.component';
 import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
+import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     component: UserNoticesComponent,
     path: 'user-notices',
+  },
+  {
+    component: LeaderboardComponent,
+    path: 'leaderboards',
   },
   {
     component: GuidelinesComponent,

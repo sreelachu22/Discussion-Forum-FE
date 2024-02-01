@@ -27,10 +27,8 @@ import { ButtonToggleComponent } from './components/ui/button-toggle/button-togg
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
-
 import { computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,7 +44,7 @@ import { SearchResultComponent } from './features/user/search-result/search-resu
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
-import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
