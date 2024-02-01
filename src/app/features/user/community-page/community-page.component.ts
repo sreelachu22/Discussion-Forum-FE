@@ -2,7 +2,9 @@ import { Component, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
+import { Thread } from 'src/app/service/HttpServices/thread.service';
 
 @Component({
   selector: 'app-community-page',
@@ -10,22 +12,23 @@ import { searchService } from 'src/app/service/HttpServices/search.service';
   styleUrls: ['./community-page.component.css'],
 })
 export class CommunityPageComponent {
+  isLoading = false;
   constructor(
     private httpService: CategoryService,
-    private searchService: searchService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private loaderService: LoaderService
   ) {}
 
   communityID: number = 0;
   ngOnInit(): void {
-    // this.getCategoriesInCommunity();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.loadCategories();
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
-      // Now you have access to communityCategoryMappingID
-      // Use it as needed in your component logic.
     });
   }
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
@@ -37,7 +40,9 @@ export class CommunityPageComponent {
   currentPage: number = 1;
   pageCount: number = 1;
 
-  isResultFound: boolean = false;
+  pages: number[] = [];
+  pageSize: number = 6;
+  totalPages: number = 0;
 
   getSingleCategory() {
     if (this.searchText == '') {
@@ -47,8 +52,27 @@ export class CommunityPageComponent {
         .getPagedCategories(this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categoriesList = data.categories;
-          this.pageCount = data.totalPages;
+          this.totalPages = Math.ceil(data.totalCount / this.pageSize);
+          this.updatePageNumbers();
         });
+    }
+  }
+
+  updatePageNumbers() {
+    const pagesToShow = Math.min(this.totalPages, 3);
+    const startPage = Math.max(1, this.currentPage - 1);
+    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
+
+    this.pages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadCategories();
     }
   }
 
@@ -84,15 +108,6 @@ export class CommunityPageComponent {
 
   modalRef?: BsModalRef;
 
-  openSearchModal(template: TemplateRef<void>) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  }
-
-  closeModal() {
-    this.modalRef?.hide();
-    this.isResultFound = false;
-  }
-
   categories: {
     communityCategoryMappingID: number;
     communityID: number;
@@ -105,23 +120,7 @@ export class CommunityPageComponent {
     threadCount: number;
   }[] = [];
 
-  threads: {
-    threadID: number;
-    communityCategoryMappingID: number;
-    content: string;
-    threadStatusID: number;
-    isAnswered: boolean;
-    isDeleted: boolean;
-    createdBy: string;
-    createdAt: string;
-    modifiedBy: Date;
-    modifiedAt: Date;
-    communityCategoryMapping: any;
-    threadStatus: any;
-    createdByUser: any;
-    modifiedByUser: any;
-    threadVotes: any;
-  }[] = [];
+  threads: Thread[] = [];
 
   id: number = 1;
   getCategoriesInCommunity() {
@@ -139,25 +138,9 @@ export class CommunityPageComponent {
     });
   }
 
-  searchResult(template: TemplateRef<void>) {
-    this.searchService.searchResult(this.searchTerm).subscribe({
-      next: (data: any) => {
-        this.threads = data;
-        this.isResultFound = true;
-        if (this.isResultFound && data.length > 0) {
-          this.openSearchModal(template);
-        } else if (this.isResultFound && data.length <= 0) {
-          alert('No search result found');
-        }
-        console.log(this.threads);
-        console.log(this.isResultFound);
-      },
-      error: (error: Error) => {
-        alert('Error has occured, ' + error.message);
-      },
-      complete: () => {
-        console.log('Completed');
-      },
+  searchResult(searchTerm: string) {
+    this.router.navigate(['/search-result'], {
+      queryParams: { searchTerm: this.searchTerm },
     });
   }
 

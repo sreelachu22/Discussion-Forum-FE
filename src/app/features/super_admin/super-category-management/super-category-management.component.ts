@@ -1,18 +1,19 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { CategoryService } from 'src/app/service/HttpServices/category.service';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { MatIcon } from '@angular/material/icon';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
+import { CategoryService } from 'src/app/service/HttpServices/category.service';
+
 @Component({
-  selector: 'app-category-management',
-  templateUrl: './category-management.component.html',
-  styleUrls: ['./category-management.component.css'],
+  selector: 'app-super-category-management',
+  templateUrl: './super-category-management.component.html',
+  styleUrls: ['./super-category-management.component.css']
 })
-export class CategoryManagementComponent implements OnInit {
+export class SuperCategoryManagementComponent implements OnInit {
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
   sortType: string = 'communityCategoryName';
   title: string = 'categoryPage';
-  // searchText: string = '';
+  searchText: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
@@ -23,27 +24,28 @@ export class CategoryManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
+    // this.getCategoriesInCommunity();
   }
 
-  // getSingleCategory() {
-  //   if (this.searchText == '') {
-  //     this.loadCategories();
-  //   } else {
-  //     this.httpService
-  //       .getPagedCategories(this.currentPage, this.searchText)
-  //       .subscribe((data) => {
-  //         this.categoriesList = data.categories;
-  //         this.pageCount = data.totalPages;
-  //       });
-  //   }
-  // }
+  getSingleCategory() {
+    if (this.searchText == '') {
+      this.loadCategories();
+    } else {
+      this.httpService
+        .getPagedCategories(this.currentPage, this.searchText)
+        .subscribe((data) => {
+          this.categoriesList = data.categories;
+          this.pageCount = data.totalPages;
+        });
+    }
+  }
 
-  //vategories pagination api
   loadCategories() {
     this.httpService
       .getPagedCategories(this.currentPage, this.sortType)
       .subscribe((data) => {
         this.categoriesList = data.categories;
+
         this.pageCount = data.totalPages;
         console.log(this.pageCount);
       });
@@ -63,16 +65,17 @@ export class CategoryManagementComponent implements OnInit {
     }
   }
 
-  //on changing sort option the categories must load based on the filtering
   onSortSelectionChange(selectedValue: string) {
     this.sortType = selectedValue;
     this.loadCategories();
   }
 
-  // BsModalRef stands for Bootstrap Modal Reference.
+  //---------------------------------------------
+
+  community_name: string = 'Experion Discussion';
+
   modalRef?: BsModalRef;
 
-  //methods for open modal for update,delete,create
   openDeleteModal(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
@@ -81,16 +84,15 @@ export class CategoryManagementComponent implements OnInit {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
   }
 
-  openUpdateModal(template: TemplateRef<void>) {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  }
-
   communityCategoryMappingID: number = 0;
   oldDescription: string = '';
   newDescription: string = '';
   modifiedBy: string = '';
 
-  //update category mapping description
+  openUpdateModal(template: TemplateRef<void>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
   updateCategoryDescription(id: number) {
     this.httpService
       .updateCategoryDescription(id, this.newDescription, this.modifiedBy)
@@ -101,15 +103,17 @@ export class CategoryManagementComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Error updating category:', error);
+          // Handle error as needed
         },
       });
   }
 
-  //after getting confirmation for delete, delete api calls
+  categoryID = 4;
   confirm(categoryID: number): void {
     this.httpService.deleteCategoryMapping(categoryID).subscribe({
       next: (data: any) => {
         alert('deleted');
+        console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
@@ -118,16 +122,13 @@ export class CategoryManagementComponent implements OnInit {
         console.log('Completed');
       },
     });
-    //hide modal after deleting
     this.modalRef?.hide();
   }
 
-  //close the modal
   decline(): void {
     this.modalRef?.hide();
   }
 
-  //To find in which table row is hovered
   isRowHovered: number | null = null;
   onMouseEnter(index: number) {
     this.isRowHovered = index;
@@ -147,13 +148,9 @@ export class CategoryManagementComponent implements OnInit {
     modifiedAt: Date;
   }[] = [];
 
-  //icons name for passing to icon component
-  faEdit = faEdit;
-  faDelete = faTrash;
 
   id: number = 1;
 
-  //get all categories inside a community
   getCategoriesInCommunity() {
     this.httpService.getCategories(this.id).subscribe({
       next: (data: any) => {

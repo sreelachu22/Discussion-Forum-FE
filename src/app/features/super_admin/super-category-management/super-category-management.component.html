@@ -1,13 +1,9 @@
-<div class="container">
+<div class="container1">
   <div class="top_nav">
     <div>
-      <a href="/community_management_dashboard" class="breadcrumb_navigation"
-        >Community Management</a
-      ><span> > </span
+      <a href="/community_page">Community</a><span> > </span
       ><span
-        ><a
-          href="/community_management_dashboard/:category-management"
-          class="breadcrumb_navigation"
+        ><a href="/community-management/:category-management"
           >Category Management</a
         ></span
       >
@@ -16,6 +12,18 @@
   <br />
   <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Manage Categories</p>
+    <!-- <form class="form-inline"></form>
+    <div class="category_search">
+      <input
+        type="text"
+        placeholder="Search"
+        class="search_input"
+        [(ngModel)]="searchText"
+      />
+      <button type="submit" class="search_button" (click)="getSingleCategory()">
+        Search
+      </button>
+    </div> -->
   </nav>
   <div class="buttons_arrangement">
     <div class="button_toggle">
@@ -68,10 +76,7 @@
             placement="top"
             *ngIf="isRowHovered === i"
           >
-            <app-icon
-              [iconName]="faDelete"
-              (click)="openDeleteModal(delete)"
-            ></app-icon>
+            <mat-icon (click)="openDeleteModal(delete)"> home </mat-icon>
           </span>
 
           <ng-template #delete>
@@ -96,11 +101,9 @@
             placement="top"
             *ngIf="isRowHovered === i"
           >
-            <app-icon
-              [iconName]="faEdit"
-              class="edit_icon"
-              (click)="openUpdateModal(update)"
-            ></app-icon>
+            <mat-icon class="edit_icon" (click)="openUpdateModal(update)"
+              >edit</mat-icon
+            >
           </span>
 
           <ng-template #update>

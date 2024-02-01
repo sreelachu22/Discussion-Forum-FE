@@ -26,35 +26,16 @@
         placeholder="Search"
         class="search_input"
         [(ngModel)]="searchTerm"
+        (keyup.enter)="searchResult(searchTerm)"
       />
       <button
         type="submit"
         class="search_button"
-        (click)="searchResult(result)"
+        (click)="searchResult(searchTerm)"
       >
         Search
       </button>
     </div>
-
-    <ng-template #result>
-      <div class="modal-dialog result_modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title">Search Results</h2>
-            <button type="button" class="close" (click)="closeModal()">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <ul>
-              <li *ngFor="let thread of threads">
-                {{ thread.content }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </ng-template>
   </nav>
   <br />
   <div class="page_body">

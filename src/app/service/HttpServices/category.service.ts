@@ -11,9 +11,9 @@ export interface AllCategories {
     description: string;
     isDeleted: boolean;
     createdBy: string | null;
-    createdAt: string | null;
+    createdAt: Date;
     modifiedBy: string | null;
-    modifiedAt: string | null;
+    modifiedAt: Date | null;
     threadCount: number | null;
   }[];
   totalCount: number;
@@ -26,14 +26,17 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   BASE_URL = 'https://localhost:7160/api/CommunityCategoryMapping';
+
+  //get paginated categories
   getPagedCategories(
     page: number,
     sortType: string
   ): Observable<AllCategories> {
-    const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=9`;
+    const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=6`;
     console.log(this.http.get(url));
     return this.http.get<AllCategories>(url);
   }
+
   getACategory(page: number, name: string): Observable<AllCategories> {
     const startIndex = page;
     const userName = name;
@@ -41,14 +44,11 @@ export class CategoryService {
     return this.http.get<AllCategories>(url);
   }
 
+  //get categories inside a community
   getCategories(id: number): Observable<any> {
     return this.http.get(
       `https://localhost:7160/api/CommunityCategoryMapping/InCommunity/${id}`
     );
-  }
-
-  getCommunities(): Observable<any> {
-    return this.http.get(`https://localhost:7160/api/Community`);
   }
 
   getCategoriesNotInCommunity(id: number): Observable<any> {

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryThreadsComponent } from './features/user/category-threads/category-threads.component';
-import { CommunityPageComponent } from './features/community-page/community-page.component';
+import { CommunityPageComponent } from './features/user/community-page/community-page.component';
 import { CommunityManagementDashboardComponent } from './features/community_head/community-management-dashboard/community-management-dashboard.component';
-import { UserManagementComponent } from './features/user-management/user-management.component';
+import { UserManagementComponent } from './features/community_head/user-management/user-management.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
@@ -12,6 +12,10 @@ import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
+import { SearchResultComponent } from './features/user/search-result/search-result.component';
+import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
+import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
+import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
 
 const routes: Routes = [
   {
@@ -30,6 +34,7 @@ const routes: Routes = [
     component: CommunityPageComponent,
     path: 'community_page',
   },
+  { component: SearchResultComponent, path: 'search-result' },
   {
     component: CategoryThreadsComponent,
     path: 'category_threads',
@@ -39,20 +44,43 @@ const routes: Routes = [
     path: 'community_management_dashboard',
   },
   {
-    component: CategoryManagementComponent,
-    path: 'community-management/category-management',
+    path: 'community-management',
+    children: [
+      {
+        path: 'category-management',
+        component: CategoryManagementComponent,
+      },
+    ],
   },
   {
-    component: UserManagementComponent,
-    path: 'community-management/user-management',
+    path: 'community-management',
+    children: [
+      {
+        path: 'user-management',
+        component: UserManagementComponent,
+      },
+      {
+        path: 'user-management/user-edit/:userID',
+        component: UserEditComponent,
+      },
+    ],
   },
   {
-    component: NoticesComponent,
-    path: 'community-management/notice-management',
+    path: 'community-management',
+    children: [
+      {
+        path: 'notice-management',
+        component: NoticesComponent,
+      },
+    ],
   },
   {
     component: UserNoticesComponent,
     path: 'user-notices',
+  },
+  {
+    component: LeaderboardComponent,
+    path: 'leaderboards',
   },
   {
     component: GuidelinesComponent,
@@ -65,6 +93,10 @@ const routes: Routes = [
   {
     component: HomePageComponent,
     path: '',
+  },
+  {
+    component: SuperCategoryManagementComponent,
+    path:'super-catMgmt'
   },
 ];
 

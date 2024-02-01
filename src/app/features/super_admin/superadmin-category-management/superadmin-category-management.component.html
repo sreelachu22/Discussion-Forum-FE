@@ -70,6 +70,7 @@
       (mouseout)="setHoveredCategoryId(null)"
     >
       <div class="card-body" (click)="openUpdateModal(update)">
+        <!-- update modal -->
         <ng-template #update>
           <div class="modal-header">
             <h4 class="modal-title">Edit Category</h4>
@@ -127,7 +128,9 @@
             </form>
           </div>
         </ng-template>
+        <!-- end of update modal -->
 
+        <!-- delete modal -->
         <ng-template #delete>
           <div class="modal-body text-center">
             <p>Do you want to confirm?</p>
@@ -143,6 +146,7 @@
             </button>
           </div>
         </ng-template>
+        <!-- end of delete modal -->
 
         <p class="card-text">{{ category.communityCategoryName }}</p>
         <span
@@ -152,8 +156,6 @@
           }"
           *ngIf="isCategoryOrIconsHovered(category.communityCategoryID)"
         >
-          <!-- <app-icon [iconName]="faEdit"></app-icon> -->
-          <!-- <app-icon [iconName]="faDelete"></app-icon> -->
         </span>
       </div>
     </div>

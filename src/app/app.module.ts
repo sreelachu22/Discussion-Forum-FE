@@ -9,10 +9,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CommunityPageComponent } from './features/community-page/community-page.component';
+import { CommunityPageComponent } from './features/user/community-page/community-page.component';
 import { CategoryService } from './service/HttpServices/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -22,15 +22,13 @@ import { CategoryThreadsComponent } from './features/user/category-threads/categ
 import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
-import { UserManagementComponent } from './features/user-management/user-management.component';
+import { UserManagementComponent } from './features/community_head/user-management/user-management.component';
 import { ButtonToggleComponent } from './components/ui/button-toggle/button-toggle.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
-import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
+import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
-
 import { computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,10 +40,15 @@ import { SidenavCustomComponent } from './components/layout/sidenavigation/siden
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
+import { SearchResultComponent } from './features/user/search-result/search-result.component';
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
-
+import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
+import { LoaderComponent } from './features/loader/loader.component';
+import { LoaderInterceptor } from './interceptor/loader.interceptor';
+import { LoaderService } from './service/HttpServices/loader.service';
+import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,11 +70,15 @@ import { SuccessPopupComponent } from './components/ui/success-popup/success-pop
     UserNoticesComponent,
     SidenavigationComponent,
     SidenavCustomComponent,
+    SuperCategoryManagementComponent,
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
+    SearchResultComponent,
     CreatePostComponent,
     SuccessPopupComponent,
+    LeaderboardComponent,
+    LoaderComponent,
   ],
 
   imports: [
@@ -92,10 +99,17 @@ import { SuccessPopupComponent } from './components/ui/success-popup/success-pop
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    EditorModule
-
+    EditorModule,
   ],
-  providers: [CategoryService],
+  providers: [
+    CategoryService,
+    LoaderService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

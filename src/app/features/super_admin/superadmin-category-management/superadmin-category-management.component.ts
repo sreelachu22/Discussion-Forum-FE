@@ -2,7 +2,10 @@ import { Component, TemplateRef } from '@angular/core';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
-import { superAdminCategoryService } from 'src/app/service/HttpServices/superadmin-category.service';
+import {
+  Category,
+  superAdminCategoryService,
+} from 'src/app/service/HttpServices/superadmin-category.service';
 
 @Component({
   selector: 'app-superadmin-category-management',
@@ -24,59 +27,15 @@ export class SuperadminCategoryManagementComponent {
 
   ngOnInit(): void {
     this.getCategoriesInCommunity();
-    // this.loadCategories();
-    // this.getCategoriesInCommunity();
   }
-
-  // getSingleCategory() {
-  //   if (this.searchText == '') {
-  //     this.loadCategories();
-  //   } else {
-  //     this.httpService
-  //       .getPagedCategories(this.currentPage, this.searchText)
-  //       .subscribe((data) => {
-  //         this.categoriesList = data.categories;
-  //         this.pageCount = data.totalPages;
-  //       });
-  //   }
-  // }
-
-  // loadCategories() {
-  //   this.httpService
-  //     .getPagedCategories(this.currentPage, this.sortType)
-  //     .subscribe((data) => {
-  //       this.categoriesList = data.categories;
-
-  //       this.pageCount = data.totalPages;
-  //       console.log(this.pageCount);
-  //     });
-  // }
-
-  // nextPage() {
-  //   if (this.currentPage <= this.pageCount - 1) {
-  //     this.currentPage++;
-  //     this.loadCategories();
-  //   }
-  // }
-
-  // prevPage() {
-  //   if (this.currentPage > 1) {
-  //     this.currentPage--;
-  //     this.loadCategories();
-  //   }
-  // }
-
-  // onSortSelectionChange(selectedValue: string) {
-  //   this.sortType = selectedValue;
-  //   this.loadCategories();
-  // }
-
-  //---------------------------------------------
 
   modalRef?: BsModalRef;
 
+  //delete confirmation modal is inside another modal.
+  //this modal reference is for delete confirmation modal
   bsmodalRef?: BsModalRef;
 
+  //open modal
   openDeleteCategoryModal(template: TemplateRef<void>) {
     console.log('modal called');
     this.bsmodalRef = this.modalService.show(template, { class: 'modal-sm' });
@@ -86,10 +45,6 @@ export class SuperadminCategoryManagementComponent {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
-  communityCategoryID: number = 0;
-  oldCategoryName: string = '';
-  newCategoryName: string = '';
-
   openUpdateModal(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
@@ -98,12 +53,18 @@ export class SuperadminCategoryManagementComponent {
     this.modalRef?.hide();
   }
 
-  categories: {
-    communityCategoryID: number;
-    communityCategoryName: string;
-    isDeleted: boolean;
-  }[] = [];
+  //close delete confirmation modal
+  decline(): void {
+    this.bsmodalRef?.hide();
+  }
 
+  communityCategoryID: number = 0;
+  oldCategoryName: string = '';
+  newCategoryName: string = '';
+
+  categories: Category[] = [];
+
+  //method for finding the hovered category
   hoveredCategoryId: number | null = null;
 
   setHoveredCategoryId(categoryId: number | null) {
@@ -114,6 +75,7 @@ export class SuperadminCategoryManagementComponent {
     return this.hoveredCategoryId === categoryId;
   }
 
+  //icons name to pass to icon component
   faEdit = faEdit;
   faDelete = faTrash;
 
@@ -123,7 +85,6 @@ export class SuperadminCategoryManagementComponent {
     this.httpService.getCategories().subscribe({
       next: (data: any) => {
         this.categories = data;
-        // console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
@@ -137,7 +98,6 @@ export class SuperadminCategoryManagementComponent {
   createCategory() {
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
-        // alert('Category created');
         this.modalRef?.hide();
       },
       error: (error: Error) => {
@@ -157,7 +117,6 @@ export class SuperadminCategoryManagementComponent {
       },
       error: (error: any) => {
         console.error('Error updating category:', error);
-        // Handle error as needed
       },
     });
   }
@@ -165,9 +124,7 @@ export class SuperadminCategoryManagementComponent {
   confirm(categoryID: number): void {
     this.httpService.deleteCategory(categoryID).subscribe({
       next: (data: any) => {
-        // alert('deleted ');
         this.bsmodalRef?.hide();
-        // console.log('deleted ' + data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
@@ -177,9 +134,5 @@ export class SuperadminCategoryManagementComponent {
       },
     });
     this.modalRef?.hide();
-  }
-
-  decline(): void {
-    this.bsmodalRef?.hide();
   }
 }
