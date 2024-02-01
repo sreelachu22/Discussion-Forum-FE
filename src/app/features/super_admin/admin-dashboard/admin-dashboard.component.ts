@@ -16,8 +16,6 @@ export class AdminDashboardComponent {
   navigateToCard(path: string) {
     // Define your route based on the card title or any other logic
     const route = `admin_dashboard_page/${path}`;
-
-    // Use the router to navigate
     this.router.navigate([route]);
   }
 }

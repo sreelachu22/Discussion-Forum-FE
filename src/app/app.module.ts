@@ -9,7 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CommunityPageComponent } from './features/user/community-page/community-page.component';
@@ -27,10 +27,8 @@ import { ButtonToggleComponent } from './components/ui/button-toggle/button-togg
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
-
 import { computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,8 +44,10 @@ import { SearchResultComponent } from './features/user/search-result/search-resu
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
-import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-
+import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
+import { LoaderComponent } from './features/loader/loader.component';
+import { LoaderInterceptor } from './interceptor/loader.interceptor';
+import { LoaderService } from './service/HttpServices/loader.service';
 import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
 @NgModule({
   declarations: [
@@ -78,6 +78,7 @@ import { SuperCategoryManagementComponent } from './features/super_admin/super-c
     CreatePostComponent,
     SuccessPopupComponent,
     LeaderboardComponent,
+    LoaderComponent,
   ],
 
   imports: [
@@ -100,7 +101,15 @@ import { SuperCategoryManagementComponent } from './features/super_admin/super-c
     MatListModule,
     EditorModule,
   ],
-  providers: [CategoryService],
+  providers: [
+    CategoryService,
+    LoaderService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

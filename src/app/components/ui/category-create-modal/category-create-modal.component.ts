@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
+import { Category } from 'src/app/service/HttpServices/superadmin-category.service';
 
 @Component({
   selector: 'app-category-create-modal',
@@ -9,11 +10,7 @@ import { CategoryService } from 'src/app/service/HttpServices/category.service';
 })
 export class CategoryCreateModalComponent implements OnInit {
   id: number = 1;
-  categoriesNotInCommunity: {
-    communityCategoryID: number;
-    communityCategoryName: string;
-  }[] = [];
-
+  categoriesNotInCommunity: Category[] = [];
   selectedCommunityCategory: number = 0;
   description: string = '';
   createdBy: string = '';
@@ -26,14 +23,12 @@ export class CategoryCreateModalComponent implements OnInit {
 
   ngOnInit() {
     this.getCategoriesNotinCommunity();
-    // Fetch categoriesNotInCommunity from your service or provide it as an input
   }
 
   getCategoriesNotinCommunity() {
     this.httpService.getCategoriesNotInCommunity(this.id).subscribe({
       next: (data: any) => {
         this.categoriesNotInCommunity = data;
-        console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
@@ -44,32 +39,11 @@ export class CategoryCreateModalComponent implements OnInit {
     });
   }
 
-  @Output() categoryCreated: EventEmitter<any> = new EventEmitter<any>();
+  @Output() categoryCreated: EventEmitter<Category> =
+    new EventEmitter<Category>();
 
   createCategory() {
     const id = 1;
-    // console.log('function called');
-    // if (this.selectedCommunityCategory == -1) {
-    //   const community = {
-    //     communityCategoryName: this.newCategoryName,
-    //   };
-
-    //   this.httpService
-    //     .createCategory(community.communityCategoryName)
-    //     .subscribe({
-    //       next: (data: any) => {
-    //         console.log('Category created successfully:', data);
-    //         this.selectedCommunityCategory = data.communityCategoryID;
-    //         console.log('inside' + this.selectedCommunityCategory);
-    //       },
-    //       error: (error: any) => {
-    //         console.error('Error creating category:', error);
-    //         // Handle error as needed
-    //       },
-    //     });
-    // }
-
-    // console.log('outside' + this.selectedCommunityCategory);
     const body = {
       communityCategoryId: this.selectedCommunityCategory,
       communitCategoryName: this.newCategoryName,
@@ -87,14 +61,12 @@ export class CategoryCreateModalComponent implements OnInit {
       )
       .subscribe({
         next: (data: any) => {
-          console.log('Category created successfully:', data);
           alert('New category added');
           this.categoryCreated.emit(data); // Emit event with created category data
-          this.bsModalRef.hide(); // Close the modal after creating
+          this.bsModalRef.hide(); // Close the modal after creating category
         },
         error: (error: any) => {
           console.error('Error creating category:', error);
-          // Handle error as needed
         },
       });
   }

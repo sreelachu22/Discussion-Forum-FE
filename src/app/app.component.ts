@@ -8,6 +8,7 @@ import {
   RouterEvent,
 } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoaderService } from './service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -15,22 +16,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) {}
-  // subscription: any;
+  constructor(private router: Router, private loaderService: LoaderService) {}
 
-  enableLoader = false;
-
+  //this subscribes to the isLoading$ observable provided by the LoaderService.
+  isLoading = false;
   ngOnInit(): void {
-    this.router.events.subscribe((routeEvent) => {
-      if (routeEvent instanceof NavigationStart) {
-        this.enableLoader = true;
-      } else if (
-        routeEvent instanceof NavigationEnd ||
-        routeEvent instanceof NavigationCancel ||
-        routeEvent instanceof NavigationError
-      ) {
-        this.enableLoader = false;
-      }
+    //the component subscribes to the isLoading$ observable provided by the LoaderService.
+    //This subscription listens for changes in the loading state.
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
   }
 }

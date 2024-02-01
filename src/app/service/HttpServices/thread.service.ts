@@ -2,6 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Thread {
+  threadID: number;
+  communityCategoryMappingID: number;
+  content: string;
+  threadStatusID: number;
+  isAnswered: boolean;
+  isDeleted: boolean;
+  createdBy: string;
+  createdAt: string;
+  modifiedBy: Date;
+  modifiedAt: Date;
+  communityCategoryMapping: any;
+  threadStatus: any;
+  createdByUser: any;
+  modifiedByUser: any;
+  threadVotes: any;
+}
+
 @Injectable({
   providedIn: 'root',
 })

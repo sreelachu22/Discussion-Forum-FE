@@ -34,7 +34,7 @@ export class UserService {
     console.log(url);
     return this.http.get<AllUsers>(url);
 }
-  getAUser(page: number,name: string): Observable<AllUsers> {
+  getAUser(page: number, name: string): Observable<AllUsers> {
     const startIndex = page;
     const userName = name;
     const url = `${this.BASE_URL}?term=${userName}&sort=Name&page=${startIndex}&limit=10`;
