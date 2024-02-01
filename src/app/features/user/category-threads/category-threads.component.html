@@ -5,6 +5,8 @@
     <a href="/home_page" class="breadcrumb_navigation">Home</a>
     <span> > </span>
     <a href="/community_page" class="breadcrumb_navigation">Community</a>
+    <span> > </span>
+    <a href="/category_threads" class="breadcrumb_navigation">Category</a>
   </div>
   <!-- nav bar -->
   <div class="navbar navbar-dark bg-secondary categorythreads_header">
@@ -33,6 +35,7 @@
     [votes]="thread.voteCount"
     [tags]="thread.tagNames.join(', ')"
     [isAnswered]="thread.isAnswered"
+    [click]="navigateToThreadReplies.bind(this, thread.threadID)"
   ></app-list>
 
   <!-- pagination ui -->

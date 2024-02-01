@@ -15,6 +15,7 @@ import { CreatePostComponent } from './features/user/create-post/create-post.com
 import { SearchResultComponent } from './features/user/search-result/search-result.component';
 import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
+import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     component: CategoryThreadsComponent,
     path: 'category_threads',
+  },
+  {
+    component: ThreadRepliesComponent,
+    path: 'thread-replies',
   },
   {
     component: CommunityManagementDashboardComponent,
@@ -81,8 +86,7 @@ const routes: Routes = [
     component: LeaderboardComponent,
     path: 'leaderboards',
   },
-  {component : GuidelinesComponent,
-  path: 'guidelines'},
+  { component: GuidelinesComponent, path: 'guidelines' },
   {
     component: CreatePostComponent,
     path: 'category_threads/create_posts',
@@ -94,10 +98,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-    }),
-  ],
+  imports: [RouterModule.forRoot(routes, {})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
