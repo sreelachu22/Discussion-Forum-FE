@@ -27,13 +27,13 @@ export interface AllUsers {
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  BASE_URL = 'https://localhost:7160/api/users/GetAllUsersWithPagination';
-  // https://localhost:7160/api/users/GetAllUsersWithPagination?term=a&sort=name&page=1&limit=10
-  getUsers(page: number, sortType:string): Observable<AllUsers> {    
-    const url = `${this.BASE_URL}?term=a&sort=${sortType}&page=${page}&limit=10`;
-     
+  BASE_URL = 'https://localhost:7160/api/users/GetAllUsersWithPagination';  
+  
+  getUsers(page: number, sortType: string, term: string | null = null): Observable<AllUsers> {    
+    const url = `${this.BASE_URL}?sort=${sortType}&page=${page}&limit=10`;
+    console.log(url);
     return this.http.get<AllUsers>(url);
-  }
+}
   getAUser(page: number,name: string): Observable<AllUsers> {
     const startIndex = page;
     const userName = name;
