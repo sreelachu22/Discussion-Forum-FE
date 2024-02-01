@@ -48,6 +48,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
+import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
     UserNoticesComponent,
     SidenavigationComponent,
     SidenavCustomComponent,
+    SuperCategoryManagementComponent,
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
