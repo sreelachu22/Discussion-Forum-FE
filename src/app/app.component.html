@@ -1,15 +1,3 @@
-<!-- <app-header></app-header> -->
-<!-- <app-sidenav class="sidenav_component"></app-sidenav> -->
 <app-sidenavigation></app-sidenavigation>
-<!-- <app-community-page></app-community-page> -->
-<!-- <app-category-threads></app-category-threads> -->
-<!-- <app-category-management></app-category-management> -->
-<!-- <app-user-management></app-user-management> -->
-<!-- <app-community-management-dashboard></app-community-management-dashboard> -->
-<!-- <div *ngIf="enableLoader">
-  <h4>Loading...</h4>
-</div>-->
+<div class="container"><app-loader *ngIf="isLoading"></app-loader></div>
 <router-outlet></router-outlet>
-<!-- <app-guidelines></app-guidelines> -->
-<!-- <app-create-post></app-create-post> -->
-

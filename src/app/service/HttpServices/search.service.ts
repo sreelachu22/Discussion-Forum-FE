@@ -8,10 +8,6 @@ import { Observable } from 'rxjs';
 export class searchService {
   constructor(private http: HttpClient) {}
 
-  getCategories(): Observable<any> {
-    return this.http.get(`https://localhost:7160/api/CommunityCategory`);
-  }
-
   searchThreads(term: string): Observable<any> {
     return this.http.get(
       `https://localhost:7160/api/Thread/SearchThreads?searchTerm=${term}`
