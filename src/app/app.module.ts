@@ -22,10 +22,10 @@ import { CategoryThreadsComponent } from './features/user/category-threads/categ
 import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
-import { UserManagementComponent } from './features/user-management/user-management.component';
+import { UserManagementComponent } from './features/community_head/user-management/user-management.component';
 import { ButtonToggleComponent } from './components/ui/button-toggle/button-toggle.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
-import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
+import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
 
 import { computed, signal } from '@angular/core';

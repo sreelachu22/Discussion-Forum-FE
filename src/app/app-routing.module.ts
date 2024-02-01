@@ -4,7 +4,7 @@ import { CategoryManagementComponent } from './features/community_head/category-
 import { CategoryThreadsComponent } from './features/user/category-threads/category-threads.component';
 import { CommunityPageComponent } from './features/user/community-page/community-page.component';
 import { CommunityManagementDashboardComponent } from './features/community_head/community-management-dashboard/community-management-dashboard.component';
-import { UserManagementComponent } from './features/user-management/user-management.component';
+import { UserManagementComponent } from './features/community_head/user-management/user-management.component';
 import { NoticesComponent } from './features/community_head/notices/notices.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
@@ -13,6 +13,7 @@ import { SuperadminCategoryManagementComponent } from './features/super_admin/su
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
 import { CreatePostComponent } from './features/user/create-post/create-post.component';
 import { SearchResultComponent } from './features/user/search-result/search-result.component';
+import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     component: UserManagementComponent,
     path: 'community-management/user-management',
+  },
+  {
+    component: UserEditComponent,
+    path: 'community-management/user-management/user-edit/:userID',
   },
   {
     component: NoticesComponent,
