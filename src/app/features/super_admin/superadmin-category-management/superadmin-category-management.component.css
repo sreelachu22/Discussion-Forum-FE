@@ -18,6 +18,8 @@
     align-items: center;
     border-radius: 5px;
     height: 100px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .card-container {
@@ -58,3 +60,17 @@
 .icon-container.hovered { z-index: 1; opacity: 1; }
 
 .icon-container { opacity: 0; position: absolute; top: 50%; right: 10px; transform: translateY(-50%); pointer-events: none; transition: opacity 0.3s ease; z-index: -1; }
+
+.buttons{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.create_button{
+  margin-right: 3%;
+
+}
+
+.close{
+  border: none;
+}

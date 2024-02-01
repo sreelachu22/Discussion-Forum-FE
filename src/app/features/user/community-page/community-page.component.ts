@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
+import { searchService } from 'src/app/service/HttpServices/search.service';
 
 @Component({
   selector: 'app-community-page',
@@ -10,8 +12,10 @@ import { CategoryService } from 'src/app/service/HttpServices/category.service';
 export class CommunityPageComponent {
   constructor(
     private httpService: CategoryService,
+    private searchService: searchService,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private modalService: BsModalService
   ) {}
 
   communityID: number = 0;
@@ -28,9 +32,14 @@ export class CommunityPageComponent {
   sortType: string = 'communityCategoryName';
   title: string = 'categoryPage';
   searchText: string = '';
+  searchTerm: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
+
+  pages: number[] = [];
+  pageSize: number = 6;
+  totalPages: number = 0;
 
   getSingleCategory() {
     if (this.searchText == '') {
@@ -40,8 +49,27 @@ export class CommunityPageComponent {
         .getPagedCategories(this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categoriesList = data.categories;
-          this.pageCount = data.totalPages;
+          this.totalPages = Math.ceil(data.totalCount / this.pageSize); // Calculate totalPages
+          this.updatePageNumbers();
         });
+    }
+  }
+
+  updatePageNumbers() {
+    const pagesToShow = Math.min(this.totalPages, 3);
+    const startPage = Math.max(1, this.currentPage - 1);
+    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
+
+    this.pages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadCategories();
     }
   }
 
@@ -52,7 +80,7 @@ export class CommunityPageComponent {
         this.categoriesList = data.categories;
 
         this.pageCount = data.totalPages;
-        console.log(this.pageCount);
+        // console.log(this.pageCount);
       });
   }
 
@@ -75,6 +103,16 @@ export class CommunityPageComponent {
     this.loadCategories();
   }
 
+  modalRef?: BsModalRef;
+
+  openSearchModal(template: TemplateRef<void>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  closeModal() {
+    this.modalRef?.hide();
+  }
+
   categories: {
     communityCategoryMappingID: number;
     communityID: number;
@@ -85,6 +123,24 @@ export class CommunityPageComponent {
     createdAt: Date;
     modifiedAt: Date;
     threadCount: number;
+  }[] = [];
+
+  threads: {
+    threadID: number;
+    communityCategoryMappingID: number;
+    content: string;
+    threadStatusID: number;
+    isAnswered: boolean;
+    isDeleted: boolean;
+    createdBy: string;
+    createdAt: string;
+    modifiedBy: Date;
+    modifiedAt: Date;
+    communityCategoryMapping: any;
+    threadStatus: any;
+    createdByUser: any;
+    modifiedByUser: any;
+    threadVotes: any;
   }[] = [];
 
   id: number = 1;
@@ -100,6 +156,12 @@ export class CommunityPageComponent {
       complete: () => {
         console.log('Completed');
       },
+    });
+  }
+
+  searchResult(searchTerm: string) {
+    this.router.navigate(['/search-result'], {
+      queryParams: { searchTerm: this.searchTerm },
     });
   }
 

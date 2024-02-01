@@ -12,20 +12,20 @@ import { NoticesComponent } from './features/community_head/notices/notices.comp
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { CommunityPageComponent } from './features/community-page/community-page.component';
+import { CommunityPageComponent } from './features/user/community-page/community-page.component';
 import { CategoryService } from './service/HttpServices/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CommunityManagementDashboardComponent } from './components/layout/community-management-dashboard/community-management-dashboard.component';
+import { CommunityManagementDashboardComponent } from './features/community_head/community-management-dashboard/community-management-dashboard.component';
 import { ListComponent } from './components/ui/list/list.component';
-import { CategoryThreadsComponent } from './components/layout/category-threads/category-threads.component';
+import { CategoryThreadsComponent } from './features/user/category-threads/category-threads.component';
 import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
-import { UserManagementComponent } from './features/user-management/user-management.component';
+import { UserManagementComponent } from './features/community_head/user-management/user-management.component';
 import { ButtonToggleComponent } from './components/ui/button-toggle/button-toggle.component';
 import { HomePageComponent } from './features/home-page/home-page.component';
-import { UserEditComponent } from './components/layout/user-edit/user-edit.component';
+import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { UserNoticesComponent } from './features/user/user-notices/user-notices.component';
 
 import { computed, signal } from '@angular/core';
@@ -42,6 +42,12 @@ import { SidenavCustomComponent } from './components/layout/sidenavigation/siden
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
 import { SuperadminCategoryManagementComponent } from './features/super_admin/superadmin-category-management/superadmin-category-management.component';
 import { GuidelinesComponent } from './features/guidelines/guidelines.component';
+import { SearchResultComponent } from './features/user/search-result/search-result.component';
+import { CreatePostComponent } from './features/user/create-post/create-post.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { SuccessPopupComponent } from './components/ui/success-popup/success-popup.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +72,10 @@ import { GuidelinesComponent } from './features/guidelines/guidelines.component'
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
+    SearchResultComponent,
+    CreatePostComponent,
+    SuccessPopupComponent,
+    LeaderboardComponent,
   ],
 
   imports: [
@@ -86,6 +96,7 @@ import { GuidelinesComponent } from './features/guidelines/guidelines.component'
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    EditorModule,
   ],
   providers: [CategoryService],
   bootstrap: [AppComponent],

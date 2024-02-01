@@ -24,12 +24,13 @@ export interface AllCategories {
 })
 export class CategoryService {
   constructor(private http: HttpClient) {}
+
   BASE_URL = 'https://localhost:7160/api/CommunityCategoryMapping';
   getPagedCategories(
     page: number,
     sortType: string
   ): Observable<AllCategories> {
-    const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=10`;
+    const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=6`;
     console.log(this.http.get(url));
     return this.http.get<AllCategories>(url);
   }
@@ -88,15 +89,6 @@ export class CategoryService {
 
     return this.http.post(
       `https://localhost:7160/api/CommunityCategoryMapping/CreateCategoryMapping/${id}`,
-      body
-    );
-  }
-
-  createCategory(communityCategoryName: string): Observable<any> {
-    const body = {};
-
-    return this.http.post(
-      `https://localhost:7160/api/CommunityCategory/${communityCategoryName}`,
       body
     );
   }
