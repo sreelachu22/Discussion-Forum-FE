@@ -50,6 +50,8 @@ import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { LoaderService } from './service/HttpServices/loader.service';
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.component';
+import { BreadcrumbsComponent } from './components/ui/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbButtonComponent } from './components/ui/breadcrumb-button/breadcrumb-button.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.
     LoaderComponent,
     ThreadRepliesComponent,
     ThreadReplyComponent,
+    BreadcrumbsComponent,
+    BreadcrumbButtonComponent,
   ],
 
   imports: [
