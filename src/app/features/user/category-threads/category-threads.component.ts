@@ -39,6 +39,7 @@ export class CategoryThreadsComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 8;
   totalPages: number = 0;
+  creatorId!: string;
 
   constructor(
     private threadService: ThreadService,
@@ -116,6 +117,24 @@ export class CategoryThreadsComponent implements OnInit {
 
   // create a post
   createPost() {
-    this.router.navigate(['category_threads/create_posts'], {});
+    const queryParams = {
+      communityCategoryMappingID: this.communityCategoryMappingID,
+      creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074', // Replace this with the actual creatorId
+    };
+
+    this.router.navigate(['category_threads/create_posts'], { queryParams });
+  }
+
+  navigateToThreadReplies(threadID: number) {
+    this.router.navigate(['/thread-replies'], {
+      queryParams: { threadID: threadID },
+    });
+  }
+
+  searchTerm: string = '';
+  searchResult(searchTerm: string) {
+    this.router.navigate(['/search-result'], {
+      queryParams: { searchTerm: this.searchTerm },
+    });
   }
 }

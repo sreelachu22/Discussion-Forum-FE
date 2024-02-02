@@ -11,6 +11,8 @@ export class ButtonComponent {
   @Input() buttonName: string = '';
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
+  // The buttonClass and buttonName are input properties, 
+  // while buttonClick is an output property emitting an event when button is clicked.
   handleClick() {
     this.buttonClick.emit();
   }
