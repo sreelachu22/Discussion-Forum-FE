@@ -33,16 +33,11 @@
   <div class="card" *ngFor="let reply of threadReplies">
     <div class="card-body">
       <p>{{ reply.content }}</p>
-      <!-- <div *ngIf="reply.nestedReplies && reply.nestedReplies.length > 0">
-          <app-thread-reply
-            *ngFor="let nestedReply of reply.nestedReplies"
-            [reply]="nestedReply"
-          ></app-thread-reply>
-        </div> -->
     </div>
     <br />
   </div>
   <!-- <div>
+    This is a recursive component created in components -> ui -> thread-reply component
     <app-thread-reply
       *ngFor="let reply of threadReplies"
       [reply]="reply"
