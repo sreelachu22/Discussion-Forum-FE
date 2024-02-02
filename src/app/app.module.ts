@@ -48,7 +48,9 @@ import { LeaderboardComponent } from './features/leaderboard/leaderboard.compone
 import { LoaderComponent } from './features/loader/loader.component';
 import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { LoaderService } from './service/HttpServices/loader.service';
-import { SuperCategoryManagementComponent } from './features/super_admin/super-category-management/super-category-management.component';
+import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
+import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +72,6 @@ import { SuperCategoryManagementComponent } from './features/super_admin/super-c
     UserNoticesComponent,
     SidenavigationComponent,
     SidenavCustomComponent,
-    SuperCategoryManagementComponent,
     AdminDashboardComponent,
     SuperadminCategoryManagementComponent,
     GuidelinesComponent,
@@ -79,6 +80,8 @@ import { SuperCategoryManagementComponent } from './features/super_admin/super-c
     SuccessPopupComponent,
     LeaderboardComponent,
     LoaderComponent,
+    ThreadRepliesComponent,
+    ThreadReplyComponent,
   ],
 
   imports: [

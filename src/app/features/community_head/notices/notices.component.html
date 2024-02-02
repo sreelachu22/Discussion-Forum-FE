@@ -1,24 +1,23 @@
 <!-- notices.component.html -->
 <div class="container">
-  <a href="" class="breadcrumb_navigation">Community management</a>
+  <a href="home_page" class="breadcrumb_navigation">Home</a>
   <span> > </span>
-  <span><a href="" class="breadcrumb_navigation">Notice management</a></span
+  <span><a href="community_management_dashboard" class="breadcrumb_navigation">Community management</a></span
   ><br /><br />
   <div class="row">
     <div class="col-8">
       <h1>Notices</h1>
     </div>
     <div class="col-4 text-right">
-      <!-- <button class="btn btn-primary" (click)="addNotice()">Create Notice</button> -->
-      <!-- <button class="btn btn-primary notices_body_create_button" (click)="openModal(openmodalTemplate)">Create Notice</button> -->
-      <app-button
+     <app-button
         buttonClass="btn btn-primary notices_body_create_button"
         buttonName="Create Notice"
-        (buttonClick)="openModal(openmodalTemplate)"
+        (buttonClick)="openModal(openmodalTemplate)"  
       ></app-button>
+      <!-- on button click opens modal to create notice -->
     </div>
   </div>
-
+  <!-- dislays active notices -->
   <div *ngFor="let notice of notices">
     <div class="card">
       <div class="card-body">
@@ -27,10 +26,7 @@
         ><br /><br />
         <h3 class="card-title notice_title">{{ notice.title }}</h3>
         <p class="card-text">{{ notice.content }}</p>
-        <!-- <p class="card-text">Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}</p>
-        <p *ngIf="notice.modifiedAt" class="card-text">Modified At: {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</p>
-        <p class="card-text">Expires At: {{ notice.expiresAt | date : "dd-MM-yyyy"}}</p> -->
-        <p class="card-text">
+         <p class="card-text">
           Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}
           <ng-container *ngIf="notice.modifiedAt">
             &nbsp;&nbsp;|&nbsp;&nbsp; Modified At:
@@ -39,27 +35,20 @@
           &nbsp;&nbsp;|&nbsp;&nbsp; Expires At:
           {{ notice.expiresAt | date : "dd-MM-yyyy" }}
         </p>
-
-        <!-- <button class="btn btn-primary notices_body_edit_button" (click)="updateNotice(notice)">Edit</button> -->
-        <!-- <button class="btn btn-warning notices_body_edit_button" (click)="openUpdateModal(updatemodalTemplate, notice)">Edit</button> -->
-        <!-- <button class="btn btn-danger notices_body_delete_button" (click)="deleteNotice(notice.noticeID)">Delete</button> -->
+        <!-- utilises icons for edit and delete to open corresponding modals -->
         <app-icon class="notices_body_edit_icon"
         [iconName]="faEdit"
         (click)="openUpdateModal(updatemodalTemplate, notice)"></app-icon>
-        <!-- <app-icon class="notices_body_delete_icon"
-              [iconName]="faDelete"
-              (click)="deleteNotice(notice.noticeID)"></app-icon>
-         -->
-         <app-icon class="notices_body_delete_icon"
+        <app-icon class="notices_body_delete_icon"
           [iconName]="faDelete"
           (click)="openDeleteModal(delete, notice)"></app-icon>
       </div>
     </div>
     <hr />
   </div>
-  <!-- Your existing button to open the modal -->
+  
 
-  <!-- Add this modal template at the end of your HTML file -->
+  <!-- modal for notice creation -->
   <ng-template #openmodalTemplate>
     <div class="modal-header">
       <h4 class="modal-title">Create Notice</h4>
@@ -72,7 +61,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <!-- Add input fields for dynamic user input -->
+      <!-- input fields for dynamic user input -->
       <div class="form-group">
         <label for="title">Title</label>
         <input
@@ -83,10 +72,6 @@
           required
         />
       </div>
-      <!-- <div class="form-group">
-      <label for="expiresAt">Expires At</label>
-      <input type="text" class="form-control" [(ngModel)]="newNotice.expiresAt" name="expiresAt" required>
-    </div> -->
       <div class="form-group">
         <label for="expiresAt">Expires At</label>
         <input
@@ -98,7 +83,7 @@
           autocomplete="off"
           bsDatepicker
           [bsConfig]="bsDatepickerConfig"
-        />
+        /> <!-- Utilizes the ngx-bootstrap datepicker -->
       </div>
       <div class="form-group">
         <label for="content">Content</label>
@@ -131,7 +116,6 @@
       </div>
     </div>
     <div class="modal-footer">
-      <!-- <button type="button" class="btn btn-primary" (click)="addNotice()">Add Notice</button> -->
       <app-button
         buttonClass="btn btn-primary"
         buttonName="Add Notice"
@@ -144,10 +128,11 @@
       >
         Close
       </button>
-      <!-- <app-button buttonClass="btn btn-secondary modal_close_button" buttonName="Close" (buttonClick)="modalRef?.hide()"></app-button> -->
+      <!-- buttons to add notice and hide modal  -->
     </div>
   </ng-template>
 
+  <!-- modal to update notice-->
   <ng-template #updatemodalTemplate>
     <div class="modal-header">
       <h4 class="modal-title">Edit Notice</h4>
@@ -161,7 +146,7 @@
     </div>
 
     <div class="modal-body">
-      <!-- Add input fields for dynamic user input -->
+      <!-- input fields for dynamic user input , id is included to automatically fill in the form fields on notice select-->
       <div class="form-group">
         <label for="noticeID">Notice ID</label>
         <input
@@ -212,30 +197,23 @@
           id="expiresAt"
         />
       </div>
-
-      <!-- <div class="form-group">
-      <label for="createdBy">Created By</label>
-      <input type="text" class="form-control" [(ngModel)]="selectedNotice.createdBy" name="createdBy">
-    </div> -->
-    <div class="form-group">
+      <div class="form-group">
       <label for="modifiedBy">Modified By</label>
       <input type="text" class="form-control" [(ngModel)]="selectedNotice.modifiedBy" name="modifiedBy">
+      </div>
     </div>
-  </div>
   <div class="modal-footer">
-    <!-- <button type="button" class="btn btn-primary" (click)="updateNotice()">Update Notice</button>-->
       <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button>
     <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
-    <!-- <app-button buttonClass="btn btn-secondary modal_close_button" buttonName="Close" (buttonClick)="modalRef?.hide()"></app-button> -->
   </div>
 </ng-template>
 
 
+<!-- modal for delete confirmation -->
 <ng-template #delete>
   <div class="modal-body text-center">
     <p>Do you want to confirm?</p>
     <app-button buttonClass="btn btn-primary" buttonName="Yes" (buttonClick)="deleteNotice()"></app-button>
-    <!-- <button type="button" class="btn btn-default" (click)="deleteNotice()">Yes</button> -->
     <button type="button" class="btn btn-default" (click)="modalRef?.hide()">No</button>
   </div>
 </ng-template>

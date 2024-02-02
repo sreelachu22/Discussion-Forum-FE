@@ -23,9 +23,6 @@ export class CommunityPageComponent {
 
   communityID: number = 0;
   ngOnInit(): void {
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
     this.loadCategories();
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];

@@ -42,8 +42,10 @@
     <div *ngIf="threads.length > 0">
       <div class="card-deck">
         <div *ngFor="let thread of threads" class="card mb-3">
-          <div class="card-body">
-            <!-- (click)="navigateToThread(thread.threadID)" -->
+          <div
+            class="card-body"
+            (click)="navigateToThreadReplies(thread.threadID)"
+          >
             <span
               ><p class="card-text">
                 Thread ID: {{ thread.threadID }} &nbsp; | &nbsp;Category ID:
