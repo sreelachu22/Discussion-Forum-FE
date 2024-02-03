@@ -9,10 +9,20 @@
       <h1>Notices</h1>
     </div>
     <div class="col-4 text-right">
-     <app-button
-        buttonClass="btn btn-primary notices_body_create_button"
+     <!-- <app-button
+        buttonClass="button_teal"
         buttonName="Create Notice"
+        buttonColor="rgb(287, 224, 224)"
         (buttonClick)="openModal(openmodalTemplate)"  
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Create Notice"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="openModal(openmodalTemplate)"
       ></app-button>
       <!-- on button click opens modal to create notice -->
     </div>
@@ -152,18 +162,36 @@
       </div>
     </div>
     <div class="modal-footer">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Add Notice"
         (buttonClick)="addNotice()"
-      ></app-button>
-      <button
+      ></app-button> -->
+      <app-button
+                buttonClass="button"
+                buttonName="Add Notice"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="addNotice()"
+              ></app-button>
+      <!-- <button
         type="button"
         class="btn btn-secondary modal_close_button"
         (click)="modalRef?.hide()"
       >
         Close
-      </button>
+      </button> -->
+      <app-button
+                buttonClass="button"
+                buttonName="Close"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="modalRef?.hide()"
+              ></app-button>
       <!-- buttons to add notice and hide modal  -->
     </div>
   </ng-template>
@@ -239,8 +267,26 @@
       </div>
     </div>
   <div class="modal-footer">
-      <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button>
-    <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
+    <app-button
+                buttonClass="button"
+                buttonName="Update Notice"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="updateNotice()"
+              ></app-button>
+      <!-- <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button> -->
+    <!-- <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button> -->
+    <app-button
+                buttonClass="button"
+                buttonName="Close"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="modalRef?.hide()"
+              ></app-button>
   </div>
 </ng-template>
 
@@ -249,7 +295,25 @@
 <ng-template #delete>
   <div class="modal-body text-center">
     <p>Do you want to confirm?</p>
-    <app-button buttonClass="btn btn-primary" buttonName="Yes" (buttonClick)="deleteNotice()"></app-button>
-    <button type="button" class="btn btn-default" (click)="modalRef?.hide()">No</button>
+    <!-- <app-button buttonClass="btn btn-primary" buttonName="Yes" (buttonClick)="deleteNotice()"></app-button>
+    <button type="button" class="btn btn-default" (click)="modalRef?.hide()">No</button> -->
+    <app-button
+        buttonClass="button"
+        buttonName="Yes"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="deleteNotice()"
+      ></app-button>
+      <app-button
+      buttonClass="button"
+      buttonName="No"
+      buttonColor="rgb(31, 151, 145)"
+      textColor="white"
+      hoverColor="rgb(51, 171, 165)"
+      hoverTextColor="white"
+      (buttonClick)="modalRef?.hide()"
+    ></app-button>
   </div>
 </ng-template>

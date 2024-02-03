@@ -24,6 +24,7 @@
       >
         Search
       </button>
+      
     </div>
   </div>
   <!-- nav bar -->
@@ -35,9 +36,18 @@
       </p>
     </div>
     <div class="navbar_buttons">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Create Post"
+        (buttonClick)="createPost()"
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Create Post"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
         (buttonClick)="createPost()"
       ></app-button>
     </div>
