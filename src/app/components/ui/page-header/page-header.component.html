@@ -1,0 +1,13 @@
+<div [ngClass]="navClass">
+  <app-text
+    *ngIf="showText"
+    [text]="categoryName"
+    textclass="Page-header-title"
+  ></app-text>
+  <app-button
+    *ngIf="showButton"
+    buttonName="Create Post"
+    buttonClass="Functional_button"
+    (buttonClick)="onButtonClick()"
+  ></app-button>
+</div>

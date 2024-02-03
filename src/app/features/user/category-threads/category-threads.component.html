@@ -9,40 +9,13 @@
       <span> > </span>
       <a href="/category_threads" class="breadcrumb_navigation">Category</a>
     </div>
-    <div class="user_search">
-      <input
-        type="text"
-        placeholder="Search"
-        class="search_input"
-        [(ngModel)]="searchTerm"
-        (keyup.enter)="searchResult(searchTerm)"
-      />
-      <button
-        type="submit"
-        class="search_button"
-        (click)="searchResult(searchTerm)"
-      >
-        Search
-      </button>
-    </div>
   </div>
   <!-- nav bar -->
-  <div class="navbar navbar-dark bg-secondary categorythreads_header">
-    <div class="navbar_container">
-      <h1 class="header_text">{{ CategoryThreads.categoryName }}</h1>
-      <p class="header_description">
-        {{ CategoryThreads.categoryDescription }}
-      </p>
-    </div>
-    <div class="navbar_buttons">
-      <app-button
-        buttonClass="btn btn-primary"
-        buttonName="Create Post"
-        (buttonClick)="createPost()"
-      ></app-button>
-    </div>
-  </div>
-
+  <app-page-header
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [categoryName]="CategoryThreads.categoryName"
+    (createPostClicked)="createPost()"
+  ></app-page-header>
   <!-- post displayed here -->
   <app-list
     *ngFor="let thread of CategoryThreads.threads"
@@ -57,28 +30,9 @@
   ></app-list>
 
   <!-- pagination ui -->
-
-  <div class="pagination">
-    <button
-      (click)="previousPage()"
-      [disabled]="currentPage === 1"
-      *ngIf="currentPage > 1"
-    >
-      Previous
-    </button>
-
-    <ng-container *ngFor="let page of pages">
-      <button (click)="goToPage(page)" [class.active]="currentPage === page">
-        {{ page }}
-      </button>
-    </ng-container>
-
-    <button
-      (click)="nextPage()"
-      [disabled]="currentPage === totalPages"
-      *ngIf="currentPage < totalPages"
-    >
-      Next
-    </button>
-  </div>
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="changePage($event)"
+  ></app-pagination>
 </div>

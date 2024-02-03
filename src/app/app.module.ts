@@ -50,6 +50,11 @@ import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { LoaderService } from './service/HttpServices/loader.service';
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.component';
+import { InputComponent } from './components/ui/input/input.component';
+import { SearchComponent } from './components/ui/search/search.component';
+import { PageHeaderComponent } from './components/ui/page-header/page-header.component';
+import { TextComponent } from './components/ui/text/text.component';
+import { PaginationComponent } from './components/ui/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +87,11 @@ import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.
     LoaderComponent,
     ThreadRepliesComponent,
     ThreadReplyComponent,
+    InputComponent,
+    SearchComponent,
+    PageHeaderComponent,
+    TextComponent,
+    PaginationComponent,
   ],
 
   imports: [

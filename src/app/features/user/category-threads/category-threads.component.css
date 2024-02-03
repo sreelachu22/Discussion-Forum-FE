@@ -82,8 +82,7 @@
   float: right;
 }
 
-
-.page_top{
+.page_top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -135,4 +134,10 @@
 .search_button:hover {
   transform: scale(1.1);
   color: rgb(255, 255, 255);
+}
+
+app-button.current-page button {
+  background-color: rgb(51, 171, 165);
+  color: white;
+  border-color: #6a6a6a;
 }
