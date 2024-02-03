@@ -59,6 +59,12 @@ import { NestedRepliesComponent } from './features/user/nested-replies/nested-re
 import { CategoryCardComponent } from './components/ui/category-card/category-card.component';
 import { TableComponent } from './components/ui/table/table.component';
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
+import { InputComponent } from './components/ui/input/input.component';
+import { SearchComponent } from './components/ui/search/search.component';
+import { PageHeaderComponent } from './components/ui/page-header/page-header.component';
+import { TextComponent } from './components/ui/text/text.component';
+import { PaginationComponent } from './components/ui/pagination/pagination.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +103,11 @@ import { CategoryEditModalComponent } from './components/ui/category-edit-modal/
     TableComponent,
     DateFormatPipe,
     CategoryEditModalComponent,
+    InputComponent,
+    SearchComponent,
+    PageHeaderComponent,
+    TextComponent,
+    PaginationComponent,
   ],
 
   imports: [

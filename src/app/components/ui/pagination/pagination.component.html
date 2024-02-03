@@ -1,0 +1,24 @@
+<!-- pagination.component.html -->
+<div class="pagination-container">
+  <app-button
+    buttonName="Previous"
+    *ngIf="showPrevious"
+    (buttonClick)="changePage(currentPage - 1)"
+    buttonClass="Previous_button"
+  ></app-button>
+
+  <app-button
+    *ngFor="let page of pages"
+    [buttonName]="page.toString()"
+    (buttonClick)="changePage(page)"
+    (pageChange)="generatePageNumbers()"
+    [buttonClass]="page === currentPage ? 'current-page' : 'Page_button'"
+  ></app-button>
+
+  <app-button
+    buttonName="Next"
+    *ngIf="showNext"
+    (buttonClick)="changePage(currentPage + 1)"
+    buttonClass="Next_button"
+  ></app-button>
+</div>
