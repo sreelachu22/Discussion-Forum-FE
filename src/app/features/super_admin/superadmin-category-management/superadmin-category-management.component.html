@@ -17,9 +17,18 @@
   <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Category Management</p>
     <div class="create_button">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Create Category"
+        (buttonClick)="openCreateCategoryModal(create)"
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Create Category"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
         (buttonClick)="openCreateCategoryModal(create)"
       ></app-button>
     </div>
@@ -41,13 +50,22 @@
         </div>
         <br />
         <div class="buttons">
-          <button
+          <!-- <button
             type="submit"
             class="btn btn-primary custom-btn"
             [disabled]="!newCategoryName"
           >
             Create
-          </button>
+          </button> -->
+          <app-button
+            buttonClass="button"
+            buttonName="Create"
+            buttonColor="rgb(31, 151, 145)"
+            textColor="white"
+            hoverColor="rgb(51, 171, 165)"
+            hoverTextColor="white"
+            [disableButton]="!newCategoryName"
+          ></app-button>
           <span> </span>
           <button
             type="button"
@@ -56,6 +74,15 @@
           >
             Close
           </button>
+          <!-- <app-button
+        buttonClass="btn"
+        buttonName="Close"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="modalRef?.hide()"
+      ></app-button> -->
         </div>
       </form>
     </div>
@@ -106,22 +133,41 @@
             </div>
             <br />
             <div class="buttons">
-              <button
-                type="submit"
-                class="btn btn-primary custom-btn"
-                [disabled]="!newCategoryName"
-              >
-                Update
-              </button>
+              <!-- <button
+                  type="submit"
+                  class="btn btn-primary custom-btn"
+                  [disabled]="!newCategoryName"
+                >
+                  Update
+                </button> -->
+              <app-button
+                buttonClass="custom-btn"
+                buttonName="Update"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                [disableButton]="!newCategoryName"
+              ></app-button>
               <span></span>
-              <button class="btn btn-default" (click)="closeModal()"></button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                (click)="openDeleteCategoryModal(delete)"
-              >
-                Delete
-              </button>
+              <!-- <button class="btn btn-default" (click)="closeModal()"></button> -->
+
+              <!-- <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="openDeleteCategoryModal(delete)"
+                >
+                  Delete
+                </button> -->
+              <app-button
+                buttonClass="button"
+                buttonName="Delete"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="openDeleteCategoryModal(delete)"
+              ></app-button>
             </div>
           </form>
         </div>
@@ -132,16 +178,34 @@
       <ng-template #delete>
         <div class="modal-body text-center">
           <p>Do you want to confirm?</p>
-          <button
-            type="button"
-            class="btn btn-default"
-            (click)="confirm(category.communityCategoryID)"
-          >
-            Yes
-          </button>
-          <button type="button" class="btn btn-primary" (click)="decline()">
-            No
-          </button>
+          <!-- <button
+              type="button"
+              class="btn btn-default"
+              (click)="confirm(category.communityCategoryID)"
+            >
+              Yes
+            </button> -->
+          <app-button
+            buttonClass="button"
+            buttonName="Yes"
+            buttonColor="rgb(31, 151, 145)"
+            textColor="white"
+            hoverColor="rgb(51, 171, 165)"
+            hoverTextColor="white"
+            (buttonClick)="confirm(category.communityCategoryID)"
+          ></app-button>
+          <!-- <button type="button" class="btn btn-primary" (click)="decline()">
+              No
+            </button> -->
+          <app-button
+            buttonClass="button"
+            buttonName="No"
+            buttonColor="rgb(31, 151, 145)"
+            textColor="white"
+            hoverColor="rgb(51, 171, 165)"
+            hoverTextColor="white"
+            (buttonClick)="decline()"
+          ></app-button>
         </div>
       </ng-template>
       <!-- end of delete modal -->

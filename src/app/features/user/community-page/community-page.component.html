@@ -10,9 +10,18 @@
       >
     </div>
     <div class="create_button">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Community Management"
+        (buttonClick)="navigateToCommunityManagement(communityID)"
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Community Management"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
         (buttonClick)="navigateToCommunityManagement(communityID)"
       ></app-button>
     </div>
@@ -38,12 +47,52 @@
     </div>
   </nav>
   <br />
-  <div class="page_body">
-    <app-category-card
-      [categoriesList]="categoriesList"
-      class="category_card"
-    ></app-category-card>
+
+  <div class="row">
+    <div *ngFor="let category of categoriesList" class="col-md-4">
+      <app-card
+        [metadataItems]="[
+          { name: 'Category ID', value: category.communityCategoryMappingID },
+          { name: '', value: category.communityCategoryName },
+          { name: 'number of posts', value: category.threadCount }
+        ]"
+        (click)="navigateToPosts(category.communityCategoryMappingID)"
+      >
+      </app-card>
+    </div>
   </div>
+  <!-- <div class="page_body">
+    <div
+      class="card"
+      style="width: 18.5rem; height: fit-content"
+      *ngFor="let category of categoriesList"
+    >
+      <div
+        class="card-body"
+        (click)="navigateToPosts(category.communityCategoryMappingID)"
+      >
+        <p class="card-text">
+          Category ID : {{ category.communityCategoryMappingID }}
+        </p>
+        <h3 class="card-title" style="font-weight: bold">
+          {{ category.communityCategoryName }}
+        </h3>
+
+        <p>
+          Description :
+          <span
+            ><p class="card-text">
+              {{ category.description }}
+            </p></span
+          >
+        </p>
+        <p>
+          number of posts: <span>{{ category.threadCount }}</span>
+        </p>
+      </div>
+    </div>
+  </div> -->
+
   <br /><br />
   <div class="pagination mt-3">
     <button (click)="prevPage()" class="prevButton">

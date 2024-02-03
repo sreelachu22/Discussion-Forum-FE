@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 20px;
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  width: 95%;
+}
+
+.hello-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

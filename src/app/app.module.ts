@@ -53,6 +53,9 @@ import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { LoaderService } from './service/HttpServices/loader.service';
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.component';
+import { BreadcrumbsComponent } from './components/ui/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbButtonComponent } from './components/ui/breadcrumb-button/breadcrumb-button.component';
+import { NestedRepliesComponent } from './features/user/nested-replies/nested-replies.component';
 import { CategoryCardComponent } from './components/ui/category-card/category-card.component';
 import { TableComponent } from './components/ui/table/table.component';
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
@@ -87,6 +90,9 @@ import { CategoryEditModalComponent } from './components/ui/category-edit-modal/
     LoaderComponent,
     ThreadRepliesComponent,
     ThreadReplyComponent,
+    BreadcrumbsComponent,
+    BreadcrumbButtonComponent,
+    NestedRepliesComponent,
     CategoryCardComponent,
     TableComponent,
     DateFormatPipe,

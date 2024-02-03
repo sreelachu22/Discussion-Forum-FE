@@ -25,7 +25,7 @@ export interface Thread {
 })
 export class ThreadService {
   constructor(private http: HttpClient) {}
-
+  BASE_URL = 'https://localhost:7160/api/Thread?CommunityCategoryMappingID=1&pageNumber=1&pageSize=1';
   getThread(
     CommunityCategoryMappingID: number,
     pageNumber: number,
@@ -34,6 +34,7 @@ export class ThreadService {
     console.log('hello api ');
     return this.http.get(
       `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      // `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 }

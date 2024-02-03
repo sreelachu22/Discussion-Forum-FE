@@ -1,3 +1,15 @@
 <!-- button.component.html -->
-<button [class]="buttonClass" (click)="handleClick()">{{ buttonName }}</button>
+<!-- <button [class]="buttonClass" (click)="handleClick()" [style.backgroundColor]="buttonColor || defaultColor">{{ buttonName }}</button> -->
 <!-- buttonName is what is displays like "OK", "Cancel" etc -->
+
+<button [class]="buttonClass" (click)="handleClick()" 
+            [style.backgroundColor]="buttonColor || defaultColor"
+            [style.color]="textColor || defaultTextColor"
+            [style.transition]="'background-color 0.3s ease, color 0.3s ease'"
+            (mouseover)="hover = true" 
+            (mouseout)="hover = false"
+            [style.backgroundColor]="hover ? hoverColor : (buttonColor || defaultColor)"
+            [style.color]="hover ? hoverTextColor : (textColor || defaultTextColor)"
+            [disabled]="disableButton">
+      {{ buttonName }}
+</button>

@@ -17,6 +17,13 @@ export class UserManagementComponent implements OnInit {
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'User Management', route: '/community-management/user-management' },
+  ];
+
   constructor(
     private userService: UserService,
     private http: HttpClient,
@@ -78,5 +85,8 @@ export class UserManagementComponent implements OnInit {
   onSortSelectionChange(selectedValue: string) {
     this.sortType = selectedValue;
     this.loadUsers();
+  }
+  handleButtonClick(){
+    window.alert("hi");
   }
 }
