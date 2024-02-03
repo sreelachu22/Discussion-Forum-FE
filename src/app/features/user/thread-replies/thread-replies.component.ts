@@ -20,25 +20,30 @@ export class ThreadRepliesComponent {
   ) {}
 
   threadId: number = 0;
-  threadName: string = '';
+  parent_replyID: number | string = "";
   searchTerm: string = '';
   threadReplies: ThreadReplies[] = [];
+  showReplies: { [key: number]: boolean } = {};
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((params) => {
       this.threadId = params['threadID'];
     });
-    this.threadRepliesService
-      .getRepliesOfThread(this.threadId, null, 1, 10)
+
+    this.threadRepliesService      
+      .getRepliesOfThread(this.threadId,this.parent_replyID, 1, 10)
       .subscribe({
         next: (data: any) => {
-          this.threadReplies = data;
+          this.threadReplies = data;        
         },
         error: (error: Error) => {
           console.log('Error', error);
         },
       });
+  }  
+  toggleReplies(index: number): void {
+    this.showReplies[index] = !this.showReplies[index];
   }
-
+  
   // search the entered term and showing it in a modal - temporary.
   // In actual implementation search results will pass
   searchReplies: ThreadReplies[] = [];

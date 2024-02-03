@@ -1,0 +1,24 @@
+<!-- use this component to get both breadcrumbs and a button on each side.
+pass breadcrumbs: { label: string, route: string }[] and button class and button name.
+the breadcrumb will be displayed
+the button click will be emitted automatically which you can give more properties at your ts file. -->
+
+<!-- <app-breadcrumb-button
+    [buttonClass]="'btn btn-primary'"
+    buttonName="'merins community'"
+    [breadcrumbs]="breadcrumbs"
+    (buttonClick)="handleButtonClick()"
+  ></app-breadcrumb-button> -->
+
+<div class="container">
+  <ng-container class="breadcrumbs-container">
+    <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  </ng-container>
+  <ng-container class="button-container">
+    <app-button
+      [buttonName]="buttonName"
+      [buttonClass]="buttonClass"
+      (buttonClick)="handleButtonClick()"
+    ></app-button>
+  </ng-container>
+</div>
