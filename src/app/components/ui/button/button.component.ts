@@ -9,12 +9,12 @@ export class ButtonComponent {
   @Input() buttonClass: string = '';
   @Input() buttonName: string = '';
   @Input() buttonColor: string = '';
-  @Input() defaultColor: string = 'rgb(31, 151, 145)';
+  @Input() defaultColor: string = '';
   @Input() textColor: string = '';
   @Input() hoverColor: string = '';
   @Input() hoverTextColor: string = '';
-  @Input() defaultTextColor: string = '#ffffff';
-  @Input() disableButton: boolean | null= false;
+  @Input() defaultTextColor: string = '';
+  @Input() disableButton: boolean | null = false;
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
   hover: boolean = false;
 
