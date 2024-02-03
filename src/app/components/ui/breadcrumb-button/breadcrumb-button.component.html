@@ -15,10 +15,19 @@ the button click will be emitted automatically which you can give more propertie
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   </ng-container>
   <ng-container class="button-container">
-    <app-button
+    <!-- <app-button
       [buttonName]="buttonName"
       [buttonClass]="buttonClass"
       (buttonClick)="handleButtonClick()"
-    ></app-button>
+    ></app-button> -->
+    <app-button
+        [buttonClass]="buttonClass"
+        [buttonName]="buttonName"
+        [buttonColor]="buttonColor"
+        [textColor]="textColor"
+        [hoverColor]="hoverColor"
+        [hoverTextColor]="hoverTextColor"
+        (buttonClick)="handleButtonClick()"
+      ></app-button>
   </ng-container>
 </div>

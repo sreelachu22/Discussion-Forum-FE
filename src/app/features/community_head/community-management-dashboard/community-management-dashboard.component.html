@@ -15,12 +15,21 @@
   </nav>
   <br />
   <!-- card data from ts file is displayed here -->
-  <div class="row">
+  <!-- <div class="row">
     <div *ngFor="let titles of cardTitles" class="col-md-4">
       <app-card
         [title]="titles.title"
         (click)="navigateToCard(titles.path)"
       ></app-card>
     </div>
+  </div> -->
+
+  <div class="row">
+  <div *ngFor="let titles of cardTitles" class="col-md-4">
+    <app-card
+       [metadataItems]="[
+         { name: '', value: titles.title },
+       ]" (click)="navigateToCard(titles.path)"
+     ></app-card>
   </div>
 </div>

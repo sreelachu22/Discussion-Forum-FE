@@ -2,9 +2,18 @@
   <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Communities</p>
     <div class="create_button">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Admin Dashboard"
+        (buttonClick)="navigateToAdminDashboard()"
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Admin Dashboard"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
         (buttonClick)="navigateToAdminDashboard()"
       ></app-button>
     </div>
@@ -20,11 +29,20 @@
         <!-- <p>
             number of posts: <span>{{ category.threadCount }}</span>
           </p> -->
-        <app-button
+        <!-- <app-button
           buttonClass="btn btn-primary"
           buttonName="View Community"
           (buttonClick)="navigateToCommunity()"
-        ></app-button>
+        ></app-button> -->
+        <app-button
+                buttonClass="button"
+                buttonName="View Community"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="navigateToCommunity()"
+              ></app-button>
       </div>
     </div>
   </div>

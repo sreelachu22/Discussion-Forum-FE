@@ -6,5 +6,14 @@
     <p>{{ message }}</p>
   </div>
   <div class="modal-footer">
-    <app-button buttonClass="btn btn-primary" buttonName="OK" (buttonClick)="close()"></app-button>
+    <!-- <app-button buttonClass="btn btn-primary" buttonName="OK" (buttonClick)="close()"></app-button> -->
+    <app-button
+        buttonClass="button"
+        buttonName="OK"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="close()"
+      ></app-button>
   </div>

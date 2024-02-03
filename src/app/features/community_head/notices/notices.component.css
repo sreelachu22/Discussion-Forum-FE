@@ -2,14 +2,14 @@
     width: 100%;
 }
 hr{
-    width: 90%;
+    width: 98%;
 }
 
 .notices_body_delete_icon {
     margin-left: 3%; 
 }
 .notices_body_edit_icon {
-    margin-left: 80%; 
+    margin-left: 800px;; 
 }
 
 @media (max-width: 768px) {

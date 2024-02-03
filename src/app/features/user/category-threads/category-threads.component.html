@@ -24,6 +24,7 @@
       >
         Search
       </button>
+      
     </div>
   </div>
   <!-- nav bar -->
@@ -35,16 +36,25 @@
       </p>
     </div>
     <div class="navbar_buttons">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Create Post"
+        (buttonClick)="createPost()"
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Create Post"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
         (buttonClick)="createPost()"
       ></app-button>
     </div>
   </div>
 
   <!-- post displayed here -->
-  <app-list
+  <!-- <app-list
     *ngFor="let thread of CategoryThreads.threads"
     [createdBy]="thread.createdBy"
     [status]="thread.threadStatusName"
@@ -53,8 +63,35 @@
     [votes]="thread.voteCount"
     [tags]="thread.tagNames.join(', ')"
     [isAnswered]="thread.isAnswered"
-    [click]="navigateToThreadReplies.bind(this, thread.threadID)"
-  ></app-list>
+  ></app-list> -->
+
+  <div *ngFor="let thread of CategoryThreads.threads">
+    <app-list
+    [sections]="[
+      {
+        title: 'Column 1',
+        metadataItems: [
+          { name: 'Created By', value: thread.createdBy },
+          { name: 'Status', value: thread.threadStatusName },
+          { name: 'Created At', value: formatDate(thread.createdAt) },
+          { name: 'Votes', value: thread.voteCount }
+        ]
+      },
+      {
+        title: 'Column 2',
+        metadataItems: [
+          { name: 'Post', value: thread.content },
+          { name: 'Tags', value: thread.tagNames.join(', ') }
+        ]
+      },
+      {
+        title: 'Column 3',
+        metadataItems: [{ name: 'Is Answered', value: thread.isAnswered }]
+      }
+    ]"
+  >
+  </app-list>
+  </div>
 
   <!-- pagination ui -->
 
