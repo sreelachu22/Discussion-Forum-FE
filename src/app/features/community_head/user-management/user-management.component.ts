@@ -9,13 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-  sortOptions = ['Name', 'Score', 'Department', 'Designation', 'CreatedAt'];
+  sortOptions = ['Name', 'Score', 'CreatedAt'];
+  // , 'Department', 'Designation'
   sortType: string = 'name';
   title: string = 'usersPage';
   searchText: string = '';
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'User Management', route: '/community-management/user-management' },
+  ];
+
   constructor(
     private userService: UserService,
     private http: HttpClient,
@@ -61,6 +69,13 @@ export class UserManagementComponent implements OnInit {
       this.loadUsers();
     }
   }
+
+  onUserIconClick(event: { icon: string; data: any }): void {
+    if (event.icon === 'edit') {
+      this.GoToSingleUserPage(event.data.userID);
+    }
+  }
+
   GoToSingleUserPage(userID: string): void {
     this.router.navigate([
       `community-management/user-management/user-edit/${userID}`,
@@ -70,5 +85,8 @@ export class UserManagementComponent implements OnInit {
   onSortSelectionChange(selectedValue: string) {
     this.sortType = selectedValue;
     this.loadUsers();
+  }
+  handleButtonClick(){
+    window.alert("hi");
   }
 }

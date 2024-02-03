@@ -1,6 +1,26 @@
 <div class="container">
 <h2>Create a Post</h2>
 <editor [init]="editorInit"></editor>
-<app-button buttonClass="btn btn-primary" id="create_post_button" buttonName="Create" (buttonClick)="onSubmit()"></app-button>
-<button class="btn btn-secondary" id="goback_button" (click)="goBack()">Cancel</button>
+<!-- <app-button buttonClass="btn btn-primary" id="create_post_button" buttonName="Create" (buttonClick)="onSubmit()"></app-button> -->
+<!-- <button class="btn btn-secondary" id="goback_button" (click)="goBack()">Cancel</button> -->
+<app-button
+    buttonClass="button"
+    buttonName="Post"
+    buttonColor="rgb(31, 151, 145)"
+    textColor="white"
+    hoverColor="rgb(51, 171, 165)"
+    hoverTextColor="white"
+    (buttonClick)="onSubmit()"
+    id="create_post_button"
+    ></app-button>
+    <app-button
+    buttonClass="button"
+    buttonName="Cancel"
+    buttonColor="rgb(31, 151, 145)"
+    textColor="white"
+    hoverColor="rgb(51, 171, 165)"
+    hoverTextColor="white"
+    (buttonClick)="goBack()"
+    id="goback_button"
+></app-button>
 </div>

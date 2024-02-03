@@ -35,6 +35,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { DateFormatPipe } from './pipe/date-format.pipe';
 import { SidenavigationComponent } from './components/layout/sidenavigation/sidenavigation.component';
 import { SidenavCustomComponent } from './components/layout/sidenavigation/sidenav-custom/sidenav-custom.component';
 import { AdminDashboardComponent } from './features/super_admin/admin-dashboard/admin-dashboard.component';
@@ -50,6 +53,12 @@ import { LoaderInterceptor } from './interceptor/loader.interceptor';
 import { LoaderService } from './service/HttpServices/loader.service';
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.component';
+import { BreadcrumbsComponent } from './components/ui/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbButtonComponent } from './components/ui/breadcrumb-button/breadcrumb-button.component';
+import { NestedRepliesComponent } from './features/user/nested-replies/nested-replies.component';
+import { CategoryCardComponent } from './components/ui/category-card/category-card.component';
+import { TableComponent } from './components/ui/table/table.component';
+import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
 import { InputComponent } from './components/ui/input/input.component';
 import { SearchComponent } from './components/ui/search/search.component';
 import { PageHeaderComponent } from './components/ui/page-header/page-header.component';
@@ -87,6 +96,13 @@ import { PaginationComponent } from './components/ui/pagination/pagination.compo
     LoaderComponent,
     ThreadRepliesComponent,
     ThreadReplyComponent,
+    BreadcrumbsComponent,
+    BreadcrumbButtonComponent,
+    NestedRepliesComponent,
+    CategoryCardComponent,
+    TableComponent,
+    DateFormatPipe,
+    CategoryEditModalComponent,
     InputComponent,
     SearchComponent,
     PageHeaderComponent,
@@ -112,6 +128,8 @@ import { PaginationComponent } from './components/ui/pagination/pagination.compo
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
     EditorModule,
   ],
   providers: [

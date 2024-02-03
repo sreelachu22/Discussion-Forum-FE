@@ -15,7 +15,8 @@ import {
 export class SuperadminCategoryManagementComponent {
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
   sortType: string = 'communityCategoryName';
-  title: string = 'categoryPage';
+  title: string = '';
+
   searchText: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;
@@ -30,7 +31,6 @@ export class SuperadminCategoryManagementComponent {
   }
 
   modalRef?: BsModalRef;
-
   //delete confirmation modal is inside another modal.
   //this modal reference is for delete confirmation modal
   bsmodalRef?: BsModalRef;
@@ -50,6 +50,7 @@ export class SuperadminCategoryManagementComponent {
   }
 
   closeModal(): void {
+    console.log('Closing modal...');
     this.modalRef?.hide();
   }
 
@@ -98,6 +99,7 @@ export class SuperadminCategoryManagementComponent {
   createCategory() {
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
+        this.getCategoriesInCommunity();
         this.modalRef?.hide();
       },
       error: (error: Error) => {
@@ -113,7 +115,9 @@ export class SuperadminCategoryManagementComponent {
     this.httpService.updateCategory(id, this.newCategoryName, false).subscribe({
       next: (data: any) => {
         alert('Category updated successfully');
-        this.modalRef?.hide; // Close the modal after updating
+        this.getCategoriesInCommunity();
+        this.modalRef?.hide(); // Close the modal after updating
+        this.newCategoryName = '';  // Clear fields for the next update
       },
       error: (error: any) => {
         console.error('Error updating category:', error);
@@ -124,6 +128,7 @@ export class SuperadminCategoryManagementComponent {
   confirm(categoryID: number): void {
     this.httpService.deleteCategory(categoryID).subscribe({
       next: (data: any) => {
+        this.getCategoriesInCommunity();
         this.bsmodalRef?.hide();
       },
       error: (error: Error) => {
