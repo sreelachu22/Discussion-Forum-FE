@@ -16,6 +16,7 @@ import { SearchResultComponent } from './features/user/search-result/search-resu
 import { UserEditComponent } from './features/community_head/user-edit/user-edit.component';
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
+import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,19 @@ const routes: Routes = [
       {
         path: 'category-management',
         component: CategoryManagementComponent,
+      },
+    ],
+  },
+  {
+    path: 'community-management',
+    children: [
+      {
+        path: 'category-management',
+        component: CategoryManagementComponent,
+      },
+      {
+        path: 'category-management/category-edit',
+        component: CategoryEditModalComponent,
       },
     ],
   },

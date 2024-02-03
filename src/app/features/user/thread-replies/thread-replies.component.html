@@ -30,18 +30,19 @@
 
   <!-- ----------------------------------------- -->
   <!-- Add reply displaying logic here by replacing the below code. -->
-  <div class="card" *ngFor="let reply of threadReplies">
+  <!-- <div class="card" *ngFor="let reply of threadReplies">
     <div class="card-body">
       <p>{{ reply.content }}</p>
     </div>
     <br />
-  </div>
-  <!-- <div>
-    This is a recursive component created in components -> ui -> thread-reply component
+  </div> -->
+  <div>
+    <!-- This is a recursive component created in components -> ui -> thread-reply
+    component -->
     <app-thread-reply
       *ngFor="let reply of threadReplies"
       [reply]="reply"
     ></app-thread-reply>
-  </div> -->
+  </div>
   <!-- ----------------------------------------- -->
 </div>

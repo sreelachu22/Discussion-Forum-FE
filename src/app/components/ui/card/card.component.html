@@ -1,3 +1,25 @@
-<div class="card">
+<div
+  class="card"
+  [style.width]="width || minWidth"
+  [style.height]="height || minHeight"
+>
   {{ title }}
+  <ng-content></ng-content>
 </div>
+<!-- How to use : Example -->
+<!-- 
+If parent component don't want to pass the width and height style use this.
+by default min-width = 300px and min-height=150px.
+      <app-card
+        [title]="titles.title"
+        (click)="yourFunction(titles.path)"
+      ></app-card> -->
+<!--  -->
+<!-- If parent component want to adjust the width style
+      <app-card
+        [title]="titles.title"
+        [width]="'300px'"
+        [height]="'50px'"
+        (click)="yourFunction(parameter)"
+      >
+-->
