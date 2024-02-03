@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-  sortOptions = ['Name', 'Score', 'Department', 'Designation', 'CreatedAt'];
+  sortOptions = ['Name', 'Score', 'CreatedAt'];
+  // , 'Department', 'Designation'
   sortType: string = 'name';
   title: string = 'usersPage';
   searchText: string = '';
@@ -68,6 +69,13 @@ export class UserManagementComponent implements OnInit {
       this.loadUsers();
     }
   }
+
+  onUserIconClick(event: { icon: string; data: any }): void {
+    if (event.icon === 'edit') {
+      this.GoToSingleUserPage(event.data.userID);
+    }
+  }
+
   GoToSingleUserPage(userID: string): void {
     this.router.navigate([
       `community-management/user-management/user-edit/${userID}`,

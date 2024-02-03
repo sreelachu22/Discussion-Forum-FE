@@ -1,7 +1,10 @@
 import { Component, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CategoryService } from 'src/app/service/HttpServices/category.service';
+import {
+  CommunityCategory,
+  CategoryService,
+} from 'src/app/service/HttpServices/category.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import { Thread } from 'src/app/service/HttpServices/thread.service';
@@ -105,17 +108,7 @@ export class CommunityPageComponent {
 
   modalRef?: BsModalRef;
 
-  categories: {
-    communityCategoryMappingID: number;
-    communityID: number;
-    communityCategoryID: number;
-    communityCategoryName: string;
-    description: string;
-    isDeleted: boolean;
-    createdAt: Date;
-    modifiedAt: Date;
-    threadCount: number;
-  }[] = [];
+  categories: CommunityCategory[] = [];
 
   threads: Thread[] = [];
 

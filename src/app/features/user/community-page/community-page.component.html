@@ -16,14 +16,14 @@
         (buttonClick)="navigateToCommunityManagement(communityID)"
       ></app-button> -->
       <app-button
-          buttonClass="button"
-          buttonName="Community Management"
-          buttonColor="rgb(31, 151, 145)"
-          textColor="white"
-          hoverColor="rgb(51, 171, 165)"
-          hoverTextColor="white"
-          (buttonClick)="navigateToCommunityManagement(communityID)"
-        ></app-button>
+        buttonClass="button"
+        buttonName="Community Management"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="navigateToCommunityManagement(communityID)"
+      ></app-button>
     </div>
   </div>
   <br />
@@ -49,15 +49,17 @@
   <br />
 
   <div class="row">
-  <div *ngFor="let category of categoriesList" class="col-md-4">
-   <app-card
-      [metadataItems]="[
-        { name: 'Category ID', value: category.communityCategoryMappingID },
-        { name: '', value: category.communityCategoryName},
-        { name: 'number of posts', value: category.threadCount},
-      ]" (click)="navigateToPosts(category.communityCategoryMappingID)"
-    > </app-card>
-  </div>
+    <div *ngFor="let category of categoriesList" class="col-md-4">
+      <app-card
+        [metadataItems]="[
+          { name: 'Category ID', value: category.communityCategoryMappingID },
+          { name: '', value: category.communityCategoryName },
+          { name: 'number of posts', value: category.threadCount }
+        ]"
+        (click)="navigateToPosts(category.communityCategoryMappingID)"
+      >
+      </app-card>
+    </div>
   </div>
   <!-- <div class="page_body">
     <div
