@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface ThreadReplies {
   replyID: number;
   threadID: number;
-  parentReplyID: number | null;
+  parentReplyID: number | string;
   content: string;
   nestedReplies?: ThreadReplies[];
 }
@@ -15,14 +15,15 @@ export interface ThreadReplies {
 export class ThreadRepliesService {
   constructor(private http: HttpClient) {}
   BASE_URL = 'https://localhost:7160/api/Reply';
+  // BASE_URL = 'https://localhost:7160/api/Reply/getAllNestedRepliesOfaPost';
 
   getRepliesOfThread(
     ThreadId: number,
-    ParentReplyId: number | null,
-    page: number,
-    pageSize: number
-  ): Observable<any> {
-    const url = `${this.BASE_URL}/getAllNestedRepliesOfaPost/${ThreadId}?page=1&pageSize=10`;
+    ParentReplyId: number | string,
+    page: number = 1,
+    pageSize: number = 10
+  ): Observable<any> {    
+    const url = `${this.BASE_URL}/getAllNestedRepliesOfaPost/${ThreadId}/${ParentReplyId}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<any>(url);
   }
 
@@ -30,4 +31,5 @@ export class ThreadRepliesService {
     const url = `${this.BASE_URL}/${ReplyID}`;
     return this.http.get<any>(url);
   }
+  
 }

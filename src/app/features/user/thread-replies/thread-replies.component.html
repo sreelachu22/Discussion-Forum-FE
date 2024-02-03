@@ -1,47 +1,28 @@
 <div class="container">
-  <div>
-    <a href="/home_page" class="breadcrumb_navigation">Home</a>
-    <span> > </span>
-    <a href="/community_page" class="breadcrumb_navigation">Community</a>
-    <span> > </span>
-    <a href="/category_threads" class="breadcrumb_navigation">Category</a>
-    <span> > </span>
-    <a href="/thread_replies" class="breadcrumb_navigation">Post</a>
-  </div>
-  <nav class="navbar navbar-dark bg-secondary">
-    <p class="header_text">Post & Replies</p>
-    <div class="user_search">
-      <input
-        type="text"
-        placeholder="Search"
-        class="search_input"
-        [(ngModel)]="searchTerm"
-        (keyup.enter)="searchResult(searchTerm)"
-      />
-      <button
-        type="submit"
-        class="search_button"
-        (click)="searchResult(searchTerm)"
-      >
-        Search
-      </button>
-    </div>
-  </nav>
-
-  <!-- ----------------------------------------- -->
-  <!-- Add reply displaying logic here by replacing the below code. -->
-  <div class="card" *ngFor="let reply of threadReplies">
+  <div class="card" *ngFor="let reply of threadReplies; let i = index">
     <div class="card-body">
-      <p>{{ reply.content }}</p>
+      <p>{{ reply.replyID }}{{ reply.content }}</p>
+      <ng-container
+        *ngIf="reply.nestedReplies && reply.nestedReplies.length > 0"
+      >
+        <button (click)="toggleReplies(i)">
+          Load
+          {{
+            reply.nestedReplies.length === 1
+              ? "1 Reply"
+              : reply.nestedReplies.length + " Replies"
+          }}
+        </button>
+      </ng-container>
+      <app-nested-replies
+        [reply]="reply"
+        *ngIf="
+          showReplies[i] &&
+          reply.nestedReplies &&
+          reply.nestedReplies.length > 0
+        "
+      ></app-nested-replies>
     </div>
     <br />
   </div>
-  <!-- <div>
-  This is a recursive component created in components -> ui -> thread-reply component
-    <app-thread-reply
-      *ngFor="let reply of threadReplies"
-      [reply]="reply"
-    ></app-thread-reply>
-  </div> -->
-  <!-- ----------------------------------------- -->
 </div>
