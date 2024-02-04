@@ -2,22 +2,80 @@
 <div class="container">
   <a href="home_page" class="breadcrumb_navigation">Home</a>
   <span> > </span>
-  <span><a href="community_management_dashboard" class="breadcrumb_navigation">Community management</a></span
+  <span
+    ><a href="community_management_dashboard" class="breadcrumb_navigation"
+      >Community management</a
+    ></span
   ><br /><br />
   <div class="row">
     <div class="col-8">
       <h1>Notices</h1>
     </div>
     <div class="col-4 text-right">
-     <app-button
-        buttonClass="btn btn-primary notices_body_create_button"
+      <!-- <app-button
+        buttonClass="button_teal"
         buttonName="Create Notice"
+        buttonColor="rgb(287, 224, 224)"
         (buttonClick)="openModal(openmodalTemplate)"  
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Create Notice"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="openModal(openmodalTemplate)"
       ></app-button>
       <!-- on button click opens modal to create notice -->
     </div>
   </div>
   <!-- dislays active notices -->
+  <div *ngFor="let notice of notices">
+    <app-list
+      [sections]="[
+        {
+          title: 'Notice Details',
+          metadataItems: [
+            { name: 'Notice ID', value: notice.noticeID },
+            { name: 'Title', value: notice.title },
+            { name: 'Content', value: notice.content }
+          ]
+        },
+        {
+          title: 'Timestamps',
+          metadataItems: [
+            {
+              name: 'Created At',
+              value: notice.createdAt | date : 'dd-MM-yyyy'
+            },
+            {
+              name: 'Modified At',
+              value: notice.modifiedAt | date : 'dd-MM-yyyy'
+            },
+            {
+              name: 'Expires At',
+              value: notice.expiresAt | date : 'dd-MM-yyyy'
+            }
+          ]
+        }
+      ]"
+    >
+      <app-icon
+        class="notices_body_edit_icon"
+        [iconName]="faEdit"
+        (click)="openUpdateModal(updatemodalTemplate, notice)"
+      ></app-icon>
+      <app-icon
+        class="notices_body_delete_icon"
+        [iconName]="faDelete"
+        (click)="openDeleteModal(delete, notice)"
+      ></app-icon>
+    </app-list>
+    <hr />
+  </div>
+
+  <!--
   <div *ngFor="let notice of notices">
     <div class="card">
       <div class="card-body">
@@ -34,9 +92,9 @@
           >
           &nbsp;&nbsp;|&nbsp;&nbsp; Expires At:
           {{ notice.expiresAt | date : "dd-MM-yyyy" }}
-        </p>
-        <!-- utilises icons for edit and delete to open corresponding modals -->
-        <app-icon class="notices_body_edit_icon"
+        </p> -->
+  <!-- utilises icons for edit and delete to open corresponding modals -->
+  <!-- <app-icon class="notices_body_edit_icon"
         [iconName]="faEdit"
         (click)="openUpdateModal(updatemodalTemplate, notice)"></app-icon>
         <app-icon class="notices_body_delete_icon"
@@ -45,8 +103,7 @@
       </div>
     </div>
     <hr />
-  </div>
-  
+  </div> -->
 
   <!-- modal for notice creation -->
   <ng-template #openmodalTemplate>
@@ -83,7 +140,8 @@
           autocomplete="off"
           bsDatepicker
           [bsConfig]="bsDatepickerConfig"
-        /> <!-- Utilizes the ngx-bootstrap datepicker -->
+        />
+        <!-- Utilizes the ngx-bootstrap datepicker -->
       </div>
       <div class="form-group">
         <label for="content">Content</label>
@@ -116,18 +174,36 @@
       </div>
     </div>
     <div class="modal-footer">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Add Notice"
         (buttonClick)="addNotice()"
+      ></app-button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Add Notice"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="addNotice()"
       ></app-button>
-      <button
+      <!-- <button
         type="button"
         class="btn btn-secondary modal_close_button"
         (click)="modalRef?.hide()"
       >
         Close
-      </button>
+      </button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Close"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="modalRef?.hide()"
+      ></app-button>
       <!-- buttons to add notice and hide modal  -->
     </div>
   </ng-template>
@@ -198,22 +274,63 @@
         />
       </div>
       <div class="form-group">
-      <label for="modifiedBy">Modified By</label>
-      <input type="text" class="form-control" [(ngModel)]="selectedNotice.modifiedBy" name="modifiedBy">
+        <label for="modifiedBy">Modified By</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="selectedNotice.modifiedBy"
+          name="modifiedBy"
+        />
       </div>
     </div>
-  <div class="modal-footer">
-      <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button>
-    <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button>
-  </div>
-</ng-template>
+    <div class="modal-footer">
+      <app-button
+        buttonClass="button"
+        buttonName="Update Notice"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="updateNotice()"
+      ></app-button>
+      <!-- <app-button buttonClass="btn btn-primary" buttonName="Update Notice" (buttonClick)="updateNotice()"></app-button> -->
+      <!-- <button type="button" class="btn btn-secondary modal_close_button" (click)="modalRef?.hide()">Close</button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Close"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="modalRef?.hide()"
+      ></app-button>
+    </div>
+  </ng-template>
 
-
-<!-- modal for delete confirmation -->
-<ng-template #delete>
-  <div class="modal-body text-center">
-    <p>Do you want to confirm?</p>
-    <app-button buttonClass="btn btn-primary" buttonName="Yes" (buttonClick)="deleteNotice()"></app-button>
-    <button type="button" class="btn btn-default" (click)="modalRef?.hide()">No</button>
-  </div>
-</ng-template>
+  <!-- modal for delete confirmation -->
+  <ng-template #delete>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm?</p>
+      <!-- <app-button buttonClass="btn btn-primary" buttonName="Yes" (buttonClick)="deleteNotice()"></app-button>
+    <button type="button" class="btn btn-default" (click)="modalRef?.hide()">No</button> -->
+      <app-button
+        buttonClass="button"
+        buttonName="Yes"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="deleteNotice()"
+      ></app-button>
+      <app-button
+        buttonClass="button"
+        buttonName="No"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="modalRef?.hide()"
+      ></app-button>
+    </div>
+  </ng-template>
+</div>

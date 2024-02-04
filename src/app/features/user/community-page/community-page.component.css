@@ -1,187 +1,183 @@
 .container{
-    width: 96%;
+  width: 96%;
 }
 
 .top_nav{
+display: flex;
+/* align-items: center; */
+flex-direction: row;
+justify-content: space-between;
+}
+
+.page_top{
   display: flex;
-  /* align-items: center; */
   flex-direction: row;
   justify-content: space-between;
 }
 
-.page_top{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.header_text {
+  font-weight: 500;
+  font-size: x-large;
+  padding-left: 30px;
+  color: #ffffff;
+  align-items: center;
+}
+.navbar {
+  align-items: center;
+  border-radius: 5px;
+  height: 100px;
 }
 
-.header_text {
-    font-weight: 500;
-    font-size: x-large;
-    padding-left: 30px;
-    color: #ffffff;
-    align-items: center;
-  }
-  .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 5px;
-    height: 100px;
-  }
+.user_search {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  left: -10px;
+}
 
-  .user_search {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    left: -10px;
-  }
+.search_input {
+  width: 500px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  .search_input {
-    width: 200px;
-    /* padding: 10px; */
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .search_button {
-    background-color: rgb(31, 151, 145);
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 0;
-    right: 0;
-    transition: 0.9s ease;
-  }
-  
-  .search_button:hover {
-    transform: scale(1.1);
-    color: rgb(255, 255, 255);
-  }
-  
+.search_button {
+  background-color: rgb(31, 151, 145);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.9s ease;
+}
 
-  .result_modal{
-    width: 90%;
-  }
+.search_button:hover {
+  transform: scale(1.1);
+  color: rgb(255, 255, 255);
+}
 
-  .close{
-    border: none;
-  }
+.result_modal{
+  width: 90%;
+}
+
+.close{
+  border: none;
+}
 
 .btn{
-    size: 3rem;
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-    background-color: rgb(31, 151, 145);
+  size: 3rem;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  background-color: rgb(31, 151, 145);
 }
 
 .btn:hover{
-    transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .create_button{
-    margin-right: 3%;
+  margin-right: 3%;
 }
 
-.page_body {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-  }
+.category_card{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* width: 20%; */
+}
 
-.card{
-    width: 30%;
-    margin-top: 2rem;
-    margin-left: 1rem;
-    transition: box-shadow 0.2s ease-in-out, transform 0.3s ease-in-out;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+/* .card{
+  width: 30%;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  transition: box-shadow 0.2s ease-in-out, transform 0.3s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .card:hover{
-    transform: scale(1.07);
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  transform: scale(1.07);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .card-body{
-    margin-top: 2rem;
-}
+  margin-top: 2rem;
+} */
 
 .pagination {
-    margin-top: 20px;
-    justify-content: center;
-  }
-  
-  .prevButton {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: rgb(31, 151, 145);
-    border: none;
-    color: #ffffff;
-    text-align: center;
-    font-size: 14px;
-    padding: 10px; 
-    width: 100px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-  }
-  .nextButton {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: rgb(31, 151, 145);
-    border: none;
-    color: #ffffff;
-    text-align: center;
-    font-size: 14px;
-    padding: 10px;
-    width: 100px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-  }
-  
-  .prevButton span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-  
-  .nextButton span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-  
-  .prevButton span:after {
-    content: "«";
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -15px;
-    transition: 0.5s;
-  }
-  
-  .nextButton span:after {
-    content: "»";
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -15px;
-    transition: 0.5s;
-  }
-  
-  .prevButton:hover span {
-    padding-right: 15px;
-  }
-  
-  .nextButton:hover span {
-    padding-right: 15px;
-  }
-  
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.prevButton {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: rgb(31, 151, 145);
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px; 
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.nextButton {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: rgb(31, 151, 145);
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.prevButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.nextButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.prevButton span:after {
+  content: "«";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+}
+
+.nextButton span:after {
+  content: "»";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+}
+
+.prevButton:hover span {
+  padding-right: 15px;
+}
+
+.nextButton:hover span {
+  padding-right: 15px;
+}

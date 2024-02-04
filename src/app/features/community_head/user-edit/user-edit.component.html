@@ -21,18 +21,36 @@
       <h1 class="header_text">User Details</h1>
     </div>
     <div class="navbar_buttons">
-      <app-button
+      <!-- <app-button
         buttonClass="btn btn-primary"
         buttonName="Change User Role"
         (buttonClick)="editUserRole()"
         *ngIf="!userRoleToggle; else saveChangesButton"
-      ></app-button>
+      ></app-button> -->
+      <app-button
+                buttonClass="button"
+                buttonName="Change User Role"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="editUserRole()"
+              ></app-button>
       <ng-template #saveChangesButton>
-        <app-button
+        <!-- <app-button
           buttonClass="btn btn-success"
           buttonName="Save Change"
           (buttonClick)="saveChanges()"
-        ></app-button>
+        ></app-button> -->
+        <app-button
+                buttonClass="button"
+                buttonName="Save Change"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="saveChanges()"
+              ></app-button>
       </ng-template>
     </div>
   </div>
