@@ -2,11 +2,13 @@
   width: 96%;
 }
 
-.card {
+/* .card {
   margin: 1rem;
   color: blue;
+} */
+.card-body1 {
+  margin-left: 20px; /* Adjust the value based on your preference for the right offset */
 }
-
 .page_top {
   display: flex;
   flex-direction: row;

@@ -1,12 +1,9 @@
 <div
   class="nested-replies"
-  *ngIf="reply.nestedReplies && reply.nestedReplies.length > 0"
+  *ngIf="nestedReply.nestedReplies && nestedReply.nestedReplies.length > 0"
 >
-  <div class="card" *ngFor="let nestedReply of reply.nestedReplies">
-    <div class="card-body">
-      <p>{{ nestedReply.replyID }}{{ nestedReply.content }}</p>
-      <app-nested-replies [reply]="nestedReply"></app-nested-replies>
-    </div>
-    <br />
+  <div class="card1" *ngFor="let nested of nestedReply.nestedReplies">
+    <app-reply-list [reply]="nested"></app-reply-list>
+    <app-nested-replies [nestedReply]="nested"></app-nested-replies>
   </div>
 </div>

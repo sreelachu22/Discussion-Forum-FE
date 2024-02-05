@@ -22,11 +22,11 @@ export class SidenavCustomComponent {
       label: 'Home',
       routes: 'home_page',
     },
-    {
-      icon: 'search',
-      label: 'Search',
-      routes: '/search',
-    },
+    // {
+    //   icon: 'search',
+    //   label: 'Search',
+    //   routes: '/search',
+    // },
     {
       icon: 'bolt',
       label: 'Latest',
