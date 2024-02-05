@@ -14,14 +14,9 @@
     </div>
   </div>
   <br />
-  <nav class="navbar navbar-dark bg-secondary">
+  <!-- <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Category Management</p>
     <div class="create_button">
-      <!-- <app-button
-        buttonClass="btn btn-primary"
-        buttonName="Create Category"
-        (buttonClick)="openCreateCategoryModal(create)"
-      ></app-button> -->
       <app-button
         buttonClass="button"
         buttonName="Create Category"
@@ -32,7 +27,15 @@
         (buttonClick)="openCreateCategoryModal(create)"
       ></app-button>
     </div>
-  </nav>
+  </nav> -->
+
+  <app-page-header
+    pageHeaderTitle="Category Management"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    ButtonName="Create Category"
+    (ButtonClick)="openCreateCategoryModal(create)"
+  ></app-page-header>
+
   <ng-template #create>
     <div class="modal-header">
       <h4 class="modal-title">Create Category</h4>
