@@ -1,11 +1,12 @@
 // Import necessary modules and components
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { NoticeCreateModalComponent } from 'src/app/components/ui/notice-create-modal/notice-create-modal.component';
  
 // Decorate the component with @Component
 @Component({
@@ -32,16 +33,24 @@ export class NoticesComponent {
   constructor(
     private noticesService: NoticesService,
     private modalService: BsModalService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {}
- 
+
   faEdit = faEdit;
   faDelete = faTrash;
  
   ngOnInit(): void {
     this.getValues();
   }
- 
+
+  openCreateNoticeModal() {
+    this.modalRef = this.modalService.show(NoticeCreateModalComponent);
+    this.modalRef.content?.noticeCreated.subscribe(() => {
+      // Trigger the getValues method to refresh data
+      this.getValues();
+    });
+  }
+
   getValues() {
     this.noticesService.getData(this.apiUrl).subscribe(
       (response: any[]) => {
@@ -53,14 +62,6 @@ export class NoticesComponent {
     );
   }
  
-  //pass the reference to the template we use for the modal
-  openModal(template: TemplateRef<any>) {
-    // Reset newNotice for creating a new notice
-    this.newNotice = {};
-    this.modalRef = this.modalService.show(template);
-    // Display the modal using the provided template
-  }
- 
   openUpdateModal(template: TemplateRef<any>, notice: any) {
     // Set selectedNotice with existing data for updating
     this.selectedNotice = { ...notice }; // Use spread operator to create a copy
@@ -68,36 +69,6 @@ export class NoticesComponent {
     this.modalRef = this.modalService.show(template);
   }
  
-  addNotice() {
-    // Ensure all required fields are provided
-    if (
-      this.newNotice.communityID &&
-      this.newNotice.title &&
-      this.newNotice.content &&
-      this.newNotice.expiresAt &&
-      this.newNotice.createdBy
-    ) {
-      // Format the expiresAt property before sending it to the backend
-      this.newNotice.expiresAt = this.formatBackendDate(
-        this.newNotice.expiresAt
-      );
- 
-      this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
-        (response) => {
-          console.log('POST Request Successful:', response);
-          this.getValues();
-        },
-        (error) => {
-          console.error('POST Request Failed:', error);
-        }
-      );
- 
-      // Close the modal after adding the notice
-      this.modalRef?.hide();
-    } else {
-      console.error('Please provide all required fields.');
-    }
-  }
  
   // Function to format the date in the desired format
   private formatBackendDate(date: Date | null): string | null {
