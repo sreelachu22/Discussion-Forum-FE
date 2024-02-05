@@ -6,17 +6,95 @@
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }*/
 
-button {
+/* button {
   padding: 10px 15px;
   font-size: 16px;
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-}
+  margin: 15px;
+} */
 
 /* .button :hover {
   background-color: rgb(51, 171, 165); 
   border-color: rgb(51, 171, 165); 
   color: #fff; 
 }  */
+button {
+  padding: 10px 15px;
+  color: #fff;
+  background-color: rgb(31, 151, 145);
+  border-radius: 5px;
+  border: 1px solid transparent; /* Added border style */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  background-color: rgb(51, 171, 165); /* New background color on hover */
+  border-color: transparent; /* New border color on hover */
+  color: #fff; /* New text color on hover */
+}
+
+.Search_button {
+  width: 100px;
+  height: 40px;
+  border-radius: 36px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  z-index: 1;
+  margin-left: -99px;
+}
+
+.Functional_button {
+  padding: 0px 0px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.Previous_button,
+.Next_button {
+  width: 90px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  background-color: white;
+  color: black;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s, box-shadow 0.2s;
+}
+
+.Previous_button:hover,
+.Next_button:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Shadow change on hover */
+}
+
+.Page_button {
+  border-color: rgb(196, 196, 196);
+  width: 40px;
+  height: 40px;
+  color: black;
+  background-color: white;
+  margin-right: 10px;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.current-page {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: rgb(51, 171, 165);
+  color: white;
+  border-color: #6a6a6a;
+}

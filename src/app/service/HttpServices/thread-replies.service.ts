@@ -7,6 +7,14 @@ export interface ThreadReplies {
   threadID: number;
   parentReplyID: number | string;
   content: string;
+  upvoteCount: number;
+  downvoteCount: number;
+  isDeleted:boolean;
+  createdBy:string;
+  createdUserName:string;
+  createdAt:string;
+  modifiedBy:string;
+  modifiedAt:string
   nestedReplies?: ThreadReplies[];
 }
 @Injectable({

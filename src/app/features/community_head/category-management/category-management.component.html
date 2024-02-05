@@ -43,187 +43,15 @@
     </div>
   </div>
   <br />
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Sl No:</th>
-        <th>Category Name</th>
-        <th>Description</th>
-        <th>Created Date</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let category of categoriesList;
-          let oddValue = odd;
-          let evenValue = even;
-          let i = index
-        "
-        [ngClass]="oddValue ? 'odd_value' : 'even_value'"
-        [ngClass]="{ 'row-hovered': isRowHovered === i }"
-        (mouseenter)="onMouseEnter(i)"
-        (mouseleave)="onMouseLeave()"
-      >
-        <td>{{ i + 1 }}</td>
-        <td>{{ category.communityCategoryName }}</td>
-        <td>{{ category.description }}</td>
-        <td>{{ category.createdAt | date : "dd-MM-yyyy" }}</td>
-        <td>
-          <span
-            triggers="mouseenter"
-            placement="top"
-            *ngIf="isRowHovered === i"
-          >
-            <app-icon
-              [iconName]="faDelete"
-              (click)="openDeleteModal(delete)"
-            ></app-icon>
-          </span>
 
-          <ng-template #delete>
-            <div class="modal-body text-center">
-              <p>Do you want to confirm?</p>
-              <!-- <button
-                type="button"
-                class="btn btn-default"
-                (click)="confirm(category.communityCategoryID)"
-              >
-                Yes
-              </button> -->
-              <app-button
-                buttonClass="button"
-                buttonName="Yes"
-                buttonColor="rgb(31, 151, 145)"
-                textColor="white"
-                hoverColor="rgb(51, 171, 165)"
-                hoverTextColor="white"
-                (buttonClick)="confirm(category.communityCategoryID)"
-              ></app-button>
-              <!-- <button type="button" class="btn btn-primary" (click)="decline()">
-                No
-              </button> -->
-              <app-button
-                buttonClass="button"
-                buttonName="No"
-                buttonColor="rgb(31, 151, 145)"
-                textColor="white"
-                hoverColor="rgb(51, 171, 165)"
-                hoverTextColor="white"
-                (buttonClick)="decline()"
-              ></app-button>
-            </div>
-          </ng-template>
-        </td>
-        <td>
-          <span
-            triggers="mouseenter"
-            placement="top"
-            *ngIf="isRowHovered === i"
-          >
-            <app-icon
-              [iconName]="faEdit"
-              class="edit_icon"
-              (click)="openUpdateModal(update)"
-            ></app-icon>
-          </span>
-
-          <ng-template #update>
-            <div class="modal-header">
-              <h4 class="modal-title">Update Category Description</h4>
-            </div>
-            <div class="modal-body">
-              <form
-                (ngSubmit)="
-                  updateCategoryDescription(category.communityCategoryMappingID)
-                "
-                #categoryForm="ngForm"
-              >
-                <div class="form-group">
-                  <label for="oldDescription">Old Description:</label>
-                  <textarea
-                    class="form-control"
-                    name="oldDescription"
-                    [(ngModel)]="category.description"
-                    readonly
-                  ></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="newDescription">New Description:</label>
-                  <textarea
-                    class="form-control"
-                    name="newDescription"
-                    [(ngModel)]="newDescription"
-                    required
-                  ></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="modifiedBy">Modified By:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="modifiedBy"
-                    [(ngModel)]="modifiedBy"
-                    required
-                    #modifiedByField="ngModel"
-                  />
-                  <span
-                    class="form_error"
-                    *ngIf="modifiedByField.invalid && modifiedByField.touched"
-                  >
-                    *Modified By is required
-                  </span>
-                </div>
-
-                <br />
-                <div class="buttons">
-                  <!-- <button
-                    type="submit"
-                    class="btn btn-primary custom-btn"
-                    [disabled]="categoryForm.invalid"
-                  >
-                    Update
-                  </button> -->
-                  <app-button
-                buttonClass="button"
-                buttonName="Update"
-                buttonColor="rgb(31, 151, 145)"
-                textColor="white"
-                hoverColor="rgb(51, 171, 165)"
-                hoverTextColor="white"
-                [disableButton]="categoryForm.invalid"
-              ></app-button>
-                  <span></span>
-                  <span>
-                    <!-- <button
-                      type="button"
-                      class="btn btn-secondary"
-                      (click)="decline()"
-                    >
-                      Close
-                    </button> -->
-                    <app-button
-                buttonClass="button"
-                buttonName="Close"
-                buttonColor="rgb(31, 151, 145)"
-                textColor="white"
-                hoverColor="rgb(51, 171, 165)"
-                hoverTextColor="white"
-                (buttonClick)="decline()"
-              ></app-button>
-                  </span>
-                </div>
-              </form>
-            </div>
-          </ng-template>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- category-management.component.html -->
+  <app-table
+    [displayedColumns]="displayedColumns"
+    [displayedNames]="displayedNames"
+    [dataSource]="categories"
+    [icons]="['edit']"
+    (iconClick)="onCategoryIconClick($event)"
+  ></app-table>
   <div class="pagination mt-3">
     <button (click)="prevPage()" class="prevButton">
       <span>Back</span>
@@ -233,3 +61,53 @@
     </button>
   </div>
 </div>
+
+<!-- <app-button
+                buttonClass="button"
+                buttonName="Yes"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="confirm(category.communityCategoryID)"
+              ></app-button>
+
+              <app-button
+                buttonClass="button"
+                buttonName="Close"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="decline()"
+              ></app-button>
+
+              <app-button
+                buttonClass="button"
+                buttonName="Update"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                [disableButton]="categoryForm.invalid"
+              ></app-button>
+
+              <app-button
+                buttonClass="button"
+                buttonName="No"
+                buttonColor="rgb(31, 151, 145)"
+                textColor="white"
+                hoverColor="rgb(51, 171, 165)"
+                hoverTextColor="white"
+                (buttonClick)="decline()"
+              ></app-button>
+
+              <app-button
+              buttonClass="button"
+              buttonName="Yes"
+              buttonColor="rgb(31, 151, 145)"
+              textColor="white"
+              hoverColor="rgb(51, 171, 165)"
+              hoverTextColor="white"
+              (buttonClick)="confirm(category.communityCategoryID)"
+            ></app-button> -->

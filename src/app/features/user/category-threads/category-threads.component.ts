@@ -38,7 +38,7 @@ export class CategoryThreadsComponent implements OnInit {
   pages: number[] = [];
   communityCategoryMappingID!: number;
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 3;
   totalPages: number = 0;
   creatorId!: string;
 
@@ -150,5 +150,12 @@ export class CategoryThreadsComponent implements OnInit {
     this.router.navigate(['/search-result'], {
       queryParams: { searchTerm: this.searchTerm },
     });
+  }
+
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
+      this.loadThreads();
+    }
   }
 }

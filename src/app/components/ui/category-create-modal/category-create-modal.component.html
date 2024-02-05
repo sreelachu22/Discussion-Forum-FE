@@ -12,15 +12,15 @@
         <!-- selectedCommunityCategory =  communityCategoryID of selected category -->
         <option
           *ngFor="let category of categoriesNotInCommunity"
-          [value]="category.communityCategoryID"
+          [value]="category.communityCategoryName"
         >
           {{ category.communityCategoryName }}
         </option>
-        <option [value]="-1">Other</option>
+        <option [value]="'other'">Other</option>
       </select>
     </div>
     <!-- selectedCommunityCategory =  -1 if selected 'other' -->
-    <div *ngIf="selectedCommunityCategory == -1">
+    <div *ngIf="selectedCommunityCategory == 'other'">
       <div class="form-group">
         <label for="newCategoryName">New Category Name:</label>
         <input

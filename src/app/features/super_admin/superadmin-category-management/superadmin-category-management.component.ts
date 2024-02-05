@@ -15,7 +15,8 @@ import {
 export class SuperadminCategoryManagementComponent {
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
   sortType: string = 'communityCategoryName';
-  title: string = 'categoryPage';
+  title: string = '';
+
   searchText: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;

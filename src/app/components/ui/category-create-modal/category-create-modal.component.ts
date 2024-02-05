@@ -11,9 +11,10 @@ import { Category } from 'src/app/service/HttpServices/superadmin-category.servi
 export class CategoryCreateModalComponent implements OnInit {
   id: number = 1;
   categoriesNotInCommunity: Category[] = [];
-  selectedCommunityCategory: number = 0;
+  selectedCommunityCategory: string = '';
   description: string = '';
   createdBy: string = '';
+  communityCategory: string = '';
   newCategoryName: string = '';
 
   constructor(
@@ -43,9 +44,14 @@ export class CategoryCreateModalComponent implements OnInit {
     new EventEmitter<Category>();
 
   createCategory() {
+    // alert('selected community category' + this.selectedCommunityCategory);
+    if (this.selectedCommunityCategory != 'other') {
+      this.newCategoryName = this.selectedCommunityCategory;
+      // alert('inside - name : ' + this.newCategoryName);
+    }
+    // alert('new category name outside:' + this.newCategoryName);
     const id = 1;
     const body = {
-      communityCategoryId: this.selectedCommunityCategory,
       communitCategoryName: this.newCategoryName,
       description: this.description,
       createdBy: this.createdBy,
@@ -55,13 +61,12 @@ export class CategoryCreateModalComponent implements OnInit {
       .createCategoryDescription(
         id,
         body.description,
-        body.communityCategoryId,
         body.communitCategoryName,
         body.createdBy
       )
       .subscribe({
         next: (data: any) => {
-          alert('New category added');
+          // alert('New category added');
           this.categoryCreated.emit(data); // Emit event with created category data
           this.bsModalRef.hide(); // Close the modal after creating category
         },

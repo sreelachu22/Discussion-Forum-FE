@@ -11,13 +11,25 @@ export interface AllCategories {
     description: string;
     isDeleted: boolean;
     createdBy: string | null;
-    createdAt: Date;
+    createdAt: string;
     modifiedBy: string | null;
-    modifiedAt: Date | null;
+    modifiedAt: string | null;
     threadCount: number | null;
   }[];
   totalCount: number;
   totalPages: number;
+}
+
+export interface CommunityCategory {
+  communityCategoryMappingID: number;
+  communityID: number;
+  communityCategoryID: number;
+  communityCategoryName: string;
+  description: string;
+  isDeleted: boolean;
+  createdAt: Date;
+  modifiedAt: Date;
+  threadCount: number;
 }
 @Injectable({
   providedIn: 'root',
@@ -76,12 +88,10 @@ export class CategoryService {
   createCategoryDescription(
     id: number,
     description: string,
-    communityCategoryId: number,
     communityCategoryName: string,
     createdBy: string
   ): Observable<any> {
     const body = {
-      communityCategoryId: communityCategoryId,
       communityCategoryName: communityCategoryName,
       description: description,
       createdBy: createdBy,
