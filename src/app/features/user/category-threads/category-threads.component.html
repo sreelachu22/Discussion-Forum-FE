@@ -50,8 +50,9 @@
 
     <app-page-header
       navClass="navbar navbar-dark bg-secondary Page_header"
-      [categoryName]="CategoryThreads.categoryName"
-      (createPostClicked)="createPost()"
+      [pageHeaderTitle]="CategoryThreads.categoryName"
+      (ButtonClick)="createPost()"
+      ButtonName="Create Post"
     ></app-page-header>
     <!-- post displayed here -->
     <!-- <app-list

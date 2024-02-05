@@ -21,6 +21,7 @@ export class ButtonComponent {
   handleClick() {
     this.buttonClick.emit();
   }
+
   isCurrentPage(): boolean {
     return this.buttonClass.includes('current-page');
   }

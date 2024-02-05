@@ -10,9 +10,15 @@
     >
   </div>
   <br />
-  <nav class="navbar navbar-dark bg-secondary">
+  <!-- <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Community Management</p>
-  </nav>
+  </nav> -->
+
+  <app-page-header
+    pageHeaderTitle="Community Management"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [showButton]="false"
+  />
   <br />
   <!-- card data from ts file is displayed here -->
   <!-- <div class="row">
@@ -25,11 +31,11 @@
   </div> -->
 
   <div class="row">
-  <div *ngFor="let titles of cardTitles" class="col-md-4">
-    <app-card
-       [metadataItems]="[
-         { name: '', value: titles.title },
-       ]" (click)="navigateToCard(titles.path)"
-     ></app-card>
+    <div *ngFor="let titles of cardTitles" class="col-md-4">
+      <app-card
+        [metadataItems]="[{ name: '', value: titles.title }]"
+        (click)="navigateToCard(titles.path)"
+      ></app-card>
+    </div>
   </div>
 </div>

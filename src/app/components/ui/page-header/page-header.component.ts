@@ -6,15 +6,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./page-header.component.css'],
 })
 export class PageHeaderComponent {
-  showButton: boolean = true;
-  showText: boolean = true;
+  @Input() showButton: boolean = true;
+  @Input() showText: boolean = true;
 
   @Input() navClass: string = '';
-  @Input() categoryName: string = '';
+  @Input() pageHeaderTitle: string = '';
+  @Input() ButtonName: string = '';
 
   onButtonClick() {
-    this.createPostClicked.emit();
+    this.ButtonClick.emit();
   }
 
-  @Output() createPostClicked = new EventEmitter<void>();
+  @Output() ButtonClick = new EventEmitter<void>();
 }
