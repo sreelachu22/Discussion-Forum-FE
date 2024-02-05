@@ -22,6 +22,15 @@ export class NoticesComponent {
 
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+    {
+      label: 'Notice Management',
+      route: '/community_management_dashboard/notice-management',
+    },
+  ];
   // variable to hold a reference to the modal
   modalRef?: BsModalRef;
 

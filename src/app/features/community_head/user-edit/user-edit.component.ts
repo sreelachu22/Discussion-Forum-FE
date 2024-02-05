@@ -25,6 +25,20 @@ export class UserEditComponent {
     private activatedroute: ActivatedRoute
   ) {}
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+    {
+      label: 'User Management',
+      route: '/community_management_dashboard/user-management',
+    },
+    {
+      label: 'User Edit',
+      route:
+        '/community_management_dashboard/user-management/user-edit/:userID',
+    },
+  ];
   //templeate variables
   user!: User;
   userRoleToggle: boolean = false;

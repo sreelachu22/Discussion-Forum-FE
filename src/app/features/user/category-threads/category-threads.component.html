@@ -2,14 +2,8 @@
 <div class="container">
   <!-- bread crumbs -->
   <div class="top_nav">
-    <div>
-      <a href="/home_page" class="breadcrumb_navigation">Home</a>
-      <span> > </span>
-      <a href="/community_page" class="breadcrumb_navigation">Community</a>
-      <span> > </span>
-      <a href="/category_threads" class="breadcrumb_navigation">Category</a>
-    </div>
-
+    <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+    <br />
     <app-page-header
       navClass="navbar navbar-dark bg-secondary Page_header"
       [pageHeaderTitle]="CategoryThreads.categoryName"

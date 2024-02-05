@@ -1,23 +1,25 @@
 <div class="modal-body text-center">
   <p>Do you want to confirm?</p>
 
-  <app-button
-    buttonClass="button"
-    buttonName="Yes"
-    buttonColor="rgb(31, 151, 145)"
-    textColor="white"
-    hoverColor="rgb(51, 171, 165)"
-    hoverTextColor="white"
-    (buttonClick)="confirm()"
-  ></app-button>
+  <div class="buttons">
+    <app-button
+      buttonClass="button"
+      buttonName="Yes"
+      buttonColor="rgb(31, 151, 145)"
+      textColor="white"
+      hoverColor="rgb(51, 171, 165)"
+      hoverTextColor="white"
+      (buttonClick)="confirm()"
+    ></app-button>
 
-  <app-button
-    buttonClass="button"
-    buttonName="No"
-    buttonColor="rgb(31, 151, 145)"
-    textColor="white"
-    hoverColor="rgb(51, 171, 165)"
-    hoverTextColor="white"
-    (buttonClick)="decline()"
-  ></app-button>
+    <app-button
+      buttonClass="button"
+      buttonName="No"
+      buttonColor="rgb(31, 151, 145)"
+      textColor="white"
+      hoverColor="rgb(51, 171, 165)"
+      hoverTextColor="white"
+      (buttonClick)="decline()"
+    ></app-button>
+  </div>
 </div>
