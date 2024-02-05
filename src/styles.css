@@ -1,9 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* @font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/fonts/Montserrat-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/fonts/Montserrat-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+} */
+
 html,
 body {
   margin: 0;
   height: 100vh;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+  /* font-family: 'Inter', sans-serif; */
+  font-family: 'Montserrat' !important;
   background-color: aliceblue;
 }
 .container {
@@ -26,7 +43,6 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .breadcrumb_navigation {

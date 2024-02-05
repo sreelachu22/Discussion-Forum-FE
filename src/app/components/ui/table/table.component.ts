@@ -1,6 +1,13 @@
 // table.component.ts
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Inject } from '@angular/core';
+import { DataService } from 'src/app/service/DataServices/data.service';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -9,23 +16,22 @@ import { Inject } from '@angular/core';
 export class TableComponent {
   @Input() displayedColumns: string[] = [];
   @Input() displayedNames: string[] = [];
-  @Input() dataSource: any[] = [];
+  @Input() dataSource: any = [];
   @Input() icons?: string[];
   @Output() iconClick: EventEmitter<{ icon: string; data: any }> =
     new EventEmitter();
-
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private dataService: DataService
+  ) {}
   onIconClick(icon: string, data: any): void {
     console.log('onIconClick called');
     this.iconClick.emit({ icon, data });
+    this.cdRef.detectChanges();
   }
 
   ngOnInit(): void {
-    this.dataSource = this.dataSource.map((data) => {
-      return {
-        ...data,
-        createdAt: this.formatDate(data.createdAt),
-      };
-    });
+    // this.dataSource = this.dataService.dataSource$;
   }
 
   private formatDate(dateString: string | null): string {
