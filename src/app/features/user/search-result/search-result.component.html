@@ -17,25 +17,13 @@
     </div>
   </div>
   <br />
-  <nav class="navbar navbar-dark bg-secondary">
-    <p class="header_text">Search Results</p>
-    <div class="user_search">
-      <input
-        type="text"
-        placeholder="Search"
-        class="search_input"
-        [(ngModel)]="searchTerm"
-        (keyup.enter)="searchResult(searchTerm)"
-      />
-      <button
-        type="submit"
-        class="search_button"
-        (click)="searchResult(searchTerm)"
-      >
-        Search
-      </button>
-    </div>
-  </nav>
+
+  <app-page-header
+    pageHeaderTitle="Search Results"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [showButton]="false"
+  />
+
   <br />
 
   <div class="page_body mt-3">

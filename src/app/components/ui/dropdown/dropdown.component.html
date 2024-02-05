@@ -1,0 +1,14 @@
+<div class="custom-dropdown">
+  <div *ngIf="results.length > 0; else noMatches">
+    <div
+      *ngFor="let result of results"
+      (click)="selectResult(result)"
+      class="result-item"
+    >
+      {{ result.title }}
+    </div>
+  </div>
+  <ng-template #noMatches>
+    <div class="no-matches">No matches found</div>
+  </ng-template>
+</div>

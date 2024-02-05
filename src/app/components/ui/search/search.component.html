@@ -1,13 +1,23 @@
 <div class="search-container">
-  <app-input
-    placeholder="Search"
-    inputClass="Search_input"
-    (inputChange)="InputChange($event)"
-  ></app-input>
+  <div class="Search_Bar">
+    <app-input
+      placeholder="Search"
+      inputClass="Search_input"
+      (inputChange)="InputChange($event)"
+    ></app-input>
 
-  <app-button
-    buttonName="Search"
-    buttonClass="Search_button"
-    (click)="searchResult()"
-  ></app-button>
+    <app-button
+      buttonName="Search"
+      buttonClass="Search_button"
+      (click)="searchResult()"
+    ></app-button>
+  </div>
+
+  <div class="Drop_Down">
+    <app-dropdown
+      *ngIf="SearchThreadsDropDown.length > 0"
+      [results]="SearchThreadsDropDown"
+      (emitselectResult)="selectResult($event)"
+    ></app-dropdown>
+  </div>
 </div>
