@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sidenavigation',
@@ -8,7 +9,12 @@ import { Component, computed, signal } from '@angular/core';
 export class SidenavigationComponent {
   collapsed = signal(false); //signals
   sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px')); //also signals
-  getLogoPath(): string {
-    return 'logo.png'; // Adjust the path as needed
-  }
+
+  // faUser = faUser;
+  // openUserProfile() {
+  //   // method body to handle the user profile click
+  // }
+  // getLogoPath(): string {
+  //   return 'logo.png'; // Adjust the path as needed
+  // }
 }

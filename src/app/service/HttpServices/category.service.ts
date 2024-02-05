@@ -31,6 +31,21 @@ export interface CommunityCategory {
   modifiedAt: Date;
   threadCount: number;
 }
+
+export interface Categories {
+  communityCategoryMappingID: number;
+  communityID: number;
+  communityCategoryID: number;
+  communityCategoryName: string | null;
+  description: string;
+  isDeleted: boolean;
+  createdBy: string | null;
+  createdAt: string;
+  modifiedBy: string | null;
+  modifiedAt: string | null;
+  threadCount: number | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,13 +55,10 @@ export class CategoryService {
   BASE_URL = 'https://localhost:7160/api/CommunityCategoryMapping';
 
   //get paginated categories
-  getPagedCategories(
-    page: number,
-    sortType: string
-  ): Observable<AllCategories> {
+  getPagedCategories(page: number, sortType: string): Observable<any> {
     const url = `${this.BASE_URL}?communityID=1&term=a&sort=${sortType}&page=${page}&limit=6`;
     console.log(this.http.get(url));
-    return this.http.get<AllCategories>(url);
+    return this.http.get<any>(url);
   }
 
   getACategory(page: number, name: string): Observable<AllCategories> {
