@@ -143,5 +143,5 @@ export class CategoryThreadsComponent implements OnInit {
       this.currentPage = newPage;
       this.loadThreads();
     }
-  }
+  }  
 }
