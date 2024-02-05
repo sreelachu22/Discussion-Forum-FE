@@ -1,12 +1,7 @@
 <div class="container">
-  <nav class="navbar navbar-dark bg-secondary">
+  <!-- <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Communities</p>
     <div class="create_button">
-      <!-- <app-button
-        buttonClass="btn btn-primary"
-        buttonName="Admin Dashboard"
-        (buttonClick)="navigateToAdminDashboard()"
-      ></app-button> -->
       <app-button
         buttonClass="button"
         buttonName="Admin Dashboard"
@@ -17,7 +12,13 @@
         (buttonClick)="navigateToAdminDashboard()"
       ></app-button>
     </div>
-  </nav>
+  </nav> -->
+  <app-page-header
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    pageHeaderTitle="Communities"
+    (ButtonClick)="navigateToAdminDashboard()"
+    ButtonName="Admin Dashboard"
+  ></app-page-header>
   <br />
   <div class="page_body">
     <div class="card" style="width: 15rem; height: fit-content">
@@ -35,14 +36,14 @@
           (buttonClick)="navigateToCommunity()"
         ></app-button> -->
         <app-button
-                buttonClass="button"
-                buttonName="View Community"
-                buttonColor="rgb(31, 151, 145)"
-                textColor="white"
-                hoverColor="rgb(51, 171, 165)"
-                hoverTextColor="white"
-                (buttonClick)="navigateToCommunity()"
-              ></app-button>
+          buttonClass="button"
+          buttonName="View Community"
+          buttonColor="rgb(31, 151, 145)"
+          textColor="white"
+          hoverColor="rgb(51, 171, 165)"
+          hoverTextColor="white"
+          (buttonClick)="navigateToCommunity()"
+        ></app-button>
       </div>
     </div>
   </div>
