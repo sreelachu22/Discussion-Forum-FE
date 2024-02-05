@@ -53,6 +53,8 @@ import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.
 import { BreadcrumbsComponent } from './components/ui/breadcrumbs/breadcrumbs.component';
 import { BreadcrumbButtonComponent } from './components/ui/breadcrumb-button/breadcrumb-button.component';
 import { NestedRepliesComponent } from './features/user/nested-replies/nested-replies.component';
+import { EditorComponent } from './components/ui/editor/editor.component';
+import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/notice-create-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +89,8 @@ import { NestedRepliesComponent } from './features/user/nested-replies/nested-re
     BreadcrumbsComponent,
     BreadcrumbButtonComponent,
     NestedRepliesComponent,
+    EditorComponent,
+    NoticeCreateModalComponent,
   ],
 
   imports: [

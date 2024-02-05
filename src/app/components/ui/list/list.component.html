@@ -35,7 +35,7 @@
 <div class="metadata-container">
   <div *ngFor="let section of sections" class="metadata-column">
     <div *ngFor="let item of section.metadataItems" class="metadata-item">
-      {{ item.name }}: {{ item.value }}
+      {{ item.name }}: <div [innerHTML]="item.isHtml ? item.value : plainText(item.value)"></div>
     </div>
   </div>
 </div>

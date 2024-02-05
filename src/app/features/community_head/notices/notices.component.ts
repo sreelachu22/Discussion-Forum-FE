@@ -7,7 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 
-// Decorate the component with @Component
+// Decorate the component with @Componentv
 @Component({
   selector: 'app-notices', // Selector for the component
   templateUrl: './notices.component.html', // Path to the HTML template file
