@@ -32,11 +32,22 @@
     </div> -->
 
     <!-- app-list.component.html -->
-<div class="metadata-container">
+<!-- <div class="metadata-container">
   <div *ngFor="let section of sections" class="metadata-column">
     <div *ngFor="let item of section.metadataItems" class="metadata-item">
       {{ item.name }}: <div [innerHTML]="item.isHtml ? item.value : plainText(item.value)"></div>
     </div>
+  </div>
+</div>
+<div class="icons-container">
+  <ng-content></ng-content>
+</div> -->
+<div class="metadata-container">
+<div *ngFor="let section of sections" class="metadata-column">
+  <div *ngFor="let item of section.metadataItems" class="metadata-item">
+    {{ item.name }}:
+    <div *ngIf="!item.isHtml">{{ item.value }}</div>
+    <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
   </div>
 </div>
 <div class="icons-container">
