@@ -1,13 +1,17 @@
 <!-- notices.component.html -->
 <div class="container">
+    <!-- <a href="home_page" class="breadcrumb_navigation">Home</a>
+    <span> > </span>
+    <span><a href="community_page" class="breadcrumb_navigation">Community</a></span><br /><br /> -->
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-    <br>
-    <app-page-header
-    pageHeaderTitle="Notices"
-    navClass="navbar navbar-dark bg-secondary Page_header"
-    [showButton]="false"
-      ></app-page-header>
-      <br>
+    <div class="row">
+        <div class="col-8">
+            <h1>Notices</h1>
+        </div>
+        <div class="col-4 text-right">
+        </div>
+    </div>
+
     <div class="row">
         <div *ngFor="let notice of notices">
   
