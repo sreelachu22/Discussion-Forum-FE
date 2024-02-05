@@ -1,0 +1,31 @@
+.custom-dropdown {
+  position: absolute;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  max-height: 250px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  margin-left: 17px;
+  margin-top: -20px;
+  width: 385px;
+}
+
+.custom-dropdown div {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-dropdown div:hover {
+  background-color: #f0f0f0;
+}
+
+.no-matches {
+  padding: 8px;
+  color: #ff0000;
+}
+
+.result-item {
+  font-size: small;
+}

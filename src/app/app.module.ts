@@ -67,6 +67,9 @@ import { PaginationComponent } from './components/ui/pagination/pagination.compo
 import { ReplyListComponent } from './components/ui/reply-list/reply-list.component';
 import { TimeDifferencePipe } from './pipe/time-difference.pipe';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,7 +114,8 @@ import { TimeDifferencePipe } from './pipe/time-difference.pipe';
     TextComponent,
     PaginationComponent,
     ReplyListComponent,
-    TimeDifferencePipe
+    TimeDifferencePipe,
+    DropdownComponent,
   ],
 
   imports: [
@@ -135,6 +139,7 @@ import { TimeDifferencePipe } from './pipe/time-difference.pipe';
     MatTableModule,
     MatPaginatorModule,
     EditorModule,
+    ReactiveFormsModule,
   ],
   providers: [
     CategoryService,

@@ -3,9 +3,12 @@ import { Component, computed, signal } from '@angular/core';
 @Component({
   selector: 'app-sidenavigation',
   templateUrl: './sidenavigation.component.html',
-  styleUrls: ['./sidenavigation.component.css']
+  styleUrls: ['./sidenavigation.component.css'],
 })
 export class SidenavigationComponent {
-  collapsed = signal(false);  //signals
-  sidenavWidth = computed(()=> this.collapsed()? '65px':'250px'); //also signals
+  collapsed = signal(false); //signals
+  sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px')); //also signals
+  getLogoPath(): string {
+    return 'logo.png'; // Adjust the path as needed
+  }
 }

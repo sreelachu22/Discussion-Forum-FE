@@ -13,7 +13,6 @@ import {
 })
 export class InputComponent {
   OnInputChange(event: any) {
-    console.log(event.target.value);
     this.inputChange.emit(event.target.value as string);
   }
   @Input() placeholder: string = '';
