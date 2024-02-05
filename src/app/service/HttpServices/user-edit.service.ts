@@ -26,6 +26,7 @@ export class UserEditService {
     adminId: string
   ): Observable<any> {
     const apiUrl = `https://localhost:7160/api/users/${userId}`;
+    console.log('hello');
 
     const params = new HttpParams()
       .set('RoleID', roleId.toString())

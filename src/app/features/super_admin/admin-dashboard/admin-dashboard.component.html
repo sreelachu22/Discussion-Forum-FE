@@ -9,9 +9,14 @@
     >
   </div>
   <br />
-  <nav class="navbar navbar-dark bg-secondary">
+  <!-- <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Admin Dashboard</p>
-  </nav>
+  </nav> -->
+  <app-page-header
+    pageHeaderTitle="Admin Dashboard"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [showButton]="false"
+  ></app-page-header>
   <br />
   <!-- <div class="row">
     <div *ngFor="let titles of cardTitles" class="col-md-4">
@@ -22,12 +27,11 @@
     </div>
   </div> -->
   <div class="row">
-  <div *ngFor="let titles of cardTitles" class="col-md-4">
-    <app-card
-       [metadataItems]="[
-         { name: '', value: titles.title },
-       ]" (click)="navigateToCard(titles.path)"
-     ></app-card>
+    <div *ngFor="let titles of cardTitles" class="col-md-4">
+      <app-card
+        [metadataItems]="[{ name: '', value: titles.title }]"
+        (click)="navigateToCard(titles.path)"
+      ></app-card>
+    </div>
   </div>
-</div>
 </div>

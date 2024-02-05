@@ -1,2 +1,6 @@
-<!-- custom-input.component.html -->
-<input [placeholder]="placeholder" [ngClass]="inputClass" />
+<input
+  type="text"
+  [placeholder]="placeholder"
+  [ngClass]="inputClass"
+  (input)="OnInputChange($event)"
+/>

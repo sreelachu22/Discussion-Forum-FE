@@ -34,16 +34,6 @@ export class UserEditComponent {
   //change user role
   editUserRole() {
     this.userRoleToggle = !this.userRoleToggle;
-    this.useredit.getUserRoles().subscribe((data) => {
-      this.userRoles = data;
-
-      // Find the role that matches the user's roleName
-      this.userRoles.forEach((role) => {
-        if (role.roleName === this.user.roleName) {
-          this.selectedRoleID = role.roleID;
-        }
-      });
-    });
   }
 
   //save the canged user role
@@ -54,7 +44,7 @@ export class UserEditComponent {
       .changeUserRole(
         this.user.userID,
         this.selectedRoleID,
-        '91CC49BD-FE2A-4322-90AF-50DDAF1EFDEE'
+        '477D9E0A-6C59-49CF-B7C5-ED8A624FF2AE'
       )
       .subscribe({
         next: (response) => {
@@ -92,6 +82,20 @@ export class UserEditComponent {
           },
         });
       }
+
+      this.useredit.getUserRoles().subscribe((data) => {
+        this.userRoles = data;
+
+        // Find the role that matches the user's roleName
+        this.userRoles.forEach((role) => {
+          if (role.roleName === this.user.roleName) {
+            this.selectedRoleID = role.roleID;
+            console.log('');
+          } else {
+            console.log('error matching role');
+          }
+        });
+      });
     });
   }
 }
