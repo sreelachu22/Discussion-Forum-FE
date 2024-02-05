@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import {
   AllCategories,
+  Categories,
   CategoryService,
   CommunityCategory,
 } from 'src/app/service/HttpServices/category.service';
@@ -22,6 +23,7 @@ import { Category } from 'src/app/service/HttpServices/superadmin-category.servi
 import { Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
+import { DataService } from 'src/app/service/DataServices/data.service';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -52,7 +54,8 @@ export class CategoryManagementComponent implements OnInit {
     private httpService: CategoryService,
     private modalService: BsModalService,
     private router: Router,
-    private categoryModalService: CategoryModalService
+    private categoryModalService: CategoryModalService,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -75,25 +78,14 @@ export class CategoryManagementComponent implements OnInit {
 
   faEdit = faEdit;
   faDelete = faTrash;
-  categories: {
-    communityCategoryMappingID: number;
-    communityID: number;
-    communityCategoryID: number;
-    communityCategoryName: string | null;
-    description: string;
-    isDeleted: boolean;
-    createdBy: string | null;
-    createdAt: string;
-    modifiedBy: string | null;
-    modifiedAt: string | null;
-    threadCount: number | null;
-  }[] = [];
+  categories: Categories[] = [];
   //categories pagination api
   loadCategories() {
     this.httpService
       .getPagedCategories(this.currentPage, this.sortType)
       .subscribe((data) => {
         this.categories = data.categories;
+        this.dataService.updateDataSource(data);
         this.pageCount = data.totalPages;
         console.log(this.pageCount);
       });
@@ -122,18 +114,9 @@ export class CategoryManagementComponent implements OnInit {
   // BsModalRef stands for Bootstrap Modal Reference.
   modalRef?: BsModalRef;
 
-  //methods for open modal for update,delete,create
-  // openDeleteModal(template: TemplateRef<void>) {
-  //   this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  // }
-
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
   }
-
-  // openUpdateModal(template: TemplateRef<void>) {
-  //   this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
-  // }
 
   onCategoryIconClick(event: { icon: string; data: any }): void {
     if (event.icon === 'edit') {
@@ -148,73 +131,19 @@ export class CategoryManagementComponent implements OnInit {
     }
   }
 
-  // onCategoryIconClick(event: { icon: string; data: any }): void {
-  //   if (event.icon === 'edit') {
-  //     const dialogRef = this.dialog.open(CategoryEditModalComponent, {
-  //       width: '600px', // Adjust the width as per your requirement
-  //       data: {
-  //         communityCategoryMappingID: event.data.communityCategoryMappingID,
-  //         description: event.data.description,
-  //       },
-  //     });
-
-  //     dialogRef.afterClosed().subscribe((result: any) => {
-  //       // Handle any data or action returned from the modal
-  //       console.log('Modal closed with result:', result);
-  //     });
-  //   }
-  // }
-
   communityCategoryMappingID: number = 0;
   oldDescription: string = '';
   newDescription: string = '';
   modifiedBy: string = '';
 
-  //update category mapping description
-  // updateCategoryDescription(id: number) {
-  //   this.httpService
-  //     .updateCategoryDescription(id, this.newDescription, this.modifiedBy)
-  //     .subscribe({
-  //       next: (data: any) => {
-  //         alert('Category updated successfully');
-  //         this.modalRef?.hide; // Close the modal after updating
-  //       },
-  //       error: (error: any) => {
-  //         console.error('Error updating category:', error);
-  //       },
-  //     });
-  // }
-
-  //after getting confirmation for delete, delete api calls
-  // confirm(categoryID: number): void {
-  //   this.httpService.deleteCategoryMapping(categoryID).subscribe({
-  //     next: (data: any) => {
-  //       alert('deleted');
-  //     },
-  //     error: (error: Error) => {
-  //       alert('Error has occured, ' + error.message);
-  //     },
-  //     complete: () => {
-  //       console.log('Completed');
-  //     },
-  //   });
-  //   //hide modal after deleting
-  //   this.modalRef?.hide();
-  // }
-
-  //close the modal
-  decline(): void {
-    this.modalRef?.hide();
-  }
-
   //To find in which table row is hovered
-  isRowHovered: number | null = null;
-  onMouseEnter(index: number) {
-    this.isRowHovered = index;
-  }
-  onMouseLeave() {
-    this.isRowHovered = null;
-  }
+  // isRowHovered: number | null = null;
+  // onMouseEnter(index: number) {
+  //   this.isRowHovered = index;
+  // }
+  // onMouseLeave() {
+  //   this.isRowHovered = null;
+  // }
 
   id: number = 1;
 
