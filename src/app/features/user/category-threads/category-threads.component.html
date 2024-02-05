@@ -68,7 +68,7 @@
 
     <div *ngFor="let thread of CategoryThreads.threads">
       <app-list
-      (click)="navigateToThreadReplies(thread.threadID)"
+        (click)="navigateToThreadReplies(thread.threadID)"
         [sections]="[
           {
             title: 'Column 1',
@@ -82,7 +82,11 @@
           {
             title: 'Column 2',
             metadataItems: [
-              { name: 'Post', value: thread.content.slice(0, 200), isHtml: true},
+              {
+                name: 'Post',
+                value: thread.content.slice(0, 200),
+                isHtml: true
+              },
               { name: 'Tags', value: thread.tagNames.join(', ') }
             ]
           },
