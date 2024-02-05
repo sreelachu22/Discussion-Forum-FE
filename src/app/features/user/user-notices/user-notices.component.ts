@@ -18,6 +18,12 @@ export class UserNoticesComponent {
     private datePipe: DatePipe
   ) {}
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Notice', route: '/user-notices'}
+  ];
+
   ngOnInit(): void {
     this.getValues();
   }
