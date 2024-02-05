@@ -23,7 +23,8 @@ export class ThreadRepliesComponent {
   parent_replyID: number | string = "";
   searchTerm: string = '';
   threadReplies: ThreadReplies[] = [];
-  showReplies: { [key: number]: boolean } = {};
+  // showReplies: { [key: number]: boolean } = {};
+  showNestedReplies: boolean[] = [];
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((params) => {
       this.threadId = params['threadID'];
@@ -40,8 +41,8 @@ export class ThreadRepliesComponent {
         },
       });
   }  
-  toggleReplies(index: number): void {
-    this.showReplies[index] = !this.showReplies[index];
+  toggleNestedReplies(index: number) {
+    this.showNestedReplies[index] = !this.showNestedReplies[index];
   }
   
   // search the entered term and showing it in a modal - temporary.

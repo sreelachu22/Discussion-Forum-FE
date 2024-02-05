@@ -1,27 +1,18 @@
 <div class="container">
-  <div class="card" *ngFor="let reply of threadReplies; let i = index">
-    <div class="card-body">
-      <p>{{ reply.replyID }}{{ reply.content }}</p>
-      <ng-container
-        *ngIf="reply.nestedReplies && reply.nestedReplies.length > 0"
-      >
-        <button (click)="toggleReplies(i)">
-          Load
-          {{
-            reply.nestedReplies.length === 1
-              ? "1 Reply"
-              : reply.nestedReplies.length + " Replies"
-          }}
-        </button>
-      </ng-container>
-      <app-nested-replies
-        [reply]="reply"
-        *ngIf="
-          showReplies[i] &&
-          reply.nestedReplies &&
-          reply.nestedReplies.length > 0
-        "
-      ></app-nested-replies>
+  <div class="card1" *ngFor="let reply of threadReplies; let i = index">
+    <app-reply-list
+      [reply]="reply"
+      (toggleRepliesEvent)="toggleNestedReplies(i)"
+    ></app-reply-list>
+    <div
+      class="card-body1"
+      *ngIf="
+        reply.nestedReplies &&
+        reply.nestedReplies.length > 0 &&
+        showNestedReplies[i]
+      "
+    >
+      <app-nested-replies [nestedReply]="reply"></app-nested-replies>
     </div>
     <br />
   </div>
