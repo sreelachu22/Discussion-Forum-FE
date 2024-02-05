@@ -50,14 +50,13 @@
     ></app-button>
 </div> -->
 <div class="container">
-<app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-<app-editor
-  [heading]="'Create Post'"
-  [firstButtonName]="'Post'"
-  [secondButtonName]="'Cancel'"
-  (onFirstButtonClick)="onSubmit($event)"
-  (onSecondButtonClick)="goBack()"
-  
-></app-editor>
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  <app-editor
+    [heading]="'Create Post'"
+    [firstButtonName]="'Post'"
+    [secondButtonName]="'Cancel'"
+    (onFirstButtonClick)="onSubmit($event)"
+    (onSecondButtonClick)="goBack()"
+  ></app-editor>
 </div>
 <!-- (secondButtonClick)="goBack()" -->

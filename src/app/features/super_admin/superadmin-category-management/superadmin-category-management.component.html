@@ -1,18 +1,5 @@
 <div class="container">
-  <div class="top_nav">
-    <div>
-      <a href="/admin_dashboard_page" class="breadcrumb_navigation"
-        >Admin Dashboard</a
-      ><span> > </span
-      ><span
-        ><a
-          href="/admin_dashboard_page/:superadmin_category_management"
-          class="breadcrumb_navigation"
-          >Category Management</a
-        ></span
-      >
-    </div>
-  </div>
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
   <!-- <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Category Management</p>
@@ -98,6 +85,10 @@
       (mouseover)="setHoveredCategoryId(category.communityCategoryID)"
       (mouseout)="setHoveredCategoryId(null)"
     >
+      <app-card
+        [metadataItems]="[{ name: '', value: category.communityCategoryName }]"
+        (click)="openUpdateModal(update)"
+      ></app-card>
       <!-- update modal -->
       <ng-template #update>
         <div class="modal-header">
@@ -169,7 +160,7 @@
                 textColor="white"
                 hoverColor="rgb(51, 171, 165)"
                 hoverTextColor="white"
-                (buttonClick)="openDeleteCategoryModal(delete)"
+                (buttonClick)="openDeleteModal(category.communityCategoryID)"
               ></app-button>
             </div>
           </form>

@@ -73,6 +73,9 @@ export class CategoryEditModalComponent {
     this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
+    this.bsmodalRef.content.subscribe(() => {
+      this.dataService.loadCategories();
+    });
   }
   // openDeleteModal(template: TemplateRef<void>) {
   //   console.log('id for delete:', this.communityCategoryMappingID);

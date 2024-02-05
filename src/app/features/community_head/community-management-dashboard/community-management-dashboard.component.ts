@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
 export class CommunityManagementDashboardComponent {
   constructor(private router: Router) {}
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+  ];
   // array for card data in ui
 
   cardTitles: { title: string; path: string }[] = [
@@ -19,7 +24,7 @@ export class CommunityManagementDashboardComponent {
   ];
 
   navigateToCard(path: string) {
-    const route = `community-management/${path}`;
+    const route = `community_management_dashboard/${path}`;
     this.router.navigate([route]);
   }
 }

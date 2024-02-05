@@ -8,7 +8,10 @@ import { Router } from '@angular/router';
 })
 export class AdminDashboardComponent {
   constructor(private router: Router) {}
-
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Admin Dashboard', route: '/admin_dashboard_page' },
+  ];
   cardTitles: { title: string; path: string }[] = [
     { title: 'Category Management', path: 'superadmin_category_management' },
   ];

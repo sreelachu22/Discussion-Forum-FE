@@ -63,6 +63,16 @@ export class CategoryManagementComponent implements OnInit {
     // this.getCategoriesInCommunity();
   }
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+    {
+      label: 'Category Management',
+      route: '/community_management_dashboard/category-management',
+    },
+  ];
+
   getSingleCategory() {
     if (this.searchText == '') {
       this.loadCategories();
@@ -116,6 +126,9 @@ export class CategoryManagementComponent implements OnInit {
 
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
+    this.modalRef.content.categories.subscribe(() => {
+      this.loadCategories();
+    });
   }
 
   onCategoryIconClick(event: { icon: string; data: any }): void {
