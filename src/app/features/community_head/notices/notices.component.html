@@ -69,7 +69,7 @@
       <app-icon
         class="notices_body_delete_icon"
         [iconName]="faDelete"
-        (click)="openDeleteModal(delete, notice)"
+        (click)="openDeleteModal(notice)"
       ></app-icon>
     </app-list>
     <hr />
@@ -308,11 +308,9 @@
   </ng-template>
 
   <!-- modal for delete confirmation -->
-  <ng-template #delete>
+  <!-- <ng-template #delete>
     <div class="modal-body text-center">
       <p>Do you want to confirm?</p>
-      <!-- <app-button buttonClass="btn btn-primary" buttonName="Yes" (buttonClick)="deleteNotice()"></app-button>
-    <button type="button" class="btn btn-default" (click)="modalRef?.hide()">No</button> -->
       <app-button
         buttonClass="button"
         buttonName="Yes"
@@ -332,5 +330,5 @@
         (buttonClick)="modalRef?.hide()"
       ></app-button>
     </div>
-  </ng-template>
+  </ng-template> -->
 </div>

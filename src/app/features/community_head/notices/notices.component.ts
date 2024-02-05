@@ -6,6 +6,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 
 // Decorate the component with @Component
 @Component({
@@ -106,7 +107,6 @@ export class NoticesComponent {
       : null;
   }
 
-
   updateNotice() {
     // Ensure all required fields are provided for update
     if (
@@ -146,12 +146,19 @@ export class NoticesComponent {
     }
   }
 
-  openDeleteModal(deleteModalTemplate: TemplateRef<any>, notice: any): void {
-    // Set the notice to be deleted
+  // BsModalRef stands for Bootstrap Modal Reference.
+  bsmodalRef?: BsModalRef;
+  //methods for open modal for delete
+  openDeleteModal(notice: any): void {
     this.selectedNotice = notice;
+    const initialState = {
+      confirmFunction: this.deleteNotice.bind(this),
+      declineFunction: this.decline.bind(this),
+    };
 
-    // Open the modal
-    this.modalRef = this.modalService.show(deleteModalTemplate);
+    this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
   }
 
   deleteNotice(): void {
@@ -172,4 +179,7 @@ export class NoticesComponent {
     this.modalRef?.hide();
   }
 
+  decline() {
+    this.modalRef?.hide();
+  }
 }

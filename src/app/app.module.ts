@@ -64,6 +64,7 @@ import { SearchComponent } from './components/ui/search/search.component';
 import { PageHeaderComponent } from './components/ui/page-header/page-header.component';
 import { TextComponent } from './components/ui/text/text.component';
 import { PaginationComponent } from './components/ui/pagination/pagination.component';
+import { DeleteModalComponent } from './components/ui/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { PaginationComponent } from './components/ui/pagination/pagination.compo
     PageHeaderComponent,
     TextComponent,
     PaginationComponent,
+    DeleteModalComponent,
   ],
 
   imports: [
