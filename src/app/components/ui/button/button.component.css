@@ -34,15 +34,17 @@ button {
 }
 
 button:hover {
-  background-color: rgb(51, 171, 165); /* New background color on hover */
-  border-color: transparent; /* New border color on hover */
-  color: #fff; /* New text color on hover */
+  background-color: rgb(51, 171, 165);
+  border-color: transparent;
+  color: #fff;
 }
 
 .Search_button {
   width: 100px;
   height: 40px;
   border-radius: 36px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   margin-top: 20px;
   margin-bottom: 20px;
   z-index: 1;
@@ -51,7 +53,7 @@ button:hover {
 
 .Functional_button {
   padding: 0px 0px;
-  width: 100px;
+  width: 150px;
   height: 40px;
   border-radius: 5px;
   margin-top: 20px;

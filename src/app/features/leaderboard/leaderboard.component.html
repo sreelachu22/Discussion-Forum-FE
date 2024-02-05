@@ -1,15 +1,14 @@
 <div class="container">
-  <div
-    *ngFor="let user of topUsers; let i = index"
-    class="user-card"
-    style="width: 25rem"
-  >
-    <h1>{{ getBadgeName(i) }}</h1>
-    <h2>{{ user.name }}</h2>
-    <p>Email: {{ user.email }}</p>
-    <p style="font-weight: bolder">Points: {{ user.score }}</p>
-    <p *ngIf="user.departmentName">Department: {{ user.departmentName }}</p>
-    <p *ngIf="user.designationName">Designation: {{ user.designationName }}</p>
+  <div class="leader-cardlist" *ngFor="let user of topUsers">
+    <app-card
+      [metadataItems]="[
+        { name: '', value: user.name },
+        { name: 'Score', value: user.score }
+      ]"
+    >
+      <div>
+        <img [src]="getBadge(user.score)" />
+      </div>
+    </app-card>
   </div>
 </div>
-;

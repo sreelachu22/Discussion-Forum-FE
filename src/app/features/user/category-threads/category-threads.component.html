@@ -4,45 +4,6 @@
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
     <br />
-    <!-- <div class="user_search">
-      <input
-        type="text"
-        placeholder="Search"
-        class="search_input"
-        [(ngModel)]="searchTerm"
-        (keyup.enter)="searchResult(searchTerm)"
-      />
-      <button
-        type="submit"
-        class="search_button"
-        (click)="searchResult(searchTerm)"
-      >
-        Search
-      </button>
-      
-    </div>
-  </div> -->
-    <!-- nav bar -->
-    <!-- <div class="navbar navbar-dark bg-secondary categorythreads_header">
-    <div class="navbar_container">
-      <h1 class="header_text">{{ CategoryThreads.categoryName }}</h1>
-      <p class="header_description">
-        {{ CategoryThreads.categoryDescription }}
-      </p>
-    </div>
-    <div class="navbar_buttons">
-      <app-button
-        buttonClass="button"
-        buttonName="Create Post"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="createPost()"
-      ></app-button>
-    </div>
-  </div> -->
-
     <app-page-header
       navClass="navbar navbar-dark bg-secondary Page_header"
       [pageHeaderTitle]="CategoryThreads.categoryName"
@@ -50,16 +11,6 @@
       ButtonName="Create Post"
     ></app-page-header>
     <!-- post displayed here -->
-    <!-- <app-list
-    *ngFor="let thread of CategoryThreads.threads"
-    [createdBy]="thread.createdBy"
-    [status]="thread.threadStatusName"
-    [createdOn]="formatDate(thread.createdAt)"
-    [post]="thread.content"
-    [votes]="thread.voteCount"
-    [tags]="thread.tagNames.join(', ')"
-    [isAnswered]="thread.isAnswered"
-  ></app-list> -->
 
     <div *ngFor="let thread of CategoryThreads.threads">
       <app-list

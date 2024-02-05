@@ -55,7 +55,7 @@ export class SearchResultComponent {
             alert('Error has occurred, ' + error.message);
           },
           complete: () => {
-            console.log('Completed');
+            //console.log('Completed');
           },
         });
       }
