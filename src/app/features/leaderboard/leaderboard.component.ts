@@ -13,7 +13,7 @@ export class LeaderboardComponent implements OnInit {
   constructor(private leaderboardService: LeaderboardService) {}
   topUsers: TopUsers[] = [];
   ngOnInit(): void {
-    this.getTopUsers(4);
+    this.getTopUsers(5);
   }
 
   //get top users based on score.
@@ -29,15 +29,15 @@ export class LeaderboardComponent implements OnInit {
   }
 
   //assign badges based on levels
-  getBadgeName(index: number): string {
-    if (index === 0) {
-      return 'Elite Contributor';
-    } else if (index === 1) {
-      return 'Expert Contributor';
-    } else if (index === 2) {
-      return 'Intermediate Contributor';
+  getBadge(score: number): string {
+    if (score >= 100) {
+      return '../../../assets/images/gold-badge.png';
+    } else if (score >= 50) {
+      return '../../../assets/images/silver-badge.png';
+    } else if (score > 0) {
+      return '../../../assets/images/bronze-badge.png';
     } else {
-      return 'Novice Contributor';
+      return '../../../assets/images/new-user.png';
     }
   }
 }
