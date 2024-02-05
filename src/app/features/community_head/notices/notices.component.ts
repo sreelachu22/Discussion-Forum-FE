@@ -6,8 +6,9 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 import { NoticeCreateModalComponent } from 'src/app/components/ui/notice-create-modal/notice-create-modal.component';
- 
+
 // Decorate the component with @Component
 @Component({
   selector: 'app-notices', // Selector for the component
@@ -19,17 +20,26 @@ export class NoticesComponent {
   public notices: any[] = [];
   public newNotice: any = {};
   public selectedNotice: any = {};
- 
+
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
- 
+
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Community Management', route: '/community_management_dashboard' },
+    {
+      label: 'Notice Management',
+      route: '/community_management_dashboard/notice-management',
+    },
+  ];
   // variable to hold a reference to the modal
   modalRef?: BsModalRef;
- 
+
   // Configuration object for the ngx-bootstrap datepicker
   bsDatepickerConfig: any = {
     dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS', // Specifies the date input format for the datepicker
   };
- 
+
   constructor(
     private noticesService: NoticesService,
     private modalService: BsModalService,
@@ -38,7 +48,7 @@ export class NoticesComponent {
 
   faEdit = faEdit;
   faDelete = faTrash;
- 
+
   ngOnInit(): void {
     this.getValues();
   }
@@ -76,8 +86,7 @@ export class NoticesComponent {
       ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS')
       : null;
   }
- 
- 
+
   updateNotice() {
     // Ensure all required fields are provided for update
     if (
@@ -99,7 +108,7 @@ export class NoticesComponent {
         createdBy: this.selectedNotice.createdBy,
         modifiedBy: this.selectedNotice.modifiedBy,
       };
- 
+
       this.noticesService
         .updateData(this.apiUrl, this.selectedNotice.noticeID, requestData)
         .subscribe(
@@ -116,19 +125,26 @@ export class NoticesComponent {
       console.error('Please provide all required fields.');
     }
   }
- 
-  openDeleteModal(deleteModalTemplate: TemplateRef<any>, notice: any): void {
-    // Set the notice to be deleted
+
+  // BsModalRef stands for Bootstrap Modal Reference.
+  bsmodalRef?: BsModalRef;
+  //methods for open modal for delete
+  openDeleteModal(notice: any): void {
     this.selectedNotice = notice;
- 
-    // Open the modal
-    this.modalRef = this.modalService.show(deleteModalTemplate);
+    const initialState = {
+      confirmFunction: this.deleteNotice.bind(this),
+      declineFunction: this.decline.bind(this),
+    };
+
+    this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
   }
- 
+
   deleteNotice(): void {
     if (this.selectedNotice) {
       const noticeId = this.selectedNotice.noticeID;
- 
+
       this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
         (response) => {
           console.log('DELETE Request Successful:', response);
@@ -142,5 +158,8 @@ export class NoticesComponent {
     // Close the modal after deleting the notice
     this.modalRef?.hide();
   }
- 
+
+  decline() {
+    this.modalRef?.hide();
+  }
 }

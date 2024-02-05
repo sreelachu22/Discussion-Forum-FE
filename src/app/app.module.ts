@@ -19,7 +19,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommunityManagementDashboardComponent } from './features/community_head/community-management-dashboard/community-management-dashboard.component';
 import { ListComponent } from './components/ui/list/list.component';
 import { CategoryThreadsComponent } from './features/user/category-threads/category-threads.component';
-import { ButtonComponent } from './components/ui/button/button.component';
 import { CategoryManagementComponent } from './features/community_head/category-management/category-management.component';
 import { CategoryCreateModalComponent } from './components/ui/category-create-modal/category-create-modal.component';
 import { UserManagementComponent } from './features/community_head/user-management/user-management.component';
@@ -66,9 +65,12 @@ import { TextComponent } from './components/ui/text/text.component';
 import { PaginationComponent } from './components/ui/pagination/pagination.component';
 import { ReplyListComponent } from './components/ui/reply-list/reply-list.component';
 import { TimeDifferencePipe } from './pipe/time-difference.pipe';
-
+import { DeleteModalComponent } from './components/ui/delete-modal/delete-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
 import { EditorComponent } from './components/ui/editor/editor.component';
 import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/notice-create-modal.component';
+import { ButtonComponent } from './components/ui/button/button.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +84,6 @@ import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/
     CommunityManagementDashboardComponent,
     ListComponent,
     CategoryThreadsComponent,
-    ButtonComponent,
     CategoryCreateModalComponent,
     UserManagementComponent,
     HomePageComponent,
@@ -114,8 +115,11 @@ import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/
     PaginationComponent,
     ReplyListComponent,
     TimeDifferencePipe,
+    DropdownComponent,
     EditorComponent,
+    ButtonComponent,
     NoticeCreateModalComponent,
+    DeleteModalComponent,
   ],
 
   imports: [
@@ -139,6 +143,7 @@ import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/
     MatTableModule,
     MatPaginatorModule,
     EditorModule,
+    ReactiveFormsModule,
   ],
   providers: [
     CategoryService,

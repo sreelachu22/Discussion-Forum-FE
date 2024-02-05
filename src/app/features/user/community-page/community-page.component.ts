@@ -24,6 +24,11 @@ export class CommunityPageComponent {
     private loaderService: LoaderService
   ) {}
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+  ];
+
   communityID: number = 0;
   ngOnInit(): void {
     this.loadCategories();

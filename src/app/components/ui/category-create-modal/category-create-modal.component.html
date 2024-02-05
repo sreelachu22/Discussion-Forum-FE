@@ -93,8 +93,7 @@
       ></app-button>
       <!-- </button> -->
       <span></span>
-      <span
-        >
+      <span>
         <!-- <button
           type="button"
           class="btn btn-secondary"
@@ -103,16 +102,15 @@
           Close
         </button> -->
         <app-button
-        buttonClass="button"
-        buttonName="Close"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="bsModalRef.hide()"
-      ></app-button>
-        </span
-      >
+          buttonClass="button"
+          buttonName="Close"
+          buttonColor="rgb(31, 151, 145)"
+          textColor="white"
+          hoverColor="rgb(51, 171, 165)"
+          hoverTextColor="white"
+          (buttonClick)="closeModal()"
+        ></app-button>
+      </span>
     </div>
   </form>
 </div>

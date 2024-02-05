@@ -42,10 +42,16 @@ export class CategoryThreadsComponent implements OnInit {
   totalPages: number = 0;
   creatorId!: string;
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Category', route: '/community_page/category_threads' },
+  ];
+
   constructor(
     private threadService: ThreadService,
     private activateRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   // ng init with method to get url params and display content based on it
@@ -124,20 +130,18 @@ export class CategoryThreadsComponent implements OnInit {
     };
 
     this.router.navigate(['category_threads/create_posts'], { queryParams });
+  }
+  // const queryParams = {
+  //   communityCategoryMappingID: this.communityCategoryMappingID,
+  //   creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074',
+  //   heading: 'Create Post',
+  //   firstButtonName: 'Posts',
+  //   secondButtonName: 'Cancel',
+  // onFirstButtonClick: ,
+  // onSecondButtonClick: ,
+  // Add other data as needed
 
-  };
-    // const queryParams = {
-    //   communityCategoryMappingID: this.communityCategoryMappingID,
-    //   creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074',
-    //   heading: 'Create Post',
-    //   firstButtonName: 'Posts',
-    //   secondButtonName: 'Cancel',
-      // onFirstButtonClick: ,
-      // onSecondButtonClick: ,
-      // Add other data as needed
-  
-  
-    // this.router.navigate(['category_threads/create_posts'], { queryParams });
+  // this.router.navigate(['category_threads/create_posts'], { queryParams });
 
   navigateToThreadReplies(threadID: number) {
     this.router.navigate(['/thread-replies'], {
@@ -157,5 +161,5 @@ export class CategoryThreadsComponent implements OnInit {
       this.currentPage = newPage;
       this.loadThreads();
     }
-  }
+  }  
 }
