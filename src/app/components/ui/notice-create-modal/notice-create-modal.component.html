@@ -1,11 +1,11 @@
 <!-- modal for notice creation -->
-<!-- <ng-template #openmodalTemplate> -->
+<ng-template #openmodalTemplate>
   <div class="modal-header">
     <h4 class="modal-title">Create Notice</h4>
     <button
       type="button"
       class="close notice_modal_header_close"
-      (click)="closeModal()"
+      (click)="modalRef?.hide()"
     >
       <span aria-hidden="true">&times;</span>
     </button>
@@ -67,6 +67,11 @@
     </div>
   </div>
   <div class="modal-footer">
+    <!-- <app-button
+      buttonClass="btn btn-primary"
+      buttonName="Add Notice"
+      (buttonClick)="addNotice()"
+    ></app-button> -->
     <app-button
       buttonClass="button"
       buttonName="Add Notice"
@@ -76,7 +81,13 @@
       hoverTextColor="white"
       (buttonClick)="addNotice()"
     ></app-button>
-
+    <!-- <button
+      type="button"
+      class="btn btn-secondary modal_close_button"
+      (click)="modalRef?.hide()"
+    >
+      Close
+    </button> -->
     <app-button
       buttonClass="button"
       buttonName="Close"
@@ -84,8 +95,8 @@
       textColor="white"
       hoverColor="rgb(51, 171, 165)"
       hoverTextColor="white"
-      (buttonClick)="closeModal()"
+      (buttonClick)="modalRef?.hide()"
     ></app-button>
     <!-- buttons to add notice and hide modal  -->
   </div>
-<!-- </ng-template> -->
+</ng-template>

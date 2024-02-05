@@ -1,5 +1,5 @@
 // Import necessary modules and components
-import { Component, EventEmitter, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -14,11 +14,14 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class NoticeCreateModalComponent {
- 
+
   public notices: any[] = [];
   public newNotice: any = {};
 
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
+
+  // variable to hold a reference to the modal
+  modalRef?: BsModalRef;
 
   // Configuration object for the ngx-bootstrap datepicker
   bsDatepickerConfig: any = {
@@ -27,16 +30,27 @@ export class NoticeCreateModalComponent {
 
   constructor(
     private noticesService: NoticesService,
-    private datePipe: DatePipe,
-    private modalRef : BsModalRef
+    private modalService: BsModalService,
+    private datePipe: DatePipe
   ) {}
-
-  @Output() noticeCreated: EventEmitter<any> =
-    new EventEmitter<any>();
 
   faEdit = faEdit;
   faDelete = faTrash;
 
+  ngOnInit(): void {
+    this.getValues();
+  }
+
+  getValues() {
+    this.noticesService.getData(this.apiUrl).subscribe(
+      (response: any[]) => {
+        this.notices = response;
+      },
+      (error) => {
+        console.error('GET Request Failed:', error);
+      }
+    );
+  }
 
   addNotice() {
     // Ensure all required fields are provided
@@ -55,8 +69,7 @@ export class NoticeCreateModalComponent {
       this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
         (response) => {
           console.log('POST Request Successful:', response);
-          this.noticeCreated.emit(response);
-          this.modalRef?.hide(); // Close the modal after creating 
+          // this.getValues();
         },
         (error) => {
           console.error('POST Request Failed:', error);
@@ -77,9 +90,6 @@ export class NoticeCreateModalComponent {
       : null;
   }
 
-  closeModal(){
-    this.modalRef.hide()
-  }
 }
 
 
