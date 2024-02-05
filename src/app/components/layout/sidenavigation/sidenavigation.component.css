@@ -28,3 +28,7 @@ mat-sidenav-content {
 .user_icon {
   margin-left: 10px;
 }
+
+app-search {
+  margin-left: 90px;
+}

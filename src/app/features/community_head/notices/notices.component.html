@@ -13,11 +13,11 @@
     </div>
     <div class="col-4 text-right">
       <!-- <app-button
-        buttonClass="button_teal"
-        buttonName="Create Notice"
-        buttonColor="rgb(287, 224, 224)"
-        (buttonClick)="openModal(openmodalTemplate)"  
-      ></app-button> -->
+          buttonClass="button_teal"
+          buttonName="Create Notice"
+          buttonColor="rgb(287, 224, 224)"
+          (buttonClick)="openModal(openmodalTemplate)"  
+  ></app-button> -->
       <app-button
         buttonClass="button"
         buttonName="Create Notice"
@@ -77,32 +77,32 @@
 
   <!--
   <div *ngFor="let notice of notices">
-    <div class="card">
-      <div class="card-body">
-        <b
-          ><span class="notice_id">Notice ID: {{ notice.noticeID }}</span></b
-        ><br /><br />
-        <h3 class="card-title notice_title">{{ notice.title }}</h3>
-        <p class="card-text">{{ notice.content }}</p>
-         <p class="card-text">
-          Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}
-          <ng-container *ngIf="notice.modifiedAt">
-            &nbsp;&nbsp;|&nbsp;&nbsp; Modified At:
-            {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</ng-container
-          >
-          &nbsp;&nbsp;|&nbsp;&nbsp; Expires At:
-          {{ notice.expiresAt | date : "dd-MM-yyyy" }}
-        </p> -->
+  <div class="card">
+  <div class="card-body">
+  <b
+  ><span class="notice_id">Notice ID: {{ notice.noticeID }}</span></b
+  ><br /><br />
+  <h3 class="card-title notice_title">{{ notice.title }}</h3>
+  <p class="card-text">{{ notice.content }}</p>
+  <p class="card-text">
+            Created At: {{ notice.createdAt | date : "dd-MM-yyyy" }}
+  <ng-container *ngIf="notice.modifiedAt">
+  &nbsp;&nbsp;|&nbsp;&nbsp; Modified At:
+              {{ notice.modifiedAt | date : "dd-MM-yyyy" }}</ng-container
+  >
+  &nbsp;&nbsp;|&nbsp;&nbsp; Expires At:
+            {{ notice.expiresAt | date : "dd-MM-yyyy" }}
+  </p> -->
   <!-- utilises icons for edit and delete to open corresponding modals -->
   <!-- <app-icon class="notices_body_edit_icon"
-        [iconName]="faEdit"
-        (click)="openUpdateModal(updatemodalTemplate, notice)"></app-icon>
-        <app-icon class="notices_body_delete_icon"
-          [iconName]="faDelete"
-          (click)="openDeleteModal(delete, notice)"></app-icon>
-      </div>
-    </div>
-    <hr />
+          [iconName]="faEdit"
+          (click)="openUpdateModal(updatemodalTemplate, notice)"></app-icon>
+  <app-icon class="notices_body_delete_icon"
+            [iconName]="faDelete"
+            (click)="openDeleteModal(delete, notice)"></app-icon>
+  </div>
+  </div>
+  <hr />
   </div> -->
 
   <!-- modal for notice creation -->
@@ -175,10 +175,10 @@
     </div>
     <div class="modal-footer">
       <!-- <app-button
-        buttonClass="btn btn-primary"
-        buttonName="Add Notice"
-        (buttonClick)="addNotice()"
-      ></app-button> -->
+          buttonClass="btn btn-primary"
+          buttonName="Add Notice"
+          (buttonClick)="addNotice()"
+  ></app-button> -->
       <app-button
         buttonClass="button"
         buttonName="Add Notice"
@@ -189,12 +189,12 @@
         (buttonClick)="addNotice()"
       ></app-button>
       <!-- <button
-        type="button"
-        class="btn btn-secondary modal_close_button"
-        (click)="modalRef?.hide()"
-      >
-        Close
-      </button> -->
+          type="button"
+          class="btn btn-secondary modal_close_button"
+          (click)="modalRef?.hide()"
+  >
+          Close
+  </button> -->
       <app-button
         buttonClass="button"
         buttonName="Close"

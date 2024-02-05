@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -6,6 +12,13 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
+  OnInputChange(event: any) {
+    console.log(event.target.value);
+    this.inputChange.emit(event.target.value as string);
+  }
   @Input() placeholder: string = '';
   @Input() inputClass: string = '';
+  @Output() inputChange = new EventEmitter<string>();
+
+  constructor() {}
 }
