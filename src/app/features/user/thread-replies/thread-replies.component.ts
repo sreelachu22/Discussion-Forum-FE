@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
@@ -39,28 +39,31 @@ export class ThreadRepliesComponent {
   threadContent!:string;
 
   ngOnInit() {
-    this.activateRoute.queryParams.subscribe((params) => {
-      this.threadId = params['threadID'];
+    this.activateRoute.queryParams.pipe(
+      switchMap(params => {
+        this.threadId = params['threadID'];
+        return this.threadService.getSingleThread(this.threadId);
+      })
+    ).subscribe((data: any) => {
+      this.threadInfo = data;
+      this.threadTitle = this.threadInfo.title;
+      this.threadContent = this.threadInfo.content;
+  
+      // Add the user and content to replyData    
+      this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});
+  
+      // Call the second service inside the first service's subscribe
+      this.threadRepliesService
+        .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
+        .subscribe({
+          next: (repliesData: any) => {
+            this.threadReplies = repliesData;
+          },
+          error: (error: Error) => {
+            console.log('Error', error);
+          },
+        });
     });
-
-   this.threadService.getSingleThread(this.threadId).subscribe((data) => {
-   this.threadInfo = data;
-    this.threadTitle = this.threadInfo.title;
-    this.threadContent = this.threadInfo.content;    
-    // Add the user and content to replyData    
-    this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});
-});
-
-    this.threadRepliesService
-      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
-      .subscribe({
-        next: (data: any) => {
-          this.threadReplies = data;
-        },
-        error: (error: Error) => {
-          console.log('Error', error);
-        },
-      });
   }
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
