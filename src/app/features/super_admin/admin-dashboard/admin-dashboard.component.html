@@ -10,18 +10,20 @@
     [showButton]="false"
   ></app-page-header>
   <br />
-  <!-- <div class="row">
-    <div *ngFor="let titles of cardTitles" class="col-md-4">
-      <app-card
-        [title]="titles.title"
-        (click)="navigateToCard(titles.path)"
-      ></app-card>
-    </div>
-  </div> -->
   <div class="row">
     <div *ngFor="let titles of cardTitles" class="col-md-4">
       <app-card
-        [metadataItems]="[{ name: '', value: titles.title }]"
+        [metadataItems]="[
+          {
+            name: '',
+            value: '',
+            imageSrc: 'assets/images/settings.png'
+          },
+          { name: '', value: titles.title }
+        ]"
+        [defaultImageWidth]="'30px'"
+        [defaultImageHeight]="'30px'"
+        [marginTop]="'-5px'"
         (click)="navigateToCard(titles.path)"
       ></app-card>
     </div>

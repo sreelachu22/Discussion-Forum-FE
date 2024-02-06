@@ -37,3 +37,11 @@ table {
     background-color: #f0f0f0;
   }
   
+  .mat-mdc-row, .mdc-data-table__content{
+    font-family: 'Montserrat' !important;
+  }
+
+  .mat-mdc-header-row {
+    font-family: 'Montserrat' !important;
+    font-weight: bolder;
+  }

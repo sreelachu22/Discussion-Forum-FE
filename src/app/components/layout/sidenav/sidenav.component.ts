@@ -89,7 +89,7 @@ export class SidenavComponent {
   }
 
   navigateToUserNotices() {
-    this.router.navigate(['user-notices'], {
+    this.router.navigate(['notices'], {
       queryParams: {
         communityID: this.communityID,
       },
@@ -111,7 +111,7 @@ export class SidenavComponent {
   }
 
   navigateToHome() {
-    this.router.navigate(['home_page'], {
+    this.router.navigate(['home'], {
       queryParams: {
         communityID: this.communityID,
       },

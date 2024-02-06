@@ -1,12 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { searchService } from 'src/app/service/HttpServices/search.service';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  throttleTime,
-} from 'rxjs/operators';
 
 export interface Thread {
   communityCategoryMapping: any;
@@ -37,25 +31,42 @@ export class SearchComponent {
 
   searchTerm: string = '';
   SearchThreadsDropDown: Thread[] = [];
+  dropdowntoggle: boolean = true;
+
+  @ViewChild('dropdown')
+  dropdown!: ElementRef;
 
   InputChange(event: any) {
-    this.searchTerm = event;
-    this.searchService.searchThreads(this.searchTerm).subscribe({
-      next: (results: Thread[]) => {
-        this.SearchThreadsDropDown = results;
-      },
-    });
+    this.searchTerm = (event as string).trim();
+    if (this.searchTerm) {
+      this.searchService.searchThreads(this.searchTerm).subscribe({
+        next: (results: Thread[]) => {
+          this.SearchThreadsDropDown = results;
+          this.dropdowntoggle = true;
+        },
+      });
+    } else {
+      this.dropdowntoggle = false;
+    }
   }
 
   searchResult() {
-    this.router.navigate(['/search-result'], {
+    this.router.navigate(['/search-results'], {
       queryParams: { searchTerm: this.searchTerm },
     });
   }
 
   selectResult(selectedThread: Thread) {
-    // Handle the selection of a dropdown result
-    console.log('Selected Thread:', selectedThread);
-    // You can add additional logic here if needed
+    this.dropdowntoggle = false;
+    this.router.navigate(['/thread-replies'], {
+      queryParams: { threadID: selectedThread.threadID },
+    });
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickoutside(event: { target: any }) {
+    if (!this.dropdown.nativeElement.contains(event.target)) {
+      this.dropdowntoggle = false;
+    }
   }
 }

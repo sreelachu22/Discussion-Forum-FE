@@ -20,7 +20,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { Category } from 'src/app/service/HttpServices/superadmin-category.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { DataService } from 'src/app/service/DataServices/data.service';
@@ -55,21 +55,23 @@ export class CategoryManagementComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private categoryModalService: CategoryModalService,
-    private dataService: DataService
+    private dataService: DataService,
+    private activateRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.sortType = 'communityCategoryName';
     this.loadCategories();
     // this.getCategoriesInCommunity();
   }
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Community Management', route: '/community-management-dashboard' },
     {
       label: 'Category Management',
-      route: '/community_management_dashboard/category-management',
+      route: '/community-management-dashboard/category-management',
     },
   ];
 

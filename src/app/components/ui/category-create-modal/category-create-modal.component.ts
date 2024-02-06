@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { DataService } from 'src/app/service/DataServices/data.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
@@ -21,7 +22,8 @@ export class CategoryCreateModalComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private httpService: CategoryService,
-    private dataService: DataService
+    private dataService: DataService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -70,8 +72,12 @@ export class CategoryCreateModalComponent implements OnInit {
         next: (data: any) => {
           // alert('New category added');
           this.categoryCreated.emit(data); // Emit event with created category data
+
+          this.router.navigate(
+            ['/community-management-dashboard/category-management'],
+            { queryParams: { sortType: 'communityCategoryName' } }
+          );
           this.bsModalRef.hide();
-          this.dataService.loadCategories(); // Close the modal after creating category
         },
         error: (error: any) => {
           console.error('Error creating category:', error);

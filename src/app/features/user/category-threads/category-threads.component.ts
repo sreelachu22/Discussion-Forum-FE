@@ -16,6 +16,7 @@ interface ThreadResponse {
 
 interface Thread {
   threadID: number;
+  title: string;
   content: string;
   createdBy: string;
   createdAt: string;
@@ -23,7 +24,8 @@ interface Thread {
   modifiedAt: string;
   threadStatusName: string;
   isAnswered: boolean;
-  voteCount: number;
+  upVoteCount: number;
+  downVoteCount: number;
   tagNames: string[];
 }
 
@@ -38,14 +40,14 @@ export class CategoryThreadsComponent implements OnInit {
   pages: number[] = [];
   communityCategoryMappingID!: number;
   currentPage: number = 1;
-  pageSize: number = 3;
+  pageSize: number = 5;
   totalPages: number = 0;
   creatorId!: string;
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Category', route: '/community_page/category_threads' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Category', route: '/community/category-posts/:categoryID' },
   ];
 
   constructor(
@@ -73,6 +75,7 @@ export class CategoryThreadsComponent implements OnInit {
       .subscribe({
         next: (data: ThreadResponse) => {
           this.CategoryThreads = data;
+          console.log(this.CategoryThreads);
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
           ); // Calculate totalPages
@@ -119,7 +122,39 @@ export class CategoryThreadsComponent implements OnInit {
 
   // user friendly data format
   formatDate(date: string | null): string {
-    return date ? new Date(date).toLocaleDateString() : 'N/A';
+    if (!date) {
+      return 'N/A';
+    }
+
+    const currentDate = new Date();
+    const inputDate = new Date(date);
+
+    const timeDifference = currentDate.getTime() - inputDate.getTime();
+    const secondsDifference = Math.floor(timeDifference / 1000);
+    const minutesDifference = Math.floor(secondsDifference / 60);
+    const hoursDifference = Math.floor(minutesDifference / 60);
+    const daysDifference = Math.floor(hoursDifference / 24);
+
+    if (daysDifference > 3) {
+      return (
+        'on ' +
+        inputDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      );
+    } else if (hoursDifference >= 1) {
+      return `${hoursDifference} ${
+        hoursDifference === 1 ? 'hour' : 'hours'
+      } ago`;
+    } else if (minutesDifference >= 1) {
+      return `${minutesDifference} ${
+        minutesDifference === 1 ? 'minute' : 'minutes'
+      } ago`;
+    } else {
+      return '1 minute ago';
+    }
   }
 
   // create a post
@@ -129,7 +164,9 @@ export class CategoryThreadsComponent implements OnInit {
       creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074', // Replace this with the actual creatorId
     };
 
-    this.router.navigate(['category_threads/create_posts'], { queryParams });
+    this.router.navigate(['/category-posts/create-posts'], {
+      queryParams,
+    });
   }
   // const queryParams = {
   //   communityCategoryMappingID: this.communityCategoryMappingID,
@@ -144,14 +181,14 @@ export class CategoryThreadsComponent implements OnInit {
   // this.router.navigate(['category_threads/create_posts'], { queryParams });
 
   navigateToThreadReplies(threadID: number) {
-    this.router.navigate(['/thread-replies'], {
+    this.router.navigate([`/community/post-replies`], {
       queryParams: { threadID: threadID },
     });
   }
 
   searchTerm: string = '';
   searchResult(searchTerm: string) {
-    this.router.navigate(['/search-result'], {
+    this.router.navigate(['/search-results'], {
       queryParams: { searchTerm: this.searchTerm },
     });
   }
@@ -161,5 +198,5 @@ export class CategoryThreadsComponent implements OnInit {
       this.currentPage = newPage;
       this.loadThreads();
     }
-  }  
+  }
 }

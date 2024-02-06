@@ -20,7 +20,7 @@ export class SidenavCustomComponent {
     {
       icon: 'home',
       label: 'Home',
-      routes: 'home_page',
+      routes: 'home',
     },
     // {
     //   icon: 'search',
@@ -35,7 +35,7 @@ export class SidenavCustomComponent {
     {
       icon: 'notifications',
       label: 'Notifications',
-      routes: 'user-notices',
+      routes: 'notices',
     },
     {
       icon: 'leaderboard',

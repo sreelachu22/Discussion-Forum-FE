@@ -7,11 +7,17 @@ import { Component, Input } from '@angular/core';
 })
 export class CardComponent {
   // @Input() title: string = '';
-  @Input() metadataItems: { name: string; value: any }[] = [];
-  // @Input() width: string | null = null;
-  // @Input() height: string | null = null;
-  // @Input() minWidth: string = '300px'; // default min-width
-  // @Input() minHeight: string = '150px'; // default min-height
-  // @Input() backgroundColor: string =
-  //   'linear-gradient(135deg, #46e8e0, #1d8d87)';
+  @Input() metadataItems: {
+    name: string;
+    value: any;
+    style?: object;
+    imageSrc?: string;
+  }[] = [];
+  @Input() defaultImageWidth: string = '25px'; // Set your default width value
+  @Input() defaultImageHeight: string = '25px'; // Set your default height value
+  @Input() marginTop: string = '0px';
+  @Input() justifyPosition: string = 'center';
+  defaultStyle = {
+    /*default styles here */
+  };
 }

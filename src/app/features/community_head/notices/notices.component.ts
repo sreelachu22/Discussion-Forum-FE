@@ -1,5 +1,5 @@
 // Import necessary modules and components
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -25,12 +25,12 @@ export class NoticesComponent {
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Community Management', route: '/community-management-dashboard' },
     {
       label: 'Notice Management',
-      route: '/community_management_dashboard/notice-management',
+      route: '/community-management-dashboard/notice-management',
     },
   ];
   // variable to hold a reference to the modal
@@ -44,7 +44,7 @@ export class NoticesComponent {
   constructor(
     private noticesService: NoticesService,
     private modalService: BsModalService,
-    private datePipe: DatePipe,
+    private datePipe: DatePipe
   ) {}
 
   faEdit = faEdit;
@@ -72,7 +72,6 @@ export class NoticesComponent {
       }
     );
   }
- 
 
   openUpdateNoticeModal(notice: any) {
     this.modalRef = this.modalService.show(NoticeUpdateModalComponent, {
@@ -84,8 +83,9 @@ export class NoticesComponent {
       this.getValues();
     });
   }
- 
- 
+
+  
+
   // Function to format the date in the desired format
   private formatBackendDate(date: Date | null): string | null {
     return date !== null

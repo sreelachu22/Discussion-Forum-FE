@@ -1,15 +1,23 @@
 <!-- list.component.html -->
 <div class="list" (click)="onClick()">
-<div class="metadata-container">
-<div *ngFor="let section of sections" class="metadata-column">
-  <div *ngFor="let item of section.metadataItems" class="metadata-item" [ngStyle]="item.style || defaultStyle">
-    {{ item.name }}:
-    <div *ngIf="!item.isHtml">{{ item.value }}</div>
-    <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
+  <div class="metadata">
+    <div class="metadata-container">
+      <div
+        *ngFor="let section of sections; let i = index"
+        class="metadata-column-{{ i + 1 }}"
+      >
+        <div
+          *ngFor="let item of section.metadataItems; let j = index"
+          class="metadata-item-{{ j + 1 }}"
+        >
+          {{ item.name }}
+          <div *ngIf="!item.isHtml">{{ item.value }}</div>
+          <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
+        </div>
+      </div>
+      <div class="icons-container">
+        <ng-content></ng-content>
+      </div>
+    </div>
   </div>
-</div>
-<div class="icons-container">
-  <ng-content></ng-content>
-</div>
-</div>
 </div>

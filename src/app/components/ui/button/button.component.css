@@ -67,6 +67,12 @@ button:hover {
   margin-right: 20px;
 }
 
+.Functional_button_community_management {
+  @extend .Functional_button;
+  width: 220px;
+  margin-right: 20px;
+}
+
 .Previous_button,
 .Next_button {
   width: 90px;

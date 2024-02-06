@@ -2,10 +2,12 @@
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   </div>
+  <br />
   <app-page-header
     pageHeaderTitle="Experion Discussion"
     navClass="navbar navbar-dark bg-secondary Page_header"
     ButtonName="Community Management"
+    ButtonClass="Functional_button_community_management"
     (ButtonClick)="navigateToCommunityManagement(communityID)"
   />
   <br />
@@ -14,8 +16,16 @@
     <div *ngFor="let category of categoriesList" class="col-md-4">
       <app-card
         [metadataItems]="[
-          { name: 'Category ID', value: category.communityCategoryMappingID },
-          { name: '', value: category.communityCategoryName },
+        {
+          name: '',
+          value: '',
+          imageSrc: 'assets/images/category.png'
+        },
+          {
+            name: '',
+            value: category.communityCategoryName,
+            style: { color: '#64A2F5', fontSize: '16px' },
+          },
           { name: 'number of posts', value: category.threadCount }
         ]"
         (click)="navigateToPosts(category.communityCategoryMappingID)"
@@ -23,6 +33,7 @@
       </app-card>
     </div>
   </div>
+
   <br /><br />
   <div class="pagination mt-3">
     <button (click)="prevPage()" class="prevButton">
