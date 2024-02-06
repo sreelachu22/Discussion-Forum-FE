@@ -4,9 +4,18 @@
     <div class="username">{{ reply.createdUserName }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
-  <div class="reply-content">
+  <!-- <div class="reply-content">
+    {{ reply.content }}
+  </div> -->
+  <div class="reply-content" *ngIf="!isHTML(reply.content)">
     {{ reply.content }}
   </div>
+  <div
+    class="reply-content"
+    *ngIf="isHTML(reply.content)"
+    [innerHTML]="reply.content"
+  ></div>
+
   <div class="reply-footer">
     <div class="votes">
       <mat-icon
@@ -36,7 +45,11 @@
         >arrow_downward
       </mat-icon>
       <p class="vote_count">{{ reply.downvoteCount }}</p>
-      <mat-icon class="your_reply_icon">reply</mat-icon>
+      <mat-icon class="your_reply_icon" (click)="postReply(reply.replyID)"
+        >reply</mat-icon
+      >
+      <mat-icon class="your_reply_icon">edit</mat-icon>
+      <mat-icon class="your_reply_icon">delete</mat-icon>
     </div>
 
     <div class="show-replies">

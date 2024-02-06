@@ -6,6 +6,7 @@ import {
   ThreadReplies,
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
+import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -16,7 +17,8 @@ export class ThreadRepliesComponent {
   constructor(
     private threadRepliesService: ThreadRepliesService,
     private searchService: searchService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private threadService:ThreadService
   ) {}
 
   breadcrumbs = [
@@ -31,10 +33,23 @@ export class ThreadRepliesComponent {
   threadReplies: ThreadReplies[] = [];
   // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
+  threadInfo:any;
+  threadData: { name: string; value: any }[] = [];
+  threadTitle!:string;
+  threadContent!:string;
+
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((params) => {
       this.threadId = params['threadID'];
     });
+
+   this.threadService.getSingleThread(this.threadId).subscribe((data) => {
+   this.threadInfo = data;
+    this.threadTitle = this.threadInfo.title;
+    this.threadContent = this.threadInfo.content;    
+    // Add the user and content to replyData    
+    this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});
+});
 
     this.threadRepliesService
       .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)

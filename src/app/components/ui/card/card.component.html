@@ -1,8 +1,10 @@
 <!-- app-card.component.html -->
 <div class="card">
+  <!-- {{ title }} -->
   <div
     *ngFor="let item of metadataItems"
     class="metadata-item"
+    [style.justifyContent]="justifyPosition"
     [ngStyle]="item.style || defaultStyle"
   >
     <div class="card_items">

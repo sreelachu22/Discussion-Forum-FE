@@ -16,6 +16,7 @@ export class CardComponent {
   @Input() defaultImageWidth: string = '25px'; // Set your default width value
   @Input() defaultImageHeight: string = '25px'; // Set your default height value
   @Input() marginTop: string = '0px';
+  @Input() justifyPosition: string = 'center';
   defaultStyle = {
     /*default styles here */
   };

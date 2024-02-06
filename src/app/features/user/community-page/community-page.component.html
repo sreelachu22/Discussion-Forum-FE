@@ -7,6 +7,7 @@
     pageHeaderTitle="Experion Discussion"
     navClass="navbar navbar-dark bg-secondary Page_header"
     ButtonName="Community Management"
+    ButtonClass="Functional_button_community_management"
     (ButtonClick)="navigateToCommunityManagement(communityID)"
   />
   <br />
@@ -32,37 +33,6 @@
       </app-card>
     </div>
   </div>
-  <!-- <div class="page_body">
-    <div
-      class="card"
-      style="width: 18.5rem; height: fit-content"
-      *ngFor="let category of categoriesList"
-    >
-      <div
-        class="card-body"
-        (click)="navigateToPosts(category.communityCategoryMappingID)"
-      >
-        <p class="card-text">
-          Category ID : {{ category.communityCategoryMappingID }}
-        </p>
-        <h3 class="card-title" style="font-weight: bold">
-          {{ category.communityCategoryName }}
-        </h3>
-
-        <p>
-          Description :
-          <span
-            ><p class="card-text">
-              {{ category.description }}
-            </p></span
-          >
-        </p>
-        <p>
-          number of posts: <span>{{ category.threadCount }}</span>
-        </p>
-      </div>
-    </div>
-  </div> -->
 
   <br /><br />
   <div class="pagination mt-3">
