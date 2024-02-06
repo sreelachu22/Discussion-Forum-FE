@@ -55,13 +55,22 @@
       </button>
       <span></span>
       <span>
-        <button
+        <!-- <button
           type="button"
           class="btn btn-danger"
           (click)="openDeleteModal(communityCategoryMappingID)"
         >
           Delete
-        </button>
+        </button> -->
+        <app-button
+      buttonClass="button"
+      buttonName="Delete"
+      buttonColor="#6c757d"
+      textColor="white"
+      hoverColor="#5c636a"
+      hoverTextColor="white"
+      (buttonClick)="openDeleteModal(communityCategoryMappingID)"
+    ></app-button>
       </span>
       <!-- <ng-template #delete>
         <div class="modal-body text-center">

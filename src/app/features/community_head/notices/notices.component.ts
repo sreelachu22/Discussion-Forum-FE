@@ -7,6 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
+import { NoticeCreateModalComponent } from 'src/app/components/ui/notice-create-modal/notice-create-modal.component';
+import { NoticeUpdateModalComponent } from 'src/app/components/ui/notice-update-modal/notice-update-modal.component';
 
 // Decorate the component with @Component
 @Component({
@@ -23,12 +25,12 @@ export class NoticesComponent {
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Community Management', route: '/community-management-dashboard' },
     {
       label: 'Notice Management',
-      route: '/community_management_dashboard/notice-management',
+      route: '/community-management-dashboard/notice-management',
     },
   ];
   // variable to hold a reference to the modal
@@ -52,6 +54,14 @@ export class NoticesComponent {
     this.getValues();
   }
 
+  openCreateNoticeModal() {
+    this.modalRef = this.modalService.show(NoticeCreateModalComponent);
+    this.modalRef.content?.noticeCreated.subscribe(() => {
+      // Trigger the getValues method to refresh data
+      this.getValues();
+    });
+  }
+
   getValues() {
     this.noticesService.getData(this.apiUrl).subscribe(
       (response: any[]) => {
@@ -63,96 +73,24 @@ export class NoticesComponent {
     );
   }
 
-  //pass the reference to the template we use for the modal
-  openModal(template: TemplateRef<any>) {
-    // Reset newNotice for creating a new notice
-    this.newNotice = {};
-    this.modalRef = this.modalService.show(template);
-    // Display the modal using the provided template
+  openUpdateNoticeModal(notice: any) {
+    this.modalRef = this.modalService.show(NoticeUpdateModalComponent, {
+      initialState: {
+        notice: notice
+      }
+    });
+    this.modalRef.content?.noticeUpdated.subscribe(() => {
+      this.getValues();
+    });
   }
 
-  openUpdateModal(template: TemplateRef<any>, notice: any) {
-    // Set selectedNotice with existing data for updating
-    this.selectedNotice = { ...notice }; // Use spread operator to create a copy
-    console.log(this.selectedNotice);
-    this.modalRef = this.modalService.show(template);
-  }
-
-  addNotice() {
-    // Ensure all required fields are provided
-    if (
-      this.newNotice.communityID &&
-      this.newNotice.title &&
-      this.newNotice.content &&
-      this.newNotice.expiresAt &&
-      this.newNotice.createdBy
-    ) {
-      // Format the expiresAt property before sending it to the backend
-      this.newNotice.expiresAt = this.formatBackendDate(
-        this.newNotice.expiresAt
-      );
-
-      this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
-        (response) => {
-          console.log('POST Request Successful:', response);
-          this.getValues();
-        },
-        (error) => {
-          console.error('POST Request Failed:', error);
-        }
-      );
-
-      // Close the modal after adding the notice
-      this.modalRef?.hide();
-    } else {
-      console.error('Please provide all required fields.');
-    }
-  }
+  
 
   // Function to format the date in the desired format
   private formatBackendDate(date: Date | null): string | null {
     return date !== null
       ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS')
       : null;
-  }
-
-  updateNotice() {
-    // Ensure all required fields are provided for update
-    if (
-      this.selectedNotice.noticeID &&
-      this.selectedNotice.communityID &&
-      this.selectedNotice.title &&
-      this.selectedNotice.content &&
-      this.selectedNotice.expiresAt &&
-      this.selectedNotice.createdBy &&
-      this.selectedNotice.modifiedBy
-    ) {
-      // Create a new object with only the required properties
-      const requestData = {
-        noticeID: this.selectedNotice.noticeID,
-        communityID: this.selectedNotice.communityID,
-        title: this.selectedNotice.title,
-        content: this.selectedNotice.content,
-        expiresAt: this.selectedNotice.expiresAt,
-        createdBy: this.selectedNotice.createdBy,
-        modifiedBy: this.selectedNotice.modifiedBy,
-      };
-
-      this.noticesService
-        .updateData(this.apiUrl, this.selectedNotice.noticeID, requestData)
-        .subscribe(
-          (response) => {
-            console.log('PUT Request Successful:', response);
-            this.getValues();
-            this.modalRef?.hide(); // Close the modal after updating the notice
-          },
-          (error) => {
-            console.error('PUT Request Failed:', error);
-          }
-        );
-    } else {
-      console.error('Please provide all required fields.');
-    }
   }
 
   // BsModalRef stands for Bootstrap Modal Reference.

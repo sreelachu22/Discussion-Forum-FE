@@ -1,39 +1,8 @@
 <div class="container">
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-    <!-- <div class="create_button">
-      <app-button
-        buttonClass="button"
-        buttonName="Community Management"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="navigateToCommunityManagement(communityID)"
-      ></app-button>
-    </div> -->
   </div>
   <br />
-  <!-- <nav class="navbar navbar-dark bg-secondary">
-    <p class="header_text">Experion Discussion</p>
-    <div class="user_search">
-      <input
-        type="text"
-        placeholder="Search"
-        class="search_input"
-        [(ngModel)]="searchTerm"
-        (keyup.enter)="searchResult(searchTerm)"
-      />
-      <button
-        type="submit"
-        class="search_button"
-        (click)="searchResult(searchTerm)"
-      >
-        Search
-      </button>
-    </div>
-  </nav> -->
-
   <app-page-header
     pageHeaderTitle="Experion Discussion"
     navClass="navbar navbar-dark bg-secondary Page_header"
@@ -47,8 +16,16 @@
     <div *ngFor="let category of categoriesList" class="col-md-4">
       <app-card
         [metadataItems]="[
-          { name: 'Category ID', value: category.communityCategoryMappingID },
-          { name: '', value: category.communityCategoryName },
+        {
+          name: '',
+          value: '',
+          imageSrc: 'assets/images/category.png'
+        },
+          {
+            name: '',
+            value: category.communityCategoryName,
+            style: { color: '#64A2F5', fontSize: '16px' },
+          },
           { name: 'number of posts', value: category.threadCount }
         ]"
         (click)="navigateToPosts(category.communityCategoryMappingID)"

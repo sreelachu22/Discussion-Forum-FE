@@ -45,9 +45,9 @@ export class CategoryThreadsComponent implements OnInit {
   creatorId!: string;
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Category', route: '/community_page/category_threads' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Category', route: '/community/category-posts/:categoryID' },
   ];
 
   constructor(
@@ -164,7 +164,9 @@ export class CategoryThreadsComponent implements OnInit {
       creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074', // Replace this with the actual creatorId
     };
 
-    this.router.navigate(['category_threads/create_posts'], { queryParams });
+    this.router.navigate(['/category-posts/create-posts'], {
+      queryParams,
+    });
   }
   // const queryParams = {
   //   communityCategoryMappingID: this.communityCategoryMappingID,
@@ -179,14 +181,14 @@ export class CategoryThreadsComponent implements OnInit {
   // this.router.navigate(['category_threads/create_posts'], { queryParams });
 
   navigateToThreadReplies(threadID: number) {
-    this.router.navigate(['/thread-replies'], {
+    this.router.navigate([`/community/post-replies`], {
       queryParams: { threadID: threadID },
     });
   }
 
   searchTerm: string = '';
   searchResult(searchTerm: string) {
-    this.router.navigate(['/search-result'], {
+    this.router.navigate(['/search-results'], {
       queryParams: { searchTerm: this.searchTerm },
     });
   }

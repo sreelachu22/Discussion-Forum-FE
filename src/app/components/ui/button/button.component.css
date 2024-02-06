@@ -24,7 +24,7 @@
 button {
   padding: 10px 15px;
   color: #fff;
-  background-color: rgb(31, 151, 145);
+  background-color: rgb(51, 171, 165);
   border-radius: 5px;
   border: 1px solid transparent; /* Added border style */
   transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -34,7 +34,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(51, 171, 165);
+  background-color: rgb(120, 182, 265);
   border-color: transparent;
   color: #fff;
 }
@@ -49,6 +49,12 @@ button:hover {
   margin-bottom: 20px;
   z-index: 1;
   margin-left: -99px;
+  background-color:black;
+  transition: transform 0.5s;
+}
+.Search_button:hover {
+  background-color:black;
+  transform: scale(1.02);
 }
 
 .Functional_button {

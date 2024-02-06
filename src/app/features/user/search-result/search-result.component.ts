@@ -36,6 +36,12 @@ export class SearchResultComponent {
     private searchService: searchService
   ) {}
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Search Results', route: '/search-results' },
+  ];
+
   threads: Threads[] = [];
 
   searchTerm: string = '';
@@ -65,15 +71,18 @@ export class SearchResultComponent {
   searchResult(searchTerm: string) {
     if (searchTerm) {
       // Call the search service with the updated logic
-      this.router.navigate(['/search-result'], {
+      this.router.navigate(['/search-results'], {
         queryParams: { searchTerm: searchTerm },
       });
     }
   }
 
   navigateToThreadReplies(threadID: number) {
-    this.router.navigate(['/thread-replies'], {
-      queryParams: { threadID: threadID },
-    });
+    this.router.navigate(
+      [`/community/category-posts/post-replies/${threadID}`],
+      {
+        queryParams: { threadID: threadID },
+      }
+    );
   }
 }

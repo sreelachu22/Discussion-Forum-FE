@@ -25,7 +25,17 @@
   <div class="row">
     <div *ngFor="let titles of cardTitles" class="col-md-4">
       <app-card
-        [metadataItems]="[{ name: '', value: titles.title }]"
+        [metadataItems]="[
+          {
+            name: '',
+            value: '',
+            imageSrc: titles.imageSrc
+          },
+          { name: '', value: titles.title }
+        ]"
+        [defaultImageWidth]="'30px'"
+        [defaultImageHeight]="'30px'"
+        [marginTop]="'-5px'"
         (click)="navigateToCard(titles.path)"
       ></app-card>
     </div>

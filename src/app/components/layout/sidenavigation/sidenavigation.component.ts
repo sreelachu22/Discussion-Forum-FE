@@ -10,7 +10,7 @@ export class SidenavigationComponent {
   collapsed = signal(false); //signals
   sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px')); //also signals
 
-  // faUser = faUser;
+  faUser = faUser;
   // openUserProfile() {
   //   // method body to handle the user profile click
   // }

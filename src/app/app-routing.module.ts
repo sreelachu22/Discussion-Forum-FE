@@ -22,35 +22,40 @@ import { CreateReplyComponent } from './features/user/create-reply/create-reply.
 const routes: Routes = [
   {
     component: HomePageComponent,
-    path: 'home_page',
+    path: 'home',
   },
   {
     component: AdminDashboardComponent,
-    path: 'admin_dashboard_page',
+    path: 'admin-dashboard',
   },
   {
     component: SuperadminCategoryManagementComponent,
-    path: 'admin_dashboard_page/superadmin_category_management',
+    path: 'admin-dashboard/admin-category-management',
   },
   {
     component: CommunityPageComponent,
-    path: 'community_page',
+    path: 'community',
   },
-  { component: SearchResultComponent, path: 'search-result' },
+  { component: SearchResultComponent, path: 'search-results' },
   {
-    component: CategoryThreadsComponent,
-    path: 'category_threads',
-  },
-  {
-    component: ThreadRepliesComponent,
-    path: 'thread-replies',
+    path: 'community',
+    children: [
+      {
+        path: 'category-posts',
+        component: CategoryThreadsComponent,
+      },
+      {
+        path: 'post-replies',
+        component: ThreadRepliesComponent,
+      },
+    ],
   },
   {
     component: CommunityManagementDashboardComponent,
-    path: 'community_management_dashboard',
+    path: 'community-management-dashboard',
   },
   {
-    path: 'community_management_dashboard',
+    path: 'community-management-dashboard',
     children: [
       {
         path: 'category-management',
@@ -59,7 +64,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'community_management_dashboard',
+    path: 'community-management-dashboard',
     children: [
       {
         path: 'category-management',
@@ -72,7 +77,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'community_management_dashboard',
+    path: 'community-management-dashboard',
     children: [
       {
         path: 'user-management',
@@ -85,7 +90,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'community_management_dashboard',
+    path: 'community-management-dashboard',
     children: [
       {
         path: 'notice-management',
@@ -95,7 +100,7 @@ const routes: Routes = [
   },
   {
     component: UserNoticesComponent,
-    path: 'user-notices',
+    path: 'notices',
   },
   {
     component: LeaderboardComponent,
@@ -104,7 +109,7 @@ const routes: Routes = [
   { component: GuidelinesComponent, path: 'guidelines' },
   {
     component: CreatePostComponent,
-    path: 'category_threads/create_posts',
+    path: 'category-posts/create-posts',
   },
   {
     component: CreateReplyComponent,

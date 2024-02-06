@@ -1,20 +1,6 @@
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
-  <!-- <nav class="navbar navbar-dark bg-secondary">
-    <p class="header_text">Category Management</p>
-    <div class="create_button">
-      <app-button
-        buttonClass="button"
-        buttonName="Create Category"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="openCreateCategoryModal(create)"
-      ></app-button>
-    </div>
-  </nav> -->
 
   <app-page-header
     pageHeaderTitle="Category Management"
@@ -40,13 +26,7 @@
         </div>
         <br />
         <div class="buttons">
-          <!-- <button
-            type="submit"
-            class="btn btn-primary custom-btn"
-            [disabled]="!newCategoryName"
-          >
-            Create
-          </button> -->
+          
           <app-button
             buttonClass="button"
             buttonName="Create"
@@ -64,15 +44,6 @@
           >
             Close
           </button>
-          <!-- <app-button
-        buttonClass="btn"
-        buttonName="Close"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="modalRef?.hide()"
-      ></app-button> -->
         </div>
       </form>
     </div>
@@ -86,7 +57,17 @@
       (mouseout)="setHoveredCategoryId(null)"
     >
       <app-card
-        [metadataItems]="[{ name: '', value: category.communityCategoryName }]"
+        [metadataItems]="[
+          {
+            name: '',
+            value: '',
+            imageSrc: 'assets/images/edit.png'
+          },
+          { name: '', value: category.communityCategoryName }
+        ]"
+        [marginTop]="'-5px'"
+        [defaultImageWidth]="'20px'"
+        [defaultImageHeight]="'20px'"
         (click)="openUpdateModal(update)"
       ></app-card>
       <!-- update modal -->
@@ -156,9 +137,9 @@
               <app-button
                 buttonClass="button"
                 buttonName="Delete"
-                buttonColor="rgb(31, 151, 145)"
+                buttonColor="#6c757d"
                 textColor="white"
-                hoverColor="rgb(51, 171, 165)"
+                hoverColor="#5c636a"
                 hoverTextColor="white"
                 (buttonClick)="openDeleteModal(category.communityCategoryID)"
               ></app-button>

@@ -25,8 +25,8 @@ export class CommunityPageComponent {
   ) {}
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
   ];
 
   communityID: number = 0;
@@ -134,20 +134,18 @@ export class CommunityPageComponent {
   }
 
   searchResult(searchTerm: string) {
-    this.router.navigate(['/search-result'], {
+    this.router.navigate(['/search-results'], {
       queryParams: { searchTerm: this.searchTerm },
     });
   }
 
   navigateToPosts(communityCategoryMappingID: number) {
-    this.router.navigate(['category_threads'], {
-      queryParams: {
-        communityCategoryMappingID: communityCategoryMappingID,
-      },
+    this.router.navigate([`/community/category-posts`], {
+      queryParams: { communityCategoryMappingID: communityCategoryMappingID },
     });
   }
   navigateToCommunityManagement(communityID: number) {
-    this.router.navigate(['community_management_dashboard'], {
+    this.router.navigate(['community-management-dashboard'], {
       queryParams: {
         communityID: communityID,
       },
