@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="page_top">
+    <h1>Experion Discussion</h1>
+    <button class="btn btn-success">Community Management</button>
+  </div>
+  <div class="page_body">
+    <div
+      class="card"
+      style="width: 50rem; height: fit-content"
+      *ngFor="let category of categories"
+    >
+      <div
+        class="card-body"
+        (onclick)="sendCategoryDetails({
+        communityCategoryMappingID : category.communityCategoryMappingID,
+
+      })"
+      >
+        <h3 class="card-title">{{ category.communityCategoryName }}</h3>
+        <p class="card-text">
+          {{ category.description }}
+        </p>
+        <p>
+          number of posts: <span>{{ category.threadCount }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

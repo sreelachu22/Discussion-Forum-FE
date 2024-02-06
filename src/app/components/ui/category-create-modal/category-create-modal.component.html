@@ -9,35 +9,13 @@
         required
         #communityCategoryField="ngModel"
       >
-        <!-- selectedCommunityCategory =  communityCategoryID of selected category -->
         <option
           *ngFor="let category of categoriesNotInCommunity"
-          [value]="category.communityCategoryName"
+          [value]="category.communityCategoryID"
         >
           {{ category.communityCategoryName }}
         </option>
-        <option [value]="'other'">Other</option>
       </select>
-    </div>
-    <!-- selectedCommunityCategory =  -1 if selected 'other' -->
-    <div *ngIf="selectedCommunityCategory == 'other'">
-      <div class="form-group">
-        <label for="newCategoryName">New Category Name:</label>
-        <input
-          type="text"
-          class="form-control"
-          name="newCategoryName"
-          [(ngModel)]="newCategoryName"
-          required
-          #newCategoryNameField="ngModel"
-        />
-        <span
-          class="form_error"
-          *ngIf="newCategoryNameField.invalid && newCategoryNameField.touched"
-        >
-          *New Category Name is required
-        </span>
-      </div>
     </div>
 
     <div class="form-group">
@@ -77,40 +55,22 @@
 
     <br />
     <div class="buttons">
-      <!-- <button
+      <button
         type="submit"
         class="btn btn-primary custom-btn"
         [disabled]="categoryForm.invalid"
-      > -->
-      <app-button
-        buttonClass="button"
-        buttonName="Submit"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        [disableButton]="categoryForm.invalid"
-      ></app-button>
-      <!-- </button> -->
-      <span></span>
-      <span>
-        <!-- <button
+      >
+        Create Category</button
+      ><span></span>
+      <span
+        ><button
           type="button"
           class="btn btn-secondary"
           (click)="bsModalRef.hide()"
         >
           Close
-        </button> -->
-        <app-button
-          buttonClass="button"
-          buttonName="Close"
-          buttonColor="rgb(31, 151, 145)"
-          textColor="white"
-          hoverColor="rgb(51, 171, 165)"
-          hoverTextColor="white"
-          (buttonClick)="closeModal()"
-        ></app-button>
-      </span>
+        </button></span
+      >
     </div>
   </form>
 </div>

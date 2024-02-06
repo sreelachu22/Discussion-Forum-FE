@@ -26,8 +26,7 @@
           routerLinkActive="sidenav_active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="sidenav_link"
-          (click)="handleItemClick(data.label)"
-        ><!-- handleItemClick(data.label) used for routing -->
+        >
           <span class="sidenav_link_text">{{ data.label }}</span>
         </a>
       </ng-container>
@@ -40,7 +39,6 @@
           routerLinkActive="sidenav_active"
           [routerLinkActiveOptions]="{ exact: true }"
           class="sidenav_link"
-          (click)="handleItemClick(data.label)"
         >
           <span class="sidenav_link_icon">
             <app-icon [iconName]="data.icon"></app-icon
