@@ -5,6 +5,8 @@
   <app-page-header
     pageHeaderTitle="Manage Categories"
     navClass="navbar navbar-dark bg-secondary"
+    (ButtonClick)="openCreateCategoryModal()"
+    ButtonName="Create Category"
   />
 
   <div class="buttons_arrangement">
@@ -13,17 +15,6 @@
         [sortOptions]="sortOptions"
         (sortSelectionChange)="onSortSelectionChange($event)"
       ></button-toggle>
-    </div>
-    <div>
-      <app-button
-        buttonClass="button"
-        buttonName="Create Category"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="openCreateCategoryModal()"
-      ></app-button>
     </div>
   </div>
   <br />

@@ -48,7 +48,7 @@ export class SearchComponent {
   }
 
   searchResult() {
-    this.router.navigate(['/search-result'], {
+    this.router.navigate(['/search-results'], {
       queryParams: { searchTerm: this.searchTerm },
     });
   }

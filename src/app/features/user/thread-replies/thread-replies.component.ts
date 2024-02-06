@@ -20,10 +20,10 @@ export class ThreadRepliesComponent {
   ) {}
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Category', route: '/category-threads' },
-    { label: 'Post', route: '/thread-replies' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Category', route: '/community/category-posts' },
+    { label: 'Post', route: '/community/post-replies' },
   ];
   threadId: number = 0;
   parent_replyID: number | string = '';

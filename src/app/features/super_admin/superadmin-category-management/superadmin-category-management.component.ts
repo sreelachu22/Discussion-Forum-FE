@@ -24,11 +24,11 @@ export class SuperadminCategoryManagementComponent {
   pageCount: number = 1;
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Admin Dashboard', route: '/admin_dashboard_page' },
+    { label: 'Home', route: '/home' },
+    { label: 'Admin Dashboard', route: '/admin-dashboard' },
     {
       label: 'category Management',
-      route: '/admin_dashboard_page/supaeradmin_category_management',
+      route: '/admin-dashboard/admin-category-management',
     },
   ];
   constructor(
