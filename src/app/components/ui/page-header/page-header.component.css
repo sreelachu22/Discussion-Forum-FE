@@ -1,7 +1,8 @@
-div {
-  display: flex;
-}
-
-.Page_header {
-  border-radius: 5px;
+.inside{
+  width:auto;
+  color:black; 
+  display: flex; 
+  justify-content: space-between; 
+  /* align-items: stretch; */
+  margin-bottom: -10px;
 }

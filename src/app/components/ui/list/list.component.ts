@@ -15,7 +15,7 @@ export class ListComponent {
   // @Input() tags: string = '';
   // @Input() isAnswered: boolean = false;
   // @Input() metadataItems: { name: string; value: any }[] = [];
-  @Input() sections: { title: string; metadataItems: { name: string; value: any , isHtml?: boolean;}[] }[] = [];
+  @Input() sections: { title: string; metadataItems: { name: string; value: any; isHtml?: boolean; style?: object}[] }[] = [];
   @Input() click!: () => void;
 
   onClick() {
@@ -24,4 +24,7 @@ export class ListComponent {
   plainText(value: any): string {
     return value.toString(); // Or implement any logic to convert value to string
   }
+  defaultStyle = {
+    /*default styles here */
+  };
 }

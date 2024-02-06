@@ -8,6 +8,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 import { NoticeCreateModalComponent } from 'src/app/components/ui/notice-create-modal/notice-create-modal.component';
+import { NoticeUpdateModalComponent } from 'src/app/components/ui/notice-update-modal/notice-update-modal.component';
 
 // Decorate the component with @Component
 @Component({
@@ -72,11 +73,16 @@ export class NoticesComponent {
     );
   }
  
-  openUpdateModal(template: TemplateRef<any>, notice: any) {
-    // Set selectedNotice with existing data for updating
-    this.selectedNotice = { ...notice }; // Use spread operator to create a copy
-    console.log(this.selectedNotice);
-    this.modalRef = this.modalService.show(template);
+
+  openUpdateNoticeModal(notice: any) {
+    this.modalRef = this.modalService.show(NoticeUpdateModalComponent, {
+      initialState: {
+        notice: notice
+      }
+    });
+    this.modalRef.content?.noticeUpdated.subscribe(() => {
+      this.getValues();
+    });
   }
  
  
@@ -85,45 +91,6 @@ export class NoticesComponent {
     return date !== null
       ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS')
       : null;
-  }
-
-  updateNotice() {
-    // Ensure all required fields are provided for update
-    if (
-      this.selectedNotice.noticeID &&
-      this.selectedNotice.communityID &&
-      this.selectedNotice.title &&
-      this.selectedNotice.content &&
-      this.selectedNotice.expiresAt &&
-      this.selectedNotice.createdBy &&
-      this.selectedNotice.modifiedBy
-    ) {
-      // Create a new object with only the required properties
-      const requestData = {
-        noticeID: this.selectedNotice.noticeID,
-        communityID: this.selectedNotice.communityID,
-        title: this.selectedNotice.title,
-        content: this.selectedNotice.content,
-        expiresAt: this.selectedNotice.expiresAt,
-        createdBy: this.selectedNotice.createdBy,
-        modifiedBy: this.selectedNotice.modifiedBy,
-      };
-
-      this.noticesService
-        .updateData(this.apiUrl, this.selectedNotice.noticeID, requestData)
-        .subscribe(
-          (response) => {
-            console.log('PUT Request Successful:', response);
-            this.getValues();
-            this.modalRef?.hide(); // Close the modal after updating the notice
-          },
-          (error) => {
-            console.error('PUT Request Failed:', error);
-          }
-        );
-    } else {
-      console.error('Please provide all required fields.');
-    }
   }
 
   // BsModalRef stands for Bootstrap Modal Reference.

@@ -12,13 +12,12 @@
 
   <!-- dislays active notices -->
   <div *ngFor="let notice of notices">
-    <app-list
+    <app-notice-list
       [sections]="[
         {
           title: 'Notice Details',
           metadataItems: [
-            { name: 'Notice ID', value: notice.noticeID },
-            { name: 'Title', value: notice.title },
+            { name: 'Title', value: notice.title,style: { color: '#64A2F5', fontSize: '16px' } },
             { name: 'Content', value: notice.content }
           ]
         },
@@ -44,205 +43,14 @@
       <app-icon
         class="notices_body_edit_icon"
         [iconName]="faEdit"
-        (click)="openUpdateModal(updatemodalTemplate, notice)"
+        (click)="openUpdateNoticeModal(notice)"
       ></app-icon>
       <app-icon
         class="notices_body_delete_icon"
         [iconName]="faDelete"
         (click)="openDeleteModal(notice)"
       ></app-icon>
-    </app-list>
+    </app-notice-list>
     <hr />
   </div>
-
-    <!-- modal to update notice-->
-  <ng-template #updatemodalTemplate>
-    <div class="modal-header">
-      <h4 class="modal-title">Edit Notice</h4>
-      <button
-        type="button"
-        class="close notice_modal_header_close"
-        (click)="modalRef?.hide()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="modal-body">
-      <!-- input fields for dynamic user input , id is included to automatically fill in the form fields on notice select-->
-      <div class="form-group">
-        <label for="noticeID">Notice ID</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="selectedNotice.noticeID"
-          name="noticeID"
-          id="noticeID"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="communityID">Community ID</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="selectedNotice.communityID"
-          name="communityID"
-          id="communityID"
-        />
-      </div>
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="selectedNotice.title"
-          name="title"
-          id="title"
-        />
-      </div>
-      <div class="form-group">
-        <label for="content">Content</label>
-        <textarea
-          class="form-control"
-          [(ngModel)]="selectedNotice.content"
-          name="content"
-          id="content"
-        ></textarea>
-      </div>
-      <div class="form-group">
-        <label for="expiresAt">Expires At</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="selectedNotice.expiresAt"
-          name="expiresAt"
-          id="expiresAt"
-        />
-      </div>
-      <div class="form-group">
-        <label for="modifiedBy">Modified By</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="selectedNotice.modifiedBy"
-          name="modifiedBy"
-        />
-      </div>
-    </div>
-    <div class="modal-footer">
-      <app-button
-        buttonClass="button"
-        buttonName="Update Notice"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="updateNotice()"
-      ></app-button>
-     <app-button
-        buttonClass="button"
-        buttonName="Close"
-        buttonColor="rgb(31, 151, 145)"
-        textColor="white"
-        hoverColor="rgb(51, 171, 165)"
-        hoverTextColor="white"
-        (buttonClick)="modalRef?.hide()"
-      ></app-button>
-    </div>
-  <div class="modal-header">
-  <h4 class="modal-title">Edit Notice</h4>
-  <button
-          type="button"
-          class="close notice_modal_header_close"
-          (click)="modalRef?.hide()"
-  >
-  <span aria-hidden="true">&times;</span>
-  </button>
-  </div>
-   
-      <div class="modal-body">
-  <!-- input fields for dynamic user input , id is included to automatically fill in the form fields on notice select-->
-  <div class="form-group">
-  <label for="noticeID">Notice ID</label>
-  <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="selectedNotice.noticeID"
-            name="noticeID"
-            id="noticeID"
-            required
-          />
-  </div>
-  <div class="form-group">
-  <label for="communityID">Community ID</label>
-  <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="selectedNotice.communityID"
-            name="communityID"
-            id="communityID"
-          />
-  </div>
-  <div class="form-group">
-  <label for="title">Title</label>
-  <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="selectedNotice.title"
-            name="title"
-            id="title"
-          />
-  </div>
-  <div class="form-group">
-  <label for="content">Content</label>
-  <textarea
-            class="form-control"
-            [(ngModel)]="selectedNotice.content"
-            name="content"
-            id="content"
-  ></textarea>
-  </div>
-  <div class="form-group">
-  <label for="expiresAt">Expires At</label>
-  <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="selectedNotice.expiresAt"
-            name="expiresAt"
-            id="expiresAt"
-          />
-  </div>
-  <div class="form-group">
-  <label for="modifiedBy">Modified By</label>
-  <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="selectedNotice.modifiedBy"
-            name="modifiedBy"
-          />
-  </div>
-  </div>
-  <div class="modal-footer">
-  <app-button
-          buttonClass="button"
-          buttonName="Update Notice"
-          buttonColor="rgb(31, 151, 145)"
-          textColor="white"
-          hoverColor="rgb(51, 171, 165)"
-          hoverTextColor="white"
-          (buttonClick)="updateNotice()"
-  ></app-button>
-  <app-button
-          buttonClass="button"
-          buttonName="Close"
-          buttonColor="rgb(31, 151, 145)"
-          textColor="white"
-          hoverColor="rgb(51, 171, 165)"
-          hoverTextColor="white"
-          (buttonClick)="modalRef?.hide()"
-  ></app-button>
-  </div>
-  </ng-template>
-
 </div>

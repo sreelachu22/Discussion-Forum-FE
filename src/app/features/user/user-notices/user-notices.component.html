@@ -11,19 +11,18 @@
     <div class="row">
         <div *ngFor="let notice of notices">
   
-            <app-list
+            <app-notice-list
           [sections]="[
             {
               title: 'Notice Details',
               metadataItems: [
-                { name: 'Notice ID', value: notice.noticeID },
-                { name: 'Title', value: notice.title },
+                { name: '', value: notice.title , style: { color: '#64A2F5', fontSize: '16px' } },
               ]
             },
             {
                 title: 'Notice Content',
                 metadataItems: [
-                  { name: 'Content', value: notice.content }
+                  { name: '', value: notice.content }
                 ]
             },
             {
@@ -38,7 +37,7 @@
               ]
             }
           ]"
-        ></app-list>
+        ></app-notice-list>
         
     </div>
 </div>

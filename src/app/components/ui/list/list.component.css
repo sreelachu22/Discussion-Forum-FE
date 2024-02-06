@@ -48,6 +48,7 @@
 }
 
 .metadata-container {
+  width:95% !important;
   display: flex;
   flex-wrap: wrap;
 }

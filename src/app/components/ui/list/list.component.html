@@ -1,50 +1,8 @@
 <!-- list.component.html -->
 <div class="list" (click)="onClick()">
-  <div class="metadata">
-    <!-- 1st div with 4 vertical divs -->
-    <!-- <div class="metadata-column"> 
-      <div class="metadata-item">Created by: {{ createdBy }}</div>
-      <div class="metadata-item">Created on: {{ createdOn }}</div>
-      <div class="metadata-item">Status: {{ status }}</div>
-      <div class="metadata-item">Votes: {{ votes }}</div>
-      <div class="metadata-item">noticeID: {{ noticeID }}</div>
-      <div class="metadata-item">Created on: {{ createdOn }}</div>
-      <div class="metadata-item">Status: {{ status }}</div>
-      <div class="metadata-item">Votes: {{ votes }}</div>
-    </div> -->
-
-    <!-- <div class="metadata-column">
-      <div *ngFor="let item of metadataItems" class="metadata-item">
-        {{ item.name }}: {{ item.value }}
-      </div>
-      <div class="icons-container">
-        <ng-content></ng-content>
-      </div>
-    </div> -->
-
-    <!-- <div class="metadata-column" *ngFor="let section of sections">
-      <div *ngFor="let item of section.metadataItems" class="metadata-item">
-        {{ item.name }}: {{ item.value }}
-      </div>
-    </div>
-    <div class="icons-container">
-      <ng-content></ng-content>
-    </div> -->
-
-    <!-- app-list.component.html -->
-<!-- <div class="metadata-container">
-  <div *ngFor="let section of sections" class="metadata-column">
-    <div *ngFor="let item of section.metadataItems" class="metadata-item">
-      {{ item.name }}: <div [innerHTML]="item.isHtml ? item.value : plainText(item.value)"></div>
-    </div>
-  </div>
-</div>
-<div class="icons-container">
-  <ng-content></ng-content>
-</div> -->
 <div class="metadata-container">
 <div *ngFor="let section of sections" class="metadata-column">
-  <div *ngFor="let item of section.metadataItems" class="metadata-item">
+  <div *ngFor="let item of section.metadataItems" class="metadata-item" [ngStyle]="item.style || defaultStyle">
     {{ item.name }}:
     <div *ngIf="!item.isHtml">{{ item.value }}</div>
     <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
@@ -53,19 +11,5 @@
 <div class="icons-container">
   <ng-content></ng-content>
 </div>
-    
-
-    <!-- 2nd div with 2 vertical divs -->
-    <!-- <div class="metadata-column"> -->
-      <!-- <div class="metadata-item">Posts: {{ post }}</div> -->
-      <!-- <div class="metadata-item post-content" [innerHTML]="post  | slice:0:200"></div>   -->
-      <!-- to retrieve inner HTML so that rich text editor content passed gets properly displayed with format -->
-      <!-- <div class="metadata-item">Tags: {{ tags }}</div> -->
-    <!-- </div> -->
-
-    <!-- 3rd div with 1 div -->
-    <!-- <div class="metadata-column"> -->
-      <!-- <div class="metadata-item">Is Answered: {{ isAnswered }}</div> -->
-    <!-- </div> -->
-  </div>
+</div>
 </div>
