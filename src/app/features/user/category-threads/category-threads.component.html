@@ -25,26 +25,35 @@
           {
             title: 'Column 1',
             metadataItems: [
-              { name: 'Created By', value: thread.createdBy },
-              { name: 'Status', value: thread.threadStatusName },
-              { name: 'Created At', value: formatDate(thread.createdAt) },
-              { name: 'Votes', value: thread.voteCount }
+              { value: thread.createdBy },
+              { value: 'Asked ' + formatDate(thread.createdAt) },
+              {
+                value:
+                  '↑ ' +
+                  thread.upVoteCount +
+                  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ ' +
+                  thread.downVoteCount
+              }
             ]
           },
           {
             title: 'Column 2',
             metadataItems: [
+              { value: thread.title },
               {
-                name: 'Post',
-                value: thread.content.slice(0, 200),
+                value:
+                  thread.content.length > 200
+                    ? thread.content.slice(0, 200) + '...'
+                    : thread.content,
                 isHtml: true
               },
-              { name: 'Tags', value: thread.tagNames.join(', ') }
+
+              {
+                value:
+                  'Tags : ' + '<span>' + thread.tagNames.join(',') + '</span>',
+                isHtml: true
+              }
             ]
-          },
-          {
-            title: 'Column 3',
-            metadataItems: [{ name: 'Is Answered', value: thread.isAnswered }]
           }
         ]"
       >

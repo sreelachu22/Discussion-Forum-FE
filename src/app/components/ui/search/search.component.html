@@ -13,9 +13,9 @@
     ></app-button>
   </div>
 
-  <div class="Drop_Down">
+  <div class="Drop_Down" #dropdown>
     <app-dropdown
-      *ngIf="SearchThreadsDropDown.length > 0"
+      *ngIf="SearchThreadsDropDown.length > 0 && dropdowntoggle"
       [results]="SearchThreadsDropDown"
       (emitselectResult)="selectResult($event)"
     ></app-dropdown>
