@@ -21,7 +21,10 @@ export class UserManagementComponent implements OnInit {
     { label: 'Home', route: '/home_page' },
     { label: 'Community', route: '/community_page' },
     { label: 'Community Management', route: '/community_management_dashboard' },
-    { label: 'User Management', route: '/community-management/user-management' },
+    {
+      label: 'User Management',
+      route: '/community-management/user-management',
+    },
   ];
 
   constructor(
@@ -78,7 +81,7 @@ export class UserManagementComponent implements OnInit {
 
   GoToSingleUserPage(userID: string): void {
     this.router.navigate([
-      `community-management/user-management/user-edit/${userID}`,
+      `community_management_dashboard/user-management/user-edit/${userID}`,
     ]);
   }
 
@@ -86,7 +89,7 @@ export class UserManagementComponent implements OnInit {
     this.sortType = selectedValue;
     this.loadUsers();
   }
-  handleButtonClick(){
-    window.alert("hi");
+  handleButtonClick() {
+    window.alert('hi');
   }
 }

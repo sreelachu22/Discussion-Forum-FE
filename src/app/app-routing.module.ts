@@ -49,7 +49,7 @@ const routes: Routes = [
     path: 'community_management_dashboard',
   },
   {
-    path: 'community-management',
+    path: 'community_management_dashboard',
     children: [
       {
         path: 'category-management',
@@ -58,20 +58,20 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'community-management',
+    path: 'community_management_dashboard',
     children: [
       {
         path: 'category-management',
         component: CategoryManagementComponent,
       },
       {
-        path: 'category-management/category-edit',
+        path: 'category-management/category-edit/:categoryID',
         component: CategoryEditModalComponent,
       },
     ],
   },
   {
-    path: 'community-management',
+    path: 'community_management_dashboard',
     children: [
       {
         path: 'user-management',
@@ -84,7 +84,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'community-management',
+    path: 'community_management_dashboard',
     children: [
       {
         path: 'notice-management',

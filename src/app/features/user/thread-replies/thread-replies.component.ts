@@ -19,8 +19,14 @@ export class ThreadRepliesComponent {
     private activateRoute: ActivatedRoute
   ) {}
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Category', route: '/category-threads' },
+    { label: 'Post', route: '/thread-replies' },
+  ];
   threadId: number = 0;
-  parent_replyID: number | string = "";
+  parent_replyID: number | string = '';
   searchTerm: string = '';
   threadReplies: ThreadReplies[] = [];
   // showReplies: { [key: number]: boolean } = {};
@@ -30,21 +36,21 @@ export class ThreadRepliesComponent {
       this.threadId = params['threadID'];
     });
 
-    this.threadRepliesService      
-      .getRepliesOfThread(this.threadId,this.parent_replyID, 1, 10)
+    this.threadRepliesService
+      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
       .subscribe({
         next: (data: any) => {
-          this.threadReplies = data;        
+          this.threadReplies = data;
         },
         error: (error: Error) => {
           console.log('Error', error);
         },
       });
-  }  
+  }
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
   }
-  
+
   // search the entered term and showing it in a modal - temporary.
   // In actual implementation search results will pass
   searchReplies: ThreadReplies[] = [];

@@ -1,18 +1,5 @@
 <div class="container">
-  <div class="top_nav">
-    <div>
-      <a href="/community_management_dashboard" class="breadcrumb_navigation"
-        >Community Management</a
-      ><span> > </span
-      ><span
-        ><a
-          href="/community_management_dashboard/:category-management"
-          class="breadcrumb_navigation"
-          >Category Management</a
-        ></span
-      >
-    </div>
-  </div>
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
 
   <app-page-header

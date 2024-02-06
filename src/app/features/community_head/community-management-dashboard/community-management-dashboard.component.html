@@ -1,14 +1,6 @@
 <!-- community-management.component.html -->
 <div class="container">
-  <div>
-    <a href="/home_page" class="breadcrumb_navigation">Home</a>
-    <span> > </span>
-    <span
-      ><a href="/community_management_dashboard" class="breadcrumb_navigation"
-        >Community Management</a
-      ></span
-    >
-  </div>
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
   <!-- <nav class="navbar navbar-dark bg-secondary">
     <p class="header_text">Community Management</p>

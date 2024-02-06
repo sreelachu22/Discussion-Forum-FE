@@ -44,6 +44,12 @@ export class CategoryThreadsComponent implements OnInit {
   totalPages: number = 0;
   creatorId!: string;
 
+  breadcrumbs = [
+    { label: 'Home', route: '/home_page' },
+    { label: 'Community', route: '/community_page' },
+    { label: 'Category', route: '/community_page/category_threads' },
+  ];
+
   constructor(
     private threadService: ThreadService,
     private activateRoute: ActivatedRoute,
