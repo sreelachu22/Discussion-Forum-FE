@@ -40,21 +40,16 @@ If parent component don't want to pass the justify content position use this.
 by default justify content center.
       <app-card
         [metadataItems]="[
-          { name: '', value: category.communityCategoryName },
-          { name: 'number of posts', value: category.threadCount }
+          {
+            name: '',
+            value: '',
+            imageSrc: titles.imageSrc
+          },
+          { name: '', value: titles.title }
         ]"
-        (click)="navigateToPosts(category.communityCategoryMappingID)"
-      >
-      </app-card> -->
+        [defaultImageWidth]="'30px'"
+        [defaultImageHeight]="'30px'"
+        [marginTop]="'-5px'"
+        (click)="navigateToCard(titles.path)"
+      ></app-card>-->
 <!--  -->
-<!-- If parent component want to adjust the position
-      <app-card
-        [metadataItems]="[
-          { name: '', value: category.communityCategoryName },
-          { name: 'number of posts', value: category.threadCount }
-        ]"
-        [position]="'start'"
-        (click)="navigateToPosts(category.communityCategoryMappingID)"
-      >
-      </app-card>
--->
