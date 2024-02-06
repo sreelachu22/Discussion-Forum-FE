@@ -17,6 +17,7 @@ import { UserEditComponent } from './features/community_head/user-edit/user-edit
 import { LeaderboardComponent } from './features/leaderboard/leaderboard.component';
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
+import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
 
 const routes: Routes = [
   {
@@ -104,6 +105,10 @@ const routes: Routes = [
   {
     component: CreatePostComponent,
     path: 'category_threads/create_posts',
+  },
+  {
+    component: CreateReplyComponent,
+    path: 'thread-replies/post-reply',
   },
   {
     component: HomePageComponent,

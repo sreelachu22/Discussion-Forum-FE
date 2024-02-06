@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 export class CardComponent {
   // @Input() title: string = '';
   @Input() metadataItems: { name: string; value: any }[] = [];
+  @Input() justifyPosition :string = "center";
   // @Input() width: string | null = null;
   // @Input() height: string | null = null;
   // @Input() minWidth: string = '300px'; // default min-width
