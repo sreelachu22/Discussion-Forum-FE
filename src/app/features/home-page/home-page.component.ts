@@ -13,7 +13,7 @@ export class HomePageComponent {
   ngOnInit() {}
 
   navigateToCommunity() {
-    this.router.navigate(['community_page'], {
+    this.router.navigate(['community'], {
       queryParams: {
         communityID: this.communityID,
       },
@@ -21,6 +21,6 @@ export class HomePageComponent {
   }
 
   navigateToAdminDashboard() {
-    this.router.navigate(['admin_dashboard_page']);
+    this.router.navigate(['admin-dashboard']);
   }
 }

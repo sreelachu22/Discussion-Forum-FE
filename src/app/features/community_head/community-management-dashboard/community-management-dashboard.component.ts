@@ -10,21 +10,37 @@ export class CommunityManagementDashboardComponent {
   constructor(private router: Router) {}
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Community Management', route: '/community-management-dashboard' },
   ];
   // array for card data in ui
 
-  cardTitles: { title: string; path: string }[] = [
-    { title: 'User Management', path: 'user-management' },
-    { title: 'Category Management', path: 'category-management' },
-    { title: 'Closed Threads', path: 'closed-threads' },
-    { title: 'Notice Management', path: 'notice-management' },
+  cardTitles: { title: string; path: string; imageSrc: string }[] = [
+    {
+      title: 'User Management',
+      path: 'user-management',
+      imageSrc: 'assets/images/settings.png',
+    },
+    {
+      title: 'Category Management',
+      path: 'category-management',
+      imageSrc: 'assets/images/settings.png',
+    },
+    {
+      title: 'Closed Threads',
+      path: 'closed-posts',
+      imageSrc: 'assets/images/settings.png',
+    },
+    {
+      title: 'Notice Management',
+      path: 'notice-management',
+      imageSrc: 'assets/images/settings.png',
+    },
   ];
 
   navigateToCard(path: string) {
-    const route = `community_management_dashboard/${path}`;
+    const route = `community-management-dashboard/${path}`;
     this.router.navigate([route]);
   }
 }

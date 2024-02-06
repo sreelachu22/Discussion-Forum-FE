@@ -18,9 +18,9 @@ export class UserManagementComponent implements OnInit {
   currentPage: number = 1;
   pageCount: number = 1;
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Community Management', route: '/community-management-dashboard' },
     {
       label: 'User Management',
       route: '/community-management/user-management',
@@ -81,7 +81,7 @@ export class UserManagementComponent implements OnInit {
 
   GoToSingleUserPage(userID: string): void {
     this.router.navigate([
-      `community_management_dashboard/user-management/user-edit/${userID}`,
+      `community-management-dashboard/user-management/user-edit/${userID}`,
     ]);
   }
 

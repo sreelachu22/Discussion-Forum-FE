@@ -26,17 +26,17 @@ export class UserEditComponent {
   ) {}
 
   breadcrumbs = [
-    { label: 'Home', route: '/home_page' },
-    { label: 'Community', route: '/community_page' },
-    { label: 'Community Management', route: '/community_management_dashboard' },
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    { label: 'Community Management', route: '/community-management-dashboard' },
     {
       label: 'User Management',
-      route: '/community_management_dashboard/user-management',
+      route: '/community-management-dashboard/user-management',
     },
     {
       label: 'User Edit',
       route:
-        '/community_management_dashboard/user-management/user-edit/:userID',
+        '/community-management-dashboard/user-management/user-edit/:userID',
     },
   ];
   //templeate variables

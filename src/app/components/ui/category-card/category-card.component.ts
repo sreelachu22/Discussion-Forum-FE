@@ -13,7 +13,7 @@ export class CategoryCardComponent {
   @Input() categoriesList: CommunityCategory[] = [];
 
   navigateToPosts(communityCategoryMappingID: number) {
-    this.router.navigate(['category_threads'], {
+    this.router.navigate(['category-posts'], {
       queryParams: {
         communityCategoryMappingID: communityCategoryMappingID,
       },
