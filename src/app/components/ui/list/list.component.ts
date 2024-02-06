@@ -1,6 +1,6 @@
 // list.component.ts
 import { Component, Input } from '@angular/core';
-
+ 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -12,14 +12,11 @@ export class ListComponent {
     metadataItems: { name?: string; value: any; isHtml?: boolean }[];
   }[] = [];
   @Input() click!: () => void;
-
+ 
   onClick() {
     this.click();
   }
   plainText(value: any): string {
     return value.toString(); // Or implement any logic to convert value to string
   }
-  defaultStyle = {
-    /*default styles here */
-  };
 }
