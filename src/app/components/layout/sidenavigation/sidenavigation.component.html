@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z3">
+<mat-toolbar class="mat-elevation-z3"  style="background-color: rgb(51, 171, 165)">
   <!-- <div class="header"> -->
   <!-- <div class="header_left"> -->
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
@@ -9,12 +9,14 @@
   <!-- <img [src]="getLogoPath()" alt="logo" /> -->
 
   <app-search></app-search>
+  <span class="spacer"></span>
   <!-- </div> -->
-  <!-- <div class="header_right"><app-icon [iconName]="faUser" (click)="openUserProfile()"></app-icon></div> -->
+  <mat-icon>person</mat-icon>
+  <!-- <app-icon [iconName]="faUser"></app-icon> -->
   <!-- </div> -->
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()"  style="background-color:rgb(224, 244, 242)">
     <app-sidenav-custom [collapsed]="collapsed()"></app-sidenav-custom>
   </mat-sidenav>
 

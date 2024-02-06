@@ -72,6 +72,9 @@ import { EditorComponent } from './components/ui/editor/editor.component';
 import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/notice-create-modal.component';
 import { ButtonComponent } from './components/ui/button/button.component';
 import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
+import { NoticeUpdateModalComponent } from './components/ui/notice-update-modal/notice-update-modal.component';
+import { NoticesService } from './service/HttpServices/notices.service';
+import { NoticeListComponent } from './components/ui/notice-list/notice-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -122,6 +125,8 @@ import { CreateReplyComponent } from './features/user/create-reply/create-reply.
     NoticeCreateModalComponent,
     DeleteModalComponent,
     CreateReplyComponent,
+    NoticeUpdateModalComponent,
+    NoticeListComponent,
   ],
 
   imports: [

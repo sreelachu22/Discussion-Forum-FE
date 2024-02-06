@@ -21,7 +21,7 @@ export class NoticeCreateModalComponent {
   private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
 
   // variable to hold a reference to the modal
-  modalRef?: BsModalRef;
+  // modalRef?: BsModalRef;
 
   // Configuration object for the ngx-bootstrap datepicker
   bsDatepickerConfig: any = {
@@ -30,7 +30,7 @@ export class NoticeCreateModalComponent {
 
   constructor(
     private noticesService: NoticesService,
-    private modalService: BsModalService,
+    private modalRef : BsModalRef,
     private datePipe: DatePipe
   ) {}
 
@@ -90,6 +90,9 @@ export class NoticeCreateModalComponent {
       : null;
   }
 
+  decline() {
+    this.modalRef?.hide();
+  }
 }
 
 

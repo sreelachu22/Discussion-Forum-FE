@@ -9,7 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class GuidelinesComponent {
   @ViewChild('template') template!: TemplateRef<void>;
-  modalRef?: BsModalRef;
+  modalRef?: BsModalRef<any>;
   guidelines: string[]; 
 
   constructor(private modalService: BsModalService,private router: Router) {
@@ -41,6 +41,10 @@ export class GuidelinesComponent {
   // Open the modal when the view is initialized
   ngAfterViewInit(): void { 
     this.modalRef = this.modalService.show(this.template, { class: 'modal-lg' }); // Use 'modal-lg' for a large modal
+    this.modalRef?.onHidden?.subscribe(() => {
+      // Navigate to the home route when the modal is hidden
+      this.router.navigate(['']);
+    });
   }
   // Close the modal and navigate to the home route
   close() {
