@@ -1,8 +1,23 @@
+<!-- list.component.html -->
 <div class="list" (click)="onClick()">
   <div class="metadata">
-    <div class="created-by">Created by: {{ createdBy }}</div>
-    <div class="is-active-now">{{ status }}</div>
-    <div class="created-on">Created on: {{ createdOn }}</div>
+    <div class="metadata-container">
+      <div
+        *ngFor="let section of sections; let i = index"
+        class="metadata-column-{{ i + 1 }}"
+      >
+        <div
+          *ngFor="let item of section.metadataItems; let j = index"
+          class="metadata-item-{{ j + 1 }}"
+        >
+          {{ item.name }}
+          <div *ngIf="!item.isHtml">{{ item.value }}</div>
+          <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
+        </div>
+      </div>
+      <div class="icons-container">
+        <ng-content></ng-content>
+      </div>
+    </div>
   </div>
-  <h2><b>P:</b> {{ post }}</h2>
 </div>

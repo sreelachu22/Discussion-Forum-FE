@@ -1,0 +1,83 @@
+<!-- category-edit-modal.component.html -->
+<div class="modal-header">
+  <h4 class="modal-title">Update Category</h4>
+  <button mat-icon-button class="close-icon" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="updateCategoryDescription()" #categoryForm="ngForm">
+    <div class="form-group">
+      <label for="oldDescription">Old Description:</label>
+      <textarea class="form-control" [(ngModel)]="description" readonly>{{
+        description
+      }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="newDescription">New Description:</label>
+      <textarea
+        class="form-control"
+        name="newDescription"
+        [(ngModel)]="newDescription"
+        required
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="modifiedBy">Modified By:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="modifiedBy"
+        [(ngModel)]="modifiedBy"
+        required
+      />
+      <span
+        class="form_error"
+        *ngIf="
+          categoryForm.controls['modifiedBy'].invalid &&
+          categoryForm.controls['modifiedBy'].touched
+        "
+      >
+        *Modified By is required
+      </span>
+    </div>
+
+    <br />
+    <div class="buttons">
+      <button
+        type="submit"
+        class="btn btn-primary custom-btn"
+        [disabled]="categoryForm.invalid"
+      >
+        Update
+      </button>
+      <span></span>
+      <span>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="openDeleteModal(communityCategoryMappingID)"
+        >
+          Delete
+        </button>
+      </span>
+      <!-- <ng-template #delete>
+        <div class="modal-body text-center">
+          <p>Do you want to confirm?</p>
+          <button
+            type="button"
+            class="btn btn-default"
+            (click)="confirm(communityCategoryMappingID)"
+          >
+            Yes
+          </button>
+          <button type="button" class="btn btn-primary" (click)="decline()">
+            No
+          </button>
+        </div>
+      </ng-template> -->
+    </div>
+  </form>
+</div>

@@ -1,0 +1,9 @@
+<div
+  class="nested-replies"
+  *ngIf="nestedReply.nestedReplies && nestedReply.nestedReplies.length > 0"
+>
+  <div class="card1" *ngFor="let nested of nestedReply.nestedReplies">
+    <app-reply-list [reply]="nested"></app-reply-list>
+    <app-nested-replies [nestedReply]="nested"></app-nested-replies>
+  </div>
+</div>

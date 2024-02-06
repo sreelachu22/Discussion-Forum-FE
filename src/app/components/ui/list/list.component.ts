@@ -1,3 +1,4 @@
+// list.component.ts
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -6,17 +7,16 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent {
-  @Input() createdBy: string = '';
-  @Input() status: string = '';
-  @Input() createdOn: string = '';
-  @Input() post: string = '';
-
-  value = 'shankar';
-
-  @Input()
-  click!: () => void;
+  @Input() sections: {
+    title: string;
+    metadataItems: { name?: string; value: any; isHtml?: boolean }[];
+  }[] = [];
+  @Input() click!: () => void;
 
   onClick() {
     this.click();
+  }
+  plainText(value: any): string {
+    return value.toString(); // Or implement any logic to convert value to string
   }
 }

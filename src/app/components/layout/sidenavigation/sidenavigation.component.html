@@ -1,0 +1,27 @@
+<mat-toolbar class="mat-elevation-z3">
+  <!-- <div class="header"> -->
+  <!-- <div class="header_left"> -->
+  <button mat-icon-button (click)="collapsed.set(!collapsed())">
+    <!-- signal -->
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- <span class="app_name">DiscussIt!</span> -->
+  <!-- <img [src]="getLogoPath()" alt="logo" /> -->
+
+  <app-search></app-search>
+  <!-- </div> -->
+  <!-- <div class="header_right"><app-icon [iconName]="faUser" (click)="openUserProfile()"></app-icon></div> -->
+  <!-- </div> -->
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+    <app-sidenav-custom [collapsed]="collapsed()"></app-sidenav-custom>
+  </mat-sidenav>
+
+  <mat-sidenav-content
+    class="sidenav_content"
+    [style.margin-left]="sidenavWidth()"
+  >
+    <router-outlet> </router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

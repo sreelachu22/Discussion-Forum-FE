@@ -1,0 +1,17 @@
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Guidelines</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+      <!-- visually hidden "times" (close) symbol intended for screen readers, enhancing accessibility. -->
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let guideline of guidelines">
+        <h4>{{ guideline.split(': ')[0] }}</h4> <!-- Extract the heading part of each guideline-->
+        <p>{{ guideline.split(': ')[1] }}</p></li><br> <!-- Extract the content part from the guideline -->
+    </ul>
+  </div>
+</ng-template>

@@ -9,13 +9,13 @@
   transition: width 0.3s ease-in-out;
   overflow-x: hidden;
   padding-top: 20px;
-  margin-top: 89px;
+  margin-top: 40px;
   color: white; /* Set your desired text color */
 }
 
 /* Collapsed state */
 .sidenav_collapsed {
-  width: 70px; /* Adjust width for collapsed state */
+  width: 80px; /* Adjust width for collapsed state */
 }
 
 /* Sidenav heading */
@@ -31,7 +31,7 @@
 .sidenav_logo {
   background: none;
   border: none;
-  color: white;
+  color: rgb(31, 151, 145);
   font-size: 20px;
   padding-left: 20px;
   cursor: pointer;
@@ -44,10 +44,6 @@
   cursor: pointer;
   font-size: 20px;
   color: white; /* Set icon color */
-}
-
-/* Navigation items */
-.sidenav_items {
 }
 
 /* Navigation item link */
@@ -84,7 +80,7 @@
 .sidenav_link_text {
   padding: 5px;
   padding-left: 30px;
-  font-size: 18px;
+  font-size: 15px;
   letter-spacing: 1px;
   margin-bottom: 8px;
   transition: opacity 0.3s ease-in-out;

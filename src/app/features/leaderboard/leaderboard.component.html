@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="leader-cardlist" *ngFor="let user of topUsers">
+    <app-card
+      [metadataItems]="[
+        { name: '', value: user.name },
+        { name: 'Score', value: user.score }
+      ]"
+    >
+      <div>
+        <img [src]="getBadge(user.score)" />
+      </div>
+    </app-card>
+  </div>
+</div>

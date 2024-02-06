@@ -1,3 +1,31 @@
 <div class="card">
-  {{ title }}
+  <!-- {{ title }} -->
+  <div *ngFor="let item of metadataItems" class="metadata-item">
+    <ng-container *ngIf="item.name.trim() !== ''">
+      {{ item.name }}: {{ item.value }}
+    </ng-container>
+    <ng-container *ngIf="item.name.trim() === ''">
+      {{ item.value }}
+    </ng-container>
+  </div>
+  <div class="icons-container">
+    <ng-content></ng-content>
+  </div>
 </div>
+<!-- How to use : Example -->
+<!-- 
+If parent component don't want to pass the width and height style use this.
+by default min-width = 300px and min-height=150px.
+      <app-card
+        [title]="titles.title"
+        (click)="yourFunction(titles.path)"
+      ></app-card> -->
+<!--  -->
+<!-- If parent component want to adjust the width style
+      <app-card
+        [title]="titles.title"
+        [width]="'300px'"
+        [height]="'50px'"
+        (click)="yourFunction(parameter)"
+      >
+-->

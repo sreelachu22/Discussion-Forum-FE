@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="top_nav">
+    <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+    <!-- <div class="create_button">
+      <app-button
+        buttonClass="button"
+        buttonName="Community Management"
+        buttonColor="rgb(31, 151, 145)"
+        textColor="white"
+        hoverColor="rgb(51, 171, 165)"
+        hoverTextColor="white"
+        (buttonClick)="navigateToCommunityManagement(communityID)"
+      ></app-button>
+    </div> -->
+  </div>
+  <br />
+  <!-- <nav class="navbar navbar-dark bg-secondary">
+    <p class="header_text">Experion Discussion</p>
+    <div class="user_search">
+      <input
+        type="text"
+        placeholder="Search"
+        class="search_input"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="searchResult(searchTerm)"
+      />
+      <button
+        type="submit"
+        class="search_button"
+        (click)="searchResult(searchTerm)"
+      >
+        Search
+      </button>
+    </div>
+  </nav> -->
+
+  <app-page-header
+    pageHeaderTitle="Experion Discussion"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    ButtonName="Community Management"
+    ButtonClass="Functional_button_community_management"
+    (ButtonClick)="navigateToCommunityManagement(communityID)"
+  />
+  <br />
+
+  <div class="row">
+    <div *ngFor="let category of categoriesList" class="col-md-4">
+      <app-card
+        [metadataItems]="[
+          { name: 'Category ID', value: category.communityCategoryMappingID },
+          { name: '', value: category.communityCategoryName },
+          { name: 'number of posts', value: category.threadCount }
+        ]"
+        (click)="navigateToPosts(category.communityCategoryMappingID)"
+      >
+      </app-card>
+    </div>
+  </div>
+
+  <br /><br />
+  <div class="pagination mt-3">
+    <button (click)="prevPage()" class="prevButton">
+      <span>Back</span>
+    </button>
+    <button (click)="nextPage()" class="nextButton">
+      <span>Next</span>
+    </button>
+  </div>
+</div>
