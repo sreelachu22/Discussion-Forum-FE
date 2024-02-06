@@ -17,3 +17,8 @@
 .Search_input:hover {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
+
+.Search_input::placeholder {
+  font-size: 15px;
+  padding-left: 5px;
+}

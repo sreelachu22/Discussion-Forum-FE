@@ -12,6 +12,7 @@ export class PageHeaderComponent {
   @Input() navClass: string = '';
   @Input() pageHeaderTitle: string = '';
   @Input() ButtonName: string = '';
+  @Input() ButtonClass: string = 'Functional_button';
 
   onButtonClick() {
     this.ButtonClick.emit();
