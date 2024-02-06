@@ -1,15 +1,22 @@
- .container{
-    width: 100%;
-}
-hr{
-    width: 98%;
+.container{
+    width: 80%;
+    position: absolute;
+    left: 20%;
+    width: 75%;
+    margin-top: 7%;
+    right: 5%;
+    padding: 5px;
+    margin-bottom: 20%;
+    padding-top: 5%;
+    padding-bottom: 10%;
+    font-family: Roboto, sans-serif;
 }
 
 .notices_body_delete_icon {
     margin-left: 3%; 
 }
 .notices_body_edit_icon {
-    margin-left: 800px;; 
+    margin-left: 80%; 
 }
 
 @media (max-width: 768px) {
@@ -18,6 +25,20 @@ hr{
         margin-left: 0; /* Reset margin for smaller screens or adjust as needed */
     }
 }
+
+/* .notices_body_create_button{
+    color: #fff;
+    background-color: rgb(31, 151, 145);
+    border-radius: 5px;
+    border: 1px solid rgb(31, 151, 145); 
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .notices_body_create_button:hover {
+    background-color: rgb(51, 171, 165); 
+    border-color: rgb(51, 171, 165); 
+    color: #fff; 
+} */
 
 .modal_close_button{
     color: grey;

@@ -22,9 +22,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" }
-
+              "src/assets"
             ],
             "styles": [
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
@@ -33,8 +31,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
-            "scripts": ["node_modules/tinymce/tinymce.min.js"
-          ]
+            "scripts": []
           },
           "configurations": {
             "production": {
