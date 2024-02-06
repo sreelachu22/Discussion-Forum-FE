@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Thread } from '../search/search.component';
 
 @Component({
@@ -10,7 +10,7 @@ export class DropdownComponent {
   @Input() results: Thread[] = [];
   @Output() emitselectResult: EventEmitter<Thread> = new EventEmitter<Thread>();
 
-  constructor() {}
+  constructor() {} // Inject ElementRef
 
   selectResult(result: Thread) {
     this.emitselectResult.emit(result);
