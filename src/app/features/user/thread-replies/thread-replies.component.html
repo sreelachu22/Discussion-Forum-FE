@@ -1,6 +1,8 @@
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
+  <app-card [metadataItems]="threadData" [justifyPosition]="'start'"></app-card>
+
   <div class="card1" *ngFor="let reply of threadReplies; let i = index">
     <app-reply-list
       [reply]="reply"

@@ -37,4 +37,8 @@ export class ThreadService {
       // `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
+  getSingleThread(threadID:number):Observable<any>{
+    const singleThreadURL = 'https://localhost:7160/api/Thread'
+    return this.http.get(`${singleThreadURL}/${threadID}`)
+  }
 }

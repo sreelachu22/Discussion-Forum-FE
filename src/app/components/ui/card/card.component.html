@@ -1,6 +1,10 @@
 <div class="card">
   <!-- {{ title }} -->
-  <div *ngFor="let item of metadataItems" class="metadata-item">
+  <div
+    *ngFor="let item of metadataItems"
+    class="metadata-item"
+    [style.justifyContent]="justifyPosition"
+  >
     <ng-container *ngIf="item.name.trim() !== ''">
       {{ item.name }}: {{ item.value }}
     </ng-container>

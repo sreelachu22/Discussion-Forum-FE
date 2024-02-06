@@ -71,6 +71,7 @@ import { DropdownComponent } from './components/ui/dropdown/dropdown.component';
 import { EditorComponent } from './components/ui/editor/editor.component';
 import { NoticeCreateModalComponent } from './components/ui/notice-create-modal/notice-create-modal.component';
 import { ButtonComponent } from './components/ui/button/button.component';
+import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -120,6 +121,7 @@ import { ButtonComponent } from './components/ui/button/button.component';
     ButtonComponent,
     NoticeCreateModalComponent,
     DeleteModalComponent,
+    CreateReplyComponent,
   ],
 
   imports: [
