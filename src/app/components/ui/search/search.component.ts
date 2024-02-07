@@ -33,15 +33,15 @@ export class SearchComponent {
   searchTerm: string = '';
   SearchThreadsDropDown: Thread[] = [];
   dropdowntoggle: boolean = false;
+  private searchTermSubject = new Subject<string>();
 
   @ViewChild('dropdown') dropdown!: ElementRef;
-
-  private searchTermSubject = new Subject<string>();
 
   constructor(private router: Router, private searchService: searchService) {}
 
   InputChange(event: any) {
     this.searchTermSubject.next((event as string).trim());
+    this.searchTerm = (event as string).trim();
   }
 
   ngOnInit() {
