@@ -32,7 +32,7 @@ export class HomePageComponent {
   navigateToCommunity(communityID: number) {
     this.router.navigate(['community'], {
       queryParams: {
-        communityID: communityID,
+        communityID: communityID
       },
     });
   }

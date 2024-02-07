@@ -32,22 +32,21 @@ export class CommunityPageComponent {
   ];
 
   communityID: number = 0;
-  communityName!: string;
+  community!: CommunityDetails;
 
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
     });
-    this.loadCommunityName();
-    this.loadCategories();
+    this.loadCommunity();
   }
 
-  loadCommunityName(){
+  loadCommunity(){
     this.communityHttpService
     .getACommunity(this.communityID)
     .subscribe((data) => {
-      console.log(data);
-      this.communityName = data.communityName;
+      this.community = data;
+      this.loadCategories();
     });
   }
 
