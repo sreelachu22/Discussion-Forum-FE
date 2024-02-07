@@ -60,7 +60,7 @@ export class CommunityPageComponent {
   }
 
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
-  sortType: string = 'communityCategoryName';
+  sortType: string = '-threadCount';
   title: string = 'categoryPage';
   searchText: string = '';
   searchTerm: string = '';
