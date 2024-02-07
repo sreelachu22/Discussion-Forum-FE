@@ -23,7 +23,6 @@ import { Category } from 'src/app/service/HttpServices/superadmin-category.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
-import { DataService } from 'src/app/service/DataServices/data.service';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -55,7 +54,6 @@ export class CategoryManagementComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private categoryModalService: CategoryModalService,
-    private dataService: DataService,
     private activateRoute: ActivatedRoute
   ) {}
 

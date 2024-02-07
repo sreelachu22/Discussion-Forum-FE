@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, switchMap } from 'rxjs';
-import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
+import { Vote, VoteService } from 'src/app/service/HttpServices/vote.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -20,16 +20,13 @@ export class ThreadRepliesComponent {
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
     private threadService: ThreadService,
-    private loaderService: LoaderService
+    private voteService: VoteService
   ) {}
-  communityCategoryMappingID!: number;
+
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
-    {
-      label: 'Category',
-      route: `/community/category-posts/communityCategory${this.communityCategoryMappingID}`,
-    },
+    { label: 'Category', route: '/community/category-posts' },
     { label: 'Post', route: '/community/post-replies' },
   ];
   threadId: number = 0;
@@ -43,15 +40,11 @@ export class ThreadRepliesComponent {
   threadTitle!: string;
   threadContent!: string;
 
-  isLoading = false;
   ngOnInit() {
     this.activateRoute.queryParams
       .pipe(
         switchMap((params) => {
           this.threadId = params['threadID'];
-          this.communityCategoryMappingID =
-            params['communityCategoryMappingID'];
-          console.log(params['communityCategoryMappingID']);
           return this.threadService.getSingleThread(this.threadId);
         })
       )
@@ -59,32 +52,52 @@ export class ThreadRepliesComponent {
         this.threadInfo = data;
         this.threadTitle = this.threadInfo.title;
         this.threadContent = this.threadInfo.content;
-
-        // Add the user and content to replyData
         this.threadData.push(
           { name: '', value: this.threadTitle },
           { name: '', value: this.threadContent }
         );
-
-        // Call the second service inside the first service's subscribe
-        this.threadRepliesService
-          .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
-          .subscribe({
-            next: (repliesData: any) => {
-              this.threadReplies = repliesData;
-            },
-            error: (error: Error) => {
-              console.log('Error', error);
-            },
-          });
+        this.loadReplies();
       });
-
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
+
+  loadReplies() {
+    this.threadRepliesService
+      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
+      .subscribe({
+        next: (repliesData: any) => {
+          this.threadReplies = repliesData;
+          console.log(repliesData);
+        },
+        error: (error: Error) => {
+          console.log('Error', error);
+        },
+      });
+  }
+
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
+  }
+  handleUpvote(vote: Vote) {
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {
+        console.log('Upvote Successful', response);
+      },
+      error: (error) => {
+        console.error('Error sending upvote', error);
+        this.loadReplies();
+      },
+    });
+  }
+  handleDownvote(vote: Vote) {
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {
+        console.log('Downvote Successful', response);
+      },
+      error: (error) => {
+        console.error('Error sending downvote', error);
+        this.loadReplies();
+      },
+    });
   }
 
   // search the entered term and showing it in a modal - temporary.

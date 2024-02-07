@@ -4,9 +4,6 @@
     <div class="username">{{ reply.createdUserName }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
-  <!-- <div class="reply-content">
-    {{ reply.content }}
-  </div> -->
   <div class="reply-content" *ngIf="!isHTML(reply.content)">
     {{ reply.content }}
   </div>
@@ -18,37 +15,21 @@
 
   <div class="reply-footer">
     <div class="votes">
-      <mat-icon
-        class="mat_icons"
-        (click)="
-          upvote({
-            userID: reply.createdBy,
-            replyID: reply.replyID,
-            isUpVote: true,
-            isDeleted: false
-          })
-        "
-        >arrow_upward</mat-icon
+      <mat-icon class="mat_icons" (click)="emitUpvote(reply)">
+        arrow_upward
+      </mat-icon>
+      <p class="vote_count">{{ reply.upvoteCount }}</p>
+      <mat-icon class="mat_icons" (click)="emitDownvote(reply)"
+        >arrow_downward</mat-icon
       >
 
-      <p class="vote_count">{{ reply.upvoteCount }}</p>
-      <mat-icon
-        class="mat_icons"
-        (click)="
-          downvote({
-            userID: reply.createdBy,
-            replyID: reply.replyID,
-            isUpVote: false,
-            isDeleted: false
-          })
-        "
-        >arrow_downward
-      </mat-icon>
       <p class="vote_count">{{ reply.downvoteCount }}</p>
       <mat-icon class="your_reply_icon" (click)="postReply(reply.replyID)"
         >reply</mat-icon
       >
-      <mat-icon class="your_reply_icon">edit</mat-icon>
+      <mat-icon class="your_reply_icon" (click)="editReply(reply.replyID)"
+        >edit</mat-icon
+      >
       <mat-icon class="your_reply_icon">delete</mat-icon>
     </div>
 

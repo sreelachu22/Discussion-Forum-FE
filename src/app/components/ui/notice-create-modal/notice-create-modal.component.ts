@@ -1,5 +1,5 @@
 // Import necessary modules and components
-import { Component, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -37,6 +37,8 @@ export class NoticeCreateModalComponent {
   faEdit = faEdit;
   faDelete = faTrash;
 
+  @Output() noticeCreated: EventEmitter<any> =  new EventEmitter<any>();
+
   ngOnInit(): void {
     this.getValues();
   }
@@ -70,6 +72,7 @@ export class NoticeCreateModalComponent {
         (response) => {
           console.log('POST Request Successful:', response);
           // this.getValues();
+          this.noticeCreated.emit();
         },
         (error) => {
           console.error('POST Request Failed:', error);

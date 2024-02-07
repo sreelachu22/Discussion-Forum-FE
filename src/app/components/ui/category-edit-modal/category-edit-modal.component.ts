@@ -10,7 +10,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
-import { DataService } from 'src/app/service/DataServices/data.service';
 import { tap } from 'rxjs';
 import { Category } from 'src/app/service/HttpServices/superadmin-category.service';
 @Component({
@@ -25,6 +24,8 @@ export class CategoryEditModalComponent {
     private httpService: CategoryService,
     private router: Router,
     private activateRoute: ActivatedRoute,
+    public modalRef: BsModalRef,
+    public modalService: BsModalService
     public updateRef: BsModalRef,
     public modalService: BsModalService,
     private dataService: DataService
@@ -63,7 +64,7 @@ export class CategoryEditModalComponent {
             ['/community-management-dashboard/category-management'],
             { queryParams: { sortType: 'communityCategoryName' } }
           );
-          // this.updateRef?.hide();
+          this.updateRef?.hide();
         },
         error: (error: any) => {
           console.error('Error updating category:', error);
@@ -87,6 +88,8 @@ export class CategoryEditModalComponent {
     this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
+    this.bsmodalRef.content.subscribe(() => {
+    });
   }
 
   //after getting confirmation for delete, delete api calls
@@ -103,6 +106,7 @@ export class CategoryEditModalComponent {
           alert('Error has occured, ' + error.message);
         },
         complete: () => {
+          this.modalRef.hide();
           this.updateRef.hide();
         },
       });
@@ -113,6 +117,7 @@ export class CategoryEditModalComponent {
     this.updateRef?.hide();
   }
   closeModal() {
+    this.modalRef.hide();
     this.updateRef.hide();
   }
 

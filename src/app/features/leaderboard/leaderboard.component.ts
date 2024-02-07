@@ -13,7 +13,7 @@ export class LeaderboardComponent implements OnInit {
   constructor(private leaderboardService: LeaderboardService) {}
   topUsers: TopUsers[] = [];
   ngOnInit(): void {
-    this.getTopUsers(5);
+    this.getTopUsers(16);
   }
 
   //get top users based on score.

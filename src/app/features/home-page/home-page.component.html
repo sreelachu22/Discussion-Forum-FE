@@ -7,19 +7,38 @@
   ></app-page-header>
   <br />
   <div class="page_body">
-    <div class="card" style="width: 15rem; height: fit-content">
-      <div class="card-body">
-        <h3 class="card-title">PM Hub</h3>
-        <app-button
-          buttonClass="button"
-          buttonName="View Community"
-          buttonColor="rgb(31, 151, 145)"
-          textColor="white"
-          hoverColor="rgb(51, 171, 165)"
-          hoverTextColor="white"
-          (buttonClick)="navigateToCommunity()"
-        ></app-button>
-      </div>
+    <div *ngFor="let community of communities">
+      <app-card
+        [metadataItems]="[
+          {
+            name: '',
+            value: '',
+            imageSrc: 'assets/images/community.png'
+          },
+          {
+            name: '',
+            value: community.communityName,
+            style: { color: '#64A2F5', fontSize: '16px' },
+          },
+          {
+            name: '',
+            value: community.categoryCount + ' categories',
+          },
+          {
+            name: '',
+            value: community.postCount + ' posts',
+          },
+          {
+            name: '',
+            value: 'Top categories : ' + community.topCategories,
+          }
+        ]"
+        [defaultImageWidth]="'50px'"
+        [defaultImageHeight]="'50px'"
+        [marginTop]="'10px'"
+        (click)="navigateToCommunity(community.communityID, community.communityName)"
+      >
+      </app-card>
     </div>
   </div>
 </div>

@@ -7,6 +7,8 @@
     <app-reply-list
       [reply]="reply"
       (toggleRepliesEvent)="toggleNestedReplies(i)"
+      (upvoteEvent)="handleUpvote($event)"
+      (downvoteEvent)="handleDownvote($event)"
     ></app-reply-list>
     <div
       class="card-body1"
