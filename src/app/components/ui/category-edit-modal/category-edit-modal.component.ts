@@ -25,10 +25,8 @@ export class CategoryEditModalComponent {
     private router: Router,
     private activateRoute: ActivatedRoute,
     public modalRef: BsModalRef,
-    public modalService: BsModalService
     public updateRef: BsModalRef,
-    public modalService: BsModalService,
-    private dataService: DataService
+    public modalService: BsModalService
   ) {}
   description: string = '';
   communityCategoryMappingID: number = 0;
@@ -88,8 +86,7 @@ export class CategoryEditModalComponent {
     this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
-    this.bsmodalRef.content.subscribe(() => {
-    });
+    this.bsmodalRef.content.subscribe(() => {});
   }
 
   //after getting confirmation for delete, delete api calls
