@@ -7,3 +7,12 @@
     padding-right:5px;
     padding-left:5px;
 }
+.error-message {
+    color: red;
+  }
+  
+  .required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+  }

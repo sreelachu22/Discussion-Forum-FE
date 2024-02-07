@@ -1,102 +1,121 @@
-<!-- modal for notice creation -->
-<!-- <ng-template #openmodalTemplate> -->
-  <div class="modal-header">
-    <h4 class="modal-title">Create Notice</h4>
-    <button
-      type="button"
-      class="close notice_modal_header_close"
-      (click)="decline()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <!-- input fields for dynamic user input -->
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="newNotice.title"
-        name="title"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="expiresAt">Expires At</label>
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="newNotice.expiresAt"
-        name="expiresAt"
-        required
-        autocomplete="off"
-        bsDatepicker
-        [bsConfig]="bsDatepickerConfig"
-      />
-      <!-- Utilizes the ngx-bootstrap datepicker -->
-    </div>
-    <div class="form-group">
-      <label for="content">Content</label>
-      <textarea
-        class="form-control"
-        [(ngModel)]="newNotice.content"
-        name="content"
-        required
-      ></textarea>
-    </div>
-    <div class="form-group">
-      <label for="communityID">Community ID</label>
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="newNotice.communityID"
-        name="communityID"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="createdBy">Created By</label>
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="newNotice.createdBy"
-        name="createdBy"
-        required
-      />
+<div class="modal-header">
+  <h4 class="modal-title">Create Notice</h4>
+  <button
+    type="button"
+    class="close notice_modal_header_close"
+    (click)="decline()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!-- input fields for dynamic user input -->
+  <div class="form-group">
+    <label for="title">Title<span class="required-field"></span></label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="newNotice.title"
+      name="title"
+      required
+      minlength="6"
+      maxlength="50"
+      pattern=".*\S+.*"
+      #titleInput="ngModel"
+    />
+    <div *ngIf="titleInput?.invalid && (titleInput?.dirty || titleInput?.touched)" class="error-message">
+      <div *ngIf="titleInput.errors?.['required']">Please fill out this field.</div>
+      <div *ngIf="titleInput.errors?.['minlength']">Title must be at least 6 characters long.</div>
+      <div *ngIf="titleInput.errors?.['maxlength']">Title cannot exceed 50 characters.</div>
+      <div *ngIf="titleInput.errors?.['pattern']">Title cannot be just empty spaces.</div>
     </div>
   </div>
-  <div class="modal-footer">
-    <!-- <app-button
-      buttonClass="btn btn-primary"
-      buttonName="Add Notice"
-      (buttonClick)="addNotice()"
-    ></app-button> -->
-    <app-button
-      buttonClass="button"
-      buttonName="Add Notice"
-      buttonColor="rgb(31, 151, 145)"
-      textColor="white"
-      hoverColor="rgb(51, 171, 165)"
-      hoverTextColor="white"
-      (buttonClick)="addNotice()"
-    ></app-button>
-    <!-- <button
-      type="button"
-      class="btn btn-secondary modal_close_button"
-      (click)="modalRef?.hide()"
-    >
-      Close
-    </button> -->
-    <app-button
-      buttonClass="button"
-      buttonName="Close"
-      buttonColor="#6c757d"
-      textColor="white"
-      hoverColor="#5c636a"
-      hoverTextColor="white"
-      (buttonClick)="decline()"
-    ></app-button>
-    <!-- buttons to add notice and hide modal  -->
+  <div class="form-group">
+    <label for="expiresAt">Expires At<span class="required-field"></span></label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="newNotice.expiresAt"
+      name="expiresAt"
+      required
+      autocomplete="off"
+      bsDatepicker
+      [bsConfig]="bsDatepickerConfig"
+      #expiresAtInput="ngModel"
+    />
+    <div *ngIf="expiresAtInput?.invalid && (expiresAtInput?.dirty || expiresAtInput?.touched)" class="error-message">Please fill out this field.</div>
+    <!-- Utilizes the ngx-bootstrap datepicker -->
   </div>
-<!-- </ng-template> -->
+  <div class="form-group">
+    <label for="content">Content<span class="required-field"></span></label>
+    <textarea
+      class="form-control"
+      [(ngModel)]="newNotice.content"
+      name="content"
+      required
+      minlength="6"
+      maxlength="250"
+      pattern=".*\S+.*"
+      #contentInput="ngModel"
+    ></textarea>
+    <div *ngIf="contentInput?.invalid && (contentInput?.dirty || contentInput?.touched)" class="error-message">
+      <div *ngIf="contentInput.errors?.['required']">Please fill out this field.</div>
+      <div *ngIf="contentInput.errors?.['minlength']">Content must be at least 6 characters long.</div>
+      <div *ngIf="contentInput.errors?.['maxlength']">Content cannot exceed 250 characters.</div>
+      <div *ngIf="contentInput.errors?.['pattern']">Community ID cannot be just empty spaces.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="communityID">Community ID<span class="required-field"></span></label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="newNotice.communityID"
+      name="communityID"
+      required
+      pattern=".*\S+.*"
+      #communityIDInput="ngModel"
+    />
+    <div *ngIf="communityIDInput?.invalid && (communityIDInput?.dirty || communityIDInput?.touched)" class="error-message">
+      <div *ngIf="communityIDInput.errors?.['required']">Please fill out this field.</div>
+      <div *ngIf="communityIDInput.errors?.['pattern']">Community ID cannot be just empty spaces.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="createdBy">Created By<span class="required-field"></span></label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="newNotice.createdBy"
+      name="createdBy"
+      required
+      pattern=".*\S+.*"
+      #createdByInput="ngModel"
+    />
+    <div *ngIf="createdByInput?.invalid && (createdByInput?.dirty || createdByInput?.touched)" class="error-message">
+      <div *ngIf="createdByInput.errors?.['required']">Please fill out this field.</div>
+      <div *ngIf="createdByInput.errors?.['pattern']">Created By cannot be just empty spaces.</div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <app-button
+    buttonClass="button"
+    buttonName="Add Notice"
+    buttonColor="rgb(31, 151, 145)"
+    textColor="white"
+    hoverColor="rgb(51, 171, 165)"
+    hoverTextColor="white"
+    (buttonClick)="addNotice()"
+  ></app-button>
+  <app-button
+    buttonClass="button"
+    buttonName="Close"
+    buttonColor="#6c757d"
+    textColor="white"
+    hoverColor="#5c636a"
+    hoverTextColor="white"
+    (buttonClick)="decline()"
+  ></app-button>
+  <!-- buttons to add notice and hide modal  -->
+</div>
