@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class CardComponent {
   // @Input() title: string = '';
   @Input() metadataItems: {
-    name: string;
+    name?: string;
     value: any;
     style?: object;
     imageSrc?: string;

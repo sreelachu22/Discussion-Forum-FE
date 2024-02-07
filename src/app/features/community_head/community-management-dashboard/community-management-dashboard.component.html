@@ -1,26 +1,12 @@
-<!-- community-management.component.html -->
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
-  <!-- <nav class="navbar navbar-dark bg-secondary">
-    <p class="header_text">Community Management</p>
-  </nav> -->
-
   <app-page-header
     pageHeaderTitle="Community Management"
     navClass="navbar navbar-dark bg-secondary Page_header"
     [showButton]="false"
   />
   <br />
-  <!-- card data from ts file is displayed here -->
-  <!-- <div class="row">
-    <div *ngFor="let titles of cardTitles" class="col-md-4">
-      <app-card
-        [title]="titles.title"
-        (click)="navigateToCard(titles.path)"
-      ></app-card>
-    </div>
-  </div> -->
 
   <div class="row">
     <div *ngFor="let titles of cardTitles" class="col-md-4">
