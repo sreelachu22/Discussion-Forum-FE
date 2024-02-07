@@ -29,10 +29,11 @@ export class HomePageComponent {
   });
   }
 
-  navigateToCommunity(communityID: number) {
+  navigateToCommunity(communityID: number, communityName: string) {
     this.router.navigate(['community'], {
       queryParams: {
-        communityID: communityID
+        communityID: communityID,
+        communityName: communityName
       },
     });
   }

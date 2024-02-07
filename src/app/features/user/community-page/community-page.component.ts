@@ -31,14 +31,18 @@ export class CommunityPageComponent {
     { label: 'Community', route: '/community' },
   ];
 
-  communityID: number = 0;
+  communityID: number = 1;
   community!: CommunityDetails;
+
+  communityName!: string;
 
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
+      this.communityName = params['communityName'] || 'PM-Hub';
     });
-    this.loadCommunity();
+    this.loadCategories();
+    // this.loadCommunity();
   }
 
   loadCommunity(){
@@ -46,7 +50,6 @@ export class CommunityPageComponent {
     .getACommunity(this.communityID)
     .subscribe((data) => {
       this.community = data;
-      this.loadCategories();
     });
   }
 
