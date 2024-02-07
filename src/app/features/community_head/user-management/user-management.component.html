@@ -15,7 +15,7 @@
       />
       <button type="submit" class="search_button" (click)="getSingleUser()">
         Search
-      </button>    
+      </button>
     </div>
   </nav>
   <!-- toggle button component imported -->
@@ -25,13 +25,6 @@
       (sortSelectionChange)="onSortSelectionChange($event)"
     ></button-toggle>
   </div>
-  <!-- table component -->
-  <!-- <app-table
-    [displayedColumns]="['name', 'email', 'score', 'createdAt']"
-    [displayedNames]="['Name', 'Email', 'Score', 'Created Date']"
-    [dataSource]="users"
-  ></app-table> -->
-  <!-- user-management.component.html -->
   <app-table
     [displayedColumns]="['name', 'email', 'score', 'createdAt']"
     [displayedNames]="['Name', 'Email', 'Score', 'Created Date']"

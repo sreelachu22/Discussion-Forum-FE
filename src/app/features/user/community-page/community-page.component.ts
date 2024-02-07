@@ -15,7 +15,6 @@ import { Thread } from 'src/app/service/HttpServices/thread.service';
   styleUrls: ['./community-page.component.css'],
 })
 export class CommunityPageComponent {
-  isLoading = false;
   constructor(
     private httpService: CategoryService,
     private router: Router,
@@ -30,21 +29,24 @@ export class CommunityPageComponent {
   ];
 
   communityID: number = 0;
+  isLoading = false;
   ngOnInit(): void {
     this.loadCategories();
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
     });
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
-  sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
-  sortType: string = 'communityCategoryName';
+  sortOptions = ['communityCategoryName', 'description', 'createdAt'];
+  sortType: string = '-threadCount';
   title: string = 'categoryPage';
   searchText: string = '';
   searchTerm: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
-
   pages: number[] = [];
   pageSize: number = 6;
   totalPages: number = 0;

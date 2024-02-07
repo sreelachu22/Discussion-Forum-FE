@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, switchMap } from 'rxjs';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
@@ -18,13 +19,17 @@ export class ThreadRepliesComponent {
     private threadRepliesService: ThreadRepliesService,
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
-    private threadService:ThreadService
+    private threadService: ThreadService,
+    private loaderService: LoaderService
   ) {}
-
+  communityCategoryMappingID!: number;
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
+    {
+      label: 'Category',
+      route: `/community/category-posts/communityCategory${this.communityCategoryMappingID}`,
+    },
     { label: 'Post', route: '/community/post-replies' },
   ];
   threadId: number = 0;
@@ -33,36 +38,49 @@ export class ThreadRepliesComponent {
   threadReplies: ThreadReplies[] = [];
   // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
-  threadInfo:any;
+  threadInfo: any;
   threadData: { name: string; value: any }[] = [];
-  threadTitle!:string;
-  threadContent!:string;
+  threadTitle!: string;
+  threadContent!: string;
 
+  isLoading = false;
   ngOnInit() {
-    this.activateRoute.queryParams.pipe(
-      switchMap(params => {
-        this.threadId = params['threadID'];
-        return this.threadService.getSingleThread(this.threadId);
-      })
-    ).subscribe((data: any) => {
-      this.threadInfo = data;
-      this.threadTitle = this.threadInfo.title;
-      this.threadContent = this.threadInfo.content;
-  
-      // Add the user and content to replyData    
-      this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});
-  
-      // Call the second service inside the first service's subscribe
-      this.threadRepliesService
-        .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
-        .subscribe({
-          next: (repliesData: any) => {
-            this.threadReplies = repliesData;
-          },
-          error: (error: Error) => {
-            console.log('Error', error);
-          },
-        });
+    this.activateRoute.queryParams
+      .pipe(
+        switchMap((params) => {
+          this.threadId = params['threadID'];
+          this.communityCategoryMappingID =
+            params['communityCategoryMappingID'];
+          console.log(params['communityCategoryMappingID']);
+          return this.threadService.getSingleThread(this.threadId);
+        })
+      )
+      .subscribe((data: any) => {
+        this.threadInfo = data;
+        this.threadTitle = this.threadInfo.title;
+        this.threadContent = this.threadInfo.content;
+
+        // Add the user and content to replyData
+        this.threadData.push(
+          { name: '', value: this.threadTitle },
+          { name: '', value: this.threadContent }
+        );
+
+        // Call the second service inside the first service's subscribe
+        this.threadRepliesService
+          .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
+          .subscribe({
+            next: (repliesData: any) => {
+              this.threadReplies = repliesData;
+            },
+            error: (error: Error) => {
+              console.log('Error', error);
+            },
+          });
+      });
+
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
   }
   toggleNestedReplies(index: number) {
