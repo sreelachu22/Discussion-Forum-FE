@@ -1,6 +1,8 @@
 import { Component, TemplateRef } from '@angular/core';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 import {
@@ -124,13 +126,13 @@ export class SuperadminCategoryManagementComponent {
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
         this.getCategoriesInCommunity();
-        this.modalRef?.hide();
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
       },
       complete: () => {
         console.log('Completed');
+        this.modalRef?.hide();
       },
     });
   }

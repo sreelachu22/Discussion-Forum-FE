@@ -75,6 +75,8 @@ import { CreateReplyComponent } from './features/user/create-reply/create-reply.
 import { NoticeUpdateModalComponent } from './components/ui/notice-update-modal/notice-update-modal.component';
 import { NoticesService } from './service/HttpServices/notices.service';
 import { NoticeListComponent } from './components/ui/notice-list/notice-list.component';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,6 +129,7 @@ import { NoticeListComponent } from './components/ui/notice-list/notice-list.com
     CreateReplyComponent,
     NoticeUpdateModalComponent,
     NoticeListComponent,
+    BarChartComponent,
   ],
 
   imports: [
@@ -151,6 +154,7 @@ import { NoticeListComponent } from './components/ui/notice-list/notice-list.com
     MatPaginatorModule,
     EditorModule,
     ReactiveFormsModule,
+    CanvasJSAngularChartsModule,
   ],
   providers: [
     CategoryService,

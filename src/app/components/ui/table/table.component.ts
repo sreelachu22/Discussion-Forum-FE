@@ -19,13 +19,11 @@ export class TableComponent {
   @Input() icons?: string[];
   @Output() iconClick: EventEmitter<{ icon: string; data: any }> =
     new EventEmitter();
-  constructor(
-    private cdRef: ChangeDetectorRef
-  ) {}
+  constructor(private cdRef: ChangeDetectorRef) {}
   onIconClick(icon: string, data: any): void {
     console.log('onIconClick called');
+    // this.iconClick.emit({ icon, data });
     this.iconClick.emit({ icon, data });
-    this.cdRef.detectChanges();
   }
 
   ngOnInit(): void {

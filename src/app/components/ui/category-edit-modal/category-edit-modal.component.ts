@@ -1,10 +1,17 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { tap } from 'rxjs';
+import { Category } from 'src/app/service/HttpServices/superadmin-category.service';
 @Component({
   selector: 'app-category-edit-modal',
   templateUrl: './category-edit-modal.component.html',
@@ -18,6 +25,7 @@ export class CategoryEditModalComponent {
     private router: Router,
     private activateRoute: ActivatedRoute,
     public modalRef: BsModalRef,
+    public updateRef: BsModalRef,
     public modalService: BsModalService
   ) {}
   description: string = '';
@@ -35,6 +43,9 @@ export class CategoryEditModalComponent {
     });
   }
 
+  @Output() categoryUpdated: EventEmitter<Category> =
+    new EventEmitter<Category>();
+
   //update category mapping description
   updateCategoryDescription() {
     this.httpService
@@ -45,7 +56,13 @@ export class CategoryEditModalComponent {
       )
       .subscribe({
         next: (data: any) => {
-          this.modalRef?.hide();
+          this.categoryUpdated.emit(data);
+          console.log(this.categoryUpdated);
+          this.router.navigate(
+            ['/community-management-dashboard/category-management'],
+            { queryParams: { sortType: 'communityCategoryName' } }
+          );
+          this.updateRef?.hide();
         },
         error: (error: any) => {
           console.error('Error updating category:', error);
@@ -69,13 +86,8 @@ export class CategoryEditModalComponent {
     this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
-    this.bsmodalRef.content.subscribe(() => {
-    });
+    this.bsmodalRef.content.subscribe(() => {});
   }
-  // openDeleteModal(template: TemplateRef<void>) {
-  //   console.log('id for delete:', this.communityCategoryMappingID);
-  //   this.bsmodalRef = this.modalService.show(template, { class: 'modal-sm' });
-  // }
 
   //after getting confirmation for delete, delete api calls
   confirm(): void {
@@ -83,26 +95,27 @@ export class CategoryEditModalComponent {
       .deleteCategoryMapping(this.communityCategoryMappingID)
       .subscribe({
         next: (data: any) => {
-          // this.dataService.updateExistingData(data);
-          // Update the data immediately after deletion
-          // this.dataService.loadCategories();
+          this.categoryUpdated.emit(data);
           // Close the modal
-          this.modalRef.hide();
+          this.updateRef.hide();
         },
         error: (error: Error) => {
           alert('Error has occured, ' + error.message);
         },
         complete: () => {
           this.modalRef.hide();
+          this.updateRef.hide();
         },
       });
   }
 
   decline() {
     this.bsmodalRef?.hide();
+    this.updateRef?.hide();
   }
   closeModal() {
     this.modalRef.hide();
+    this.updateRef.hide();
   }
 
   categories: {
@@ -118,15 +131,4 @@ export class CategoryEditModalComponent {
     modifiedAt: string | null;
     threadCount: number | null;
   }[] = [];
-  //categories pagination api
-  // loadCategories() {
-  //   this.httpService
-  //     .getPagedCategories(this.currentPage, this.sortType)
-  //     .subscribe((data) => {
-  //       this.categories = data.categories;
-  //       this.dataService.updateDataSource(data);
-  //       this.pageCount = data.totalPages;
-  //       console.log(this.pageCount);
-  //     });
-  // }
 }
