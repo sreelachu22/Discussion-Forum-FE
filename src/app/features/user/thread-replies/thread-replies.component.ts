@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
+import { Vote, VoteService } from 'src/app/service/HttpServices/vote.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -18,7 +19,8 @@ export class ThreadRepliesComponent {
     private threadRepliesService: ThreadRepliesService,
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
-    private threadService:ThreadService
+    private threadService:ThreadService,
+    private voteService:VoteService
   ) {}
 
   breadcrumbs = [
@@ -26,7 +28,7 @@ export class ThreadRepliesComponent {
     { label: 'Community', route: '/community' },
     { label: 'Category', route: '/community/category-posts' },
     { label: 'Post', route: '/community/post-replies' },
-  ];
+  ];  
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
@@ -39,33 +41,61 @@ export class ThreadRepliesComponent {
   threadContent!:string;
 
   ngOnInit() {
-    this.activateRoute.queryParams.subscribe((params) => {
-      this.threadId = params['threadID'];
-    });
+    this.activateRoute.queryParams.pipe(
+      switchMap(params => {
+        this.threadId = params['threadID'];
+        return this.threadService.getSingleThread(this.threadId);
+      })
+    ).subscribe((data: any) => {
+      this.threadInfo = data;
+      this.threadTitle = this.threadInfo.title;
+      this.threadContent = this.threadInfo.content;       
+      this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});      
+    this.loadReplies();
+  });}
 
-   this.threadService.getSingleThread(this.threadId).subscribe((data) => {
-   this.threadInfo = data;
-    this.threadTitle = this.threadInfo.title;
-    this.threadContent = this.threadInfo.content;    
-    // Add the user and content to replyData    
-    this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});
-});
-
+  loadReplies() {
     this.threadRepliesService
       .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
       .subscribe({
-        next: (data: any) => {
-          this.threadReplies = data;
+        next: (repliesData: any) => {
+          this.threadReplies = repliesData;
+          console.log(repliesData);
         },
         error: (error: Error) => {
           console.log('Error', error);
         },
       });
   }
+
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
   }
+  handleUpvote(vote: Vote) {
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {
+        console.log('Upvote Successful', response);                
+      },
+      error: (error) => {
+        console.error('Error sending upvote', error);
+        this.loadReplies(); 
+      },
+    });
+    
+  }
+  handleDownvote(vote: Vote) {    
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {
+        console.log('Downvote Successful', response);                      
+      },
+      error: (error) => {
+        console.error('Error sending downvote', error);
+        this.loadReplies(); 
+      },
+    });
+  }
 
+  
   // search the entered term and showing it in a modal - temporary.
   // In actual implementation search results will pass
   searchReplies: ThreadReplies[] = [];

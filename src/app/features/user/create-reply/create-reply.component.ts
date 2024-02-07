@@ -34,32 +34,7 @@ export class CreateReplyComponent implements OnInit {
     // Add the user and content to replyData    
     this.replyData.push({ name: '', value: this.replyContent });
   });
-  }
-
-  // extractInnerHTML(htmlString: string): string {
-  //   // Create a temporary div element
-  //   const tempDiv = this.renderer.createElement('div');
-  //   // Set HTML content
-  //   tempDiv.innerHTML = htmlString;
-    
-  //   // Initialize result string
-  //   let result = '';
-    
-  //   // Iterate through child nodes to preserve formatting
-  //   for (let i = 0; i < tempDiv.childNodes.length; i++) {
-  //     const node = tempDiv.childNodes[i];
-  //     if (node.nodeType === Node.TEXT_NODE) {
-  //       // If text node, add its text content to result
-  //       result += node.textContent;
-  //     } else {
-  //       // If element node, recursively process its HTML content
-  //       result += this.extractInnerHTML(node.innerHTML);
-  //     }
-  //   }
-    
-  //   return result;
-  // }
-    
+  }    
   onSubmit(content: any) {    
     //should change the creatorID to the user that is logged in
     if (typeof content === 'string') {
@@ -90,19 +65,18 @@ export class CreateReplyComponent implements OnInit {
       complete: () => {
         const queryParams = {
           threadID: this.threadID     
-        };
-      
-        this.router.navigate(['thread-replies'], { queryParams: queryParams });
+        };  
+        this.router.navigate(['community', 'post-replies'], { queryParams: queryParams });
       }
     });
   }
     
   
 
-    goBack() {    
+  goBack() {    
     const queryParams = {
       threadID: this.threadID     
     };  
-    this.router.navigate(['thread-replies'], { queryParams: queryParams });
+    this.router.navigate(['community', 'post-replies'], { queryParams: queryParams });
   }
   }

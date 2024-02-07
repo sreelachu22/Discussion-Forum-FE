@@ -4,7 +4,7 @@
   </div>
   <br />
   <app-page-header
-    pageHeaderTitle="Experion Discussion"
+    [pageHeaderTitle]="communityName"
     navClass="navbar navbar-dark bg-secondary Page_header"
     ButtonName="Community Management"
     ButtonClass="Functional_button_community_management"
@@ -26,7 +26,7 @@
             value: category.communityCategoryName,
             style: { color: '#64A2F5', fontSize: '16px' },
           },
-          { name: 'number of posts', value: category.threadCount }
+          { value: category.threadCount + ' posts' }
         ]"
         (click)="navigateToPosts(category.communityCategoryMappingID)"
       >

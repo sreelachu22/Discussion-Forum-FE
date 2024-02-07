@@ -1,5 +1,8 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 
 export interface Thread {
@@ -27,27 +30,42 @@ export interface Thread {
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent {
-  constructor(private router: Router, private searchService: searchService) {}
-
   searchTerm: string = '';
   SearchThreadsDropDown: Thread[] = [];
-  dropdowntoggle: boolean = true;
+  dropdowntoggle: boolean = false;
+  private searchTermSubject = new Subject<string>();
 
-  @ViewChild('dropdown')
-  dropdown!: ElementRef;
+  @ViewChild('dropdown') dropdown!: ElementRef;
+
+  constructor(private router: Router, private searchService: searchService) {}
 
   InputChange(event: any) {
+    this.searchTermSubject.next((event as string).trim());
     this.searchTerm = (event as string).trim();
-    if (this.searchTerm) {
-      this.searchService.searchThreads(this.searchTerm).subscribe({
+  }
+
+  ngOnInit() {
+    this.searchTermSubject
+      .pipe(
+        debounceTime(700),
+        distinctUntilChanged(),
+        switchMap((searchTerm: string) => {
+          if (searchTerm) {
+            return this.searchService.searchThreads(searchTerm);
+          } else {
+            return of([]);
+          }
+        })
+      )
+      .subscribe({
         next: (results: Thread[]) => {
           this.SearchThreadsDropDown = results;
           this.dropdowntoggle = true;
         },
+        error: (error: any) => {
+          console.error('Error fetching search results:', error);
+        },
       });
-    } else {
-      this.dropdowntoggle = false;
-    }
   }
 
   searchResult() {
@@ -58,7 +76,7 @@ export class SearchComponent {
 
   selectResult(selectedThread: Thread) {
     this.dropdowntoggle = false;
-    this.router.navigate(['/thread-replies'], {
+    this.router.navigate([`/community/post-replies`], {
       queryParams: { threadID: selectedThread.threadID },
     });
   }

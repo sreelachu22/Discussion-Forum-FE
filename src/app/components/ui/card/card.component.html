@@ -20,10 +20,10 @@
         </ng-container>
       </div>
       <div class="card_content">
-        <ng-container *ngIf="item.name.trim() !== ''">
-          {{ item.name }}: {{ item.value }}
+        <ng-container *ngIf="item.name?.trim() !== ''">
+          {{ item.name }} {{ item.value }}
         </ng-container>
-        <ng-container *ngIf="item.name.trim() === ''">
+        <ng-container *ngIf="item.name?.trim() === ''">
           {{ item.value }}
         </ng-container>
       </div>

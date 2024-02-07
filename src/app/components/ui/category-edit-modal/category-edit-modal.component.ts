@@ -4,7 +4,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
-import { DataService } from 'src/app/service/DataServices/data.service';
 import { tap } from 'rxjs';
 @Component({
   selector: 'app-category-edit-modal',
@@ -19,8 +18,7 @@ export class CategoryEditModalComponent {
     private router: Router,
     private activateRoute: ActivatedRoute,
     public modalRef: BsModalRef,
-    public modalService: BsModalService,
-    private dataService: DataService
+    public modalService: BsModalService
   ) {}
   description: string = '';
   communityCategoryMappingID: number = 0;
@@ -48,8 +46,6 @@ export class CategoryEditModalComponent {
       .subscribe({
         next: (data: any) => {
           this.modalRef?.hide();
-          this.dataService.updateExistingData(data);
-          this.dataService.loadCategories;
         },
         error: (error: any) => {
           console.error('Error updating category:', error);
@@ -74,7 +70,6 @@ export class CategoryEditModalComponent {
       initialState,
     });
     this.bsmodalRef.content.subscribe(() => {
-      this.dataService.loadCategories();
     });
   }
   // openDeleteModal(template: TemplateRef<void>) {
@@ -86,12 +81,6 @@ export class CategoryEditModalComponent {
   confirm(): void {
     this.httpService
       .deleteCategoryMapping(this.communityCategoryMappingID)
-      .pipe(
-        tap(() => {
-          // Perform any side effect here, e.g., updating the data
-          this.dataService.loadCategories();
-        })
-      )
       .subscribe({
         next: (data: any) => {
           // this.dataService.updateExistingData(data);
@@ -105,18 +94,15 @@ export class CategoryEditModalComponent {
         },
         complete: () => {
           this.modalRef.hide();
-          this.dataService.loadCategories();
         },
       });
   }
 
   decline() {
     this.bsmodalRef?.hide();
-    this.dataService.loadCategories();
   }
   closeModal() {
     this.modalRef.hide();
-    this.dataService.loadCategories();
   }
 
   categories: {

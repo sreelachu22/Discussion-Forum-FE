@@ -78,11 +78,8 @@ export class SearchResultComponent {
   }
 
   navigateToThreadReplies(threadID: number) {
-    this.router.navigate(
-      [`/community/category-posts/post-replies/${threadID}`],
-      {
-        queryParams: { threadID: threadID },
-      }
-    );
+    this.router.navigate([`/community/post-replies`], {
+      queryParams: { threadID: threadID },
+    });
   }
 }
