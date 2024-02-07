@@ -16,6 +16,10 @@ export class SidenavCustomComponent {
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
   }
+   //INPUT SETTER, A PROPERTY DECORATOR
+  // When the 'collapsed' input property changes,
+  // Angular invokes this setter to update the 'sideNavCollapsed' signal.
+
   menuItems = signal<MenuItem[]>([
     {
       icon: 'home',

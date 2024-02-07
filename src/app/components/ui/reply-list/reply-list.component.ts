@@ -12,32 +12,33 @@ import { Router } from '@angular/router';
 })
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
+  @Output() upvoteEvent = new EventEmitter<Vote>();
+  @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   showReplies: { [key: number]: boolean } = {};
 constructor(private voteService: VoteService, private router : Router) {}
 
-  upvote(vote: Vote) {
-    this.voteService.sendVote(vote).subscribe({
-      next: (response) => {
-        console.log('Vote Successful', response);
-      },
-      error: (error) => {
-        console.error('Error sending vote', error);
-      },
-    });
+  emitUpvote(reply: ThreadReplies) {
+    const vote: Vote = {
+      userID: reply.createdBy,
+      replyID: reply.replyID,
+      isUpVote: true,
+      isDeleted: false
+    };
+    this.upvoteEvent.emit(vote);
   }
-
-  downvote(vote: Vote) {
-    this.voteService.sendVote(vote).subscribe({
-      next: (response) => {
-        console.log('Vote Successful', response);
-      },
-      error: (error) => {
-        console.error('Error sending vote', error);
-      },
-    });  
-  }  
   
+
+  emitDownvote(reply: ThreadReplies) {
+    const vote: Vote = {
+      userID: reply.createdBy,
+      replyID: reply.replyID,
+      isUpVote: false,
+      isDeleted: false
+    };
+    this.downvoteEvent.emit(vote);
+  }
+    
   toggleReplies() {    
     this.toggleRepliesEvent.emit();
   }
@@ -48,6 +49,12 @@ constructor(private voteService: VoteService, private router : Router) {}
 
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }  
+  editReply(replyID:number){
+    const queryParams = {
+      replyID: replyID      
+    };
+    this.router.navigate(['thread-replies/post-reply'], { queryParams });
+  }
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);

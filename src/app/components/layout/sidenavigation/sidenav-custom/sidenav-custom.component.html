@@ -6,6 +6,7 @@
 </div> -->
 <mat-nav-list>
   <!-- using property binding [], directive, #template reference variable -->
+  <!-- local template variable rla -->
   <a
     mat-list-item
     class="sidenav_menu_item"
@@ -20,6 +21,11 @@
       matListItemIcon
       >{{ item.icon }}</mat-icon
     >
-    <span matListItemTitle *ngIf="!sideNavCollapsed()">{{ item.label }}</span>
+    <span
+      matListItemTitle
+      *ngIf="!sideNavCollapsed()"
+      style="font-family: 'Montserrat', sans-serif !important"
+      >{{ item.label }}</span
+    >
   </a>
 </mat-nav-list>
