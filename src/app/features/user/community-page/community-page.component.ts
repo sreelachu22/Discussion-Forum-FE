@@ -38,6 +38,7 @@ export class CommunityPageComponent {
 
   communityName!: string;
 
+  isLoading = false;
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
@@ -45,6 +46,9 @@ export class CommunityPageComponent {
     });
     this.loadCategories();
     // this.loadCommunity();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
 
   loadCommunity() {

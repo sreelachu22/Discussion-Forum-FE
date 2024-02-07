@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, switchMap } from 'rxjs';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
@@ -20,7 +21,8 @@ export class ThreadRepliesComponent {
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
     private threadService: ThreadService,
-    private voteService: VoteService
+    private voteService: VoteService,
+    private loaderService: LoaderService
   ) {}
 
   breadcrumbs = [
@@ -40,6 +42,7 @@ export class ThreadRepliesComponent {
   threadTitle!: string;
   threadContent!: string;
 
+  isLoading = false;
   ngOnInit() {
     this.activateRoute.queryParams
       .pipe(
@@ -58,6 +61,9 @@ export class ThreadRepliesComponent {
         );
         this.loadReplies();
       });
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
 
   loadReplies() {
