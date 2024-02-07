@@ -10,11 +10,11 @@
     <div *ngFor="let community of communities">
       <app-card
         [metadataItems]="[
-        {
-          name: '',
-          value: '',
-          imageSrc: 'assets/images/community.png'
-        },
+          {
+            name: '',
+            value: '',
+            imageSrc: 'assets/images/community.png'
+          },
           {
             name: '',
             value: community.communityName,
@@ -23,23 +23,20 @@
           {
             name: '',
             value: community.categoryCount + ' categories',
-            style: { color: '#64A2F5', fontSize: '16px' },
           },
           {
             name: '',
             value: community.postCount + ' posts',
-            style: { color: '#64A2F5', fontSize: '16px' },
           },
           {
             name: '',
             value: 'Top categories : ' + community.topCategories,
-            style: { color: '#64A2F5', fontSize: '16px' },
           }
         ]"
         [defaultImageWidth]="'50px'"
         [defaultImageHeight]="'50px'"
         [marginTop]="'10px'"
-        (click)="navigateToCommunity(community.communityId)"
+        (click)="navigateToCommunity(community.communityID)"
       >
       </app-card>
     </div>

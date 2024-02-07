@@ -16,6 +16,7 @@ export class HomePageComponent {
 
   communities : CommunityDetails[] = [];
   ngOnInit():void {
+    this.activateRoute.queryParams.subscribe();
     this.loadCommunities();
   }
 
@@ -28,10 +29,10 @@ export class HomePageComponent {
   });
   }
 
-  navigateToCommunity(communityId: number) {
+  navigateToCommunity(communityID: number) {
     this.router.navigate(['community'], {
       queryParams: {
-        communityID: communityId,
+        communityID: communityID,
       },
     });
   }

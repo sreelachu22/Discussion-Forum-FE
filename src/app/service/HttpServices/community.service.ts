@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface CommunityDetails{
-  communityId : number;
+  communityID : number;
   communityName : string;
   communityStatusName : string;
   createdBy : string;
@@ -22,11 +22,12 @@ export class CommunityService {
 
   BASE_URL = 'https://localhost:7160/api/Community'
 
-  getAllCommunities(): Observable<any> {
-    return this.http.get<any>(this.BASE_URL);
+  getAllCommunities(): Observable<CommunityDetails[]> {
+    return this.http.get<CommunityDetails[]>(this.BASE_URL);
   }
 
   getACommunity(id: number): Observable<CommunityDetails> {
-    return this.http.get<CommunityDetails>(`${this.BASE_URL}/${id}`);
+    const reqURL = `${this.BASE_URL}/${id}`;
+    return this.http.get<CommunityDetails>(reqURL);
   }
 }
