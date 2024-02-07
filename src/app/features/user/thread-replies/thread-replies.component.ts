@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, switchMap } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
@@ -7,6 +7,7 @@ import {
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
+import { Vote, VoteService } from 'src/app/service/HttpServices/vote.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -18,7 +19,8 @@ export class ThreadRepliesComponent {
     private threadRepliesService: ThreadRepliesService,
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
-    private threadService:ThreadService
+    private threadService:ThreadService,
+    private voteService:VoteService
   ) {}
 
   breadcrumbs = [
@@ -26,7 +28,7 @@ export class ThreadRepliesComponent {
     { label: 'Community', route: '/community' },
     { label: 'Category', route: '/community/category-posts' },
     { label: 'Post', route: '/community/post-replies' },
-  ];
+  ];  
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
@@ -47,28 +49,53 @@ export class ThreadRepliesComponent {
     ).subscribe((data: any) => {
       this.threadInfo = data;
       this.threadTitle = this.threadInfo.title;
-      this.threadContent = this.threadInfo.content;
-  
-      // Add the user and content to replyData    
-      this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});
-  
-      // Call the second service inside the first service's subscribe
-      this.threadRepliesService
-        .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
-        .subscribe({
-          next: (repliesData: any) => {
-            this.threadReplies = repliesData;
-          },
-          error: (error: Error) => {
-            console.log('Error', error);
-          },
-        });
-    });
+      this.threadContent = this.threadInfo.content;       
+      this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});      
+    this.loadReplies();
+  });}
+
+  loadReplies() {
+    this.threadRepliesService
+      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
+      .subscribe({
+        next: (repliesData: any) => {
+          this.threadReplies = repliesData;
+          console.log(repliesData);
+        },
+        error: (error: Error) => {
+          console.log('Error', error);
+        },
+      });
   }
+
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
   }
+  handleUpvote(vote: Vote) {
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {
+        console.log('Upvote Successful', response);                
+      },
+      error: (error) => {
+        console.error('Error sending upvote', error);
+        this.loadReplies(); 
+      },
+    });
+    
+  }
+  handleDownvote(vote: Vote) {    
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {
+        console.log('Downvote Successful', response);                      
+      },
+      error: (error) => {
+        console.error('Error sending downvote', error);
+        this.loadReplies(); 
+      },
+    });
+  }
 
+  
   // search the entered term and showing it in a modal - temporary.
   // In actual implementation search results will pass
   searchReplies: ThreadReplies[] = [];

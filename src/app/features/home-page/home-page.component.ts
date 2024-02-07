@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommunityDetails, CommunityService } from 'src/app/service/HttpServices/community.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,15 +8,32 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  constructor(private activateRoute: ActivatedRoute, private router: Router) {}
-  communityID: number = 1;
+  constructor(
+    private httpService: CommunityService,
+    private activateRoute: ActivatedRoute, 
+    private router: Router
+  ) {}
 
-  ngOnInit() {}
+  communities : CommunityDetails[] = [];
+  ngOnInit():void {
+    this.activateRoute.queryParams.subscribe();
+    this.loadCommunities();
+  }
 
-  navigateToCommunity() {
+  loadCommunities() {
+    this.httpService
+    .getAllCommunities()
+    .subscribe((data) => {
+      console.log(data);
+    this.communities = data;
+  });
+  }
+
+  navigateToCommunity(communityID: number, communityName: string) {
     this.router.navigate(['community'], {
       queryParams: {
-        communityID: this.communityID,
+        communityID: communityID,
+        communityName: communityName
       },
     });
   }

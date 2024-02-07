@@ -7,11 +7,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./sidenavigation.component.css'],
 })
 export class SidenavigationComponent {
-  ngOnInit() {
-    console.log('side nave oninit');
-  }
-  collapsed = signal(false); //signals
-  sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px')); //also signals
+  collapsed = signal(false); //signals which will pass the state with the parent component
+  //Automatically update the sidenav width according to the collapsed state
+  sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
 
   faUser = faUser;
   // openUserProfile() {

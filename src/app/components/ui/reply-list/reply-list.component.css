@@ -2,13 +2,16 @@
 
 .reply-container {
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 8px;
   padding-top: 10px;
   padding-bottom: 5px;
   padding-right: 10px;
   padding-left: 15px;
   display: flex;
   flex-direction: column;
+}
+.reply-container:hover {
+  box-shadow: 0 4px 8px rgba(147, 33, 33, 0.1);
 }
 
 .reply-header {
@@ -18,7 +21,8 @@
 }
 
 .username {
-  color: #3498db; /* Blue color for username */
+  font-weight: bold;
+  color: #3498db;
 }
 
 .date {
@@ -32,18 +36,26 @@
 }
 
 .votes {
+  font-weight: bolder;
   display: flex;
 }
-
+.reply-content {
+  margin-bottom: 10px;
+}
 .votes button {
   margin-right: 10px;
 }
 
 .show-replies-button {
+  font-weight: bold;
   color: #db978f; /* Red color for replies button */
   cursor: pointer;
+  transition: color 0.3s ease-in-out;
 }
 
+.show-replies-button:hover {
+  color: #ea4937;
+}
 /* .show-replies {
   margin-left: auto;
 } */
