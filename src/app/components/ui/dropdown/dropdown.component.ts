@@ -10,8 +10,7 @@ export class DropdownComponent {
   @Input() results: Thread[] = [];
   @Output() emitselectResult: EventEmitter<Thread> = new EventEmitter<Thread>();
 
-  constructor() {} // Inject ElementRef
-
+  constructor() {}
   selectResult(result: Thread) {
     this.emitselectResult.emit(result);
   }
