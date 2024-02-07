@@ -33,5 +33,21 @@ mat-nav-list {
 }
 
 .selected_menu_item {
-  border-right-color: #3f51b5;
+  border-right-color: black;
+}
+.mat-mdc-list-base.mat-mdc-list-base
+  .mdc-list-item--selected.mdc-list-item--with-leading-icon
+  .mdc-list-item__start,
+.mat-mdc-list-base.mat-mdc-list-base
+  .mdc-list-item--activated.mdc-list-item--with-leading-icon
+  .mdc-list-item__start {
+  color: black;
+}
+.mat-mdc-list-base.mat-mdc-list-base
+  .mdc-list-item--selected
+  .mdc-list-item__primary-text,
+.mat-mdc-list-base.mat-mdc-list-base
+  .mdc-list-item--activated
+  .mdc-list-item__primary-text {
+  color: black;
 }
