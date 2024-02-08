@@ -77,6 +77,7 @@ import { NoticesService } from './service/HttpServices/notices.service';
 import { NoticeListComponent } from './components/ui/notice-list/notice-list.component';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component';
+import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,6 +131,7 @@ import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component
     NoticeUpdateModalComponent,
     NoticeListComponent,
     BarChartComponent,
+    InvalidPopupComponent,
   ],
 
   imports: [

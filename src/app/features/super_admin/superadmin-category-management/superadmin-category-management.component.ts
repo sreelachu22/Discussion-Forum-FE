@@ -5,6 +5,8 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
+import { InvalidPopupComponent } from 'src/app/components/ui/invalid-popup/invalid-popup.component';
+import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import {
   Category,
   superAdminCategoryService,
@@ -46,6 +48,8 @@ export class SuperadminCategoryManagementComponent {
   //delete confirmation modal is inside another modal.
   //this modal reference is for delete confirmation modal
   bsmodalRef?: BsModalRef;
+
+  alertRef?: BsModalRef;
 
   //open modal
   // openDeleteCategoryModal(template: TemplateRef<void>) {
@@ -123,12 +127,34 @@ export class SuperadminCategoryManagementComponent {
   }
 
   createCategory() {
+    // Check if the category already exists locally
+    const categoryExists = this.categories.some(category =>
+      category.communityCategoryName === this.newCategoryName
+    );
+  
+    if (categoryExists) {
+      // Category name already exists, show error message or take appropriate action
+      this.alertRef = this.modalService.show(InvalidPopupComponent, {
+        initialState: {
+          message: 'Category name already exists', //make use of reusable success pop up , sends message to it
+        },
+      });
+      this.newCategoryName = '';
+      return; // Exit function early
+    }
+  
+    // If the category doesn't exist locally, proceed to create it
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
+        // Update the list of categories in the community
         this.getCategoriesInCommunity();
+        // Hide the modal after successfully creating the category
+        this.modalRef?.hide();
+        this.newCategoryName = '';
+        
       },
       error: (error: Error) => {
-        alert('Error has occured, ' + error.message);
+        alert('Error has occurred: ' + error.message);
       },
       complete: () => {
         console.log('Completed');
@@ -136,11 +162,17 @@ export class SuperadminCategoryManagementComponent {
       },
     });
   }
+  
 
   updateCategory(id: number) {
     this.httpService.updateCategory(id, this.newCategoryName, false).subscribe({
       next: (data: any) => {
-        alert('Category updated successfully');
+        // alert('Category updated successfully');
+        this.alertRef = this.modalService.show(SuccessPopupComponent, {
+          initialState: {
+            message: 'Category updated successfully', //make use of reusable success pop up , sends message to it
+          },
+        });
         this.getCategoriesInCommunity();
         this.modalRef?.hide(); // Close the modal after updating
         this.newCategoryName = ''; // Clear fields for the next update
