@@ -5,7 +5,10 @@ import {
   CommunityCategory,
   CategoryService,
 } from 'src/app/service/HttpServices/category.service';
-import { CommunityDetails, CommunityService } from 'src/app/service/HttpServices/community.service';
+import {
+  CommunityDetails,
+  CommunityService,
+} from 'src/app/service/HttpServices/community.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import { Thread } from 'src/app/service/HttpServices/thread.service';
@@ -16,7 +19,6 @@ import { Thread } from 'src/app/service/HttpServices/thread.service';
   styleUrls: ['./community-page.component.css'],
 })
 export class CommunityPageComponent {
-  isLoading = false;
   constructor(
     private httpService: CategoryService,
     private communityHttpService: CommunityService,
@@ -36,6 +38,7 @@ export class CommunityPageComponent {
 
   communityName!: string;
 
+  isLoading = false;
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
@@ -43,25 +46,27 @@ export class CommunityPageComponent {
     });
     this.loadCategories();
     // this.loadCommunity();
-  }
-
-  loadCommunity(){
-    this.communityHttpService
-    .getACommunity(this.communityID)
-    .subscribe((data) => {
-      this.community = data;
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
   }
 
+  loadCommunity() {
+    this.communityHttpService
+      .getACommunity(this.communityID)
+      .subscribe((data) => {
+        this.community = data;
+      });
+  }
+
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
-  sortType: string = 'communityCategoryName';
+  sortType: string = '-threadCount';
   title: string = 'categoryPage';
   searchText: string = '';
   searchTerm: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
-
   pages: number[] = [];
   pageSize: number = 6;
   totalPages: number = 0;

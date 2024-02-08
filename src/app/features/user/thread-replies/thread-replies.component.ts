@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, switchMap } from 'rxjs';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
@@ -19,8 +20,9 @@ export class ThreadRepliesComponent {
     private threadRepliesService: ThreadRepliesService,
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
-    private threadService:ThreadService,
-    private voteService:VoteService
+    private threadService: ThreadService,
+    private voteService: VoteService,
+    private loaderService: LoaderService
   ) {}
 
   breadcrumbs = [
@@ -28,31 +30,41 @@ export class ThreadRepliesComponent {
     { label: 'Community', route: '/community' },
     { label: 'Category', route: '/community/category-posts' },
     { label: 'Post', route: '/community/post-replies' },
-  ];  
+  ];
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
   threadReplies: ThreadReplies[] = [];
   // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
-  threadInfo:any;
+  threadInfo: any;
   threadData: { name: string; value: any }[] = [];
-  threadTitle!:string;
-  threadContent!:string;
+  threadTitle!: string;
+  threadContent!: string;
 
+  isLoading = false;
   ngOnInit() {
-    this.activateRoute.queryParams.pipe(
-      switchMap(params => {
-        this.threadId = params['threadID'];
-        return this.threadService.getSingleThread(this.threadId);
-      })
-    ).subscribe((data: any) => {
-      this.threadInfo = data;
-      this.threadTitle = this.threadInfo.title;
-      this.threadContent = this.threadInfo.content;       
-      this.threadData.push({ name: '', value: this.threadTitle },{name: '',value:this.threadContent});      
-    this.loadReplies();
-  });}
+    this.activateRoute.queryParams
+      .pipe(
+        switchMap((params) => {
+          this.threadId = params['threadID'];
+          return this.threadService.getSingleThread(this.threadId);
+        })
+      )
+      .subscribe((data: any) => {
+        this.threadInfo = data;
+        this.threadTitle = this.threadInfo.title;
+        this.threadContent = this.threadInfo.content;
+        this.threadData.push(
+          { name: '', value: this.threadTitle },
+          { name: '', value: this.threadContent }
+        );
+        this.loadReplies();
+      });
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+  }
 
   loadReplies() {
     this.threadRepliesService
@@ -74,28 +86,26 @@ export class ThreadRepliesComponent {
   handleUpvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({
       next: (response) => {
-        console.log('Upvote Successful', response);                
+        console.log('Upvote Successful', response);
       },
       error: (error) => {
         console.error('Error sending upvote', error);
-        this.loadReplies(); 
+        this.loadReplies();
       },
     });
-    
   }
-  handleDownvote(vote: Vote) {    
+  handleDownvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({
       next: (response) => {
-        console.log('Downvote Successful', response);                      
+        console.log('Downvote Successful', response);
       },
       error: (error) => {
         console.error('Error sending downvote', error);
-        this.loadReplies(); 
+        this.loadReplies();
       },
     });
   }
 
-  
   // search the entered term and showing it in a modal - temporary.
   // In actual implementation search results will pass
   searchReplies: ThreadReplies[] = [];

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
 // interface for response data
@@ -47,22 +48,30 @@ export class CategoryThreadsComponent implements OnInit {
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts/:categoryID' },
+    {
+      label: 'Category',
+      route: `/community/category-posts/${this.communityCategoryMappingID}`,
+    },
   ];
 
   constructor(
     private threadService: ThreadService,
     private activateRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading = false;
   // ng init with method to get url params and display content based on it
   ngOnInit() {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityCategoryMappingID = params['communityCategoryMappingID'];
     });
-
+    console.log(this.communityCategoryMappingID);
     this.loadThreads();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
 
   loadThreads() {
@@ -168,21 +177,12 @@ export class CategoryThreadsComponent implements OnInit {
       queryParams,
     });
   }
-  // const queryParams = {
-  //   communityCategoryMappingID: this.communityCategoryMappingID,
-  //   creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074',
-  //   heading: 'Create Post',
-  //   firstButtonName: 'Posts',
-  //   secondButtonName: 'Cancel',
-  // onFirstButtonClick: ,
-  // onSecondButtonClick: ,
-  // Add other data as needed
-
-  // this.router.navigate(['category_threads/create_posts'], { queryParams });
-
   navigateToThreadReplies(threadID: number) {
     this.router.navigate([`/community/post-replies`], {
-      queryParams: { threadID: threadID },
+      queryParams: {
+        threadID: threadID,
+        communityCategoryMappingID: this.communityCategoryMappingID,
+      },
     });
   }
 

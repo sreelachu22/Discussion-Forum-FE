@@ -1,6 +1,8 @@
 import { Component, TemplateRef } from '@angular/core';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { CategoryCreateModalComponent } from 'src/app/components/ui/category-create-modal/category-create-modal.component';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 import { InvalidPopupComponent } from 'src/app/components/ui/invalid-popup/invalid-popup.component';
@@ -156,6 +158,7 @@ export class SuperadminCategoryManagementComponent {
       },
       complete: () => {
         console.log('Completed');
+        this.modalRef?.hide();
       },
     });
   }

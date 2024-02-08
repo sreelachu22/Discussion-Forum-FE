@@ -1,7 +1,9 @@
 <div class="modal-body custom-modal-body">
   <form (ngSubmit)="createCategory()" #categoryForm="ngForm">
     <div class="form-group">
-      <label for="communityCategory">Community Category:</label>
+      <label for="communityCategory"
+        ><span class="required">*</span>Community Category:</label
+      >
       <select
         class="form-control"
         name="communityCategory"
@@ -9,7 +11,7 @@
         required
         #communityCategoryField="ngModel"
       >
-        <!-- selectedCommunityCategory =  communityCategoryID of selected category -->
+        <!-- selectedCommunityCategory =  communityCategoryName of selected category -->
         <option
           *ngFor="let category of categoriesNotInCommunity"
           [value]="category.communityCategoryName"
@@ -18,47 +20,95 @@
         </option>
         <option [value]="'other'">Other</option>
       </select>
+      <span
+        class="form_error"
+        *ngIf="communityCategoryField.invalid && communityCategoryField.touched"
+      >
+        *Category is required
+      </span>
     </div>
-    <!-- selectedCommunityCategory =  -1 if selected 'other' -->
+    <!-- selectedCommunityCategory =  other if selected 'other' -->
     <div *ngIf="selectedCommunityCategory == 'other'">
       <div class="form-group">
-        <label for="newCategoryName">New Category Name:</label>
+        <label for="newCategoryName"
+          ><span class="required">*</span>New Category Name:</label
+        >
         <input
           type="text"
           class="form-control"
           name="newCategoryName"
           [(ngModel)]="newCategoryName"
           required
+          minlength="2"
+          maxlength="50"
+          pattern=".*\S+.*"
+          #categoryNameInput="ngModel"
+          [disabled]="
+            !communityCategoryField.valid || !communityCategoryField.value
+          "
           #newCategoryNameField="ngModel"
         />
-        <span
-          class="form_error"
-          *ngIf="newCategoryNameField.invalid && newCategoryNameField.touched"
+        <div
+          *ngIf="
+            categoryNameInput?.invalid &&
+            (categoryNameInput?.dirty || categoryNameInput?.touched)
+          "
+          class="error-message"
         >
-          *New Category Name is required
-        </span>
+          <div *ngIf="categoryNameInput.errors?.['required']">
+            Please fill out this field.
+          </div>
+          <div *ngIf="categoryNameInput.errors?.['minlength']">
+            Category Name must be at least 2 characters long.
+          </div>
+          <div *ngIf="categoryNameInput.errors?.['maxlength']">
+            Category Name cannot exceed 50 characters.
+          </div>
+          <div *ngIf="categoryNameInput.errors?.['pattern']">
+            Category Name cannot be just empty spaces.
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="description">Description:</label>
+      <label for="description"
+        ><span class="required">*</span>Description:</label
+      >
       <textarea
         class="form-control"
         name="description"
         [(ngModel)]="description"
         required
+        minlength="6"
+        maxlength="200"
+        pattern=".*\S+.*"
         #descriptionField="ngModel"
       ></textarea>
-      <span
-        class="form_error"
-        *ngIf="descriptionField.invalid && descriptionField.touched"
+      <div
+        *ngIf="
+          descriptionField?.invalid &&
+          (descriptionField?.dirty || descriptionField?.touched)
+        "
+        class="error-message"
       >
-        *Description is required
-      </span>
+        <div *ngIf="descriptionField.errors?.['required']">
+          Please fill out this field.
+        </div>
+        <div *ngIf="descriptionField.errors?.['minlength']">
+          Description must be at least 6 characters long.
+        </div>
+        <div *ngIf="descriptionField.errors?.['maxlength']">
+          Description cannot exceed 200 characters.
+        </div>
+        <div *ngIf="descriptionField.errors?.['pattern']">
+          Description cannot be just empty spaces.
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="createdBy">Created By:</label>
+      <label for="createdBy"><span class="required">*</span>Created By:</label>
       <input
         type="text"
         class="form-control"
@@ -77,11 +127,6 @@
 
     <br />
     <div class="buttons">
-      <!-- <button
-        type="submit"
-        class="btn btn-primary custom-btn"
-        [disabled]="categoryForm.invalid"
-      > -->
       <app-button
         buttonClass="button"
         buttonName="Submit"
@@ -91,16 +136,8 @@
         hoverTextColor="white"
         [disableButton]="categoryForm.invalid"
       ></app-button>
-      <!-- </button> -->
       <span></span>
       <span>
-        <!-- <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="bsModalRef.hide()"
-        >
-          Close
-        </button> -->
         <app-button
           buttonClass="button"
           buttonName="Close"

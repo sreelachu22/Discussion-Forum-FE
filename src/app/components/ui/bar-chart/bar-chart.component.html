@@ -1,0 +1,8 @@
+<div class="container">
+  <div [style.height]="height" [style.width]="width">
+    <canvasjs-chart
+      *ngIf="chartOptions"
+      [options]="chartOptions"
+    ></canvasjs-chart>
+  </div>
+</div>

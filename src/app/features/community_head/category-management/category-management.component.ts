@@ -35,7 +35,7 @@ export interface TableColumn {
   styleUrls: ['./category-management.component.css'],
 })
 export class CategoryManagementComponent implements OnInit {
-  sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
+  sortOptions = ['communityCategoryName', 'description', 'createdAt'];
   sortType: string = 'communityCategoryName';
   title: string = 'categoryPage';
   searchText: string = '';
@@ -94,9 +94,9 @@ export class CategoryManagementComponent implements OnInit {
     this.httpService
       .getPagedCategories(this.currentPage, this.sortType)
       .subscribe((data) => {
+        console.log('called loadCategories');
         this.categories = data.categories;
         this.pageCount = data.totalPages;
-        console.log(this.pageCount);
       });
   }
 
@@ -125,11 +125,12 @@ export class CategoryManagementComponent implements OnInit {
 
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
-    this.modalRef.content.categories.subscribe(() => {
+    this.modalRef.content.categoryCreated.subscribe(() => {
       this.loadCategories();
     });
   }
 
+  updateRef?: BsModalRef;
   onCategoryIconClick(event: { icon: string; data: any }): void {
     if (event.icon === 'edit') {
       const communityCategoryMappingID = event.data.communityCategoryMappingID;
@@ -139,7 +140,11 @@ export class CategoryManagementComponent implements OnInit {
         communityCategoryMappingID,
         description
       );
-      this.modalRef = this.modalService.show(CategoryEditModalComponent);
+      this.updateRef = this.modalService.show(CategoryEditModalComponent);
+      this.updateRef.content.categoryUpdated.subscribe(() => {
+        console.log('called loadCategories');
+        this.loadCategories();
+      });
     }
   }
 
@@ -147,15 +152,6 @@ export class CategoryManagementComponent implements OnInit {
   oldDescription: string = '';
   newDescription: string = '';
   modifiedBy: string = '';
-
-  //To find in which table row is hovered
-  // isRowHovered: number | null = null;
-  // onMouseEnter(index: number) {
-  //   this.isRowHovered = index;
-  // }
-  // onMouseLeave() {
-  //   this.isRowHovered = null;
-  // }
 
   id: number = 1;
 
