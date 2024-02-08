@@ -75,6 +75,7 @@ import { CreateReplyComponent } from './features/user/create-reply/create-reply.
 import { NoticeUpdateModalComponent } from './components/ui/notice-update-modal/notice-update-modal.component';
 import { NoticesService } from './service/HttpServices/notices.service';
 import { NoticeListComponent } from './components/ui/notice-list/notice-list.component';
+import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,6 +128,7 @@ import { NoticeListComponent } from './components/ui/notice-list/notice-list.com
     CreateReplyComponent,
     NoticeUpdateModalComponent,
     NoticeListComponent,
+    InvalidPopupComponent,
   ],
 
   imports: [

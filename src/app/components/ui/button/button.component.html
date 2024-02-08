@@ -8,6 +8,7 @@
   (mouseout)="hover = false"
   [style.backgroundColor]="hover ? hoverColor : buttonColor || defaultColor"
   [style.color]="hover ? hoverTextColor : textColor || defaultTextColor"
+  [type]="buttonType"
   [disabled]="disableButton"
 >
   {{ buttonName }}
