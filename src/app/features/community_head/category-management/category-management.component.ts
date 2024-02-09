@@ -23,7 +23,6 @@ import { Category } from 'src/app/service/HttpServices/superadmin-category.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
-import { DataService } from 'src/app/service/DataServices/data.service';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -36,7 +35,7 @@ export interface TableColumn {
   styleUrls: ['./category-management.component.css'],
 })
 export class CategoryManagementComponent implements OnInit {
-  sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
+  sortOptions = ['communityCategoryName', 'description', 'createdAt'];
   sortType: string = 'communityCategoryName';
   title: string = 'categoryPage';
   searchText: string = '';
@@ -55,7 +54,6 @@ export class CategoryManagementComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private categoryModalService: CategoryModalService,
-    private dataService: DataService,
     private activateRoute: ActivatedRoute
   ) {}
 
@@ -96,10 +94,9 @@ export class CategoryManagementComponent implements OnInit {
     this.httpService
       .getPagedCategories(this.currentPage, this.sortType)
       .subscribe((data) => {
+        console.log('called loadCategories');
         this.categories = data.categories;
-        this.dataService.updateDataSource(data);
         this.pageCount = data.totalPages;
-        console.log(this.pageCount);
       });
   }
 
@@ -128,11 +125,12 @@ export class CategoryManagementComponent implements OnInit {
 
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
-    this.modalRef.content.categories.subscribe(() => {
+    this.modalRef.content.categoryCreated.subscribe(() => {
       this.loadCategories();
     });
   }
 
+  updateRef?: BsModalRef;
   onCategoryIconClick(event: { icon: string; data: any }): void {
     if (event.icon === 'edit') {
       const communityCategoryMappingID = event.data.communityCategoryMappingID;
@@ -142,7 +140,11 @@ export class CategoryManagementComponent implements OnInit {
         communityCategoryMappingID,
         description
       );
-      this.modalRef = this.modalService.show(CategoryEditModalComponent);
+      this.updateRef = this.modalService.show(CategoryEditModalComponent);
+      this.updateRef.content.categoryUpdated.subscribe(() => {
+        console.log('called loadCategories');
+        this.loadCategories();
+      });
     }
   }
 
@@ -150,15 +152,6 @@ export class CategoryManagementComponent implements OnInit {
   oldDescription: string = '';
   newDescription: string = '';
   modifiedBy: string = '';
-
-  //To find in which table row is hovered
-  // isRowHovered: number | null = null;
-  // onMouseEnter(index: number) {
-  //   this.isRowHovered = index;
-  // }
-  // onMouseLeave() {
-  //   this.isRowHovered = null;
-  // }
 
   id: number = 1;
 

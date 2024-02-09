@@ -26,4 +26,11 @@
       ></app-card>
     </div>
   </div>
+
+  <app-bar-chart
+    *ngIf="categoryChartOptions"
+    [chartOptions]="categoryChartOptions"
+    [width]="'57rem'"
+    [height]="'360px'"
+  ></app-bar-chart>
 </div>

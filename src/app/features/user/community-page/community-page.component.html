@@ -4,7 +4,7 @@
   </div>
   <br />
   <app-page-header
-    pageHeaderTitle="Experion Discussion"
+    [pageHeaderTitle]="communityName"
     navClass="navbar navbar-dark bg-secondary Page_header"
     ButtonName="Community Management"
     ButtonClass="Functional_button_community_management"
@@ -44,3 +44,6 @@
     </button>
   </div>
 </div>
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>

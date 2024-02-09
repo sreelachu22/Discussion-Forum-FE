@@ -1,10 +1,14 @@
-import { Component, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, Input, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {
   CommunityCategory,
   CategoryService,
 } from 'src/app/service/HttpServices/category.service';
+import {
+  CommunityDetails,
+  CommunityService,
+} from 'src/app/service/HttpServices/community.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import { Thread } from 'src/app/service/HttpServices/thread.service';
@@ -15,9 +19,9 @@ import { Thread } from 'src/app/service/HttpServices/thread.service';
   styleUrls: ['./community-page.component.css'],
 })
 export class CommunityPageComponent {
-  isLoading = false;
   constructor(
     private httpService: CategoryService,
+    private communityHttpService: CommunityService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private modalService: BsModalService,
@@ -29,22 +33,40 @@ export class CommunityPageComponent {
     { label: 'Community', route: '/community' },
   ];
 
-  communityID: number = 0;
+  communityID: number = 1;
+  community!: CommunityDetails;
+
+  communityName!: string;
+
+  isLoading = false;
   ngOnInit(): void {
-    this.loadCategories();
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
+      this.communityName = params['communityName'] || 'PM-Hub';
+    });
+    this.loadCategories();
+    // this.loadCommunity();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
   }
+
+  loadCommunity() {
+    this.communityHttpService
+      .getACommunity(this.communityID)
+      .subscribe((data) => {
+        this.community = data;
+      });
+  }
+
   sortOptions = ['communityCategoryName', 'description', 'CreatedAt'];
-  sortType: string = 'communityCategoryName';
+  sortType: string = '-threadCount';
   title: string = 'categoryPage';
   searchText: string = '';
   searchTerm: string = '';
   categoriesList: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
-
   pages: number[] = [];
   pageSize: number = 6;
   totalPages: number = 0;

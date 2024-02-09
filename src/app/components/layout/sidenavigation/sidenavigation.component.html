@@ -1,22 +1,40 @@
-<mat-toolbar class="mat-elevation-z3"  style="background-color: rgb(51, 171, 165)">
+<mat-toolbar
+  class="mat-elevation-z3"
+  style="background-color: rgb(51, 171, 165)"
+>
   <!-- <div class="header"> -->
   <!-- <div class="header_left"> -->
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
     <!-- signal -->
     <mat-icon>menu</mat-icon>
   </button>
+  <img
+    class="logo-icon"
+    src="assets/images/Logo.png"
+    style="max-width: 10%; min-width: 5%"
+  />
   <!-- <span class="app_name">DiscussIt!</span> -->
   <!-- <img [src]="getLogoPath()" alt="logo" /> -->
 
   <app-search></app-search>
   <span class="spacer"></span>
   <!-- </div> -->
-  <mat-icon>person</mat-icon>
+  <!-- <mat-icon>person</mat-icon> -->
+  <img
+    class="user-icon"
+    src="assets/images/profile-user.png"
+    style="max-width: 3%; min-width: 3%"
+  />
   <!-- <app-icon [iconName]="faUser"></app-icon> -->
   <!-- </div> -->
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav opened mode="side" [style.width]="sidenavWidth()"  style="background-color:rgb(224, 244, 242)">
+  <mat-sidenav
+    opened
+    mode="side"
+    [style.width]="sidenavWidth()"
+    style="background-color: rgb(224, 244, 242)"
+  >
     <app-sidenav-custom [collapsed]="collapsed()"></app-sidenav-custom>
   </mat-sidenav>
 

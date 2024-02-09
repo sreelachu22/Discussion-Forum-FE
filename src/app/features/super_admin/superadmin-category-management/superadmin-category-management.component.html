@@ -16,17 +16,42 @@
     <div class="modal-body">
       <form (ngSubmit)="createCategory()" #categoryForm="ngForm">
         <div class="form-group">
-          <label for="newCategoryName">New Category Name:</label>
+          <label for="newCategoryName"
+            ><span class="required">*</span>New Category Name:</label
+          >
           <textarea
             class="form-control"
             name="newCategoryName"
             [(ngModel)]="newCategoryName"
             required
+            minlength="2"
+            maxlength="50"
+            pattern=".*\S+.*"
+            #categoryNameInput="ngModel"
           ></textarea>
+          <div
+            *ngIf="
+              categoryNameInput?.invalid &&
+              (categoryNameInput?.dirty || categoryNameInput?.touched)
+            "
+            class="error-message"
+          >
+            <div *ngIf="categoryNameInput.errors?.['required']">
+              Please fill out this field.
+            </div>
+            <div *ngIf="categoryNameInput.errors?.['minlength']">
+              New Category Name must be at least 2 characters long.
+            </div>
+            <div *ngIf="categoryNameInput.errors?.['maxlength']">
+              New Category Name cannot exceed 50 characters.
+            </div>
+            <div *ngIf="categoryNameInput.errors?.['pattern']">
+              New Category Name cannot be just empty spaces.
+            </div>
+          </div>
         </div>
         <br />
         <div class="buttons">
-          
           <app-button
             buttonClass="button"
             buttonName="Create"
@@ -44,6 +69,15 @@
           >
             Close
           </button>
+          <!-- <app-button
+            buttonClass="button"
+            buttonName="Close"
+            buttonColor="#6c757d"
+            textColor="white"
+            hoverColor="#5c636a"
+            hoverTextColor="white"
+            (buttonClick)="closeModal()"
+          ></app-button> -->
         </div>
       </form>
     </div>
@@ -99,47 +133,58 @@
             </div>
 
             <div class="form-group">
-              <label for="newCategoryName">New Category Name:</label>
+              <label for="newCategoryName"
+                ><span class="required">*</span>New Category Name:</label
+              >
               <textarea
                 class="form-control"
                 name="newCategoryName"
+                required
+                minlength="2"
+                maxlength="50"
+                pattern=".*\S+.*"
+                #newcategoryNameInput="ngModel"
                 [(ngModel)]="newCategoryName"
               ></textarea>
+              <div
+                *ngIf="
+                  newcategoryNameInput?.invalid &&
+                  (newcategoryNameInput?.dirty || newcategoryNameInput?.touched)
+                "
+                class="error-message"
+              >
+                <div *ngIf="newcategoryNameInput.errors?.['required']">
+                  Please fill out this field.
+                </div>
+                <div *ngIf="newcategoryNameInput.errors?.['minlength']">
+                  New category name must be at least 2 characters long.
+                </div>
+                <div *ngIf="newcategoryNameInput.errors?.['maxlength']">
+                  New category name cannot exceed 50 characters.
+                </div>
+                <div *ngIf="newcategoryNameInput.errors?.['pattern']">
+                  New category name cannot be just empty spaces.
+                </div>
+              </div>
             </div>
             <br />
             <div class="buttons">
-              <!-- <button
-                  type="submit"
-                  class="btn btn-primary custom-btn"
-                  [disabled]="!newCategoryName"
-                >
-                  Update
-                </button> -->
               <app-button
                 buttonClass="custom-btn"
-                buttonName="Update"
+                buttonName="Submit"
                 buttonColor="rgb(31, 151, 145)"
                 textColor="white"
                 hoverColor="rgb(51, 171, 165)"
                 hoverTextColor="white"
-                [disableButton]="!newCategoryName"
+                [disableButton]="!categoryForm.valid"
               ></app-button>
               <span></span>
-              <!-- <button class="btn btn-default" (click)="closeModal()"></button> -->
-
-              <!-- <button
-                  type="button"
-                  class="btn btn-danger"
-                  (click)="openDeleteCategoryModal(delete)"
-                >
-                  Delete
-                </button> -->
               <app-button
                 buttonClass="button"
                 buttonName="Delete"
-                buttonColor="#6c757d"
+                buttonColor="#5c636a"
                 textColor="white"
-                hoverColor="#5c636a"
+                hoverColor="red"
                 hoverTextColor="white"
                 (buttonClick)="openDeleteModal(category.communityCategoryID)"
               ></app-button>
@@ -148,57 +193,6 @@
         </div>
       </ng-template>
       <!-- end of update modal -->
-
-      <!-- delete modal -->
-      <ng-template #delete>
-        <div class="modal-body text-center">
-          <p>Do you want to confirm?</p>
-          <!-- <button
-              type="button"
-              class="btn btn-default"
-              (click)="confirm(category.communityCategoryID)"
-            >
-              Yes
-            </button> -->
-          <app-button
-            buttonClass="button"
-            buttonName="Yes"
-            buttonColor="rgb(31, 151, 145)"
-            textColor="white"
-            hoverColor="rgb(51, 171, 165)"
-            hoverTextColor="white"
-            (buttonClick)="confirm(category.communityCategoryID)"
-          ></app-button>
-          <!-- <button type="button" class="btn btn-primary" (click)="decline()">
-              No
-            </button> -->
-          <app-button
-            buttonClass="button"
-            buttonName="No"
-            buttonColor="rgb(31, 151, 145)"
-            textColor="white"
-            hoverColor="rgb(51, 171, 165)"
-            hoverTextColor="white"
-            (buttonClick)="decline()"
-          ></app-button>
-        </div>
-      </ng-template>
-      <!-- end of delete modal -->
-
-      <!-- <app-card
-        [title]="category.communityCategoryName ?? 'Default Empty'"
-        [width]="'300px'"
-        [height]="'50px'"
-        (click)="openUpdateModal(update)"
-      >
-        <div
-          class="icon-container"
-          [ngClass]="{
-            hovered: isCategoryOrIconsHovered(category.communityCategoryID)
-          }"
-          *ngIf="isCategoryOrIconsHovered(category.communityCategoryID)"
-        ></div>
-      </app-card> -->
       <span
         class="icon-container"
         [ngClass]="{

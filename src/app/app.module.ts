@@ -77,6 +77,9 @@ import { NoticesService } from './service/HttpServices/notices.service';
 import { NoticeListComponent } from './components/ui/notice-list/notice-list.component';
 import { LatestComponent } from './features/latest/latest.component';
 import { ThreadFormatDatePipe } from './pipe/thread-dateFormat.pipe';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component';
+import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,7 +133,9 @@ import { ThreadFormatDatePipe } from './pipe/thread-dateFormat.pipe';
     NoticeUpdateModalComponent,
     NoticeListComponent,
     LatestComponent,
-    ThreadFormatDatePipe
+    ThreadFormatDatePipe,
+    BarChartComponent,
+    InvalidPopupComponent,
   ],
 
   imports: [
@@ -155,6 +160,7 @@ import { ThreadFormatDatePipe } from './pipe/thread-dateFormat.pipe';
     MatPaginatorModule,
     EditorModule,
     ReactiveFormsModule,
+    CanvasJSAngularChartsModule,
   ],
   providers: [
     CategoryService,

@@ -1,7 +1,7 @@
 .custom-dropdown {
   position: absolute;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  background-color: #f6f6f6;
   max-height: 250px;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -13,18 +13,19 @@
 
 .custom-dropdown div {
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.custom-dropdown div:hover {
-  background-color: #f0f0f0;
 }
 
 .no-matches {
-  padding: 8px;
   color: #ff0000;
 }
 
 .result-item {
   font-size: small;
+  transition: background-color 0.5s ease;
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+
+.result-item:hover {
+  background-color: #3498db; /* Change to the desired background color on hover */
 }
