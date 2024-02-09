@@ -18,6 +18,7 @@ import { LeaderboardComponent } from './features/leaderboard/leaderboard.compone
 import { ThreadRepliesComponent } from './features/user/thread-replies/thread-replies.component';
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
 import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
+import { LatestComponent } from './features/latest/latest.component';
 
 const routes: Routes = [
   {
@@ -119,6 +120,10 @@ const routes: Routes = [
     component: HomePageComponent,
     path: '',
   },
+  {
+    component: LatestComponent,
+    path:'latest'
+  }
 ];
 
 @NgModule({

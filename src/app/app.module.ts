@@ -75,6 +75,8 @@ import { CreateReplyComponent } from './features/user/create-reply/create-reply.
 import { NoticeUpdateModalComponent } from './components/ui/notice-update-modal/notice-update-modal.component';
 import { NoticesService } from './service/HttpServices/notices.service';
 import { NoticeListComponent } from './components/ui/notice-list/notice-list.component';
+import { LatestComponent } from './features/latest/latest.component';
+import { ThreadFormatDatePipe } from './pipe/thread-dateFormat.pipe';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component';
 import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-popup.component';
@@ -130,6 +132,8 @@ import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-pop
     CreateReplyComponent,
     NoticeUpdateModalComponent,
     NoticeListComponent,
+    LatestComponent,
+    ThreadFormatDatePipe,
     BarChartComponent,
     InvalidPopupComponent,
   ],
