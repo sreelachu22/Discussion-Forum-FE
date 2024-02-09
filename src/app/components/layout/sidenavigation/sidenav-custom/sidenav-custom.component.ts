@@ -37,13 +37,13 @@ export class SidenavCustomComponent {
       routes: '/latest',
     },
     {
-      icon: 'notifications',
-      label: 'Notifications',
+      icon: 'announcement',
+      label: 'Notices',
       routes: 'notices',
     },
     {
       icon: 'leaderboard',
-      label: 'Leaderboards',
+      label: 'Leaderboard',
       routes: '/leaderboards',
     },
     {

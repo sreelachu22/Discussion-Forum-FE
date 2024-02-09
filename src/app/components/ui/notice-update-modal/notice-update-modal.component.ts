@@ -21,7 +21,8 @@ export class NoticeUpdateModalComponent {
 
   // Configuration object for the ngx-bootstrap datepicker
   bsDatepickerConfig: any = {
-    dateInputFormat: 'YYYY-MM-DDTHH:mm:ss.SSS', // Specifies the date input format for the datepicker
+    dateInputFormat: 'DD-MM-YYYY', // Specifies the date input format for the datepicker
+    minDate: new Date(),
   };
 
   constructor(
