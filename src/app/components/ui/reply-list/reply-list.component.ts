@@ -20,7 +20,7 @@ constructor(private voteService: VoteService, private router : Router) {}
 
   emitUpvote(reply: ThreadReplies) {
     const vote: Vote = {
-      userID: reply.createdBy,
+      userID: '962fda5b-3f0b-4523-8dcc-5e7927104e0c',
       replyID: reply.replyID,
       isUpVote: true,
       isDeleted: false
@@ -31,7 +31,7 @@ constructor(private voteService: VoteService, private router : Router) {}
 
   emitDownvote(reply: ThreadReplies) {
     const vote: Vote = {
-      userID: reply.createdBy,
+      userID: '962fda5b-3f0b-4523-8dcc-5e7927104e0c',
       replyID: reply.replyID,
       isUpVote: false,
       isDeleted: false

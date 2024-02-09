@@ -42,7 +42,7 @@ export class CreateReplyComponent implements OnInit {
       // content = this.extractInnerHTML(content);
     }
 
-    const postURL = `${this.postBaseURL}/${this.threadID}?creatorId=E3066C1C-8DAB-4F59-9382-431E1B2AE82C&parentReplyId=${this.replyID}`;
+    const postURL = `${this.postBaseURL}/${this.threadID}?creatorId=962fda5b-3f0b-4523-8dcc-5e7927104e0c&parentReplyId=${this.replyID}`;
     this.http.post(postURL, JSON.stringify(content), {
       headers: {
         'Content-Type': 'application/json',
