@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Pipe({
-  name: 'formatDate',
+  name: 'formatThreadDate',
 })
 export class DateFormatPipe implements PipeTransform {
   transform(value: any, format: string = 'dd-MM-yyyy'): any {

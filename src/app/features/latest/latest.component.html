@@ -1,0 +1,58 @@
+<button-toggle></button-toggle>
+<div class="latest_container">
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  <app-page-header
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [pageHeaderTitle]="'Latest Posts'"
+    [showButton]="false"
+  ></app-page-header>
+  <br />
+  <div class="button_toggle">
+    <button-toggle
+      [sortOptions]="sortOptions"
+      (sortSelectionChange)="onSortSelectionChange($event)"
+    ></button-toggle>
+  </div>
+  <br />
+  <div *ngFor="let thread of latestPosts">
+    <app-list
+      [sections]="[
+        {
+          title: 'Column 1',
+          metadataItems: [
+            { value: thread.createdBy },
+            { value: 'Asked ' + (thread.createdAt | formatThreadDate) },
+            {
+              value:
+                '↑ ' +
+                thread.upVoteCount +
+                '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ ' +
+                thread.downVoteCount,
+              isHtml: true
+            }
+          ]
+        },
+        {
+          title: 'Column 2',
+          metadataItems: [
+            { value: thread.title },
+            {
+              value:
+                thread.content.length > 200
+                  ? thread.content.slice(0, 200) + '...'
+                  : thread.content,
+              isHtml: true
+            },
+
+            {
+              value:
+                'Tags : ' + '<span>' + thread.tagNames.join(',') + '</span>',
+              isHtml: true
+            }
+          ]
+        }
+      ]"
+    >
+    </app-list>
+  </div>
+</div>

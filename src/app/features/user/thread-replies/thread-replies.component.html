@@ -18,7 +18,11 @@
         showNestedReplies[i]
       "
     >
-      <app-nested-replies [nestedReply]="reply"></app-nested-replies>
+      <app-nested-replies
+        [nestedReply]="reply"
+        (upvoteEvent)="handleUpvote($event)"
+        (downvoteEvent)="handleDownvote($event)"
+      ></app-nested-replies>
     </div>
     <br />
   </div>

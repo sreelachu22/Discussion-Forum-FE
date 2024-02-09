@@ -19,7 +19,9 @@ export class ReplyListComponent {
 constructor(private voteService: VoteService, private router : Router) {}
 
   emitUpvote(reply: ThreadReplies) {
+    //should change the vote to the person who votes
     const vote: Vote = {
+
       userID: reply.createdBy,
       replyID: reply.replyID,
       isUpVote: true,
