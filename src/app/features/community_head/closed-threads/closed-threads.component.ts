@@ -7,8 +7,7 @@ import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 interface ThreadResponse {
   threads: Thread[];
   totalCount: number;
-  categoryName: string;
-  categoryDescription: string;
+  communityName: string;
   pageSize: number;
   currentPage: number;
   totalPages: number;
@@ -38,7 +37,7 @@ export class ClosedThreadsComponent {
 // templete variables
 CategoryThreads!: ThreadResponse;
 pages: number[] = [];
-communityCategoryMappingID!: number;
+communityID!: number;
 currentPage: number = 1;
 pageSize: number = 5;
 totalPages: number = 0;
@@ -48,9 +47,13 @@ breadcrumbs = [
   { label: 'Home', route: '/home' },
   { label: 'Community', route: '/community' },
   {
-    label: 'Category',
-    route: `/community/category-posts/${this.communityCategoryMappingID}`,
+    label: 'Community Management',
+    route: `/community-management-dashboard`,
   },
+  {
+    label: 'Closed Threads',
+    route: '/closed-threads'
+  }
 ];
 
 constructor(
@@ -64,9 +67,9 @@ isLoading = false;
 // ng init with method to get url params and display content based on it
 ngOnInit() {
   this.activateRoute.queryParams.subscribe((params) => {
-    this.communityCategoryMappingID = params['communityCategoryMappingID'];
+    this.communityID = 1;
   });
-  console.log(this.communityCategoryMappingID);
+  console.log(this.communityID);
   this.loadThreads();
   this.loaderService.isLoading$.subscribe((isLoading) => {
     this.isLoading = isLoading;
@@ -75,8 +78,8 @@ ngOnInit() {
 
 loadThreads() {
   this.threadService
-    .getThread(
-      this.communityCategoryMappingID,
+    .getClosedThread(
+      this.communityID,
       this.currentPage,
       this.pageSize
     )
@@ -163,14 +166,6 @@ formatDate(date: string | null): string {
   } else {
     return '1 minute ago';
   }
-}
-navigateToThreadReplies(threadID: number) {
-  this.router.navigate([`/community/post-replies`], {
-    queryParams: {
-      threadID: threadID,
-      communityCategoryMappingID: this.communityCategoryMappingID,
-    },
-  });
 }
 
 searchTerm: string = '';
