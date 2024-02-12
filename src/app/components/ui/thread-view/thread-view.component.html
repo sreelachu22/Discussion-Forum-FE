@@ -25,19 +25,19 @@
       <mat-icon class="mat_icons" (click)="emitUpvote(thread)">
         arrow_upward
       </mat-icon>
-      <!-- <p class="vote_count">{{ thread.upvoteCount }}</p> -->
+      <p class="vote_count">{{ thread.upVoteCount }}</p>
       <mat-icon class="mat_icons" (click)="emitDownvote(thread)"
         >arrow_downward</mat-icon
       >
 
-      <!-- <p class="vote_count">{{ thread.downvoteCount }}</p> -->
-      <mat-icon class="your_reply_icon" (click)="postReply(thread.threadID)"
+      <p class="vote_count">{{ thread.downVoteCount }}</p>
+      <mat-icon class="your_icon" (click)="postReply(thread.threadID)"
         >reply</mat-icon
       >
-      <mat-icon class="your_reply_icon" (click)="editThread(thread.threadID)"
+      <mat-icon class="your_icon" (click)="editThread(thread.threadID)"
         >edit</mat-icon
       >
-      <mat-icon class="your_reply_icon">delete</mat-icon>
+      <mat-icon class="your_icon">cancel</mat-icon>
     </div>
   </div>
 </div>

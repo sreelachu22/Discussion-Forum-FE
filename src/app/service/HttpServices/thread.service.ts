@@ -4,21 +4,17 @@ import { Observable } from 'rxjs';
 
 export interface Thread {
   threadID: number;
-  communityCategoryMappingID: number;
   title: string;
   content: string;
-  threadStatusID: number;
-  isAnswered: boolean;
-  isDeleted: boolean;
   createdBy: string;
-  createdAt: string;
-  modifiedBy: Date;
+  createdAt: Date;
+  modifiedBy: string;
   modifiedAt: Date;
-  communityCategoryMapping: any;
-  threadStatus: any;
-  createdByUser: any;
-  modifiedByUser: any;
-  threadVotes: any;
+  threadStatusName: string;
+  isAnswered: boolean;
+  upVoteCount: number;
+  downVoteCount: number;
+  tagNames: string[];
 }
 
 @Injectable({
@@ -26,7 +22,8 @@ export interface Thread {
 })
 export class ThreadService {
   constructor(private http: HttpClient) {}
-  BASE_URL = 'https://localhost:7160/api/Thread?CommunityCategoryMappingID=1&pageNumber=1&pageSize=1';
+  BASE_URL =
+    'https://localhost:7160/api/Thread?CommunityCategoryMappingID=1&pageNumber=1&pageSize=1';
   getThread(
     CommunityCategoryMappingID: number,
     pageNumber: number,
@@ -50,8 +47,8 @@ export class ThreadService {
     );
   }
 
-  getSingleThread(threadID:number):Observable<Thread>{
-    const singleThreadURL = 'https://localhost:7160/api/Thread'
-    return this.http.get<Thread>(`${singleThreadURL}/${threadID}`)
+  getSingleThread(threadID: number): Observable<Thread> {
+    const singleThreadURL = 'https://localhost:7160/api/Thread';
+    return this.http.get<Thread>(`${singleThreadURL}/${threadID}`);
   }
 }

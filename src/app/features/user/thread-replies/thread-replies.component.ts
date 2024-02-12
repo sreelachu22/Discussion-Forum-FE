@@ -7,8 +7,15 @@ import {
   ThreadReplies,
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
-import { Thread, ThreadService } from 'src/app/service/HttpServices/thread.service';
-import { Vote, VoteService } from 'src/app/service/HttpServices/vote.service';
+import {
+  Thread,
+  ThreadService,
+} from 'src/app/service/HttpServices/thread.service';
+import {
+  ThreadVote,
+  Vote,
+  VoteService,
+} from 'src/app/service/HttpServices/vote.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -45,6 +52,13 @@ export class ThreadRepliesComponent {
 
   isLoading = false;
   ngOnInit() {
+    this.loadThread();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+  }
+
+  loadThread() {
     this.activateRoute.queryParams
       .pipe(
         switchMap((params) => {
@@ -64,11 +78,7 @@ export class ThreadRepliesComponent {
         console.log(data);
         this.loadReplies();
       });
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
-
   loadReplies() {
     this.threadRepliesService
       .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
@@ -104,7 +114,30 @@ export class ThreadRepliesComponent {
       },
       error: (error) => {
         console.error('Error sending downvote', error);
-        this.loadReplies();
+        this.loadThread();
+      },
+    });
+  }
+
+  handleThreadUpvote(vote: ThreadVote) {
+    this.voteService.sendThreadVote(vote).subscribe({
+      next: (response) => {
+        console.log('Upvote Successful', response);
+      },
+      error: (error) => {
+        console.error('Error sending upvote', error);
+        this.loadThread();
+      },
+    });
+  }
+  handleThreadDownvote(vote: ThreadVote) {
+    this.voteService.sendThreadVote(vote).subscribe({
+      next: (response) => {
+        console.log('Downvote Successful', response);
+      },
+      error: (error) => {
+        console.error('Error sending downvote', error);
+        this.loadThread();
       },
     });
   }
