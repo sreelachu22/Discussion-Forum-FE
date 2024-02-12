@@ -166,6 +166,9 @@ export class AdminLoginComponent {
             this.accountsService.microsoftLogin(this.azureObj).subscribe({
               next: (res: any) => {
                 this.accountsService.isLogged = true;
+                this.accountsService.updateUserLoggedInStatus(
+                  this.accountsService.isLogged
+                );
                 sessionStorage.setItem('token', res.token);
                 const decodedToken: any = jwtDecode(res.token);
                 var role =

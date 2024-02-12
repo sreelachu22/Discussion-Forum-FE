@@ -115,6 +115,7 @@ import { UnauthorisedComponent } from './features/unauthorised/unauthorised.comp
 import { jwtDecode } from 'jwt-decode';
 import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
+import { MainComponent } from './features/main/main.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -184,6 +185,7 @@ const isIE =
     LogoutComponent,
     UnauthorisedComponent,
     ThreadViewComponent,
+    MainComponent,
   ],
 
   imports: [
