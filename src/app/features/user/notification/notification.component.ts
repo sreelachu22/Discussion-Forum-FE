@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { NotificationService } from 'src/app/service/HttpServices/notification.service';
 
 export interface Notification {
@@ -27,18 +28,32 @@ export class NotificationComponent implements OnInit {
   pageNumber:number = 1;
   pageSize:number = 10;
 
-  constructor(private notificationService: NotificationService) { }
+  categories:any[] = [];
+  parentDropdownOptions: string[] = ['All'];
+  sortOptions = ['Old to New', 'New to Old'];
+
+  constructor(private notificationService: NotificationService, private categoryService:CategoryService) { }
 
   ngOnInit(): void {
-    this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+    this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);    
   }
 
   getNotifications(userId:string,categoryID:number, sortOrder:string, pageNumber:number, pageSize:number) {
     this.notificationService.getNotifications(userId, categoryID, sortOrder, pageNumber, pageSize)
-      .subscribe((data: any[]) => {
-        this.notifications = data;         
+      .subscribe((data: any[]) => {        
+        this.notifications = data;   
+        this.getCategories();      
       });
   }
+
+  getCategories() {
+    this.categoryService.getCategories(1) // Assuming 1 is the community ID, adjust accordingly
+      .subscribe((data: any[]) => {
+        this.categories = data;
+        this.parentDropdownOptions = ['All', ...data.map(category => category.communityCategoryName)];
+      });
+  }
+
   onMarkAsRead(replyId: number) {   
     this.notificationService.markAsRead(replyId).subscribe(
         () => {
@@ -48,7 +63,29 @@ export class NotificationComponent implements OnInit {
             console.error('Error marking reply as read:', error);
         }
     );
-}
-
-    // 
+  }    
+  handleOptionSelected(option: string) {
+    console.log('Selected option:', option);
+  
+    if (option === 'All') {      
+      this.categoryID = 0;
+    } else {
+      const selectedCategory = this.categories.find(category => category.communityCategoryName === option);
+      if (selectedCategory) {        
+        this.categoryID = selectedCategory.communityCategoryID;
+      } else {
+        console.error('Category not found:', option);
+        return;
+      }
+    }    
+    this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
   }
+  onSortSelectionChange(selectedValue: string) {
+    if (selectedValue === 'old to new') {
+      this.sortOrder = 'asc';
+    } else if (selectedValue === 'new to old') {
+      this.sortOrder = 'desc';
+    }
+    this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+  }
+}

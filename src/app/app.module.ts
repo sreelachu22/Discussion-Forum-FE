@@ -83,6 +83,8 @@ import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-pop
 import { ClosedThreadsComponent } from './features/community_head/closed-threads/closed-threads.component';
 import { NotificationComponent } from './features/user/notification/notification.component';
 import { NotficationListComponent } from './components/ui/notfication-list/notfication-list.component';
+import { DropdownSelectComponent } from './components/ui/dropdown-select/dropdown-select.component';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,7 +143,8 @@ import { NotficationListComponent } from './components/ui/notfication-list/notfi
     InvalidPopupComponent, 
     NotificationComponent, 
     NotficationListComponent,
-    ClosedThreadsComponent,
+    ClosedThreadsComponent,  
+    DropdownSelectComponent,
   ],
 
   imports: [
@@ -167,6 +170,8 @@ import { NotficationListComponent } from './components/ui/notfication-list/notfi
     EditorModule,
     ReactiveFormsModule,
     CanvasJSAngularChartsModule,
+    MatSelectModule,
+     
   ],
   providers: [
     CategoryService,

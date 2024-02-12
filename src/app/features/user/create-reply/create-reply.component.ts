@@ -70,9 +70,7 @@ export class CreateReplyComponent implements OnInit {
       }
     });
   }
-    
-  
-
+        
   goBack() {    
     const queryParams = {
       threadID: this.threadID     
