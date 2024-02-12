@@ -1,5 +1,5 @@
 <div class="modal-body custom-modal-body">
-  <form (ngSubmit)="createCategory()" #categoryForm="ngForm">
+  <form (ngSubmit)="createCategory()" #categoryForm="ngForm" (keydown.enter)="$event.preventDefault()">
     <div class="form-group">
       <label for="communityCategory"
         ><span class="required">*</span>Community Category:</label
@@ -41,7 +41,7 @@
           required
           minlength="2"
           maxlength="50"
-          pattern=".*\S+.*"
+          pattern="^(?=.*[a-zA-Z]).+$"
           #categoryNameInput="ngModel"
           [disabled]="
             !communityCategoryField.valid || !communityCategoryField.value
@@ -65,7 +65,7 @@
             Category Name cannot exceed 50 characters.
           </div>
           <div *ngIf="categoryNameInput.errors?.['pattern']">
-            Category Name cannot be just empty spaces.
+            Category Name must contain atleast 1 alphabet.
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
         required
         minlength="6"
         maxlength="200"
-        pattern=".*\S+.*"
+        pattern="^(?=.*[a-zA-Z]).+$"
         #descriptionField="ngModel"
       ></textarea>
       <div
@@ -102,7 +102,7 @@
           Description cannot exceed 200 characters.
         </div>
         <div *ngIf="descriptionField.errors?.['pattern']">
-          Description cannot be just empty spaces.
+          Description must contain atleast 1 alphabet.
         </div>
       </div>
     </div>

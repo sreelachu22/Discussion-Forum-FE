@@ -5,7 +5,7 @@
 >
   <ng-container *ngFor="let option of sortOptions">
     <mat-button-toggle [value]="option.toLowerCase()">
-      {{ option }}
+      {{ getOptionLabel(option) }}
     </mat-button-toggle>
   </ng-container>
 </mat-button-toggle-group>

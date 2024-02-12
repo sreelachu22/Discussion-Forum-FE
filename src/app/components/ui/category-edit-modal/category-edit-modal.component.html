@@ -64,7 +64,7 @@
       <span
         class="form_error"
         *ngIf="
-          categoryForm.controls['modifiedBy'].invalid &&
+          categoryForm.controls['modifiedBy']?.invalid &&
           categoryForm.controls['modifiedBy'].touched
         "
       >

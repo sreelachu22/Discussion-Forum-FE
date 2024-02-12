@@ -65,9 +65,9 @@ export class NoticeCreateModalComponent {
       this.newNotice.createdBy
     ) {
       // Format the expiresAt property before sending it to the backend
-      this.newNotice.expiresAt = this.formatBackendDate(
-        this.newNotice.expiresAt
-      );
+      // this.newNotice.expiresAt = this.formatBackendDate(
+      //   this.newNotice.expiresAt
+      // );
 
       this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
         (response) => {
@@ -88,11 +88,11 @@ export class NoticeCreateModalComponent {
   }
 
   // Function to format the date in the desired format
-  private formatBackendDate(date: Date | null): string | null {
-    return date !== null
-      ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS')
-      : null;
-  }
+  // private formatBackendDate(date: Date | null): string | null {
+  //   return date !== null
+  //     ? this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss.SSS')
+  //     : null;
+  // }
 
   decline() {
     this.modalRef?.hide();
