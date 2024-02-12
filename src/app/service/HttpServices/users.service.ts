@@ -22,6 +22,16 @@ export interface AllUsers {
   totalPages: number;
 }
 
+export interface User {
+  userID: string;
+  name: string;
+  email: string;
+  score: number;
+  departmentName: string | null;
+  designationName: string | null;
+  roleName: string | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,5 +53,8 @@ export class UserService {
     const userName = name;
     const url = `${this.BASE_URL}?term=${userName}&sort=Name&page=${startIndex}&limit=10`;
     return this.http.get<AllUsers>(url);
+  }
+  getUserByID(userID: string): Observable<User> {
+    return this.http.get<User>(`https://localhost:7160/api/users/${userID}`);
   }
 }

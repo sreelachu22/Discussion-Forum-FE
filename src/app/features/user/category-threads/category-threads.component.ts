@@ -170,7 +170,7 @@ export class CategoryThreadsComponent implements OnInit {
   createPost() {
     const queryParams = {
       communityCategoryMappingID: this.communityCategoryMappingID,
-      creatorId: this.creatorId || '636544A4-6255-478C-A8E8-DAEE14E90074', // Replace this with the actual creatorId
+      creatorId: this.creatorId || sessionStorage.getItem('userID'), // Replace this with the actual creatorId
     };
 
     this.router.navigate(['/category-posts/create-posts'], {
