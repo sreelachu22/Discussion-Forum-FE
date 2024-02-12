@@ -1,0 +1,72 @@
+/* thread-container.component.css */
+
+.thread-container {
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.thread-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.username {
+  font-weight: bold;
+  color: #3498db;
+}
+.date {
+  color: #3498db; /* Green color for date */
+}
+
+.thread-data {
+  display: flex;
+}
+
+.user-controls {
+  padding-top: 5px;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+}
+.user-control {
+  display: flex;
+}
+
+.mat_icons {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.vote_count {
+  margin-right: 10px;
+}
+.your_icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.content {
+  margin-left: 0px;
+}
+.thread-title {
+  padding-top: 10px;
+  font-size: x-large;
+  font-weight: bold;
+}
+.thread-content {
+  font-size: medium;
+}
+
+.owner-controls {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+.owner-control {
+  padding-top: 5px;
+}

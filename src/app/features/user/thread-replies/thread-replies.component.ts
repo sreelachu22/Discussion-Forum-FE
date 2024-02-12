@@ -7,8 +7,15 @@ import {
   ThreadReplies,
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
-import { ThreadService } from 'src/app/service/HttpServices/thread.service';
-import { Vote, VoteService } from 'src/app/service/HttpServices/vote.service';
+import {
+  Thread,
+  ThreadService,
+} from 'src/app/service/HttpServices/thread.service';
+import {
+  ThreadVote,
+  Vote,
+  VoteService,
+} from 'src/app/service/HttpServices/vote.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -37,13 +44,21 @@ export class ThreadRepliesComponent {
   threadReplies: ThreadReplies[] = [];
   // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
-  threadInfo: any;
-  threadData: { name: string; value: any; isHtml: boolean }[] = [];
-  threadTitle!: string;
-  threadContent!: string;
+  // threadInfo: any;
+  // threadData: { name: string; value: any; isHtml: boolean }[] = [];
+  // threadTitle!: string;
+  // threadContent!: string;
+  thread!: Thread;
 
   isLoading = false;
   ngOnInit() {
+    this.loadThread();
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+  }
+
+  loadThread() {
     this.activateRoute.queryParams
       .pipe(
         switchMap((params) => {
@@ -52,20 +67,18 @@ export class ThreadRepliesComponent {
         })
       )
       .subscribe((data: any) => {
-        this.threadInfo = data;
-        this.threadTitle = this.threadInfo.title;
-        this.threadContent = this.threadInfo.content;
-        this.threadData.push(
-          { name: '', value: this.threadTitle, isHtml: true },
-          { name: '', value: this.threadContent, isHtml: true }
-        );
+        // this.threadInfo = data;
+        // this.threadTitle = this.threadInfo.title;
+        // this.threadContent = this.threadInfo.content;
+        // this.threadData.push(
+        //   { name: '', value: this.threadTitle, isHtml: true },
+        //   { name: '', value: this.threadContent, isHtml: true }
+        // );
+        this.thread = data;
+        console.log(data);
         this.loadReplies();
       });
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
-
   loadReplies() {
     this.threadRepliesService
       .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
@@ -101,7 +114,30 @@ export class ThreadRepliesComponent {
       },
       error: (error) => {
         console.error('Error sending downvote', error);
-        this.loadReplies();
+        this.loadThread();
+      },
+    });
+  }
+
+  handleThreadUpvote(vote: ThreadVote) {
+    this.voteService.sendThreadVote(vote).subscribe({
+      next: (response) => {
+        console.log('Upvote Successful', response);
+      },
+      error: (error) => {
+        console.error('Error sending upvote', error);
+        this.loadThread();
+      },
+    });
+  }
+  handleThreadDownvote(vote: ThreadVote) {
+    this.voteService.sendThreadVote(vote).subscribe({
+      next: (response) => {
+        console.log('Downvote Successful', response);
+      },
+      error: (error) => {
+        console.error('Error sending downvote', error);
+        this.loadThread();
       },
     });
   }
