@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-reply-list',
   templateUrl: './reply-list.component.html',
-  styleUrls: ['./reply-list.component.css']
+  styleUrls: ['./reply-list.component.css'],
 })
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
@@ -16,49 +16,47 @@ export class ReplyListComponent {
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   showReplies: { [key: number]: boolean } = {};
-constructor(private voteService: VoteService, private router : Router) {}
+  constructor(private voteService: VoteService, private router: Router) {}
 
   emitUpvote(reply: ThreadReplies) {
     //should change the vote to the person who votes
     const vote: Vote = {
-
-      userID: reply.createdBy,
+      userID: sessionStorage.getItem('userID'),
       replyID: reply.replyID,
       isUpVote: true,
-      isDeleted: false
+      isDeleted: false,
     };
     this.upvoteEvent.emit(vote);
   }
-  
 
   emitDownvote(reply: ThreadReplies) {
     const vote: Vote = {
-      userID: reply.createdBy,
+      userID: sessionStorage.getItem('userID'),
       replyID: reply.replyID,
       isUpVote: false,
-      isDeleted: false
+      isDeleted: false,
     };
     this.downvoteEvent.emit(vote);
   }
-    
-  toggleReplies() {    
+
+  toggleReplies() {
     this.toggleRepliesEvent.emit();
   }
-  postReply(replyID:number) {    
+  postReply(replyID: number) {
     const queryParams = {
-      replyID: replyID      
+      replyID: replyID,
     };
 
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
-  }  
-  editReply(replyID:number){
+  }
+  editReply(replyID: number) {
     const queryParams = {
-      replyID: replyID      
+      replyID: replyID,
     };
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
-    return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
+    return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
 }
