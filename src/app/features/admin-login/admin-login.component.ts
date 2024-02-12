@@ -144,7 +144,6 @@ export class AdminLoginComponent {
       },
       error: (err: any) => {
         console.error('Error during login:', err);
-        // Handle error gracefully, e.g., show an error message to the user
         Swal.fire('Error', 'An error occurred during login.', 'error');
       },
     });
