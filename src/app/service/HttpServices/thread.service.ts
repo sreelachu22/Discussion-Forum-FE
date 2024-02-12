@@ -37,6 +37,18 @@ export class ThreadService {
       // `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
+
+  getClosedThread(
+    CommunityID: number,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<any> {
+    console.log('hello api ');
+    return this.http.get(
+      `https://localhost:7160/api/Thread/ClosedThreads?CommunityID=${CommunityID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+
   getSingleThread(threadID:number):Observable<any>{
     const singleThreadURL = 'https://localhost:7160/api/Thread'
     return this.http.get(`${singleThreadURL}/${threadID}`)
