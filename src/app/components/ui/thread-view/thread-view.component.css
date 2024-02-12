@@ -16,46 +16,28 @@
   justify-content: space-between;
   margin-bottom: 5px;
 }
-
 .username {
   font-weight: bold;
   color: #3498db;
 }
-
 .date {
   color: #3498db; /* Green color for date */
 }
 
-.thread-footer {
+.thread-data {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
 }
 
-.votes {
+.user-controls {
+  padding-top: 5px;
   font-weight: bolder;
   display: flex;
+  flex-direction: column;
 }
-.thread-content {
-  margin-bottom: 10px;
-}
-.votes button {
-  margin-right: 10px;
+.user-control {
+  display: flex;
 }
 
-.show-replies-button {
-  font-weight: bold;
-  color: #db978f; /* Red color for replies button */
-  cursor: pointer;
-  transition: color 0.3s ease-in-out;
-}
-
-.show-replies-button:hover {
-  color: #ea4937;
-}
-/* .show-replies {
-    margin-left: auto;
-  } */
 .mat_icons {
   margin-right: 5px;
   cursor: pointer;
@@ -66,4 +48,25 @@
 .your_icon {
   cursor: pointer;
   margin-right: 10px;
+}
+
+.content {
+  margin-left: 0px;
+}
+.thread-title {
+  padding-top: 10px;
+  font-size: x-large;
+  font-weight: bold;
+}
+.thread-content {
+  font-size: medium;
+}
+
+.owner-controls {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+.owner-control {
+  padding-top: 5px;
 }

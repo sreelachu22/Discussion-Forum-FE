@@ -3,41 +3,54 @@
     <div class="username">{{ thread.createdBy }}</div>
     <div class="date">{{ thread.createdAt | timeDifference }}</div>
   </div>
-  <div class="thread-title" *ngIf="!isHTML(thread.title)">
-    {{ thread.title }}
-  </div>
-  <div
-    class="thread title"
-    *ngIf="isHTML(thread.title)"
-    [innerHTML]="thread.title"
-  ></div>
-  <div class="thread-content" *ngIf="!isHTML(thread.content)">
-    {{ thread.content }}
-  </div>
-  <div
-    class="thread-content"
-    *ngIf="isHTML(thread.content)"
-    [innerHTML]="thread.content"
-  ></div>
-
-  <div class="thread-footer">
-    <div class="votes">
-      <mat-icon class="mat_icons" (click)="emitUpvote(thread)">
-        arrow_upward
-      </mat-icon>
-      <p class="vote_count">{{ thread.upVoteCount }}</p>
-      <mat-icon class="mat_icons" (click)="emitDownvote(thread)"
-        >arrow_downward</mat-icon
-      >
-
-      <p class="vote_count">{{ thread.downVoteCount }}</p>
-      <mat-icon class="your_icon" (click)="postReply(thread.threadID)"
-        >reply</mat-icon
-      >
-      <mat-icon class="your_icon" (click)="editThread(thread.threadID)"
-        >edit</mat-icon
-      >
-      <mat-icon class="your_icon">cancel</mat-icon>
+  <div class="thread-data">
+    <div class="user-controls">
+      <div class="user-control">
+        <mat-icon class="mat_icons" (click)="emitUpvote(thread)">
+          arrow_upward
+        </mat-icon>
+        <p class="vote_count">{{ thread.upVoteCount }}</p>
+      </div>
+      <div class="user-control">
+        <mat-icon class="mat_icons" (click)="emitDownvote(thread)">
+          arrow_downward
+        </mat-icon>
+        <p class="vote_count">{{ thread.downVoteCount }}</p>
+      </div>
+      <div class="user-control">
+        <mat-icon class="your_icon" (click)="postReply(thread.threadID)">
+          reply
+        </mat-icon>
+      </div>
+    </div>
+    <div class="content">
+      <div class="thread-title" *ngIf="!isHTML(thread.title)">
+        {{ thread.title }}
+      </div>
+      <div
+        class="thread-title"
+        *ngIf="isHTML(thread.title)"
+        [innerHTML]="thread.title"
+      ></div>
+      <br />
+      <div class="thread-content" *ngIf="!isHTML(thread.content)">
+        {{ thread.content }}
+      </div>
+      <div
+        class="thread-content"
+        *ngIf="isHTML(thread.content)"
+        [innerHTML]="thread.content"
+      ></div>
+    </div>
+    <div class="owner-controls">
+      <div class="owner-control">
+        <mat-icon class="your_icon" (click)="editThread(thread.threadID)">
+          edit
+        </mat-icon>
+      </div>
+      <div class="owner-control">
+        <mat-icon class="your_icon">cancel</mat-icon>
+      </div>
     </div>
   </div>
 </div>
