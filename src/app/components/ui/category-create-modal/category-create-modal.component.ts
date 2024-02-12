@@ -2,7 +2,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
-import { Category, superAdminCategoryService } from 'src/app/service/HttpServices/superadmin-category.service';
+import {
+  Category,
+  superAdminCategoryService,
+} from 'src/app/service/HttpServices/superadmin-category.service';
 import { InvalidPopupComponent } from '../invalid-popup/invalid-popup.component';
 
 @Component({
@@ -13,7 +16,7 @@ import { InvalidPopupComponent } from '../invalid-popup/invalid-popup.component'
 export class CategoryCreateModalComponent implements OnInit {
   id: number = 1;
   categoriesNotInCommunity: Category[] = [];
-  allCategories: any[]=[];
+  allCategories: any[] = [];
   selectedCommunityCategory: string = '';
   description: string = '';
   createdBy: string = '';
@@ -29,7 +32,7 @@ export class CategoryCreateModalComponent implements OnInit {
   ) {}
 
   alertRef?: BsModalRef;
-  
+
   ngOnInit() {
     this.getCategoriesNotinCommunity();
   }
@@ -44,11 +47,10 @@ export class CategoryCreateModalComponent implements OnInit {
       },
       complete: () => {
         console.log('Completed');
-        this.getCategories(); 
+        this.getCategories();
       },
     });
   }
-
 
   getCategories() {
     this.categoryService.getCategories().subscribe({
@@ -68,7 +70,7 @@ export class CategoryCreateModalComponent implements OnInit {
     new EventEmitter<Category>();
 
   createCategory() {
-    console.log('hi')
+    console.log('hi');
     // alert('selected community category' + this.selectedCommunityCategory);
     if (this.selectedCommunityCategory != 'other') {
       this.newCategoryName = this.selectedCommunityCategory;
@@ -77,8 +79,8 @@ export class CategoryCreateModalComponent implements OnInit {
     if (this.selectedCommunityCategory === 'other') {
       // Check if the new category name already exists
 
-      const categoryExists = this.allCategories.some(category =>
-        category.communityCategoryName === this.newCategoryName
+      const categoryExists = this.allCategories.some(
+        (category) => category.communityCategoryName === this.newCategoryName
       );
 
       if (categoryExists) {
@@ -110,11 +112,6 @@ export class CategoryCreateModalComponent implements OnInit {
         next: (data: any) => {
           // alert('New category added');
           this.categoryCreated.emit(data); // Emit event with created category data
-
-          this.router.navigate(
-            ['/community-management-dashboard/category-management'],
-            { queryParams: { sortType: 'communityCategoryName' } }
-          );
           this.bsModalRef.hide();
         },
         error: (error: any) => {

@@ -1,0 +1,5 @@
+main {
+    background-image: url("../../../assets/images/bg-login.jpg");
+    background-size: cover;
+    min-height: 100vh;
+}
