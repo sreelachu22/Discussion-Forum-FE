@@ -8,6 +8,7 @@ import {
   MsalGuardConfiguration,
   MsalService,
 } from '@azure/msal-angular';
+import { AccountsService } from 'src/app/service/HttpServices/account.service';
 export type MenuItem = {
   icon: string;
   label: string;
@@ -24,10 +25,17 @@ export class SidenavCustomComponent {
   constructor(
     private router: Router,
     private tokenHandler: TokenHandler,
-    private authService: MsalService
+    private authService: MsalService,
+    private accountService : AccountsService
   ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
+  }
+
+  userID : any;
+
+  ngOnInit(){
+    this.userID = sessionStorage.getItem('userID');
   }
   //INPUT SETTER, A PROPERTY DECORATOR
   // When the 'collapsed' input property changes,
@@ -66,7 +74,8 @@ export class SidenavCustomComponent {
     },
   ]);
 
-  handleLogOut() {
+  handleLogOut(userID : any) {
+    console.log("user ID : " +userID)
     Swal.fire({
       title: 'Are you sure?',
 
@@ -81,10 +90,11 @@ export class SidenavCustomComponent {
       cancelButtonText: 'Cancel',
     }).then((result: any) => {
       if (result.isConfirmed) {
+      this.accountService.logoutBackend(userID).subscribe();
+        this.tokenHandler.removeToken();        
         this.authService.logoutRedirect({
           postLogoutRedirectUri: 'http://localhost:4200',
         });
-        this.tokenHandler.removeToken();
         sessionStorage.clear();
         this.router.navigateByUrl('/logout');
       }

@@ -66,4 +66,7 @@ export class AccountsService {
       model
     );
   }
+  logoutBackend(userID : any){
+    return this.http.post('https://localhost:7160/api/Login/Logout', userID);
+  }
 }
