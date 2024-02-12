@@ -5,11 +5,13 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-notice-update-modal',
   templateUrl: './notice-update-modal.component.html',
-  styleUrls: ['./notice-update-modal.component.css']
+  styleUrls: ['./notice-update-modal.component.css'],
+  providers: [DatePipe],
 })
 export class NoticeUpdateModalComponent {
   // public notice: any ={}; 
@@ -28,6 +30,7 @@ export class NoticeUpdateModalComponent {
   constructor(
     private noticesService: NoticesService,
     private modalRef : BsModalRef,
+    private datePipe: DatePipe
   ) {}
 
   @Input() notice: any = {};

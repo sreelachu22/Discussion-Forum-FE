@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../service/HttpServices/users.service';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-user-management',
@@ -53,7 +54,13 @@ export class UserManagementComponent implements OnInit {
     this.userService
       .getUsers(this.currentPage, this.sortType)
       .subscribe((data) => {
-        this.users = data.users;
+        this.users = data.users.map(user => {
+          return {
+            ...user,
+            createdAt: user.createdAt ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US') : null
+            // Add more properties if necessary
+          };
+        });
         // console.log(this.users[1].userID);
         this.pageCount = data.totalPages;
       });

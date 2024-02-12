@@ -19,6 +19,8 @@ import { ThreadRepliesComponent } from './features/user/thread-replies/thread-re
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
 import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
 import { LatestComponent } from './features/latest/latest.component';
+import { ClosedThreadsComponent } from './features/community_head/closed-threads/closed-threads.component';
+import { NotificationComponent } from './features/user/notification/notification.component';
 
 const routes: Routes = [
   {
@@ -88,6 +90,10 @@ const routes: Routes = [
         path: 'user-management/user-edit/:userID',
         component: UserEditComponent,
       },
+      {
+        path: 'closed-threads',
+        component: ClosedThreadsComponent,
+      },
     ],
   },
   {
@@ -107,7 +113,10 @@ const routes: Routes = [
     component: LeaderboardComponent,
     path: 'leaderboards',
   },
-  { component: GuidelinesComponent, path: 'guidelines' },
+  { 
+    component: GuidelinesComponent,
+    path: 'guidelines'
+  },
   {
     component: CreatePostComponent,
     path: 'category-posts/create-posts',
@@ -121,7 +130,7 @@ const routes: Routes = [
     path: '',
   },
   {
-    component: LatestComponent,
+    component: NotificationComponent,
     path:'latest'
   }
 ];
