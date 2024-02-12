@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,6 +83,41 @@ import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-pop
 import { ClosedThreadsComponent } from './features/community_head/closed-threads/closed-threads.component';
 import { NotificationComponent } from './features/user/notification/notification.component';
 import { NotficationListComponent } from './components/ui/notfication-list/notfication-list.component';
+import { LoginComponent } from './features/login/login.component';
+import {
+  MsalGuard,
+  MsalInterceptor,
+  MsalBroadcastService,
+  MsalInterceptorConfiguration,
+  MsalModule,
+  MsalService,
+  MSAL_GUARD_CONFIG,
+  MSAL_INSTANCE,
+  MSAL_INTERCEPTOR_CONFIG,
+  MsalGuardConfiguration,
+  MsalRedirectComponent,
+} from '@azure/msal-angular'; // Redirect component imported from msal-angular
+import {
+  BrowserCacheLocation,
+  Configuration,
+  IPublicClientApplication,
+  InteractionType,
+  LogLevel,
+  PublicClientApplication,
+} from '@azure/msal-browser';
+import { TokenInterceptor } from './interceptor/token.interceptor';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TokenHandler } from './util/tokenHandler';
+import { AdminLoginComponent } from './features/admin-login/admin-login.component';
+import { LogoutComponent } from './features/logout/logout.component';
+import { UnauthorisedComponent } from './features/unauthorised/unauthorised.component';
+import { jwtDecode } from 'jwt-decode';
+import { AccountsService } from './service/HttpServices/account.service';
+
+const isIE =
+  window.navigator.userAgent.indexOf('MSIE') > -1 ||
+  window.navigator.userAgent.indexOf('Trident/') > -1;
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,14 +173,43 @@ import { NotficationListComponent } from './components/ui/notfication-list/notfi
     LatestComponent,
     ThreadFormatDatePipe,
     BarChartComponent,
-    InvalidPopupComponent, 
-    NotificationComponent, 
+    InvalidPopupComponent,
+    NotificationComponent,
     NotficationListComponent,
     ClosedThreadsComponent,
+    LoginComponent,
+    AdminLoginComponent,
+    LogoutComponent,
+    UnauthorisedComponent,
   ],
 
   imports: [
-    ModalModule.forRoot(),
+    MsalModule.forRoot(
+      new PublicClientApplication({
+        auth: {
+          clientId: '78e1557c-a3e9-4e8d-a734-663e72bc722e',
+          redirectUri: 'http://localhost:4200',
+          authority:
+            'https://login.microsoftonline.com/5b751804-232f-410d-bb2f-714e3bb466eb',
+        },
+        cache: {
+          cacheLocation: 'localStorage',
+          storeAuthStateInCookie: isIE,
+        },
+      }),
+      {
+        interactionType: InteractionType.Redirect,
+        authRequest: {
+          scopes: ['user.read'],
+        },
+      },
+      {
+        interactionType: InteractionType.Redirect,
+        protectedResourceMap: new Map([
+          ['https://graph.microsoft.com/v1.0/me', ['user.Read']],
+        ]),
+      }
+    ),
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
@@ -167,16 +231,59 @@ import { NotficationListComponent } from './components/ui/notfication-list/notfi
     EditorModule,
     ReactiveFormsModule,
     CanvasJSAngularChartsModule,
+    MsalModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     CategoryService,
     LoaderService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptor,
+      useClass: MsalInterceptor,
       multi: true,
     },
+
+    // {
+    //   provide: MSAL_INSTANCE,
+    //   useFactory: MSALInstanceFactory,
+    // },
+    // {
+    //   provide: MSAL_GUARD_CONFIG,
+    //   useFactory: MSALGuardConfigFactory,
+    // },
+    // {
+    //   provide: MSAL_INTERCEPTOR_CONFIG,
+    //   useFactory: MSALInterceptorConfigFactory,
+    // },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true,
+    // },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService,
+    TokenHandler,
+    AccountsService,
   ],
-  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent, MsalRedirectComponent],
 })
-export class AppModule {}
+export class AppModule {
+  // private msalInstance: IPublicClientApplication;
+  // constructor() {
+  //   this.initializeMsalInstance();
+  // }
+  // private async initializeMsalInstance() {
+  //   const msalInstance = new PublicClientApplication({
+  //     auth: {
+  //       clientId: '78e1557c-a3e9-4e8d-a734-663e72bc722e',
+  //     },
+  //     system: {
+  //       allowNativeBroker: true,
+  //     },
+  //   });
+  //   await msalInstance.initialize();
+  //   await msalInstance.handleRedirectPromise();
+  // }
+}

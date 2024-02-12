@@ -24,11 +24,13 @@ export class CategoryEditModalComponent {
     private httpService: CategoryService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    public modalRef: BsModalRef,
-    public updateRef: BsModalRef,
-    public modalService: BsModalService
+    private modalRef: BsModalRef,
+    private updateRef: BsModalRef,
+    private modalService: BsModalService
   ) {}
+  // @Input()
   description: string = '';
+  // @Input()
   communityCategoryMappingID: number = 0;
   newDescription: string = '';
   modifiedBy: string = '';
@@ -57,11 +59,6 @@ export class CategoryEditModalComponent {
       .subscribe({
         next: (data: any) => {
           this.categoryUpdated.emit(data);
-          console.log(this.categoryUpdated);
-          this.router.navigate(
-            ['/community-management-dashboard/category-management'],
-            { queryParams: { sortType: 'communityCategoryName' } }
-          );
           this.updateRef?.hide();
         },
         error: (error: any) => {
@@ -95,16 +92,24 @@ export class CategoryEditModalComponent {
       .deleteCategoryMapping(this.communityCategoryMappingID)
       .subscribe({
         next: (data: any) => {
-          this.categoryUpdated.emit(data);
+          // this.categoryUpdated.emit(data);
+          this.httpService.getPagedCategories(1, '-createdAt').subscribe({
+            next: (data: any) => {
+              console.log(data);
+            },
+            error: (error: Error) => {
+              alert('Error has occured, ' + error.message);
+            },
+          });
           // Close the modal
-          this.updateRef.hide();
+          // this.updateRef.hide();
         },
         error: (error: Error) => {
           alert('Error has occured, ' + error.message);
         },
         complete: () => {
           this.modalRef.hide();
-          this.updateRef.hide();
+          // this.updateRef.hide();
         },
       });
   }
