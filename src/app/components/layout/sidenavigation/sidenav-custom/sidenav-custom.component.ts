@@ -1,5 +1,13 @@
 import { Component, Input, signal } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { TokenHandler } from 'src/app/util/tokenHandler';
+import Swal from 'sweetalert2';
+import {
+  MSAL_GUARD_CONFIG,
+  MsalBroadcastService,
+  MsalGuardConfiguration,
+  MsalService,
+} from '@azure/msal-angular';
 export type MenuItem = {
   icon: string;
   label: string;
@@ -13,10 +21,15 @@ export type MenuItem = {
 })
 export class SidenavCustomComponent {
   sideNavCollapsed = signal(false);
+  constructor(
+    private router: Router,
+    private tokenHandler: TokenHandler,
+    private authService: MsalService
+  ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
   }
-   //INPUT SETTER, A PROPERTY DECORATOR
+  //INPUT SETTER, A PROPERTY DECORATOR
   // When the 'collapsed' input property changes,
   // Angular invokes this setter to update the 'sideNavCollapsed' signal.
 
@@ -52,4 +65,29 @@ export class SidenavCustomComponent {
       routes: '/guidelines',
     },
   ]);
+
+  handleLogOut() {
+    Swal.fire({
+      title: 'Are you sure?',
+
+      text: 'Do you want to log out?',
+
+      icon: 'warning',
+
+      showCancelButton: true,
+
+      confirmButtonText: 'Logout',
+
+      cancelButtonText: 'Cancel',
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        this.authService.logoutRedirect({
+          postLogoutRedirectUri: 'http://localhost:4200',
+        });
+        this.tokenHandler.removeToken();
+        sessionStorage.clear();
+        this.router.navigateByUrl('/logout');
+      }
+    });
+  }
 }

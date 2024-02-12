@@ -130,6 +130,7 @@ export class CategoryManagementComponent implements OnInit {
 
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
+    console.log(this.modalRef);
     this.modalRef.content.categoryCreated.subscribe(() => {
       this.loadCategories();
     });
@@ -137,20 +138,29 @@ export class CategoryManagementComponent implements OnInit {
 
   updateRef?: BsModalRef;
   onCategoryIconClick(event: { icon: string; data: any }): void {
-    if (event.icon === 'edit') {
-      const communityCategoryMappingID = event.data.communityCategoryMappingID;
-      const description = event.data.description;
+    console.log('onCategoryIconClick');
+    const communityCategoryMappingID = event.data.communityCategoryMappingID;
+    const description = event.data.description;
 
-      this.categoryModalService.setCategoryData(
-        communityCategoryMappingID,
-        description
-      );
-      this.updateRef = this.modalService.show(CategoryEditModalComponent);
-      this.updateRef.content.categoryUpdated.subscribe(() => {
-        console.log('called loadCategories');
-        this.loadCategories();
-      });
-    }
+    // const initialState = {
+    //   communityCategoryMappingID: event.data.communityCategoryMappingID,
+    //   description: event.data.description,
+    // };
+    // this.categoryModalService.setCategoryData(
+    //   communityCategoryMappingID,
+    //   description
+    // );
+    console.log('before show', this.updateRef);
+    console.log('update Ref : ');
+    // this.updateRef = this.modalService.show(CategoryEditModalComponent);
+    console.log(
+      'update Ref : ',
+      this.modalService.show(CategoryEditModalComponent)
+    );
+    // this.updateRef.content.categoryUpdated.subscribe(() => {
+    //   console.log('called loadCategories inside funtion');
+    //   this.loadCategories();
+    // });
   }
 
   communityCategoryMappingID: number = 0;
