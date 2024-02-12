@@ -8,6 +8,7 @@ import {
   MsalGuardConfiguration,
   MsalService,
 } from '@azure/msal-angular';
+import { AccountsService } from 'src/app/service/HttpServices/account.service';
 export type MenuItem = {
   icon: string;
   label: string;
@@ -24,7 +25,8 @@ export class SidenavCustomComponent {
   constructor(
     private router: Router,
     private tokenHandler: TokenHandler,
-    private authService: MsalService
+    private authService: MsalService,
+    private accountService: AccountsService
   ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
@@ -85,6 +87,10 @@ export class SidenavCustomComponent {
           postLogoutRedirectUri: 'http://localhost:4200',
         });
         this.tokenHandler.removeToken();
+        this.accountService.isLogged = false;
+        this.accountService.updateUserLoggedInStatus(
+          this.accountService.isLogged
+        );
         sessionStorage.clear();
         this.router.navigateByUrl('/logout');
       }
