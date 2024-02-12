@@ -52,6 +52,10 @@ export class AccountsService {
     return this.http.post('https://localhost:7160/api/Login/login', model);
   }
 
+  updateUserLoggedInStatus(loggedIn: boolean): void {
+    this.isUserLoggedIn.next(loggedIn); // Emit new value
+  }
+
   Logout() {
     console.log('logout');
     this.isLogged = false;

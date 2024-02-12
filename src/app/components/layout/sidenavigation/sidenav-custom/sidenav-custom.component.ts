@@ -26,7 +26,7 @@ export class SidenavCustomComponent {
     private router: Router,
     private tokenHandler: TokenHandler,
     private authService: MsalService,
-    private accountService : AccountsService
+    private accountService: AccountsService
   ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
@@ -95,6 +95,10 @@ export class SidenavCustomComponent {
         this.authService.logoutRedirect({
           postLogoutRedirectUri: 'http://localhost:4200',
         });
+        this.accountService.isLogged = false;
+        this.accountService.updateUserLoggedInStatus(
+          this.accountService.isLogged
+        );
         sessionStorage.clear();
         this.router.navigateByUrl('/logout');
       }

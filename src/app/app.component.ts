@@ -27,18 +27,18 @@ export class AppComponent implements OnInit {
   //this subscribes to the isLoading$ observable provided by the LoaderService.
   isLoading = false;
   ngOnInit(): void {
-    // this.accountService.isUserLoggedIn.subscribe((data) => {
-    //   this.isLogged = data;
-    // });
-    // const token = sessionStorage.getItem('token');
-    // if (token != null) {
-    //   // this.accountService. = token;
-    //   // this.accountService.ResolveToken(this.azureReturn);
-    // } else {
-    //   if (this.isLogged == false) {
-    //     this.accountService.Logout();
-    //   }
-    // }
+    this.accountService.isUserLoggedIn.subscribe((data) => {
+      this.isLogged = data;
+    });
+    const token = sessionStorage.getItem('token');
+    if (token != null) {
+      // this.accountService. = token;
+      // this.accountService.ResolveToken(this.azureReturn);
+    } else {
+      if (this.isLogged == false) {
+        this.accountService.Logout();
+      }
+    }
     //the component subscribes to the isLoading$ observable provided by the LoaderService.
     //This subscription listens for changes in the loading state.
     this.loaderService.isLoading$.subscribe((isLoading) => {
