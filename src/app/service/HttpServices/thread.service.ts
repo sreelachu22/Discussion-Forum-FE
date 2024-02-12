@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface Thread {
   threadID: number;
   communityCategoryMappingID: number;
+  title: string;
   content: string;
   threadStatusID: number;
   isAnswered: boolean;
@@ -49,8 +50,8 @@ export class ThreadService {
     );
   }
 
-  getSingleThread(threadID:number):Observable<any>{
+  getSingleThread(threadID:number):Observable<Thread>{
     const singleThreadURL = 'https://localhost:7160/api/Thread'
-    return this.http.get(`${singleThreadURL}/${threadID}`)
+    return this.http.get<Thread>(`${singleThreadURL}/${threadID}`)
   }
 }

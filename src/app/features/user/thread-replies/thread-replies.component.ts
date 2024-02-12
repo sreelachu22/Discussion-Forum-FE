@@ -7,7 +7,7 @@ import {
   ThreadReplies,
   ThreadRepliesService,
 } from 'src/app/service/HttpServices/thread-replies.service';
-import { ThreadService } from 'src/app/service/HttpServices/thread.service';
+import { Thread, ThreadService } from 'src/app/service/HttpServices/thread.service';
 import { Vote, VoteService } from 'src/app/service/HttpServices/vote.service';
 
 @Component({
@@ -37,10 +37,11 @@ export class ThreadRepliesComponent {
   threadReplies: ThreadReplies[] = [];
   // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
-  threadInfo: any;
-  threadData: { name: string; value: any; isHtml: boolean }[] = [];
-  threadTitle!: string;
-  threadContent!: string;
+  // threadInfo: any;
+  // threadData: { name: string; value: any; isHtml: boolean }[] = [];
+  // threadTitle!: string;
+  // threadContent!: string;
+  thread!: Thread;
 
   isLoading = false;
   ngOnInit() {
@@ -52,13 +53,15 @@ export class ThreadRepliesComponent {
         })
       )
       .subscribe((data: any) => {
-        this.threadInfo = data;
-        this.threadTitle = this.threadInfo.title;
-        this.threadContent = this.threadInfo.content;
-        this.threadData.push(
-          { name: '', value: this.threadTitle, isHtml: true },
-          { name: '', value: this.threadContent, isHtml: true }
-        );
+        // this.threadInfo = data;
+        // this.threadTitle = this.threadInfo.title;
+        // this.threadContent = this.threadInfo.content;
+        // this.threadData.push(
+        //   { name: '', value: this.threadTitle, isHtml: true },
+        //   { name: '', value: this.threadContent, isHtml: true }
+        // );
+        this.thread = data;
+        console.log(data);
         this.loadReplies();
       });
     this.loaderService.isLoading$.subscribe((isLoading) => {

@@ -83,7 +83,7 @@ export class CreatePostComponent {
       +this.route.snapshot.queryParams['communityCategoryMappingID'];
     const creatorId =
       this.route.snapshot.queryParams['creatorId'] ||
-      '962fda5b-3f0b-4523-8dcc-5e7927104e0c';
+      sessionStorage.getItem('userID');
     // const content = this.editorContent;
 
     const url = `https://localhost:7160/api/Thread?communityMappingId=${communityCategoryMappingId}&userId=${creatorId}`;

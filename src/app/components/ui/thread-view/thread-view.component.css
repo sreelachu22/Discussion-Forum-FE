@@ -1,0 +1,69 @@
+/* thread-container.component.css */
+
+.thread-container {
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.thread-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.username {
+  font-weight: bold;
+  color: #3498db;
+}
+
+.date {
+  color: #3498db; /* Green color for date */
+}
+
+.thread-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.votes {
+  font-weight: bolder;
+  display: flex;
+}
+.thread-content {
+  margin-bottom: 10px;
+}
+.votes button {
+  margin-right: 10px;
+}
+
+.show-replies-button {
+  font-weight: bold;
+  color: #db978f; /* Red color for replies button */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.show-replies-button:hover {
+  color: #ea4937;
+}
+/* .show-replies {
+    margin-left: auto;
+  } */
+.mat_icons {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.vote_count {
+  margin-right: 10px;
+}
+.your_reply_icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
