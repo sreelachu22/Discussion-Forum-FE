@@ -20,6 +20,7 @@ import { CategoryEditModalComponent } from './components/ui/category-edit-modal/
 import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
 import { LatestComponent } from './features/latest/latest.component';
 import { ClosedThreadsComponent } from './features/community_head/closed-threads/closed-threads.component';
+import { NotificationComponent } from './features/user/notification/notification.component';
 
 const routes: Routes = [
   {
@@ -129,7 +130,7 @@ const routes: Routes = [
     path: '',
   },
   {
-    component: LatestComponent,
+    component: NotificationComponent,
     path:'latest'
   }
 ];

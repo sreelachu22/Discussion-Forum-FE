@@ -1,0 +1,9 @@
+<div class="notification_container">
+  <br />
+  <div *ngFor="let notification of notifications">
+    <app-notfication-list
+      [notification]="notification"
+      (markAsRead)="onMarkAsRead($event)"
+    ></app-notfication-list>
+  </div>
+</div>
