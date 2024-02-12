@@ -23,6 +23,7 @@ import { Category } from 'src/app/service/HttpServices/superadmin-category.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
+import { formatDate } from '@angular/common';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -94,8 +95,12 @@ export class CategoryManagementComponent implements OnInit {
     this.httpService
       .getPagedCategories(this.currentPage, this.sortType)
       .subscribe((data) => {
-        console.log('called loadCategories');
-        this.categories = data.categories;
+        this.categories = data.categories.map((category: { createdAt: string | number | Date; }) => {
+          return {
+            ...category,
+            createdAt: formatDate(category.createdAt, 'dd-MM-yyyy', 'en-US')
+          };
+        });
         this.pageCount = data.totalPages;
       });
   }

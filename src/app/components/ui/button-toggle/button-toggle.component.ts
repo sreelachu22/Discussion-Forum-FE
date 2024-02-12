@@ -21,4 +21,18 @@ export class ButtonToggleComponent {
     this.sortSelection = event.value;
     this.sortSelectionChange.emit(this.sortSelection); // Emit the selected value
   }
+
+  getOptionLabel(option: string): string {
+    switch (option) {
+      case 'communityCategoryName':
+        return 'Community Category Name';
+      case 'description':
+        return 'Description';
+      case 'createdAt':
+        return 'Created At';
+      default:
+        return option;
+    }
+  }
+  
 }

@@ -7,67 +7,8 @@
         class="py-4"
       />
       <p class="text-white">Discussit</p>
-      <form #form="ngForm" (ngSubmit)="saveData()">
-        <div class="form-group">
-          <label class="form-control-label">Email</label>
-          <input
-            type="email"
-            name="email"
-            #email="ngModel"
-            [(ngModel)]="model.email"
-            class="form-control w-75 mx-auto"
-            autocomplete="off"
-            required
-            minlength="6"
-            maxlength="70"
-          />
-          <div
-            class="text-danger valid-error"
-            *ngIf="email.invalid && email.touched"
-          >
-            <div *ngIf="email.errors?.['minlength']">Email is too short.</div>
-            <div *ngIf="email.errors?.['required']">Email is required.</div>
-            <div *ngIf="email.errors?.['maxlength']">Email is too long.</div>
-            <!-- <div *ngIf="email.errors?.['pattern']">Email is invalid.</div> -->
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-control-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            #password="ngModel"
-            [(ngModel)]="model.password"
-            class="form-control w-75 mx-auto"
-            minlength="8"
-            maxlength="25"
-            required
-          />
-          <div
-            class="text-danger valid-error"
-            *ngIf="password.invalid && password.touched"
-          >
-            <div
-              *ngIf="password.errors?.['minlength'] || password.errors?.['maxlength']"
-            >
-              Password is wrong.
-            </div>
-            <div *ngIf="password.errors?.['required']">
-              Password is required.
-            </div>
-          </div>
-        </div>
-        <br />
-        <button
-          type="submit"
-          class="btn signin w-75 mx-auto"
-          [disabled]="email.invalid || password.invalid"
-        >
-          Sign in
-        </button>
-      </form>
       <br />
-      <h4>Or</h4>
+      <h4></h4>
       <a #loginButton (click)="handleMicrosoftLogin()">
         <span class="ms-logo"></span>
         Sign in with Microsoft
