@@ -80,6 +80,7 @@ import { ThreadFormatDatePipe } from './pipe/thread-dateFormat.pipe';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component';
 import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-popup.component';
+import { TagInputModule } from 'ngx-chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -161,6 +162,7 @@ import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-pop
     EditorModule,
     ReactiveFormsModule,
     CanvasJSAngularChartsModule,
+    TagInputModule,
   ],
   providers: [
     CategoryService,

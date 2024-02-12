@@ -21,10 +21,13 @@
       </div>
       <div class="card_content">
         <ng-container *ngIf="item.name?.trim() !== ''">
-          {{ item.name }} {{ item.value }}
+          {{ item.name }}
+          <div *ngIf="!item.isHtml">{{ item.value }}</div>
+          <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
         </ng-container>
         <ng-container *ngIf="item.name?.trim() === ''">
-          {{ item.value }}
+          <div *ngIf="!item.isHtml">{{ item.value }}</div>
+          <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
         </ng-container>
       </div>
     </div>
