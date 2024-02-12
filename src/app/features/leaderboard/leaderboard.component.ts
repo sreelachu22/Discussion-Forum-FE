@@ -31,11 +31,11 @@ export class LeaderboardComponent implements OnInit {
   //assign badges based on levels
   getBadge(score: number): string {
     if (score >= 100) {
-      return '../../../assets/images/gold-medal.png';
+      return '../../../assets/images/gold_medal.png';
     } else if (score >= 50) {
-      return '../../../assets/images/silver-medal.png';
+      return '../../../assets/images/silver_medal.png';
     } else {
-      return '../../../assets/images/bronze-medal.png';
+      return '../../../assets/images/bronze_medal.png';
     }
   }
 }
