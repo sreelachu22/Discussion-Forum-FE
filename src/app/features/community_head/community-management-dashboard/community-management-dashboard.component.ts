@@ -41,14 +41,14 @@ export class CommunityManagementDashboardComponent {
       path: 'category-management',
       imageSrc: 'assets/images/settings.png',
     },
-    // {
-    //   title: 'Closed Threads',
-    //   path: 'closed-posts',
-    //   imageSrc: 'assets/images/settings.png',
-    // },
     {
       title: 'Notice Management',
       path: 'notice-management',
+      imageSrc: 'assets/images/settings.png',
+    },
+    {
+      title: 'Closed Threads',
+      path: 'closed-threads',
       imageSrc: 'assets/images/settings.png',
     },
   ];
