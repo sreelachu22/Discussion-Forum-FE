@@ -19,6 +19,7 @@ import { ThreadRepliesComponent } from './features/user/thread-replies/thread-re
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
 import { CreateReplyComponent } from './features/user/create-reply/create-reply.component';
 import { LatestComponent } from './features/latest/latest.component';
+import { NotificationComponent } from './features/user/notification/notification.component';
 
 const routes: Routes = [
   {
@@ -121,7 +122,7 @@ const routes: Routes = [
     path: '',
   },
   {
-    component: LatestComponent,
+    component: NotificationComponent,
     path:'latest'
   }
 ];

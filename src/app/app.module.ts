@@ -80,6 +80,8 @@ import { ThreadFormatDatePipe } from './pipe/thread-dateFormat.pipe';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { BarChartComponent } from './components/ui/bar-chart/bar-chart.component';
 import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-popup.component';
+import { NotificationComponent } from './features/user/notification/notification.component';
+import { NotficationListComponent } from './components/ui/notfication-list/notfication-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -135,7 +137,9 @@ import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-pop
     LatestComponent,
     ThreadFormatDatePipe,
     BarChartComponent,
-    InvalidPopupComponent,
+    InvalidPopupComponent, 
+    NotificationComponent, 
+    NotficationListComponent   
   ],
 
   imports: [
