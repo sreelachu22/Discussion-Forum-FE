@@ -83,6 +83,7 @@ import { InvalidPopupComponent } from './components/ui/invalid-popup/invalid-pop
 import { ClosedThreadsComponent } from './features/community_head/closed-threads/closed-threads.component';
 import { NotificationComponent } from './features/user/notification/notification.component';
 import { NotficationListComponent } from './components/ui/notfication-list/notfication-list.component';
+import { TagInputModule } from 'ngx-chips';
 import { LoginComponent } from './features/login/login.component';
 import {
   MsalGuard,
@@ -231,6 +232,7 @@ const isIE =
     EditorModule,
     ReactiveFormsModule,
     CanvasJSAngularChartsModule,
+    TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
   ],
@@ -242,24 +244,6 @@ const isIE =
       useClass: MsalInterceptor,
       multi: true,
     },
-
-    // {
-    //   provide: MSAL_INSTANCE,
-    //   useFactory: MSALInstanceFactory,
-    // },
-    // {
-    //   provide: MSAL_GUARD_CONFIG,
-    //   useFactory: MSALGuardConfigFactory,
-    // },
-    // {
-    //   provide: MSAL_INTERCEPTOR_CONFIG,
-    //   useFactory: MSALInterceptorConfigFactory,
-    // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: TokenInterceptor,
-    //   multi: true,
-    // },
     MsalService,
     MsalGuard,
     MsalBroadcastService,
@@ -269,21 +253,4 @@ const isIE =
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent, MsalRedirectComponent],
 })
-export class AppModule {
-  // private msalInstance: IPublicClientApplication;
-  // constructor() {
-  //   this.initializeMsalInstance();
-  // }
-  // private async initializeMsalInstance() {
-  //   const msalInstance = new PublicClientApplication({
-  //     auth: {
-  //       clientId: '78e1557c-a3e9-4e8d-a734-663e72bc722e',
-  //     },
-  //     system: {
-  //       allowNativeBroker: true,
-  //     },
-  //   });
-  //   await msalInstance.initialize();
-  //   await msalInstance.handleRedirectPromise();
-  // }
-}
+export class AppModule {}

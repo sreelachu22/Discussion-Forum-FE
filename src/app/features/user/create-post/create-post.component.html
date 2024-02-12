@@ -1,12 +1,11 @@
-
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <app-editor
-    [heading]="'Create Post'"
+    [title]="title"
     [firstButtonName]="'Post'"
     [secondButtonName]="'Cancel'"
     (onFirstButtonClick)="onSubmit($event)"
     (onSecondButtonClick)="goBack()"
+    [existingTags]="existingTags"
   ></app-editor>
 </div>
-

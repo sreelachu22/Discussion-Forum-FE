@@ -38,7 +38,7 @@ export class ThreadRepliesComponent {
   // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
   threadInfo: any;
-  threadData: { name: string; value: any }[] = [];
+  threadData: { name: string; value: any; isHtml: boolean }[] = [];
   threadTitle!: string;
   threadContent!: string;
 
@@ -56,8 +56,8 @@ export class ThreadRepliesComponent {
         this.threadTitle = this.threadInfo.title;
         this.threadContent = this.threadInfo.content;
         this.threadData.push(
-          { name: '', value: this.threadTitle },
-          { name: '', value: this.threadContent }
+          { name: '', value: this.threadTitle, isHtml: true },
+          { name: '', value: this.threadContent, isHtml: true }
         );
         this.loadReplies();
       });
