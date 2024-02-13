@@ -14,6 +14,7 @@ export class CreateReplyComponent implements OnInit {
   reply: any;
   replyID!: number;
   replyUser!: string;
+  threadOwnerEmail!:string;
   replyContent!: string;
   threadID!: number;
   parentReplyID!: number;
@@ -32,12 +33,17 @@ export class CreateReplyComponent implements OnInit {
 
   ngOnInit(): void {
     this.replyID = +this.route.snapshot.queryParams['replyID'];
-    this.threadRepliesService.getReplyByID(this.replyID).subscribe((reply) => {
-      this.reply = reply;
-      this.replyUser = reply.createdBy; // Assuming 'createdBy' is the correct property name
+    this.threadRepliesService.getReplyByID(this.replyID).subscribe((data) => {
+      console.log(data);
+      this.reply = data[0];
+      console.log(this.reply);
+      console.log(this.reply.threadOwnerEmail);
+      this.replyUser = this.reply.createdBy; // Assuming 'createdBy' is the correct property name
       this.replyContent = this.reply.content;
       this.threadID = this.reply.threadID;
-      this.parentReplyID = this.reply.ReplyID;
+      this.parentReplyID = this.reply.parentReplyID;
+      this.threadOwnerEmail=this.reply.threadOwnerEmail;
+
       // Add the user and content to replyData
       this.replyData.push({ name: '', value: this.replyContent });
     });

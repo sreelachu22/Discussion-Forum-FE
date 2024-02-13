@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import { environment } from 'src/app/environments/environment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { jwtDecode } from 'jwt-decode';
@@ -70,7 +70,9 @@ export class AccountsService {
       model
     );
   }
-  logoutBackend(userID : any){
-    return this.http.post('https://localhost:7160/api/Login/Logout', userID);
+  logoutBackend(userID : string): Observable<any> {
+    const url = `https://localhost:7160/api/Login/Logout?userId=${userID}`;
+    return this.http.post(url, null);
   }
+ 
 }

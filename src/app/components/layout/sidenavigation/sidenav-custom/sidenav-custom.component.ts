@@ -9,6 +9,7 @@ import {
   MsalService,
 } from '@azure/msal-angular';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
+
 export type MenuItem = {
   icon: string;
   label: string;
@@ -26,16 +27,10 @@ export class SidenavCustomComponent {
     private router: Router,
     private tokenHandler: TokenHandler,
     private authService: MsalService,
-    private accountService: AccountsService
+    private accountService : AccountsService
   ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
-  }
-
-  userID : any;
-
-  ngOnInit(){
-    this.userID = sessionStorage.getItem('userID');
   }
   //INPUT SETTER, A PROPERTY DECORATOR
   // When the 'collapsed' input property changes,
@@ -74,34 +69,45 @@ export class SidenavCustomComponent {
     },
   ]);
 
-  handleLogOut(userID : any) {
-    console.log("user ID : " +userID)
+  userId!: string | null;
+  async handleLogOut() {
     Swal.fire({
       title: 'Are you sure?',
-
       text: 'Do you want to log out?',
-
       icon: 'warning',
-
       showCancelButton: true,
-
       confirmButtonText: 'Logout',
-
       cancelButtonText: 'Cancel',
-    }).then((result: any) => {
+    }).then(async (result: any) => {
       if (result.isConfirmed) {
-      this.accountService.logoutBackend(userID).subscribe();
-        this.tokenHandler.removeToken();        
-        this.authService.logoutRedirect({
-          postLogoutRedirectUri: 'http://localhost:4200',
-        });
-        this.accountService.isLogged = false;
-        this.accountService.updateUserLoggedInStatus(
-          this.accountService.isLogged
-        );
-        sessionStorage.clear();
-        this.router.navigateByUrl('/logout');
+        this.userId = sessionStorage.getItem('userID'); // Assuming 'userID' is the key used to store the user ID in sessionStorage
+        if (this.userId) {
+          try {
+            this.accountService.logoutBackend(this.userId).subscribe(
+              () => {
+                console.log('Logout successful');
+                this.authService.logoutRedirect({
+                  postLogoutRedirectUri: 'http://localhost:4200',
+                });
+                this.tokenHandler.removeToken();
+                sessionStorage.clear();
+                this.router.navigateByUrl('/logout');
+              },
+              (error) => {
+                // Handle error
+                console.error('Logout failed:', error);
+                // Display error message to the user if needed
+              }
+            );
+          } catch (error) {
+            // Handle other errors
+            console.error('An error occurred:', error);
+          }
+        } else {
+          console.error('User ID not found in sessionStorage');
+          // Handle the absence of the user ID, e.g., display an error message to the user
+        }
       }
     });
   }
-}
+}  
