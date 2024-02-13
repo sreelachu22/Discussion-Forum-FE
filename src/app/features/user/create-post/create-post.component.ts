@@ -17,9 +17,7 @@ export interface Tag {
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent {
-  // bsModalRef!: BsModalRef;
   editorContent: any;
-  // editorInit: any;
   bsModalRef!: BsModalRef;
   communityCategoryMappingID!: number;
   title!: string;
@@ -70,14 +68,12 @@ export class CreatePostComponent {
   }) {
     const { title, editorContent, tags } = eventPayload;
     this.tagsAsStringArray = tags.map((tag) => tag.value);
-    console.log(this.tagsAsStringArray);
 
     const content = {
       Title: title,
       Content: editorContent,
       Tags: this.tagsAsStringArray,
     };
-    console.log(content);
 
     const communityCategoryMappingId =
       +this.route.snapshot.queryParams['communityCategoryMappingID'];

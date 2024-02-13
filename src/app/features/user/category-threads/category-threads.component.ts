@@ -41,7 +41,7 @@ export class CategoryThreadsComponent implements OnInit {
   pages: number[] = [];
   communityCategoryMappingID!: number;
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 9;
   totalPages: number = 0;
   creatorId!: string;
 
@@ -67,7 +67,6 @@ export class CategoryThreadsComponent implements OnInit {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityCategoryMappingID = params['communityCategoryMappingID'];
     });
-    console.log(this.communityCategoryMappingID);
     this.loadThreads();
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -84,11 +83,9 @@ export class CategoryThreadsComponent implements OnInit {
       .subscribe({
         next: (data: ThreadResponse) => {
           this.CategoryThreads = data;
-          console.log(this.CategoryThreads);
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
-          ); // Calculate totalPages
-          this.updatePageNumbers();
+          );
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -108,23 +105,9 @@ export class CategoryThreadsComponent implements OnInit {
     );
   }
 
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadThreads();
-    }
-  }
-
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.loadThreads();
-    }
-  }
-
-  goToPage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
       this.loadThreads();
     }
   }
@@ -186,17 +169,11 @@ export class CategoryThreadsComponent implements OnInit {
     });
   }
 
-  searchTerm: string = '';
-  searchResult(searchTerm: string) {
-    this.router.navigate(['/search-results'], {
-      queryParams: { searchTerm: this.searchTerm },
-    });
-  }
+  // searchTerm: string = '';
 
-  changePage(newPage: number) {
-    if (newPage >= 1 && newPage <= this.totalPages) {
-      this.currentPage = newPage;
-      this.loadThreads();
-    }
-  }
+  // searchResult(searchTerm: string) {
+  //   this.router.navigate(['/search-results'], {
+  //     queryParams: { searchTerm: this.searchTerm },
+  //   });
+  // }
 }
