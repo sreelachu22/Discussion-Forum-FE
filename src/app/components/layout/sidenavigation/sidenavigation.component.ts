@@ -60,7 +60,6 @@ export class SidenavigationComponent {
     if (this.showProfilePopup) {
       const initialState = {
         user: this.user,
-        handleLogOut: this.handleLogOut.bind(this),
       };
       this.modalRef = this.modalService.show(ProfilePopupComponent, {
         initialState,

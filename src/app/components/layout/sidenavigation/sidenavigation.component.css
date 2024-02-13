@@ -38,27 +38,3 @@ app-search {
   flex: 1 1 auto;
 }
 
-.profile-window {
-  position: absolute;
-  top: 50px; /* Adjust the distance from the top */
-  left: 0;
-  right: 0;
-  margin: auto;
-  z-index: 999;
-  width: 500px; /* Adjust the width of the profile window */
-  max-height: 300px; /* Adjust the max height of the profile window */
-  overflow-y: auto; /* Enable scrolling if content exceeds max height */
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  animation: expandProfileWindow 0.3s ease-out;
-}
-
-@keyframes expandProfileWindow {
-  from {
-    height: 0;
-  }
-  to {
-    height: 100%;
-  }
-}
