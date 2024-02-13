@@ -20,6 +20,7 @@ export class ThreadViewComponent {
   @Input() thread?: Thread;
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
+  ActiveUserID : string | null = sessionStorage.getItem('userID');
 
   constructor(
     private voteService: VoteService,
@@ -34,7 +35,9 @@ export class ThreadViewComponent {
       this.user = data;
     });
   }
-
+  isCurrentUser(thread: Thread): boolean {
+    return this.ActiveUserID === thread.createdBy;
+  }
   emitUpvote(thread: Thread) {
     //should change the vote to the person who votes
     const vote: ThreadVote = {

@@ -7,8 +7,10 @@ export interface Thread {
   title: string;
   content: string;
   createdBy: string;
+  createdByUser: string;
   createdAt: Date;
   modifiedBy: string;
+  modifiedByUser: string;
   modifiedAt: Date;
   threadStatusName: string;
   isAnswered: boolean;

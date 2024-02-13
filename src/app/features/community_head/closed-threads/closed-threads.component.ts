@@ -17,9 +17,9 @@ interface Thread {
   threadID: number;
   title: string;
   content: string;
-  createdBy: string;
+  createdByUser: string;
   createdAt: string;
-  modifiedBy: string;
+  modifiedByUser: string;
   modifiedAt: string;
   threadStatusName: string;
   isAnswered: boolean;
@@ -31,154 +31,150 @@ interface Thread {
 @Component({
   selector: 'app-closed-threads',
   templateUrl: './closed-threads.component.html',
-  styleUrls: ['./closed-threads.component.css']
+  styleUrls: ['./closed-threads.component.css'],
 })
 export class ClosedThreadsComponent {
-// templete variables
-CategoryThreads!: ThreadResponse;
-pages: number[] = [];
-communityID!: number;
-currentPage: number = 1;
-pageSize: number = 5;
-totalPages: number = 0;
-creatorId!: string;
+  // templete variables
+  CategoryThreads!: ThreadResponse;
+  pages: number[] = [];
+  communityID!: number;
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 0;
+  creatorId!: string;
 
-breadcrumbs = [
-  { label: 'Home', route: '/home' },
-  { label: 'Community', route: '/community' },
-  {
-    label: 'Community Management',
-    route: `/community-management-dashboard`,
-  },
-  {
-    label: 'Closed Threads',
-    route: '/closed-threads'
-  }
-];
+  breadcrumbs = [
+    { label: 'Home', route: '/home' },
+    { label: 'Community', route: '/community' },
+    {
+      label: 'Community Management',
+      route: `/community-management-dashboard`,
+    },
+    {
+      label: 'Closed Threads',
+      route: '/closed-threads',
+    },
+  ];
 
-constructor(
-  private threadService: ThreadService,
-  private activateRoute: ActivatedRoute,
-  private router: Router,
-  private loaderService: LoaderService
-) {}
+  constructor(
+    private threadService: ThreadService,
+    private activateRoute: ActivatedRoute,
+    private router: Router,
+    private loaderService: LoaderService
+  ) {}
 
-isLoading = false;
-// ng init with method to get url params and display content based on it
-ngOnInit() {
-  this.activateRoute.queryParams.subscribe((params) => {
-    this.communityID = 1;
-  });
-  console.log(this.communityID);
-  this.loadThreads();
-  this.loaderService.isLoading$.subscribe((isLoading) => {
-    this.isLoading = isLoading;
-  });
-}
-
-loadThreads() {
-  this.threadService
-    .getClosedThread(
-      this.communityID,
-      this.currentPage,
-      this.pageSize
-    )
-    .subscribe({
-      next: (data: ThreadResponse) => {
-        this.CategoryThreads = data;
-        console.log(this.CategoryThreads);
-        this.totalPages = Math.ceil(
-          this.CategoryThreads.totalCount / this.pageSize
-        ); // Calculate totalPages
-        this.updatePageNumbers();
-      },
-      error: (error: Error) => {
-        console.log('Error', error);
-      },
+  isLoading = false;
+  // ng init with method to get url params and display content based on it
+  ngOnInit() {
+    this.activateRoute.queryParams.subscribe((params) => {
+      this.communityID = 1;
     });
-}
-
-// paginations logics
-updatePageNumbers() {
-  const pagesToShow = Math.min(this.totalPages, 3);
-  const startPage = Math.max(1, this.currentPage - 1);
-  const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
-
-  this.pages = Array.from(
-    { length: endPage - startPage + 1 },
-    (_, i) => startPage + i
-  );
-}
-
-previousPage() {
-  if (this.currentPage > 1) {
-    this.currentPage--;
+    console.log(this.communityID);
     this.loadThreads();
-  }
-}
-
-nextPage() {
-  if (this.currentPage < this.totalPages) {
-    this.currentPage++;
-    this.loadThreads();
-  }
-}
-
-goToPage(page: number) {
-  if (page >= 1 && page <= this.totalPages) {
-    this.currentPage = page;
-    this.loadThreads();
-  }
-}
-
-// user friendly data format
-formatDate(date: string | null): string {
-  if (!date) {
-    return 'N/A';
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
 
-  const currentDate = new Date();
-  const inputDate = new Date(date);
+  loadThreads() {
+    this.threadService
+      .getClosedThread(this.communityID, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (data: ThreadResponse) => {
+          this.CategoryThreads = data;
+          console.log(this.CategoryThreads);
+          this.totalPages = Math.ceil(
+            this.CategoryThreads.totalCount / this.pageSize
+          ); // Calculate totalPages
+          this.updatePageNumbers();
+        },
+        error: (error: Error) => {
+          console.log('Error', error);
+        },
+      });
+  }
 
-  const timeDifference = currentDate.getTime() - inputDate.getTime();
-  const secondsDifference = Math.floor(timeDifference / 1000);
-  const minutesDifference = Math.floor(secondsDifference / 60);
-  const hoursDifference = Math.floor(minutesDifference / 60);
-  const daysDifference = Math.floor(hoursDifference / 24);
+  // paginations logics
+  updatePageNumbers() {
+    const pagesToShow = Math.min(this.totalPages, 3);
+    const startPage = Math.max(1, this.currentPage - 1);
+    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
 
-  if (daysDifference > 3) {
-    return (
-      'on ' +
-      inputDate.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      })
+    this.pages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
     );
-  } else if (hoursDifference >= 1) {
-    return `${hoursDifference} ${
-      hoursDifference === 1 ? 'hour' : 'hours'
-    } ago`;
-  } else if (minutesDifference >= 1) {
-    return `${minutesDifference} ${
-      minutesDifference === 1 ? 'minute' : 'minutes'
-    } ago`;
-  } else {
-    return '1 minute ago';
   }
-}
 
-searchTerm: string = '';
-searchResult(searchTerm: string) {
-  this.router.navigate(['/search-results'], {
-    queryParams: { searchTerm: this.searchTerm },
-  });
-}
-
-changePage(newPage: number) {
-  if (newPage >= 1 && newPage <= this.totalPages) {
-    this.currentPage = newPage;
-    this.loadThreads();
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadThreads();
+    }
   }
-}
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadThreads();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadThreads();
+    }
+  }
+
+  // user friendly data format
+  formatDate(date: string | null): string {
+    if (!date) {
+      return 'N/A';
+    }
+
+    const currentDate = new Date();
+    const inputDate = new Date(date);
+
+    const timeDifference = currentDate.getTime() - inputDate.getTime();
+    const secondsDifference = Math.floor(timeDifference / 1000);
+    const minutesDifference = Math.floor(secondsDifference / 60);
+    const hoursDifference = Math.floor(minutesDifference / 60);
+    const daysDifference = Math.floor(hoursDifference / 24);
+
+    if (daysDifference > 3) {
+      return (
+        'on ' +
+        inputDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      );
+    } else if (hoursDifference >= 1) {
+      return `${hoursDifference} ${
+        hoursDifference === 1 ? 'hour' : 'hours'
+      } ago`;
+    } else if (minutesDifference >= 1) {
+      return `${minutesDifference} ${
+        minutesDifference === 1 ? 'minute' : 'minutes'
+      } ago`;
+    } else {
+      return '1 minute ago';
+    }
+  }
+
+  searchTerm: string = '';
+  searchResult(searchTerm: string) {
+    this.router.navigate(['/search-results'], {
+      queryParams: { searchTerm: this.searchTerm },
+    });
+  }
+
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
+      this.loadThreads();
+    }
+  }
 }

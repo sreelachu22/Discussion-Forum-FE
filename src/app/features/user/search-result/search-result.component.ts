@@ -24,8 +24,8 @@ export interface Threads {
   modifiedAt: Date;
   communityCategoryMapping: any;
   threadStatus: any;
-  createdByUser: any;
-  modifiedByUser: any;
+  createdByUser: string;
+  modifiedByUser: string;
   threadVotes: any;
 }
 @Component({

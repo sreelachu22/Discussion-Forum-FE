@@ -1,6 +1,6 @@
 <div class="thread-container" *ngIf="thread">
   <div class="thread-header">
-    <div class="username">{{ thread.createdBy }}</div>
+    <div class="username">{{ thread.createdByUser }}</div>
     <div class="date">{{ thread.createdAt | timeDifference }}</div>
   </div>
   <div class="thread-data">
@@ -42,7 +42,7 @@
         [innerHTML]="thread.content"
       ></div>
     </div>
-    <div class="owner-controls">
+    <div class="owner-controls" *ngIf="isCurrentUser(thread)">
       <div class="owner-control">
         <mat-icon class="your_icon" (click)="editThread(thread.threadID)">
           edit

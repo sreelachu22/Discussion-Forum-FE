@@ -66,15 +66,9 @@ export class CreateReplyComponent implements OnInit {
   onSubmit(content: any) {
     console.log(content.editorContent);
     if (this.parentReplyID) {
-      this.postBaseURL = `${this.postBaseURL}/${
-        this.threadID
-      }?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${
-        this.replyID
-      }`;
+      this.postBaseURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${this.replyID}`;
     } else {
-      this.postBaseURL = `${this.postBaseURL}/${
-        this.threadID
-      }?creatorId=${sessionStorage.getItem('userID')}`;
+      this.postBaseURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}`;
     }
     this.http
       .post(this.postBaseURL, JSON.stringify(content.editorContent), {
