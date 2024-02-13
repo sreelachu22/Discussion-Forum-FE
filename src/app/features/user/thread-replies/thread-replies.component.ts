@@ -41,13 +41,8 @@ export class ThreadRepliesComponent {
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
-  threadReplies: ThreadReplies[] = [];
-  // showReplies: { [key: number]: boolean } = {};
+  threadReplies: ThreadReplies[] = [];  
   showNestedReplies: boolean[] = [];
-  // threadInfo: any;
-  // threadData: { name: string; value: any; isHtml: boolean }[] = [];
-  // threadTitle!: string;
-  // threadContent!: string;
   thread!: Thread;
 
   isLoading = false;
@@ -66,14 +61,7 @@ export class ThreadRepliesComponent {
           return this.threadService.getSingleThread(this.threadId);
         })
       )
-      .subscribe((data: any) => {
-        // this.threadInfo = data;
-        // this.threadTitle = this.threadInfo.title;
-        // this.threadContent = this.threadInfo.content;
-        // this.threadData.push(
-        //   { name: '', value: this.threadTitle, isHtml: true },
-        //   { name: '', value: this.threadContent, isHtml: true }
-        // );
+      .subscribe((data: any) => {        
         this.thread = data;
         console.log(data);
         this.loadReplies();

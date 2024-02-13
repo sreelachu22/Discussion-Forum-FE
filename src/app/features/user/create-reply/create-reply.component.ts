@@ -37,8 +37,7 @@ export class CreateReplyComponent implements OnInit {
   ngOnInit(): void {
     if (this.route.snapshot.queryParams['threadID']) {
       this.threadID = this.route.snapshot.queryParams['threadID'];
-      this.threadService.getSingleThread(this.threadID).subscribe((data) => {
-        console.log(data);
+      this.threadService.getSingleThread(this.threadID).subscribe((data) => {        
         this.thread = data;
         this.replyData.push(
           { name: '', value: this.thread.title },
@@ -59,7 +58,7 @@ export class CreateReplyComponent implements OnInit {
     });
   }}
   onSubmit(content: any) {
-    console.log(content.editorContent);
+        
     if (this.parentReplyID) {
       this.postBaseURL = `${this.postBaseURL}/${
         this.threadID
@@ -71,6 +70,7 @@ export class CreateReplyComponent implements OnInit {
         this.threadID
       }?creatorId=${sessionStorage.getItem('userID')}`;
     }
+
     this.http
       .post(this.postBaseURL, JSON.stringify(content.editorContent), {
         headers: {

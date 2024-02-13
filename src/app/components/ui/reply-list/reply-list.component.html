@@ -1,9 +1,10 @@
-<!-- reply-container.component.html -->
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
+    <!-- sssssssssssssssssssss -->
     <div class="username">{{ reply.createdUserName }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
+
   <div class="reply-content" *ngIf="!isHTML(reply.content)">
     {{ reply.content }}
   </div>
@@ -24,6 +25,7 @@
       >
 
       <p class="vote_count">{{ reply.downvoteCount }}</p>
+
       <mat-icon class="your_reply_icon" (click)="postReply(reply.replyID)"
         >reply</mat-icon
       >
