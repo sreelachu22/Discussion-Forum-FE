@@ -53,7 +53,6 @@ export class CreatePostComponent {
   }
 
   goBack() {
-    // Use the dynamically retrieved communityCategoryMappingID in the navigation
     this.router.navigate(['/community/category-posts'], {
       queryParams: {
         communityCategoryMappingID: this.communityCategoryMappingID,
@@ -80,7 +79,6 @@ export class CreatePostComponent {
     const creatorId =
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
-    // const content = this.editorContent;
 
     const url = `https://localhost:7160/api/Thread?communityMappingId=${communityCategoryMappingId}&userId=${creatorId}`;
 
@@ -94,10 +92,9 @@ export class CreatePostComponent {
       .subscribe({
         next: (response) => {
           console.log('Post created successfully:', response);
-          // Show success message
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
-              message: 'Post created successfully', //make use of reusable success pop up , sends message to it
+              message: 'Post created successfully',
             },
           });
         },
@@ -105,10 +102,7 @@ export class CreatePostComponent {
           console.error('Error creating post:', error);
         },
         complete: () => {
-          console.log('hello');
-          // This block will be executed when the observable completes (optional)
-          // routing to posts page
-          this.router.navigate(['category_posts'], {
+          this.router.navigate(['/community/category-posts'], {
             queryParams: {
               communityCategoryMappingID: this.communityCategoryMappingID,
             },
