@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
+import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 export interface EmailModel {
   toEmail: string;
   subject: string;
@@ -16,9 +17,10 @@ export interface EmailModel {
 })
 export class CreateReplyComponent implements OnInit {
   reply: any;
+  thread: any;
   replyID!: number;
   replyUser!: string;
-  threadOwnerEmail!:string;
+  threadOwnerEmail!: string;
   replyContent!: string;
   threadID!: number;
   parentReplyID!: number;
@@ -33,36 +35,50 @@ export class CreateReplyComponent implements OnInit {
     private threadRepliesService: ThreadRepliesService,
     private http: HttpClient,
     private modalService: BsModalService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private threadService: ThreadService
   ) {}
 
   ngOnInit(): void {
-    this.replyID = +this.route.snapshot.queryParams['replyID'];
-    this.threadRepliesService.getReplyByID(this.replyID).subscribe((data) => {
-      console.log(data);
-      this.reply = data[0];
-      console.log(this.reply);
-      console.log(this.reply.threadOwnerEmail);
-      this.replyUser = this.reply.createdBy; // Assuming 'createdBy' is the correct property name
-      this.replyContent = this.reply.content;
-      this.threadID = this.reply.threadID;
-      this.parentReplyID = this.reply.parentReplyID;
-      this.threadOwnerEmail=this.reply.threadOwnerEmail;
+    if (this.route.snapshot.queryParams['threadID']) {
+      this.threadID = this.route.snapshot.queryParams['threadID'];
+      this.threadService.getSingleThread(this.threadID).subscribe((data) => {
+        console.log(data);
+        this.thread = data;
+        this.replyData.push(
+          { name: '', value: this.thread.title },
+          { name: '', value: this.thread.content }
+        );
+      });
+    } else {
+      this.replyID = +this.route.snapshot.queryParams['replyID'];
+      this.threadRepliesService.getReplyByID(this.replyID).subscribe((data) => {
+        this.reply = data[0];
+        this.replyContent = this.reply.content;
+        this.threadID = this.reply.threadID;
+        this.parentReplyID = this.reply.parentReplyID;
+        this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
-      // Add the user and content to replyData
-      this.replyData.push({ name: '', value: this.replyContent });
-    });
+        // Add the user and content to replyData
+        this.replyData.push({ name: '', value: this.replyContent });
+      });
+    }
   }
   onSubmit(content: any) {
-    //should change the creatorID to the user that is logged in
-    if (typeof content === 'string') {
-      // Extract inner HTML text
-      // content = this.extractInnerHTML(content);
+    console.log(content.editorContent);
+    if (this.parentReplyID) {
+      this.postBaseURL = `${this.postBaseURL}/${
+        this.threadID
+      }?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${
+        this.replyID
+      }`;
+    } else {
+      this.postBaseURL = `${this.postBaseURL}/${
+        this.threadID
+      }?creatorId=${sessionStorage.getItem('userID')}`;
     }
-
-    const postURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${this.replyID}`;
     this.http
-      .post(postURL, JSON.stringify(content), {
+      .post(this.postBaseURL, JSON.stringify(content.editorContent), {
         headers: {
           'Content-Type': 'application/json',
           Accept: '*/*',
