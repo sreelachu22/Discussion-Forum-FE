@@ -1,0 +1,17 @@
+<div class="user_profile_modal">
+  <div class="modal-header">
+    <div class="left_side">
+      <img [src]="getBadge(user.score)" alt="Badge" />
+      <h3>{{ user.name }}</h3>
+      <p>Points : {{ user.score }}</p>
+    </div>
+    <div class="right_side">
+      <p>{{ user.email }}</p>
+      <p>Designation: {{ user.designationName }}</p>
+      <p>Department: {{ user.departmentName }}</p>
+      <p class="logout" (click)="logout()">
+        Logout &nbsp;<span><mat-icon>logout</mat-icon></span>
+      </p>
+    </div>
+  </div>
+</div>

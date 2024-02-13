@@ -9,7 +9,15 @@
     ButtonName="Community Management"
     ButtonClass="Functional_button_community_management"
     (ButtonClick)="navigateToCommunityManagement(communityID)"
+    *ngIf="isAdmin"
   />
+  <app-page-header
+    [pageHeaderTitle]="communityName"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    *ngIf="!isAdmin"
+    [showButton]="false"
+  />
+
   <br />
 
   <div class="row">
