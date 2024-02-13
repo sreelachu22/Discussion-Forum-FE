@@ -1,53 +1,61 @@
 <div class="container">
   <h2>{{ heading }}</h2>
 
-  <label> Title </label>
-  <br />
-  <span> Give a short specific title for your Post </span>
+  <div class="editor-title" *ngIf="showTitle">
+    <label> Title </label>
+    <br />
+    <span> Give a short specific title for your Post </span>
 
-  <app-input
-    placeholder="Enter the title"
-    inputClass="thread_title"
-    (inputChange)="onInputChange($event)"
-    (inputBlur)="validateTitle()"
-  ></app-input>
-  <div *ngIf="!isTitleValid" class="error-message">{{ titleErrorMessage }}</div>
-
-  <label> Body </label>
-  <br />
-  <span>
-    This is the body of your post.Describe in detail,be specific.Words should
-    not exceed more that 250 words.
-  </span>
-  <editor [init]="editorInit"></editor>
-  <div *ngIf="!isContentValid" class="error-message">
-    {{ contentErrorMessage }}
+    <app-input
+      placeholder="Enter the title"
+      inputClass="thread_title"
+      (inputChange)="onInputChange($event)"
+      (inputBlur)="validateTitle()"
+    ></app-input>
+    <div *ngIf="!isTitleValid" class="error-message">
+      {{ titleErrorMessage }}
+    </div>
   </div>
-  <label> Tags </label>
-  <br />
-  <span>
-    Add upto 5 tags related to your post. <br />
-    Guidelines for Adding Tags: <br />
-    * Tags should be descriptive and related to your post content. <br />
-    * Avoid using single characters or numbers as tags. <br />
-    * Special characters are not allowed in tags. <br />
-    * Use relevant keywords to enhance searchability. <br />
-    * Check for suggestions provided below for accurate and popular tags. <br />
-    * Ensure that tags accurately represent the main topics or themes of your
-    post. <br />
-    * You cannot add invalid or inappropriate tags. <br />
-  </span>
-  <div class="thread_tags">
-    <tag-input
-      [(ngModel)]="tags"
-      [placeholder]="'Enter the tags'"
-      [maxItems]="5"
-    >
-      <tag-input-dropdown [autocompleteItems]="existingTags" />
-    </tag-input>
+  <div class="editor-body" *ngIf="showBody">
+    <label *ngIf="showSpan"> Body </label>
+    <br />
+    <span *ngIf="showSpan">
+      This is the body of your post.Describe in detail,be specific.Words should
+      not exceed more that 250 words.
+    </span>
+    <editor [init]="editorInit"></editor>
+    <div *ngIf="!isContentValid" class="error-message">
+      {{ contentErrorMessage }}
+    </div>
   </div>
+  <div class="editor-tags" *ngIf="showTag">
+    <label> Tags </label>
+    <br />
+    <span>
+      Add upto 5 tags related to your post. <br />
+      Guidelines for Adding Tags: <br />
+      * Tags should be descriptive and related to your post content. <br />
+      * Avoid using single characters or numbers as tags. <br />
+      * Special characters are not allowed in tags. <br />
+      * Use relevant keywords to enhance searchability. <br />
+      * Check for suggestions provided below for accurate and popular tags.
+      <br />
+      * Ensure that tags accurately represent the main topics or themes of your
+      post. <br />
+      * You cannot add invalid or inappropriate tags. <br />
+    </span>
+    <div class="thread_tags">
+      <tag-input
+        [(ngModel)]="tags"
+        [placeholder]="'Enter the tags'"
+        [maxItems]="5"
+      >
+        <tag-input-dropdown [autocompleteItems]="existingTags" />
+      </tag-input>
+    </div>
 
-  <div *ngIf="!isTagValid" class="error-message">{{ tagErrorMessage }}</div>
+    <div *ngIf="!isTagValid" class="error-message">{{ tagErrorMessage }}</div>
+  </div>
 
   <app-button
     buttonClass="button"

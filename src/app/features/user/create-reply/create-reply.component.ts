@@ -43,15 +43,10 @@ export class CreateReplyComponent implements OnInit {
     });
   }
   onSubmit(content: any) {
-    //should change the creatorID to the user that is logged in
-    if (typeof content === 'string') {
-      // Extract inner HTML text
-      // content = this.extractInnerHTML(content);
-    }
-
+    console.log(content.editorContent)        
     const postURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${this.replyID}`;
     this.http
-      .post(postURL, JSON.stringify(content), {
+      .post(postURL, JSON.stringify(content.editorContent), {
         headers: {
           'Content-Type': 'application/json',
           Accept: '*/*',
