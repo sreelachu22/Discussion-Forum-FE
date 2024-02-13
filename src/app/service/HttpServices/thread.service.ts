@@ -29,7 +29,6 @@ export class ThreadService {
     pageNumber: number,
     pageSize: number
   ): Observable<any> {
-    console.log('hello api ');
     return this.http.get(
       `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
       // `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
@@ -47,8 +46,8 @@ export class ThreadService {
     );
   }
 
-  getSingleThread(threadID: number): Observable<Thread> {
+  getSingleThread(threadID: number): Observable<any> {
     const singleThreadURL = 'https://localhost:7160/api/Thread';
-    return this.http.get<Thread>(`${singleThreadURL}/${threadID}`);
+    return this.http.get(`${singleThreadURL}/${threadID}`);
   }
 }

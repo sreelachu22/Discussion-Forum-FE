@@ -32,3 +32,9 @@ body {
 .breadcrumb_navigation {
   text-decoration: none;
 }
+
+::ng-deep {
+  .tox-promotion {
+    background-color: black;
+  }
+}
