@@ -1,17 +1,25 @@
-.container{
-    width: 80%;
-    margin-left: 10%;
+.container {
+  width: 80%;
+  margin-left: 10%;
 }
-#create_post_button{
-    float:right ;
-    margin-top: 3%;
-  }
-#goback_button{
-    float:right ;
-    margin-top: 3%;
-    margin-right: 3%;
+#create_post_button {
+  float: right;
+  margin-top: 3%;
+}
+#goback_button {
+  float: right;
+  margin-top: 3%;
+  margin-right: 3%;
 }
 
-app-editor{
-    width: 100%;
+app-editor {
+  width: 100%;
+}
+
+app-editor
+  .tox-tinymce
+  .tox-editor-container
+  .tox-editor-header
+  .tox-promotion {
+  background-color: black;
 }

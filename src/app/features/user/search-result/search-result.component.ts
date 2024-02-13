@@ -54,7 +54,7 @@ export class SearchResultComponent {
         // Call the search service with the updated logic
         this.searchService.searchThreads(this.searchTerm).subscribe({
           next: (results: any[]) => {
-            // Merge the results into a single array
+            console.log(results.length);
             this.threads = results;
           },
           error: (error: Error) => {

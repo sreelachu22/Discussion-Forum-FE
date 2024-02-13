@@ -99,7 +99,7 @@ import {
   MSAL_INTERCEPTOR_CONFIG,
   MsalGuardConfiguration,
   MsalRedirectComponent,
-} from '@azure/msal-angular'; // Redirect component imported from msal-angular
+} from '@azure/msal-angular';
 import {
   BrowserCacheLocation,
   Configuration,

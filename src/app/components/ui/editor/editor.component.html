@@ -8,8 +8,11 @@
   <app-input
     placeholder="Enter the title"
     inputClass="thread_title"
-    (inputChange)="InputChange($event)"
+    (inputChange)="onInputChange($event)"
+    (inputBlur)="validateTitle()"
   ></app-input>
+  <div *ngIf="!isTitleValid" class="error-message">{{ titleErrorMessage }}</div>
+
   <label> Body </label>
   <br />
   <span>
@@ -17,6 +20,9 @@
     not exceed more that 250 words.
   </span>
   <editor [init]="editorInit"></editor>
+  <div *ngIf="!isContentValid" class="error-message">
+    {{ contentErrorMessage }}
+  </div>
   <label> Tags </label>
   <br />
   <span>
@@ -40,6 +46,8 @@
       <tag-input-dropdown [autocompleteItems]="existingTags" />
     </tag-input>
   </div>
+
+  <div *ngIf="!isTagValid" class="error-message">{{ tagErrorMessage }}</div>
 
   <app-button
     buttonClass="button"
