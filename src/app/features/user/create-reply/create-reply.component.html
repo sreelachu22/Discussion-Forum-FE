@@ -3,9 +3,12 @@
   <!-- <app-thread-reply> </app-thread-reply> -->
   <app-editor
     [heading]="'Reply'"
-    [firstButtonName]="'Post'"
+    [firstButtonName]="'Reply'"
     [secondButtonName]="'Cancel'"
-    (onFirstButtonClick)="onSubmit($event)"
+    (onFirstButtonClickReply)="onSubmit($event)"
     (onSecondButtonClick)="goBack()"
+    [showTitle]="false"
+    [showTag]="false"
+    [showSpan]="false"
   ></app-editor>
 </div>

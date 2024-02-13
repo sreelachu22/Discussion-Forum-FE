@@ -14,7 +14,8 @@ export interface ThreadReplies {
   createdUserName:string;
   createdAt:string;
   modifiedBy:string;
-  modifiedAt:string
+  modifiedAt:string;
+  threadOwnerEmail:string;
   nestedReplies?: ThreadReplies[];
 }
 @Injectable({

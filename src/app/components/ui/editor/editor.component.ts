@@ -12,6 +12,10 @@ export class EditorComponent {
   title: string = '';
   tags: { display: string; value: string }[] = [];
 
+  @Input() showSpan:boolean=true;
+  @Input() showTitle:boolean=true;
+  @Input() showBody:boolean=true;
+  @Input() showTag:boolean=true;
   @Input() existingTags!: { display: string; value: string }[];
   @Input() heading: string = '';
   @Input() firstButtonName: string = '';
@@ -25,6 +29,13 @@ export class EditorComponent {
     editorContent: string;
     tags: { display: string; value: string }[];
   }>();
+
+  @Output() onFirstButtonClickReply: EventEmitter<{
+    editorContent: string;
+  }> = new EventEmitter<{
+    editorContent: string;
+    
+  }>();
   @Output() onSecondButtonClick: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}
@@ -37,6 +48,8 @@ export class EditorComponent {
       suffix: '.min',
       plugins: 'lists link image table code help wordcount', // List of plugins to include in the editor
       placeholder: 'Type your content here...',
+      promotion: false,
+      branding: false,
       file_picker_callback: (callback: any, value: any, meta: any) => {
         //to attach images directly from system
         const input = document.createElement('input'); // Create a new input element of type 'file'
@@ -78,37 +91,56 @@ export class EditorComponent {
   }
 
   FirstButton() {
-    this.titleTouched = true;
-    const tagsvalidaterarray = this.validateTags();
-    if (
-      !this.validateTitle() ||
-      !tagsvalidaterarray.includes(0) ||
-      !this.validContent()
-    ) {
-      if (!this.validateTitle()) {
-        this.isTitleValid = false;
-        this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters.`;
-      }
-      if (!tagsvalidaterarray.includes(0)) {
-        this.isTagValid = false;
-        this.tagErrorMessage =
-          'Tags field should not be empty, each tag should not special characters or white spaces, and each tag length should be greater than 1.';
-      }
+    if(!this.showTitle && !this.showTag){      
       if (!this.validContent()) {
         this.isContentValid = false;
-        this.contentErrorMessage = `Content must be between ${this.minContentLength} and ${this.maxContentLength} characters.`;
+        this.contentErrorMessage = `Content must have minimum of ${this.minContentLength} characters.`;
       }
-    } else {
-      this.isTitleValid = true;
-      this.titleErrorMessage = '';
-      this.isTagValid = true;
-      this.tagErrorMessage = '';
-      this.onFirstButtonClick.emit({
-        title: this.title,
-        editorContent: this.editorContent,
-        tags: this.tags,
-      });
+      else{
+        this.isContentValid=true;
+        this.contentErrorMessage=''
+        this.onFirstButtonClickReply.emit({
+          editorContent: this.editorContent
+        });
+
+      }
     }
+    else{
+      this.titleTouched = true;
+      const tagsvalidaterarray = this.validateTags();
+      if (
+        !this.validateTitle() ||
+        !tagsvalidaterarray.includes(0) ||
+        !this.validContent()
+      ) {
+        if (!this.validateTitle()) {
+          this.isTitleValid = false;
+          this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters.`;
+        }
+        if (!tagsvalidaterarray.includes(0)) {
+          this.isTagValid = false;
+          this.tagErrorMessage =
+            'Tags field should not be empty, each tag should not special characters or white spaces, and each tag length should be greater than 1.';
+        }
+        if (!this.validContent()) {
+          this.isContentValid = false;
+          this.contentErrorMessage = `Content must be between ${this.minContentLength} and ${this.maxContentLength} characters.`;
+        }
+      } else {
+        this.isContentValid=true;
+        this.contentErrorMessage=''
+        this.isTitleValid = true;
+        this.titleErrorMessage = '';
+        this.isTagValid = true;
+        this.tagErrorMessage = '';
+        this.onFirstButtonClick.emit({
+          title: this.title,
+          editorContent: this.editorContent,
+          tags: this.tags,
+        });
+      }
+    }
+    
   }
 
   SecondButton() {
@@ -123,7 +155,7 @@ export class EditorComponent {
   isTitleValid: boolean = false;
   titleErrorMessage: string = '';
   minTitleLength: number = 5;
-  maxTitleLength: number = 50;
+  maxTitleLength: number = 150;
   titleTouched: boolean = false;
 
   isTagValid: boolean = false;
@@ -133,7 +165,7 @@ export class EditorComponent {
   isContentValid: boolean = false;
   contentErrorMessage: string = '';
   minContentLength: number = 20;
-  maxContentLength: number = 250;
+  maxContentLength: number = 10000;
 
   public validateTitle(): boolean {
     if (
@@ -152,7 +184,11 @@ export class EditorComponent {
 
   public validContent(): boolean {
     if (this.editorContent) {
-      if (this.editorContent.length < 28 || this.editorContent.length > 100) {
+      console.log(this.editorContent.length);
+      if (
+        this.editorContent.length < this.minContentLength ||
+        this.editorContent.length > this.maxContentLength
+      ) {
         return false;
       } else {
         this.isContentValid = true;

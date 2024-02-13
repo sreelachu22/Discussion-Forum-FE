@@ -156,7 +156,7 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: LatestComponent,
+    component: NotificationComponent,
     path: 'latest',
     canActivate: [UserRouteGuard],
   },

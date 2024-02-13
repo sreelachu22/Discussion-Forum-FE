@@ -8,13 +8,15 @@
   </div>
 
   <!-- Replies -->
-  <div class="replies">
+  <!-- <div class="replies">
     <div class="reply">
       <span
         >{{ notification.childReplyUserName }} replied "{{
           notification.childReplyContent
-        }}"</span
+        }}"
+       </span
       >
+      
       <span *ngIf="notification.parentReplyID; else parentPost">
         to your comment "{{ notification.parentReplyContent }}"
       </span>
@@ -23,7 +25,32 @@
       </ng-template>
     </div>
   </div>
-  <div>
+  <div> -->
+  <div class="replies">
+    <div class="reply">
+      <span
+        >{{ notification.childReplyUserName }} replied
+        <div
+          class="reply-content"
+          *ngIf="!isHTML(notification.childReplyContent)"
+        >
+          {{ notification.childReplyContent }}
+        </div>
+        <div
+          class="reply-content"
+          *ngIf="isHTML(notification.childReplyContent)"
+          [innerHTML]="notification.childReplyContent"
+        ></div>
+      </span>
+
+      <span *ngIf="notification.parentReplyID; else parentPost">
+        to your comment "{{ notification.parentReplyContent }}"
+      </span>
+      <ng-template #parentPost>
+        to your post "{{ notification.parentReplyContent }}"
+      </ng-template>
+    </div>
+
     <button (click)="removeNotification(notification.childReplyID)">
       Mark as read
     </button>

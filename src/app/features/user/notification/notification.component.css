@@ -1,37 +1,10 @@
 .notification_container {
   margin-top: 20px;
+  margin-left: 50px;
+  width: 91%;
 }
 
-.notification-item {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.child-reply {
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.parent-reply {
-  background-color: #e0e0e0;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.category,
-.community,
-.thread {
-  margin-top: 10px;
-}
-
-.category p,
-.community p,
-.thread p {
-  margin: 5px 0;
-  font-weight: bold;
+.header_options {
+  display: flex;
+  justify-content: space-between;
 }

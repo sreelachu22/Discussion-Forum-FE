@@ -16,6 +16,7 @@ export class ReplyListComponent {
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   showReplies: { [key: number]: boolean } = {};
+  ActiveUserID : string | null = sessionStorage.getItem('userID');
   constructor(private voteService: VoteService, private router: Router) {}
 
   emitUpvote(reply: ThreadReplies) {
@@ -54,6 +55,9 @@ export class ReplyListComponent {
       replyID: replyID,
     };
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
+  }
+  isCurrentUser(reply: ThreadReplies): boolean {
+    return this.ActiveUserID === reply.createdBy;
   }
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');

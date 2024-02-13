@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { Thread } from '../search/search.component';
+import { CategoryThreadDto, Thread } from '../search/search.component';
 
 @Component({
   selector: 'app-dropdown',
@@ -7,11 +7,11 @@ import { Thread } from '../search/search.component';
   styleUrls: ['./dropdown.component.css'],
 })
 export class DropdownComponent {
-  @Input() results: Thread[] = [];
+  @Input() results: CategoryThreadDto[] = [];
   @Output() emitselectResult: EventEmitter<Thread> = new EventEmitter<Thread>();
 
   constructor() {}
-  selectResult(result: Thread) {
+  selectResult(result: any) {
     this.emitselectResult.emit(result);
   }
 }
