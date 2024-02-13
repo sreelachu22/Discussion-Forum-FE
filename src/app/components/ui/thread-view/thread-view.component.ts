@@ -39,9 +39,11 @@ export class ThreadViewComponent {
       this.user = data;
     });
   }
+
   isCurrentUser(thread: Thread): boolean {
     return this.ActiveUserID === thread.createdBy;
   }
+
   emitUpvote(thread: Thread) {
     //should change the vote to the person who votes
     const vote: ThreadVote = {
@@ -69,12 +71,14 @@ export class ThreadViewComponent {
     };
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
+
   editThread(threadID: number) {
     const queryParams = {
       threadID: threadID,
     };
     this.router.navigate(['category-posts/create-posts'], { queryParams });
   }
+
   closeThread(threadID: number) {
     const ModifierId = sessionStorage.getItem('userID') || '';
     this.threadService.closeThread(threadID, ModifierId).subscribe({
@@ -94,7 +98,28 @@ export class ThreadViewComponent {
       },
     });
   }
-  deleteThread(threadID: number) {}
+
+  deleteThread(threadID: number) 
+  {
+    const ModifierId = sessionStorage.getItem('userID') || '';
+    this.threadService.deleteThread(threadID, ModifierId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
+          initialState: {
+            message: 'Thread deleted successfully', //make use of reusable success pop up , sends message to it
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error closing thread:', error);
+      },
+      complete: () => {
+        this.router.navigate(['community']);
+      },
+    });
+  }
+
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
