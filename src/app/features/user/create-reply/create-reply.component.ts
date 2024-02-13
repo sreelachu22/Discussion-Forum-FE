@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
-
+export interface EmailModel {
+  toEmail: string;
+  subject: string;
+  body: string;
+}
 @Component({
   selector: 'app-create-reply',
   templateUrl: './create-reply.component.html',
@@ -22,6 +26,7 @@ export class CreateReplyComponent implements OnInit {
   justifyPosition: string = 'flex-start';
   bsModalRef!: BsModalRef;
   postBaseURL: string = 'https://localhost:7160/api/Reply';
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -72,6 +77,7 @@ export class CreateReplyComponent implements OnInit {
               message: 'Reply posted successfully', //make use of reusable success pop up , sends message to it
             },
           });
+          this.sendEmailToOwner(this.threadOwnerEmail, this.threadID, this.replyContent);
         },
         error: (error) => {
           console.error('Error creating thread:', error);
@@ -87,6 +93,24 @@ export class CreateReplyComponent implements OnInit {
       });
   }
 
+  sendEmailToOwner(threadOwnerEmail: string, threadID: number, replyContent: string) {
+    const emailModel: EmailModel = {
+      toEmail: threadOwnerEmail,
+      subject: 'New Reply on Your Thread',
+      body: `A new reply has been posted on your thread. Reply content: ${replyContent}. Thread ID: ${threadID}`
+    };
+  
+    this.http.post('https://your-backend-api-url/send-email', emailModel)
+      .subscribe(
+        response => {
+          console.log('Email sent successfully:', response);
+        },
+        error => {
+          console.error('Error sending email:', error);
+        }
+      );
+  }
+  
   goBack() {
     const queryParams = {
       threadID: this.threadID,
