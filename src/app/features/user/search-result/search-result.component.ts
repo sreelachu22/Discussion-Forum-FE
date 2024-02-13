@@ -5,6 +5,10 @@ import {
   Router,
 } from '@angular/router';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import {
+  CategoryThreadDto,
+  SearchThreadResult,
+} from 'src/app/components/ui/search/search.component';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 
 export interface Threads {
@@ -42,28 +46,32 @@ export class SearchResultComponent {
     { label: 'Search Results', route: '/search-results' },
   ];
 
-  threads: Threads[] = [];
+  threads: CategoryThreadDto[] = [];
 
   searchTerm: string = '';
   isResultFound = false;
+  pageNumber: number = 1;
+  pageSize: number = 10;
 
   ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.searchTerm = queryParams['searchTerm'];
       if (this.searchTerm) {
         // Call the search service with the updated logic
-        this.searchService.searchThreads(this.searchTerm).subscribe({
-          next: (results: any[]) => {
-            console.log(results.length);
-            this.threads = results;
-          },
-          error: (error: Error) => {
-            alert('Error has occurred, ' + error.message);
-          },
-          complete: () => {
-            //console.log('Completed');
-          },
-        });
+        this.searchService
+          .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
+          .subscribe({
+            next: (results: SearchThreadResult) => {
+              console.log(results);
+              this.threads = results.searchThreadDtoList;
+            },
+            error: (error: Error) => {
+              alert('Error has occurred, ' + error.message);
+            },
+            complete: () => {
+              //console.log('Completed');
+            },
+          });
       }
     });
   }
@@ -81,5 +89,41 @@ export class SearchResultComponent {
     this.router.navigate([`/community/post-replies`], {
       queryParams: { threadID: threadID },
     });
+  }
+
+  formatDate(date: string | null): string {
+    if (!date) {
+      return 'N/A';
+    }
+
+    const currentDate = new Date();
+    const inputDate = new Date(date);
+
+    const timeDifference = currentDate.getTime() - inputDate.getTime();
+    const secondsDifference = Math.floor(timeDifference / 1000);
+    const minutesDifference = Math.floor(secondsDifference / 60);
+    const hoursDifference = Math.floor(minutesDifference / 60);
+    const daysDifference = Math.floor(hoursDifference / 24);
+
+    if (daysDifference > 3) {
+      return (
+        'on ' +
+        inputDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      );
+    } else if (hoursDifference >= 1) {
+      return `${hoursDifference} ${
+        hoursDifference === 1 ? 'hour' : 'hours'
+      } ago`;
+    } else if (minutesDifference >= 1) {
+      return `${minutesDifference} ${
+        minutesDifference === 1 ? 'minute' : 'minutes'
+      } ago`;
+    } else {
+      return '1 minute ago';
+    }
   }
 }
