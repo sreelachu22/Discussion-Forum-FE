@@ -26,7 +26,7 @@
             required
             minlength="2"
             maxlength="50"
-            pattern=".*\S+.*"
+            pattern="^(?=.*[a-zA-Z]).+$"
             #categoryNameInput="ngModel"
           ></textarea>
           <div
@@ -46,7 +46,7 @@
               New Category Name cannot exceed 50 characters.
             </div>
             <div *ngIf="categoryNameInput.errors?.['pattern']">
-              New Category Name cannot be just empty spaces.
+              New Category Name must contain atleast 1 alphabet.
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
             textColor="white"
             hoverColor="rgb(51, 171, 165)"
             hoverTextColor="white"
-            [disableButton]="!newCategoryName"
+            [disableButton]="!categoryForm.valid"
           ></app-button>
           <span> </span>
           <button

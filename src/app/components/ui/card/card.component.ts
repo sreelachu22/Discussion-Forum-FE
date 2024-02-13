@@ -12,6 +12,7 @@ export class CardComponent {
     value: any;
     style?: object;
     imageSrc?: string;
+    isHtml?: boolean;
   }[] = [];
   @Input() defaultImageWidth: string = '25px'; // Set your default width value
   @Input() defaultImageHeight: string = '25px'; // Set your default height value

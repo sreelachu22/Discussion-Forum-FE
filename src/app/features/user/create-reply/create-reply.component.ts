@@ -17,7 +17,7 @@ export class CreateReplyComponent implements OnInit {
   replyContent!:string;
   threadID!:number;
   parentReplyID!:number;
-  replyData: { name: string; value: any }[] = [];
+  replyData: { name: string; value: any}[] = [];
   justifyPosition:string = "flex-start";
   bsModalRef!: BsModalRef;
   postBaseURL:string = 'https://localhost:7160/api/Reply'
@@ -32,7 +32,7 @@ export class CreateReplyComponent implements OnInit {
     this.threadID = this.reply.threadID;
     this.parentReplyID = this.reply.ReplyID;
     // Add the user and content to replyData    
-    this.replyData.push({ name: '', value: this.replyContent });
+    this.replyData.push({ name: '', value: this.replyContent});
   });
   }    
   onSubmit(content: any) {    

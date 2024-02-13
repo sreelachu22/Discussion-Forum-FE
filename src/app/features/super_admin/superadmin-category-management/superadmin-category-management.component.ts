@@ -31,7 +31,7 @@ export class SuperadminCategoryManagementComponent {
     { label: 'Home', route: '/home' },
     { label: 'Admin Dashboard', route: '/admin-dashboard' },
     {
-      label: 'category Management',
+      label: 'Category Management',
       route: '/admin-dashboard/admin-category-management',
     },
   ];

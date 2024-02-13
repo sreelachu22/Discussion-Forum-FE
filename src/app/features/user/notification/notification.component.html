@@ -16,4 +16,11 @@
       (markAsRead)="onMarkAsRead($event)"
     ></app-notfication-list>
   </div>
+  <!-- pagination ui -->
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="changePage($event)"
+  ></app-pagination>
 </div>

@@ -21,23 +21,38 @@ import { CreateReplyComponent } from './features/user/create-reply/create-reply.
 import { LatestComponent } from './features/latest/latest.component';
 import { ClosedThreadsComponent } from './features/community_head/closed-threads/closed-threads.component';
 import { NotificationComponent } from './features/user/notification/notification.component';
+import { AdminLoginComponent } from './features/admin-login/admin-login.component';
+import { LoginComponent } from './features/login/login.component';
+import { LogoutComponent } from './features/logout/logout.component';
+import { UnauthorisedComponent } from './features/unauthorised/unauthorised.component';
+import { AdminRouteGuard } from './guard/admin.guard';
+import { SuperAdminRouteGuard } from './guard/superadmin.guard';
+import { UserRouteGuard } from './guard/user.guard';
 
 const routes: Routes = [
+  { path: '', component: AdminLoginComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: 'login', component: AdminLoginComponent },
+  { path: 'unauthorised', component: UnauthorisedComponent },
   {
     component: HomePageComponent,
     path: 'home',
+    canActivate: [UserRouteGuard],
   },
   {
     component: AdminDashboardComponent,
     path: 'admin-dashboard',
+    canActivate: [SuperAdminRouteGuard],
   },
   {
     component: SuperadminCategoryManagementComponent,
     path: 'admin-dashboard/admin-category-management',
+    canActivate: [SuperAdminRouteGuard],
   },
   {
     component: CommunityPageComponent,
     path: 'community',
+    canActivate: [UserRouteGuard],
   },
   { component: SearchResultComponent, path: 'search-results' },
   {
@@ -52,10 +67,12 @@ const routes: Routes = [
         component: ThreadRepliesComponent,
       },
     ],
+    canActivate: [UserRouteGuard],
   },
   {
     component: CommunityManagementDashboardComponent,
     path: 'community-management-dashboard',
+    canActivate: [AdminRouteGuard],
   },
   {
     path: 'community-management-dashboard',
@@ -65,6 +82,7 @@ const routes: Routes = [
         component: CategoryManagementComponent,
       },
     ],
+    canActivate: [AdminRouteGuard],
   },
   {
     path: 'community-management-dashboard',
@@ -78,6 +96,7 @@ const routes: Routes = [
         component: CategoryEditModalComponent,
       },
     ],
+    canActivate: [AdminRouteGuard],
   },
   {
     path: 'community-management-dashboard',
@@ -95,6 +114,7 @@ const routes: Routes = [
         component: ClosedThreadsComponent,
       },
     ],
+    canActivate: [AdminRouteGuard],
   },
   {
     path: 'community-management-dashboard',
@@ -104,35 +124,38 @@ const routes: Routes = [
         component: NoticesComponent,
       },
     ],
+    canActivate: [AdminRouteGuard],
   },
   {
     component: UserNoticesComponent,
     path: 'notices',
+    canActivate: [UserRouteGuard],
   },
   {
     component: LeaderboardComponent,
     path: 'leaderboards',
+    canActivate: [UserRouteGuard],
   },
-  { 
+  {
     component: GuidelinesComponent,
-    path: 'guidelines'
+    path: 'guidelines',
+    canActivate: [UserRouteGuard],
   },
   {
     component: CreatePostComponent,
     path: 'category-posts/create-posts',
+    canActivate: [UserRouteGuard],
   },
   {
     component: CreateReplyComponent,
     path: 'thread-replies/post-reply',
-  },
-  {
-    component: HomePageComponent,
-    path: '',
+    canActivate: [UserRouteGuard],
   },
   {
     component: NotificationComponent,
-    path:'latest'
-  }
+    path: 'latest',
+    canActivate: [UserRouteGuard],
+  },
 ];
 
 @NgModule({

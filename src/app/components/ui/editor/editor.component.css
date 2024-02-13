@@ -1,13 +1,42 @@
-.container{
-    width: 80%;
-    margin-left: 10%;
+.container {
+  width: 80%;
+  /* margin-left: 10%; */
 }
-#create_post_button{
-    float:right ;
-    margin-top: 3%;
-  }
-#goback_button{
-    float:right ;
-    margin-top: 3%;
-    margin-right: 3%;
+#create_post_button {
+  float: right;
+  margin-top: 3%;
+}
+#goback_button {
+  float: right;
+  margin-top: 3%;
+  margin-right: 3%;
+}
+
+editor {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+label {
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+span {
+  font-size: smaller;
+}
+
+/* tag-input {
+  border: 2px solid #eee;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: none;
+} */
+
+.tags {
+  border: 2px solid #eee;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: none;
 }

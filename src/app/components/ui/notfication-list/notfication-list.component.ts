@@ -12,4 +12,9 @@ export class NotficationListComponent {
   removeNotification(replyId: number) {
     this.markAsRead.emit(replyId);
   }
+
+  isHTML(content: string): boolean {
+    const doc = new DOMParser().parseFromString(content, 'text/html');
+    return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
+  }
 }

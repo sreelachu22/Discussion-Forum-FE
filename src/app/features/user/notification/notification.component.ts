@@ -24,13 +24,18 @@ export class NotificationComponent implements OnInit {
   notifications!: Notification[];
   userId:string = "211526D8-AB57-4251-8D9B-B19C82BD6C72";
   categoryID:number = 0;
-  sortOrder:string = "desc";
-  pageNumber:number = 1;
-  pageSize:number = 10;
+  sortOrder:string = "desc";  
 
   categories:any[] = [];
   parentDropdownOptions: string[] = ['All'];
   sortOptions = ['Old to New', 'New to Old'];
+
+  pageNumber:number = 1;
+  pageSize:number = 10;
+  pages: number[] = [];  
+  currentPage: number = 1;  
+  totalPages: number = 10;
+  notificationCount!:number;
 
   constructor(private notificationService: NotificationService, private categoryService:CategoryService) { }
 
@@ -40,9 +45,17 @@ export class NotificationComponent implements OnInit {
 
   getNotifications(userId:string,categoryID:number, sortOrder:string, pageNumber:number, pageSize:number) {
     this.notificationService.getNotifications(userId, categoryID, sortOrder, pageNumber, pageSize)
-      .subscribe((data: any[]) => {        
-        this.notifications = data;   
-        this.getCategories();      
+      .subscribe({
+        next: (data: any) => {
+          this.notifications = data.replies;  
+        this.notificationCount = data.totalCount;    
+        this.totalPages = Math.ceil(this.notificationCount/this.pageSize);
+        this.updatePageNumbers();        
+        this.getCategories();  
+        },
+        error: (error: Error) => {
+          console.log('Error', error);
+        },
       });
   }
 
@@ -87,5 +100,24 @@ export class NotificationComponent implements OnInit {
       this.sortOrder = 'desc';
     }
     this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+  }
+
+  // paginations logics
+  updatePageNumbers() {
+    const pagesToShow = Math.min(this.totalPages, 3);
+    const startPage = Math.max(1, this.currentPage - 1);
+    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
+
+    this.pages = Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    );
+  }
+
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
+      this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+    }
   }
 }

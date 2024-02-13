@@ -12,7 +12,7 @@
 
 <div class="modal-body">
   <!-- input fields for dynamic user input, id is included to automatically fill in the form fields on notice select -->
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="noticeID">Notice ID</label>
     <input
       type="text"
@@ -23,24 +23,7 @@
       required
       readonly
     />
-  </div>
-  <div class="form-group">
-    <label for="communityID">Community ID<span class="required-field"></span></label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="selectedNotice.communityID"
-      name="communityID"
-      id="communityID"
-      required
-      pattern=".*\S+.*"
-      #communityIDInput="ngModel"
-    />
-    <div *ngIf="communityIDInput?.invalid && (communityIDInput?.dirty || communityIDInput?.touched)" class="error-message">
-      <div *ngIf="communityIDInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="communityIDInput.errors?.['pattern']">Community ID cannot be just empty spaces.</div>
-    </div>
-  </div>
+  </div> -->
   <div class="form-group">
     <label for="title">Title<span class="required-field"></span></label>
     <input
@@ -63,6 +46,24 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="expiresAt">Expires At<span class="required-field"></span></label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="selectedNotice.expiresAt"
+      name="expiresAt"
+      id="expiresAt"
+      required
+      pattern=".*\S+.*"
+      bsDatepicker
+      [bsConfig]="bsDatepickerConfig"
+      #expiresAtInput="ngModel"
+    />
+    <div *ngIf="expiresAtInput?.invalid && (expiresAtInput?.dirty || expiresAtInput?.touched)" class="error-message">
+      <div *ngIf="expiresAtInput.errors?.['required']">Please fill out this field.</div>
+      <div *ngIf="expiresAtInput.errors?.['pattern']">Expires At cannot be just empty spaces.</div>
+  </div>
+  <div class="form-group">
     <label for="content">Content<span class="required-field"></span></label>
     <textarea
       class="form-control"
@@ -83,22 +84,6 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="expiresAt">Expires At<span class="required-field"></span></label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="selectedNotice.expiresAt"
-      name="expiresAt"
-      id="expiresAt"
-      required
-      pattern=".*\S+.*"
-      #expiresAtInput="ngModel"
-    />
-    <div *ngIf="expiresAtInput?.invalid && (expiresAtInput?.dirty || expiresAtInput?.touched)" class="error-message">
-      <div *ngIf="expiresAtInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="expiresAtInput.errors?.['pattern']">Expires At cannot be just empty spaces.</div>
-  </div>
-  <div class="form-group">
     <label for="modifiedBy">Modified By<span class="required-field"></span></label>
     <input
       type="text"
@@ -113,6 +98,23 @@
     <div *ngIf="modifiedByInput?.invalid && (modifiedByInput?.dirty || modifiedByInput?.touched)" class="error-message">
       <div *ngIf="modifiedByInput.errors?.['required']">Please fill out this field.</div>
       <div *ngIf="modifiedByInput.errors?.['pattern']">Modified By cannot be just empty spaces.</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="communityID">Community ID<span class="required-field"></span></label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="selectedNotice.communityID"
+      name="communityID"
+      id="communityID"
+      required
+      pattern=".*\S+.*"
+      #communityIDInput="ngModel"
+    />
+    <div *ngIf="communityIDInput?.invalid && (communityIDInput?.dirty || communityIDInput?.touched)" class="error-message">
+      <div *ngIf="communityIDInput.errors?.['required']">Please fill out this field.</div>
+      <div *ngIf="communityIDInput.errors?.['pattern']">Community ID cannot be just empty spaces.</div>
     </div>
   </div>
 </div>
