@@ -30,7 +30,6 @@ import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
 
 const routes: Routes = [
-  // { path: '', component: AdminLoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'login', component: AdminLoginComponent },
   { path: 'unauthorised', component: UnauthorisedComponent },
@@ -157,9 +156,13 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: LatestComponent,
+    component: NotificationComponent,
     path: 'latest',
     canActivate: [UserRouteGuard],
+  },
+  {
+    component: HomePageComponent,
+    path: '',
   },
 ];
 

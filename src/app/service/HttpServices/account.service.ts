@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import { environment } from 'src/app/environments/environment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { jwtDecode } from 'jwt-decode';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 export interface azureObj {
@@ -26,6 +27,8 @@ export class AccountsService {
   apiurl: string = environment.apiUrl;
   isUserLoggedIn: Subject<boolean> = new Subject<boolean>();
   isLogged: boolean = false;
+  isSuperAdmin: boolean = false;
+  isAdmin: boolean = false;
   data: any;
   userValid: boolean = false;
   azureObj: azureObj = {
@@ -70,4 +73,9 @@ export class AccountsService {
       model
     );
   }
+  logoutBackend(userID : string): Observable<any> {
+    const url = `https://localhost:7160/api/Login/Logout?userId=${userID}`;
+    return this.http.post(url, null);
+  }
+ 
 }

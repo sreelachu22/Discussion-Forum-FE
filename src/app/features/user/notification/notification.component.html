@@ -1,9 +1,26 @@
 <div class="notification_container">
   <br />
+  <div class="header_options">
+    <app-dropdown-select
+      [dropdownOptions]="parentDropdownOptions"
+      (optionSelected)="handleOptionSelected($event)"
+    ></app-dropdown-select>
+    <button-toggle
+      [sortOptions]="sortOptions"
+      (sortSelectionChange)="onSortSelectionChange($event)"
+    ></button-toggle>
+  </div>
   <div *ngFor="let notification of notifications">
     <app-notfication-list
       [notification]="notification"
       (markAsRead)="onMarkAsRead($event)"
     ></app-notfication-list>
   </div>
+  <!-- pagination ui -->
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="changePage($event)"
+  ></app-pagination>
 </div>

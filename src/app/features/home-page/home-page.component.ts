@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommunityDetails, CommunityService } from 'src/app/service/HttpServices/community.service';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import { AccountsService } from 'src/app/service/HttpServices/account.service';
+import {
+  CommunityDetails,
+  CommunityService,
+} from 'src/app/service/HttpServices/community.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,30 +15,31 @@ import { CommunityDetails, CommunityService } from 'src/app/service/HttpServices
 export class HomePageComponent {
   constructor(
     private httpService: CommunityService,
-    private activateRoute: ActivatedRoute, 
-    private router: Router
+    private activateRoute: ActivatedRoute,
+    private router: Router,
+    private accountService: AccountsService
   ) {}
 
-  communities : CommunityDetails[] = [];
-  ngOnInit():void {
+  isSuperAdmin: boolean = false;
+  communities: CommunityDetails[] = [];
+  ngOnInit(): void {
     this.activateRoute.queryParams.subscribe();
     this.loadCommunities();
+    this.isSuperAdmin = this.accountService.isSuperAdmin;
   }
 
   loadCommunities() {
-    this.httpService
-    .getAllCommunities()
-    .subscribe((data) => {
+    this.httpService.getAllCommunities().subscribe((data) => {
       console.log(data);
-    this.communities = data;
-  });
+      this.communities = data;
+    });
   }
 
   navigateToCommunity(communityID: number, communityName: string) {
     this.router.navigate(['community'], {
       queryParams: {
         communityID: communityID,
-        communityName: communityName
+        communityName: communityName,
       },
     });
   }

@@ -4,6 +4,13 @@
     pageHeaderTitle="Communities"
     (ButtonClick)="navigateToAdminDashboard()"
     ButtonName="Admin Dashboard"
+    *ngIf="isSuperAdmin"
+  ></app-page-header>
+  <app-page-header
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    pageHeaderTitle="Communities"
+    *ngIf="!isSuperAdmin"
+    [showButton]="false"
   ></app-page-header>
   <br />
   <div class="page_body">
@@ -36,7 +43,9 @@
         [defaultImageWidth]="'50px'"
         [defaultImageHeight]="'50px'"
         [marginTop]="'10px'"
-        (click)="navigateToCommunity(community.communityID, community.communityName)"
+        (click)="
+          navigateToCommunity(community.communityID, community.communityName)
+        "
       >
       </app-card>
     </div>
