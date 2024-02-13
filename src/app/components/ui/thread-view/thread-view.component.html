@@ -49,7 +49,14 @@
         </mat-icon>
       </div>
       <div class="owner-control">
-        <mat-icon class="your_icon">cancel</mat-icon>
+        <mat-icon class="your_icon" (click)="closeThread(thread.threadID)">
+          cancel
+        </mat-icon>
+      </div>
+      <div class="owner-control">
+        <mat-icon class="your_icon" (click)="deleteThread(thread.threadID)">
+          delete
+        </mat-icon>
       </div>
     </div>
   </div>
