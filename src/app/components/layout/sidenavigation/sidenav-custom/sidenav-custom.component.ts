@@ -27,7 +27,7 @@ export class SidenavCustomComponent {
     private router: Router,
     private tokenHandler: TokenHandler,
     private authService: MsalService,
-    private accountService : AccountsService
+    private accountService: AccountsService
   ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
@@ -101,4 +101,4 @@ export class SidenavCustomComponent {
       }
     });
   }
-}  
+}

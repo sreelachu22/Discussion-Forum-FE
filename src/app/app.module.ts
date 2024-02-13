@@ -119,6 +119,7 @@ import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { environment } from './environments/environment';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -182,7 +183,7 @@ const isIE =
     InvalidPopupComponent,
     NotificationComponent,
     NotficationListComponent,
-    ClosedThreadsComponent,  
+    ClosedThreadsComponent,
     DropdownSelectComponent,
     LoginComponent,
     AdminLoginComponent,
@@ -196,13 +197,12 @@ const isIE =
     MsalModule.forRoot(
       new PublicClientApplication({
         auth: {
-          clientId: '78e1557c-a3e9-4e8d-a734-663e72bc722e',
-          redirectUri: 'http://localhost:4200',
-          authority:
-            'https://login.microsoftonline.com/5b751804-232f-410d-bb2f-714e3bb466eb',
+          clientId: environment.msalConfig.clientId,
+          redirectUri: environment.msalConfig.redirectUri,
+          authority: environment.msalConfig.authority,
         },
         cache: {
-          cacheLocation: 'localStorage',
+          cacheLocation: environment.msalConfig.cacheLocation,
           storeAuthStateInCookie: isIE,
         },
       }),
@@ -215,7 +215,7 @@ const isIE =
       {
         interactionType: InteractionType.Redirect,
         protectedResourceMap: new Map([
-          ['https://graph.microsoft.com/v1.0/me', ['user.Read']],
+          [environment.msalConfig.protectedResourceMap, ['user.Read']],
         ]),
       }
     ),
@@ -240,7 +240,7 @@ const isIE =
     EditorModule,
     ReactiveFormsModule,
     CanvasJSAngularChartsModule,
-    MatSelectModule,     
+    MatSelectModule,
     TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
