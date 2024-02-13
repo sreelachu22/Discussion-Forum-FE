@@ -27,10 +27,15 @@
       <mat-icon class="your_reply_icon" (click)="postReply(reply.replyID)"
         >reply</mat-icon
       >
-      <mat-icon class="your_reply_icon" (click)="editReply(reply.replyID)"
+      <mat-icon
+        *ngIf="isCurrentUser(reply)"
+        class="your_reply_icon"
+        (click)="editReply(reply.replyID)"
         >edit</mat-icon
       >
-      <mat-icon class="your_reply_icon">delete</mat-icon>
+      <mat-icon *ngIf="isCurrentUser(reply)" class="your_reply_icon"
+        >delete</mat-icon
+      >
     </div>
 
     <div class="show-replies">
