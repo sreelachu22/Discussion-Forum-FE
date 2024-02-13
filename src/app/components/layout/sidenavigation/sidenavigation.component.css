@@ -26,9 +26,13 @@ mat-sidenav-content {
 }
 
 .user_icon {
-  margin-left: 10px;
+  margin-left: 22rem;
   cursor: pointer;
 }
+
+/* app-profile-popup{
+  margin: 30px;
+} */
 
 app-search {
   margin-left: 185px;
@@ -36,5 +40,9 @@ app-search {
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.btn-group{
+  width: fit-content;
 }
 

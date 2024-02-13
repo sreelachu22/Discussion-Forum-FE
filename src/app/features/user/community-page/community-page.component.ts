@@ -48,11 +48,10 @@ export class CommunityPageComponent {
       this.communityName = params['communityName'] || 'PM-Hub';
     });
     this.loadCategories();
-    // this.loadCommunity();
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.isAdmin = this.accountService.isAdmin;
+    this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
   }
 
   loadCommunity() {

@@ -18,20 +18,24 @@
 
   <app-search></app-search>
   <span class="spacer"></span>
-  <!-- </div> -->
-  <!-- <mat-icon>person</mat-icon> -->
-  <img
-    (click)="toggleProfilePopup()"
-    class="user_icon"
-    src="assets/images/profile-user.png"
-    style="max-width: 3%; min-width: 3%"
-  />
-  <!-- <div *ngIf="showProfilePopup" class="profile-window">
-    <app-user-profile-modal
-      [user]="user"
-      [handleLogOut]="handleLogOut"
-    ></app-user-profile-modal>
-  </div> -->
+
+  <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+    <img
+      dropdownToggle
+      class="user_icon"
+      src="assets/images/profile-user.png"
+      style="max-width: 10%; min-width: 10%"
+      aria-controls="dropdown-basic"
+    />
+    <div
+      *dropdownMenu
+      class="dropdown-menu profile-dropdown"
+      aria-labelledby="button-basic"
+      (click)="toggleProfilePopup()"
+    >
+      <app-profile-popup [user]="user"></app-profile-popup>
+    </div>
+  </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav

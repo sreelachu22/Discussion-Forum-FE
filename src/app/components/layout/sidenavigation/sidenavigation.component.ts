@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, Input, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,7 @@ import { UserEditService } from 'src/app/service/HttpServices/user-edit.service'
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import Swal from 'sweetalert2';
 import { ProfilePopupComponent } from '../profile-popup/profile-popup.component';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 
 @Component({
   selector: 'app-sidenavigation',
@@ -21,8 +22,7 @@ export class SidenavigationComponent {
     private tokenHandler: TokenHandler,
     private authService: MsalService,
     private accountService: AccountsService,
-    private userService: UserEditService,
-    private modalService: BsModalService
+    private userService: UserEditService
   ) {}
   collapsed = signal(false); //signals which will pass the state with the parent component
   //Automatically update the sidenav width according to the collapsed state
@@ -31,11 +31,7 @@ export class SidenavigationComponent {
   faUser = faUser;
 
   showProfilePopup: boolean = false;
-  userName: string = 'John Doe';
-  userEmail: string = 'john@example.com';
-  departmentName: string = 'IT';
-  designationName: string = 'Software Engineer';
-  userID: string | null = '';
+  @Input() userID: string | null = '';
   user!: SingleUser;
 
   ngOnInit() {
@@ -53,22 +49,8 @@ export class SidenavigationComponent {
     }
   }
 
-  modalRef?: BsModalRef;
-
   toggleProfilePopup(): void {
     this.showProfilePopup = !this.showProfilePopup;
-    if (this.showProfilePopup) {
-      const initialState = {
-        user: this.user,
-      };
-      this.modalRef = this.modalService.show(ProfilePopupComponent, {
-        initialState,
-        ignoreBackdropClick: false,
-        class: 'modal-dialog modal-dialog-right',
-      });
-    } else {
-      this.modalRef?.hide();
-    }
   }
 
   handleLogOut() {

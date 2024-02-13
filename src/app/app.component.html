@@ -1,7 +1,5 @@
-<!-- <app-admin-login *ngIf="!isLogged"></app-admin-login> -->
-<!-- <ng-container class="container"
-  ><app-loader *ngIf="isLoading"></app-loader
-></ng-container> -->
-<app-sidenavigation *ngIf="isLogged"></app-sidenavigation>
+<ng-container *ngIf="isLogged">
+  <app-sidenavigation [userID]="userID"></app-sidenavigation>
+</ng-container>
 <app-admin-login *ngIf="!isLogged"></app-admin-login>
 <!-- <router-outlet></router-outlet> -->

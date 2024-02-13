@@ -9,12 +9,17 @@ import {
 import { Observable } from 'rxjs';
 import { TokenHandler } from '../util/tokenHandler';
 import { jwtDecode } from 'jwt-decode';
+import { AccountsService } from '../service/HttpServices/account.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminRouteGuard implements CanActivate {
-  constructor(private tokenHandler: TokenHandler, private router: Router) {}
+  constructor(
+    private tokenHandler: TokenHandler,
+    private router: Router,
+    private accountsService: AccountsService
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -31,11 +36,6 @@ export class AdminRouteGuard implements CanActivate {
         decodedToken[
           'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
         ];
-      // console.log('role : ' + role);
-      // var mainroute = state.url.split('/');
-      // if (role.toLowerCase() == mainroute[1]) {
-      //   return true;
-      // }
       if (role == 'SuperAdmin' || role == 'CommunityHead') {
         return true;
       }

@@ -1,3 +1,6 @@
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
@@ -52,6 +55,3 @@
     </button>
   </div>
 </div>
-<ng-container class="container"
-  ><app-loader *ngIf="isLoading"></app-loader
-></ng-container>

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../service/HttpServices/users.service';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { SingleUserService } from 'src/app/service/DataServices/singleUser.service';
 
 @Component({
   selector: 'app-user-management',
@@ -31,7 +32,8 @@ export class UserManagementComponent implements OnInit {
   constructor(
     private userService: UserService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private singleUserService: SingleUserService
   ) {}
 
   ngOnInit() {
@@ -54,10 +56,12 @@ export class UserManagementComponent implements OnInit {
     this.userService
       .getUsers(this.currentPage, this.sortType)
       .subscribe((data) => {
-        this.users = data.users.map(user => {
+        this.users = data.users.map((user) => {
           return {
             ...user,
-            createdAt: user.createdAt ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US') : null
+            createdAt: user.createdAt
+              ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US')
+              : null,
             // Add more properties if necessary
           };
         });
@@ -82,13 +86,14 @@ export class UserManagementComponent implements OnInit {
 
   onUserIconClick(event: { icon: string; data: any }): void {
     if (event.icon === 'edit') {
+      this.singleUserService.setUserData(event.data.userID);
       this.GoToSingleUserPage(event.data.userID);
     }
   }
 
   GoToSingleUserPage(userID: string): void {
     this.router.navigate([
-      `community-management-dashboard/user-management/user-edit/${userID}`,
+      `community-management-dashboard/user-management/user-edit`,
     ]);
   }
 

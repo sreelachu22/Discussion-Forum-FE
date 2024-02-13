@@ -28,9 +28,9 @@ export class CategoryEditModalComponent {
     private updateRef: BsModalRef,
     private modalService: BsModalService
   ) {}
-  // @Input()
+  @Input()
   description: string = '';
-  // @Input()
+  @Input()
   communityCategoryMappingID: number = 0;
   newDescription: string = '';
   modifiedBy: string = '';
@@ -73,7 +73,6 @@ export class CategoryEditModalComponent {
   bsmodalRef?: BsModalRef;
   //methods for open modal for delete
   openDeleteModal(communityCategoryMappingID: number) {
-    console.log('id for delete:', communityCategoryMappingID);
     this.communityCategoryMappingID = communityCategoryMappingID;
     const initialState = {
       confirmFunction: this.confirm.bind(this),
@@ -92,24 +91,18 @@ export class CategoryEditModalComponent {
       .deleteCategoryMapping(this.communityCategoryMappingID)
       .subscribe({
         next: (data: any) => {
-          // this.categoryUpdated.emit(data);
           this.httpService.getPagedCategories(1, '-createdAt').subscribe({
-            next: (data: any) => {
-              console.log(data);
-            },
+            next: (data: any) => {},
             error: (error: Error) => {
               alert('Error has occured, ' + error.message);
             },
           });
-          // Close the modal
-          // this.updateRef.hide();
         },
         error: (error: Error) => {
           alert('Error has occured, ' + error.message);
         },
         complete: () => {
           this.modalRef.hide();
-          // this.updateRef.hide();
         },
       });
   }

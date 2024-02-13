@@ -115,8 +115,8 @@ import { UnauthorisedComponent } from './features/unauthorised/unauthorised.comp
 import { jwtDecode } from 'jwt-decode';
 import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
-import { MainComponent } from './features/main/main.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -186,7 +186,6 @@ const isIE =
     LogoutComponent,
     UnauthorisedComponent,
     ThreadViewComponent,
-    MainComponent,
     ProfilePopupComponent,
   ],
 
@@ -241,6 +240,7 @@ const isIE =
     TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
+    BsDropdownModule.forRoot(),
   ],
   providers: [
     CategoryService,

@@ -166,9 +166,7 @@ export class AdminLoginComponent {
             this.accountsService.microsoftLogin(this.azureObj).subscribe({
               next: (res: any) => {
                 this.accountsService.isLogged = true;
-                this.accountsService.updateUserLoggedInStatus(
-                  this.accountsService.isLogged
-                );
+                this.accountsService.updateUserLoggedInStatus(true);
                 sessionStorage.setItem('token', res.token);
                 const decodedToken: any = jwtDecode(res.token);
                 var role =
@@ -179,14 +177,15 @@ export class AdminLoginComponent {
                   decodedToken[
                     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
                   ];
+
                 sessionStorage.setItem('userID', userID);
                 if (role == 'SuperAdmin') {
-                  this.accountsService.isSuperAdmin = true;
-                  this.accountsService.isAdmin = true;
-                  this.router.navigateByUrl('/admin-dashboard');
+                  sessionStorage.setItem('isSuperAdmin', true.toString());
+                  sessionStorage.setItem('isAdmin', true.toString());
+                  this.router.navigateByUrl('/home');
                 } else if (role == 'CommunityHead') {
-                  this.accountsService.isAdmin = true;
-                  this.router.navigateByUrl('/community-management-dashboard');
+                  sessionStorage.setItem('isAdmin', true.toString());
+                  this.router.navigateByUrl('/home');
                 } else if (role == 'User') {
                   this.router.navigateByUrl('/home');
                 } else {

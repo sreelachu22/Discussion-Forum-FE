@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SingleUserService } from 'src/app/service/DataServices/singleUser.service';
 import { UserEditService } from 'src/app/service/HttpServices/user-edit.service';
 
 //interface for user DTO
@@ -22,7 +23,8 @@ export interface SingleUser {
 export class UserEditComponent {
   constructor(
     private useredit: UserEditService,
-    private activatedroute: ActivatedRoute
+    private activatedroute: ActivatedRoute,
+    private singleUserService: SingleUserService
   ) {}
 
   breadcrumbs = [
@@ -83,8 +85,12 @@ export class UserEditComponent {
 
   //ng init method loading current user details from url params
   ngOnInit() {
+    var userID: string = '';
     this.activatedroute.params.subscribe((params) => {
-      const userID = params['userID'];
+      this.singleUserService.userID$.subscribe((uid) => {
+        userID = uid;
+      });
+      alert(userID);
       if (userID) {
         this.useredit.getSingleUser(userID).subscribe({
           next: (data: SingleUser) => {

@@ -61,7 +61,6 @@ export class CategoryManagementComponent implements OnInit {
   ngOnInit(): void {
     this.sortType = 'communityCategoryName';
     this.loadCategories();
-    // this.getCategoriesInCommunity();
   }
 
   breadcrumbs = [
@@ -95,12 +94,14 @@ export class CategoryManagementComponent implements OnInit {
     this.httpService
       .getPagedCategories(this.currentPage, this.sortType)
       .subscribe((data) => {
-        this.categories = data.categories.map((category: { createdAt: string | number | Date; }) => {
-          return {
-            ...category,
-            createdAt: formatDate(category.createdAt, 'dd-MM-yyyy', 'en-US')
-          };
-        });
+        this.categories = data.categories.map(
+          (category: { createdAt: string | number | Date }) => {
+            return {
+              ...category,
+              createdAt: formatDate(category.createdAt, 'dd-MM-yyyy', 'en-US'),
+            };
+          }
+        );
         this.pageCount = data.totalPages;
       });
   }
@@ -142,25 +143,23 @@ export class CategoryManagementComponent implements OnInit {
     const communityCategoryMappingID = event.data.communityCategoryMappingID;
     const description = event.data.description;
 
-    // const initialState = {
-    //   communityCategoryMappingID: event.data.communityCategoryMappingID,
-    //   description: event.data.description,
-    // };
-    // this.categoryModalService.setCategoryData(
-    //   communityCategoryMappingID,
-    //   description
-    // );
+    const initialState = {
+      communityCategoryMappingID: event.data.communityCategoryMappingID,
+      description: event.data.description,
+    };
+    this.categoryModalService.setCategoryData(
+      communityCategoryMappingID,
+      description
+    );
     console.log('before show', this.updateRef);
     console.log('update Ref : ');
-    // this.updateRef = this.modalService.show(CategoryEditModalComponent);
-    console.log(
-      'update Ref : ',
-      this.modalService.show(CategoryEditModalComponent)
-    );
-    // this.updateRef.content.categoryUpdated.subscribe(() => {
-    //   console.log('called loadCategories inside funtion');
-    //   this.loadCategories();
-    // });
+    this.updateRef = this.modalService.show(CategoryEditModalComponent, {
+      initialState,
+    });
+    this.updateRef.content.categoryUpdated.subscribe(() => {
+      console.log('called loadCategories inside funtion');
+      this.loadCategories();
+    });
   }
 
   communityCategoryMappingID: number = 0;

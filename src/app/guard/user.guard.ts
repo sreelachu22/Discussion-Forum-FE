@@ -31,11 +31,6 @@ export class UserRouteGuard implements CanActivate {
         decodedToken[
           'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
         ];
-      // console.log('role : ' + role);
-      // var mainroute = state.url.split('/');
-      // if (role.toLowerCase() == mainroute[1]) {
-      //   return true;
-      // }
       if (role == 'SuperAdmin' || role == 'CommunityHead' || role == 'User') {
         return true;
       }

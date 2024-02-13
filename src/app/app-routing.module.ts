@@ -110,7 +110,7 @@ const routes: Routes = [
         component: UserManagementComponent,
       },
       {
-        path: 'user-management/user-edit/:userID',
+        path: 'user-management/user-edit',
         component: UserEditComponent,
       },
       {
