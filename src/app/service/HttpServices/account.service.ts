@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { jwtDecode } from 'jwt-decode';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 export interface azureObj {
@@ -26,6 +27,8 @@ export class AccountsService {
   apiurl: string = environment.apiUrl;
   isUserLoggedIn: Subject<boolean> = new Subject<boolean>();
   isLogged: boolean = false;
+  isSuperAdmin: boolean = false;
+  isAdmin: boolean = false;
   data: any;
   userValid: boolean = false;
   azureObj: azureObj = {

@@ -1,0 +1,39 @@
+.user_profile_modal {
+    width: fit-content;
+    background-color: #fff;
+    border-radius: 8px !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-header {
+    width: fit-content;
+    padding: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  
+  .upper_side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    background-color: rgb(51, 171, 165);
+  }
+  
+  .upper_side img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+
+  .lower_side{
+    display: flex;
+    font-size: smaller;
+    height: max-content;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0%;
+    padding: 2rem;
+  }

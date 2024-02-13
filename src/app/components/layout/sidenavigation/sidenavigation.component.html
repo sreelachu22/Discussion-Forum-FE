@@ -21,12 +21,17 @@
   <!-- </div> -->
   <!-- <mat-icon>person</mat-icon> -->
   <img
-    class="user-icon"
+    (click)="toggleProfilePopup()"
+    class="user_icon"
     src="assets/images/profile-user.png"
     style="max-width: 3%; min-width: 3%"
   />
-  <!-- <app-icon [iconName]="faUser"></app-icon> -->
-  <!-- </div> -->
+  <!-- <div *ngIf="showProfilePopup" class="profile-window">
+    <app-user-profile-modal
+      [user]="user"
+      [handleLogOut]="handleLogOut"
+    ></app-user-profile-modal>
+  </div> -->
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav
