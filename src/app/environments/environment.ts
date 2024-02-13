@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:7160/api/', //* url section *//
+  apiUrl: 'https://localhost:7160/api/',
   msalConfig: {
     clientId: '78e1557c-a3e9-4e8d-a734-663e72bc722e',
     redirectUri: 'http://localhost:4200',
