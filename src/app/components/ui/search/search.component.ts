@@ -5,6 +5,26 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 
+export interface SearchThreadResult {
+  searchThreadDtoList: CategoryThreadDto[];
+  searchThreadDtoListLength: number;
+}
+
+export interface CategoryThreadDto {
+  threadID: number;
+  title: string;
+  content: string;
+  createdBy: string;
+  createdAt: string;
+  modifiedBy: string | null;
+  modifiedAt: string;
+  threadStatusName: string;
+  isAnswered: boolean;
+  upVoteCount: number;
+  downVoteCount: number;
+  tagNames: string[];
+}
+
 export interface Thread {
   communityCategoryMapping: any;
   communityCategoryMappingID: number;
@@ -30,8 +50,11 @@ export interface Thread {
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent {
+  pageNumber: number = 1;
+  pageSize: number = 10;
+
   searchTerm: string = '';
-  SearchThreadsDropDown: Thread[] = [];
+  SearchThreadsDropDown: CategoryThreadDto[] = [];
   dropdowntoggle: boolean = false;
   private searchTermSubject = new Subject<string>();
 
@@ -51,15 +74,19 @@ export class SearchComponent {
         distinctUntilChanged(),
         switchMap((searchTerm: string) => {
           if (searchTerm) {
-            return this.searchService.searchThreads(searchTerm);
+            return this.searchService.searchThreads(
+              searchTerm,
+              this.pageNumber,
+              this.pageSize
+            );
           } else {
             return of([]);
           }
         })
       )
       .subscribe({
-        next: (results: Thread[]) => {
-          this.SearchThreadsDropDown = results;
+        next: (results: SearchThreadResult) => {
+          this.SearchThreadsDropDown = results.searchThreadDtoList;
           this.dropdowntoggle = true;
         },
         error: (error: any) => {

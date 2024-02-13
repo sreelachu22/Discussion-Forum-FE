@@ -48,6 +48,8 @@ export class EditorComponent {
       suffix: '.min',
       plugins: 'lists link image table code help wordcount', // List of plugins to include in the editor
       placeholder: 'Type your content here...',
+      promotion: false,
+      branding: false,
       file_picker_callback: (callback: any, value: any, meta: any) => {
         //to attach images directly from system
         const input = document.createElement('input'); // Create a new input element of type 'file'
@@ -92,7 +94,7 @@ export class EditorComponent {
     if(!this.showTitle && !this.showTag){      
       if (!this.validContent()) {
         this.isContentValid = false;
-        this.contentErrorMessage = `Content must be between ${this.minContentLength} and ${this.maxContentLength} characters.`;
+        this.contentErrorMessage = `Content must have minimum of ${this.minContentLength} characters.`;
       }
       else{
         this.isContentValid=true;
@@ -153,7 +155,7 @@ export class EditorComponent {
   isTitleValid: boolean = false;
   titleErrorMessage: string = '';
   minTitleLength: number = 5;
-  maxTitleLength: number = 50;
+  maxTitleLength: number = 150;
   titleTouched: boolean = false;
 
   isTagValid: boolean = false;
@@ -163,7 +165,7 @@ export class EditorComponent {
   isContentValid: boolean = false;
   contentErrorMessage: string = '';
   minContentLength: number = 20;
-  maxContentLength: number = 250;
+  maxContentLength: number = 10000;
 
   public validateTitle(): boolean {
     if (
@@ -182,7 +184,11 @@ export class EditorComponent {
 
   public validContent(): boolean {
     if (this.editorContent) {
-      if (this.editorContent.length < 28 || this.editorContent.length > 100) {
+      console.log(this.editorContent.length);
+      if (
+        this.editorContent.length < this.minContentLength ||
+        this.editorContent.length > this.maxContentLength
+      ) {
         return false;
       } else {
         this.isContentValid = true;
