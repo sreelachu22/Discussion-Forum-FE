@@ -12,6 +12,7 @@ import {
   VoteService,
 } from 'src/app/service/HttpServices/vote.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-thread-view',
@@ -24,7 +25,8 @@ export class ThreadViewComponent {
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
   ActiveUserID: string | null = sessionStorage.getItem('userID');
 
-  bsModalRef!: BsModalRef;
+  confirmModal!: BsModalRef;
+  successModal!: BsModalRef;
   constructor(
     private voteService: VoteService,
     private router: Router,
@@ -79,12 +81,23 @@ export class ThreadViewComponent {
     this.router.navigate(['category-posts/create-posts'], { queryParams });
   }
 
-  closeThread(threadID: number) {
+  threadID!: number;
+  openCloseModal(threadID: number) {
+    this.threadID = threadID;
+    const initialState = {
+      confirmFunction: this.confirmCloseThread.bind(this),
+      declineFunction: this.declineCloseThread.bind(this),
+    };
+    this.confirmModal = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
+  }
+  confirmCloseThread(): void {
     const ModifierId = sessionStorage.getItem('userID') || '';
-    this.threadService.closeThread(threadID, ModifierId).subscribe({
+    this.threadService.closeThread(this.threadID, ModifierId).subscribe({
       next: (response) => {
         console.log(response);
-        this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
+        this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
             message: 'Thread closed successfully', //make use of reusable success pop up , sends message to it
           },
@@ -98,14 +111,27 @@ export class ThreadViewComponent {
       },
     });
   }
+  declineCloseThread() {
+    this.confirmModal?.hide();
+    this.successModal?.hide();
+  }
 
-  deleteThread(threadID: number) 
-  {
+  openDeleteModal(threadID: number) {
+    this.threadID = threadID;
+    const initialState = {
+      confirmFunction: this.confirmDeleteThread.bind(this),
+      declineFunction: this.declineDeleteThread.bind(this),
+    };
+    this.confirmModal = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
+  }
+  confirmDeleteThread() {
     const ModifierId = sessionStorage.getItem('userID') || '';
-    this.threadService.deleteThread(threadID, ModifierId).subscribe({
+    this.threadService.deleteThread(this.threadID, ModifierId).subscribe({
       next: (response) => {
         console.log(response);
-        this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
+        this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
             message: 'Thread deleted successfully', //make use of reusable success pop up , sends message to it
           },
@@ -118,6 +144,10 @@ export class ThreadViewComponent {
         this.router.navigate(['community']);
       },
     });
+  }
+  declineDeleteThread() {
+    this.confirmModal?.hide();
+    this.successModal?.hide();
   }
 
   isHTML(content: string): boolean {
