@@ -1,6 +1,10 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Thread } from 'src/app/service/HttpServices/thread.service';
+import {
+  Thread,
+  ThreadService,
+} from 'src/app/service/HttpServices/thread.service';
 import { User, UserService } from 'src/app/service/HttpServices/users.service';
 import {
   ThreadVote,
@@ -18,18 +22,17 @@ export class ThreadViewComponent {
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
 
   constructor(
-    private voteService: VoteService, 
+    private voteService: VoteService,
     private router: Router,
-    private userService : UserService
-    )
-  {}
+    private userService: UserService,
+    private threadService: ThreadService
+  ) {}
 
   user!: User;
   getUserName(thread: Thread) {
-    this.userService.getUserByID(thread.createdBy)
-    .subscribe((data: User) => {
+    this.userService.getUserByID(thread.createdBy).subscribe((data: User) => {
       this.user = data;
-    })
+    });
   }
 
   emitUpvote(thread: Thread) {
@@ -57,7 +60,6 @@ export class ThreadViewComponent {
     const queryParams = {
       threadID: threadID,
     };
-
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
   editThread(threadID: number) {
@@ -66,6 +68,11 @@ export class ThreadViewComponent {
     };
     this.router.navigate(['category-posts/create-posts'], { queryParams });
   }
+  closeThread(threadID: number) {
+    const ModifierId = sessionStorage.getItem('userID') || '';
+    this.threadService.closeThread(threadID, ModifierId).subscribe();
+  }
+  deleteThread(threadID: number) {}
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
