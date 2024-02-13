@@ -4,20 +4,17 @@ import { Observable } from 'rxjs';
 
 export interface Thread {
   threadID: number;
-  communityCategoryMappingID: number;
+  title: string;
   content: string;
-  threadStatusID: number;
-  isAnswered: boolean;
-  isDeleted: boolean;
   createdBy: string;
-  createdAt: string;
-  modifiedBy: Date;
+  createdAt: Date;
+  modifiedBy: string;
   modifiedAt: Date;
-  communityCategoryMapping: any;
-  threadStatus: any;
-  createdByUser: any;
-  modifiedByUser: any;
-  threadVotes: any;
+  threadStatusName: string;
+  isAnswered: boolean;
+  upVoteCount: number;
+  downVoteCount: number;
+  tagNames: string[];
 }
 
 @Injectable({
