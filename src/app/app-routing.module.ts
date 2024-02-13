@@ -30,7 +30,7 @@ import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
 
 const routes: Routes = [
-  { path: '', component: AdminLoginComponent },
+  // { path: '', component: AdminLoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'login', component: AdminLoginComponent },
   { path: 'unauthorised', component: UnauthorisedComponent },
@@ -45,8 +45,13 @@ const routes: Routes = [
     canActivate: [SuperAdminRouteGuard],
   },
   {
-    component: SuperadminCategoryManagementComponent,
-    path: 'admin-dashboard/admin-category-management',
+    path: 'admin-dashboard',
+    children: [
+      {
+        component: SuperadminCategoryManagementComponent,
+        path: 'admin-category-management',
+      },
+    ],
     canActivate: [SuperAdminRouteGuard],
   },
   {
