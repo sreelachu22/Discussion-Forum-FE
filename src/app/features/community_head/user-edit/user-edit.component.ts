@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserEditService } from 'src/app/service/HttpServices/user-edit.service';
 
 //interface for user DTO
-interface User {
+export interface SingleUser {
   userID: string;
   name: string;
   email: string;
@@ -40,7 +40,7 @@ export class UserEditComponent {
     },
   ];
   //templeate variables
-  user!: User;
+  user!: SingleUser;
   userRoleToggle: boolean = false;
   userRoles!: [{ roleID: number; roleName: string }];
   selectedRoleID!: number;
@@ -66,7 +66,7 @@ export class UserEditComponent {
 
           // Reload user details after successful API call
           this.useredit.getSingleUser(this.user.userID).subscribe({
-            next: (data: User) => {
+            next: (data: SingleUser) => {
               this.user = data;
               console.log('User details reloaded:', this.user);
             },
@@ -87,7 +87,7 @@ export class UserEditComponent {
       const userID = params['userID'];
       if (userID) {
         this.useredit.getSingleUser(userID).subscribe({
-          next: (data: User) => {
+          next: (data: SingleUser) => {
             this.user = data;
             console.log(this.user);
           },

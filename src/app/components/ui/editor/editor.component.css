@@ -40,3 +40,17 @@ span {
   box-sizing: border-box;
   box-shadow: none;
 }
+
+/* app-editor.component.css */
+
+.error-message {
+  color: red;
+  font-size: 14px; /* Adjust the font size as needed */
+  margin-bottom: 10px; /* Add some top margin for better spacing */
+}
+
+::ng-deep {
+  .tox-promotion {
+    background-color: black;
+  }
+}

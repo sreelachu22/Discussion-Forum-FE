@@ -181,8 +181,11 @@ export class AdminLoginComponent {
                   ];
                 sessionStorage.setItem('userID', userID);
                 if (role == 'SuperAdmin') {
+                  this.accountsService.isSuperAdmin = true;
+                  this.accountsService.isAdmin = true;
                   this.router.navigateByUrl('/admin-dashboard');
                 } else if (role == 'CommunityHead') {
+                  this.accountsService.isAdmin = true;
                   this.router.navigateByUrl('/community-management-dashboard');
                 } else if (role == 'User') {
                   this.router.navigateByUrl('/home');

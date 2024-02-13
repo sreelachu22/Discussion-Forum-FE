@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AccountsService } from 'src/app/service/HttpServices/account.service';
 import {
   CommunityCategory,
   CategoryService,
@@ -25,6 +26,7 @@ export class CommunityPageComponent {
     private router: Router,
     private activateRoute: ActivatedRoute,
     private modalService: BsModalService,
+    private accountService: AccountsService,
     private loaderService: LoaderService
   ) {}
 
@@ -39,6 +41,7 @@ export class CommunityPageComponent {
   communityName!: string;
 
   isLoading = false;
+  isAdmin: boolean = false;
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
@@ -49,6 +52,7 @@ export class CommunityPageComponent {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
+    this.isAdmin = this.accountService.isAdmin;
   }
 
   loadCommunity() {

@@ -10,7 +10,7 @@ export class EditorComponent {
   editorContent: any;
   editorInit: any;
   title: string = '';
-  tags: string[] = [];
+  tags: { display: string; value: string }[] = [];
 
   @Input() existingTags!: { display: string; value: string }[];
   @Input() heading: string = '';
@@ -19,11 +19,11 @@ export class EditorComponent {
   @Output() onFirstButtonClick: EventEmitter<{
     title: string;
     editorContent: string;
-    tags: string[];
+    tags: { display: string; value: string }[];
   }> = new EventEmitter<{
     title: string;
     editorContent: string;
-    tags: string[];
+    tags: { display: string; value: string }[];
   }>();
   @Output() onSecondButtonClick: EventEmitter<void> = new EventEmitter<void>();
 
@@ -70,25 +70,125 @@ export class EditorComponent {
 
         editor.on('change', () => {
           // Event listener for the 'change' event in the editor
-          this.editorContent = editor.getContent(); // Update the component's 'editorContent' property with the current content of the editor
+          this.editorContent = editor.getContent();
+          // Update the component's 'editorContent' property with the current content of the editor
         });
       },
     };
   }
 
   FirstButton() {
-    this.onFirstButtonClick.emit({
-      title: this.title,
-      editorContent: this.editorContent,
-      tags: this.tags,
-    });
+    this.titleTouched = true;
+    const tagsvalidaterarray = this.validateTags();
+    if (
+      !this.validateTitle() ||
+      !tagsvalidaterarray.includes(0) ||
+      !this.validContent()
+    ) {
+      if (!this.validateTitle()) {
+        this.isTitleValid = false;
+        this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters.`;
+      }
+      if (!tagsvalidaterarray.includes(0)) {
+        this.isTagValid = false;
+        this.tagErrorMessage =
+          'Tags field should not be empty, each tag should not special characters or white spaces, and each tag length should be greater than 1.';
+      }
+      if (!this.validContent()) {
+        this.isContentValid = false;
+        this.contentErrorMessage = `Content must be between ${this.minContentLength} and ${this.maxContentLength} characters.`;
+      }
+    } else {
+      this.isTitleValid = true;
+      this.titleErrorMessage = '';
+      this.isTagValid = true;
+      this.tagErrorMessage = '';
+      this.onFirstButtonClick.emit({
+        title: this.title,
+        editorContent: this.editorContent,
+        tags: this.tags,
+      });
+    }
   }
 
   SecondButton() {
     this.onSecondButtonClick.emit();
   }
 
-  InputChange(event: any) {
+  onInputChange(event: any) {
     this.title = (event as string).trim();
+  }
+
+  // validations
+  isTitleValid: boolean = false;
+  titleErrorMessage: string = '';
+  minTitleLength: number = 5;
+  maxTitleLength: number = 50;
+  titleTouched: boolean = false;
+
+  isTagValid: boolean = false;
+  tagErrorMessage: string = '';
+  minTagCount: number = 1;
+
+  isContentValid: boolean = false;
+  contentErrorMessage: string = '';
+  minContentLength: number = 20;
+  maxContentLength: number = 250;
+
+  public validateTitle(): boolean {
+    if (
+      this.title.length < this.minTitleLength ||
+      this.title.length > this.maxTitleLength
+    ) {
+      this.isTitleValid = false;
+      this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters.`;
+      return false;
+    } else {
+      this.isTitleValid = true;
+      this.titleErrorMessage = '';
+      return true;
+    }
+  }
+
+  public validContent(): boolean {
+    if (this.editorContent) {
+      if (this.editorContent.length < 28 || this.editorContent.length > 100) {
+        return false;
+      } else {
+        this.isContentValid = true;
+        this.contentErrorMessage = '';
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private validateTags(): number[] {
+    var tagvalidatorarray = [];
+
+    if (this.tags.length < this.minTagCount) {
+      tagvalidatorarray.push(1);
+    }
+
+    const whitespaceRegex = /\s/;
+    const specialRegex = /[^\p{L}\p{N}\p{Z}\s]/u;
+    const seenTags = new Set<string>();
+
+    for (const tag of this.tags) {
+      if (
+        tag.value.length <= 1 ||
+        whitespaceRegex.test(tag.value) ||
+        specialRegex.test(tag.value)
+      ) {
+        tagvalidatorarray.push(2);
+        break;
+      }
+      if (!seenTags.add(tag.value)) {
+        tagvalidatorarray.push(3);
+        break;
+      }
+    }
+
+    return tagvalidatorarray.length === 0 ? [0] : tagvalidatorarray;
   }
 }

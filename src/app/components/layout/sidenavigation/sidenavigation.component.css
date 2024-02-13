@@ -27,6 +27,7 @@ mat-sidenav-content {
 
 .user_icon {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 app-search {
@@ -36,3 +37,4 @@ app-search {
 .spacer {
   flex: 1 1 auto;
 }
+

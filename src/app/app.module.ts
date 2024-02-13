@@ -97,7 +97,7 @@ import {
   MSAL_INTERCEPTOR_CONFIG,
   MsalGuardConfiguration,
   MsalRedirectComponent,
-} from '@azure/msal-angular'; // Redirect component imported from msal-angular
+} from '@azure/msal-angular';
 import {
   BrowserCacheLocation,
   Configuration,
@@ -116,6 +116,7 @@ import { jwtDecode } from 'jwt-decode';
 import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
 import { MainComponent } from './features/main/main.component';
+import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -186,6 +187,7 @@ const isIE =
     UnauthorisedComponent,
     ThreadViewComponent,
     MainComponent,
+    ProfilePopupComponent,
   ],
 
   imports: [
