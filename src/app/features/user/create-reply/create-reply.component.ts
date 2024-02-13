@@ -18,7 +18,7 @@ export class CreateReplyComponent implements OnInit {
   replyContent!: string;
   threadID!: number;
   parentReplyID!: number;
-  replyData: { name: string; value: any }[] = [];
+  replyData: { name: string; value: any ;isHtml:boolean}[] = [];
   justifyPosition: string = 'flex-start';
   bsModalRef!: BsModalRef;
   postBaseURL: string = 'https://localhost:7160/api/Reply';
@@ -45,7 +45,7 @@ export class CreateReplyComponent implements OnInit {
       this.threadOwnerEmail=this.reply.threadOwnerEmail;
 
       // Add the user and content to replyData
-      this.replyData.push({ name: '', value: this.replyContent });
+      this.replyData.push({ name: '', value: this.replyContent , isHtml:true});
     });
   }
   onSubmit(content: any) {
@@ -89,5 +89,9 @@ export class CreateReplyComponent implements OnInit {
     this.router.navigate(['community', 'post-replies'], {
       queryParams: queryParams,
     });
+  }
+  isHTML(content: string): boolean {
+    const doc = new DOMParser().parseFromString(content, 'text/html');
+    return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
 }
