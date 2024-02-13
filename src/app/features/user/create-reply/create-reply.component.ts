@@ -20,7 +20,7 @@ export class CreateReplyComponent implements OnInit {
   replyContent!: string;
   threadID!: number;
   parentReplyID!: number;
-  replyData: { name: string; value: any ;isHtml?:boolean}[] = [];
+  replyData: { name: string; value: any; isHtml?: boolean }[] = [];
   justifyPosition: string = 'flex-start';
   bsModalRef!: BsModalRef;
   postBaseURL: string = 'https://localhost:7160/api/Reply';
@@ -41,8 +41,8 @@ export class CreateReplyComponent implements OnInit {
         console.log(data);
         this.thread = data;
         this.replyData.push(
-          { name: '', value: this.thread.title },
-          { name: '', value: this.thread.content }
+          { name: '', value: this.thread.title, isHtml: true },
+          { name: '', value: this.thread.content, isHtml: true }
         );
       });
     } else {
@@ -54,10 +54,15 @@ export class CreateReplyComponent implements OnInit {
         this.parentReplyID = this.reply.replyID;
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
-      // Add the user and content to replyData
-      this.replyData.push({ name: '', value: this.replyContent , isHtml:true});
-    });
-  }}
+        // Add the user and content to replyData
+        this.replyData.push({
+          name: '',
+          value: this.replyContent,
+          isHtml: true,
+        });
+      });
+    }
+  }
   onSubmit(content: any) {
     console.log(content.editorContent);
     if (this.parentReplyID) {
