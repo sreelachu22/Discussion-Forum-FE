@@ -23,25 +23,24 @@
   font-weight: bold;
 }
 
-img{
+img {
   margin-right: 5px;
   /* align-items: center; */
   /* margin-top: -5px; */
 }
 
-.card_items{
+.card_items {
   display: flex;
   flex-direction: row;
   /* align-items: center; */
 }
 
-.card_image{
+.card_image {
   position: absolute;
   left: 10%;
   /* align-items: center; */
 }
 
-.card_content{
-  position: relative;
+.card_content {
   left: 10%;
 }

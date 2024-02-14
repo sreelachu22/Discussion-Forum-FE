@@ -8,6 +8,12 @@
   >
   </app-thread-view>
   <br />
+  <div class="centered-container">
+  <div *ngIf="!threadRepliesStatus" class="content">
+    <h3>No Replies Yet. Be the First one to reply✏️</h3>
+    <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%;">
+    </div>
+  </div>
   <div *ngIf="threadRepliesStatus">
     <div class="card1" *ngFor="let reply of threadReplies; let i = index">
       <app-reply-list

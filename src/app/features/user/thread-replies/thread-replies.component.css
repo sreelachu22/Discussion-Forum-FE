@@ -58,3 +58,13 @@
   transform: scale(1.1);
   color: rgb(255, 255, 255);
 }
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  text-align: center;
+}

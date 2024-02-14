@@ -37,7 +37,7 @@ export class SuperadminCategoryManagementComponent {
   ];
   constructor(
     private httpService: superAdminCategoryService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +50,10 @@ export class SuperadminCategoryManagementComponent {
   bsmodalRef?: BsModalRef;
 
   alertRef?: BsModalRef;
+
+  bsModalRef!: BsModalRef;
+
+
 
   //open modal
   // openDeleteCategoryModal(template: TemplateRef<void>) {
@@ -158,6 +162,11 @@ export class SuperadminCategoryManagementComponent {
       },
       complete: () => {
         console.log('Completed');
+        this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
+          initialState: {
+            message: 'Category Created successfully', //make use of reusable success pop up , sends message to it
+          },
+        });
         this.modalRef?.hide();
       },
     });

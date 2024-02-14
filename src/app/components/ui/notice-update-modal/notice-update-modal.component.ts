@@ -6,6 +6,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 
 @Component({
   selector: 'app-notice-update-modal',
@@ -30,7 +31,8 @@ export class NoticeUpdateModalComponent {
   constructor(
     private noticesService: NoticesService,
     private modalRef : BsModalRef,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private communityDataService: CommunityDataService
   ) {}
 
   @Input() notice: any = {};
@@ -47,14 +49,17 @@ export class NoticeUpdateModalComponent {
 
   updateNotice() {
     // Ensure all required fields are provided for update
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.selectedNotice.communityID = id;
+    });
+    console.log(this.newNotice.communityID)
+    this.selectedNotice.modifiedBy= sessionStorage.getItem('userID');
     if (
       this.selectedNotice.noticeID &&
-      this.selectedNotice.communityID &&
       this.selectedNotice.title &&
       this.selectedNotice.content &&
       this.selectedNotice.expiresAt &&
-      this.selectedNotice.createdBy &&
-      this.selectedNotice.modifiedBy
+      this.selectedNotice.createdBy
     ) {
 
       // Create a new object with only the required properties

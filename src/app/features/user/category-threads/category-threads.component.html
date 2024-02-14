@@ -70,8 +70,11 @@
           </app-list>
         </div>
       </div>
-      <div *ngIf="CategoryThreads.threads.length === 0">
-        <h3>No Posts.Be the First one to post✏️</h3>
+      <div class="centered-container">
+      <div *ngIf="CategoryThreads.threads.length === 0" class="content">
+        <h3>No Posts Yet. Be the First one to post ✏️</h3>
+        <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%;">
+      </div>
       </div>
     </div>
 
