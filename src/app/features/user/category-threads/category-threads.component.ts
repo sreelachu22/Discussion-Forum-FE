@@ -62,14 +62,17 @@ export class CategoryThreadsComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private router: Router,
     private loaderService: LoaderService,
-    private communityDataService:CommunityDataService,
-    private categoryMappingService : CategoryMappingService
+    private communityDataService: CommunityDataService,
+    private categoryMappingService: CategoryMappingService
   ) {}
 
   isLoading = false;
   // ng init with method to get url params and display content based on it
 
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
@@ -77,9 +80,6 @@ export class CategoryThreadsComponent implements OnInit {
       this.communityCategoryMappingID = id;
     });
     this.loadThreads();
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
 
   loadThreads() {
@@ -159,8 +159,7 @@ export class CategoryThreadsComponent implements OnInit {
     });
   }
   navigateToThreadReplies(threadID: number) {
-    this.router.navigate([`/community/post-replies`]
-    , {
+    this.router.navigate([`/community/post-replies`], {
       queryParams: {
         threadID: threadID,
       },

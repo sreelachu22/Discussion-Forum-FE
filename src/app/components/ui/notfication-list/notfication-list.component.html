@@ -11,7 +11,7 @@
   <div class="replies">
     <div class="reply">
       <span class="notification">
-        {{ notification.childReplyUserName }} replied
+        {{ notification.childReplyUserName }} have replied :
         <div
           class="reply-content"
           *ngIf="!isHTML(notification.childReplyContent)"
@@ -20,10 +20,13 @@
         </div>
         <div
           class="reply-content"
-          *ngIf="isHTML(notification.childReplyContent)"
+          *ngIf="
+            notification.parentReplyContent &&
+            isHTML(notification.childReplyContent)
+          "
         >
           <span
-            [innerHTML]="notification.childReplyContent | slice : 0 : 110"
+            [innerHTML]="appendEllipsis(notification.childReplyContent, true)"
           ></span>
         </div>
       </span>
@@ -31,7 +34,8 @@
       <!-- To -->
 
       <span *ngIf="notification.parentReplyID; else parentPost">
-        to your comment
+        <br />to your comment:
+
         <div
           class="reply-content"
           *ngIf="
@@ -49,12 +53,14 @@
           "
         >
           <span
-            [innerHTML]="notification.parentReplyContent | slice : 0 : 110"
+            [innerHTML]="appendEllipsis(notification.parentReplyContent, true)"
           ></span>
         </div>
       </span>
       <ng-template #parentPost>
-        to your post
+        <br />
+        to your post:
+
         <div
           class="reply-content"
           *ngIf="
@@ -72,7 +78,7 @@
           "
         >
           <span
-            [innerHTML]="notification.parentReplyContent | slice : 0 : 110"
+            [innerHTML]="appendEllipsis(notification.parentReplyContent, true)"
           ></span>
         </div>
       </ng-template>

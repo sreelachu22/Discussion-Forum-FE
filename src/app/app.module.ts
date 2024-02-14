@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IconComponent } from './components/ui/icon/icon.component';
-import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
-import { HeaderComponent } from './components/layout/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CardComponent } from './components/ui/card/card.component';
@@ -117,12 +115,14 @@ import { UnauthorisedComponent } from './features/unauthorised/unauthorised.comp
 import { jwtDecode } from 'jwt-decode';
 import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
-import { MainComponent } from './features/main/main.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 import { HeaderSearchComponent } from './components/ui/header-search/header-search.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { environment } from './environments/environment';
+
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
   window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -131,9 +131,7 @@ const isIE =
   declarations: [
     AppComponent,
     IconComponent,
-    SidenavComponent,
     CardComponent,
-    HeaderComponent,
     NoticesComponent,
     CommunityPageComponent,
     CategoryManagementComponent,
@@ -185,14 +183,13 @@ const isIE =
     InvalidPopupComponent,
     NotificationComponent,
     NotficationListComponent,
-    ClosedThreadsComponent,  
+    ClosedThreadsComponent,
     DropdownSelectComponent,
     LoginComponent,
     AdminLoginComponent,
     LogoutComponent,
     UnauthorisedComponent,
     ThreadViewComponent,
-    MainComponent,
     ProfilePopupComponent,
     EditReplyComponent,
     EditPostComponent,
@@ -203,13 +200,12 @@ const isIE =
     MsalModule.forRoot(
       new PublicClientApplication({
         auth: {
-          clientId: '78e1557c-a3e9-4e8d-a734-663e72bc722e',
-          redirectUri: 'http://localhost:4200',
-          authority:
-            'https://login.microsoftonline.com/5b751804-232f-410d-bb2f-714e3bb466eb',
+          clientId: environment.msalConfig.clientId,
+          redirectUri: environment.msalConfig.redirectUri,
+          authority: environment.msalConfig.authority,
         },
         cache: {
-          cacheLocation: 'localStorage',
+          cacheLocation: environment.msalConfig.cacheLocation,
           storeAuthStateInCookie: isIE,
         },
       }),
@@ -222,7 +218,7 @@ const isIE =
       {
         interactionType: InteractionType.Redirect,
         protectedResourceMap: new Map([
-          ['https://graph.microsoft.com/v1.0/me', ['user.Read']],
+          [environment.msalConfig.protectedResourceMap, ['user.Read']],
         ]),
       }
     ),
@@ -247,11 +243,12 @@ const isIE =
     EditorModule,
     ReactiveFormsModule,
     CanvasJSAngularChartsModule,
-    MatSelectModule,     
+    MatSelectModule,
     TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
-    MatTooltipModule 
+    MatTooltipModule,
+    BsDropdownModule.forRoot(),
   ],
   providers: [
     CategoryService,

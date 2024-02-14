@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface ThreadReplies {
   replyID: number;
@@ -23,13 +24,15 @@ export interface ThreadReplies {
 })
 export class ThreadRepliesService {
   constructor(private http: HttpClient) {}
-  BASE_URL = 'https://localhost:7160/api/Reply';  
+  apiurl: string = environment.apiUrl;
+
+  BASE_URL = this.apiurl + 'Reply';
 
   getRepliesOfThread(
     ThreadId: number,
     ParentReplyId: number | string,
     page: number = 1,
-    pageSize: number = 10
+    pageSize: number = 20
   ): Observable<any> {
     const url = `${this.BASE_URL}/getAllNestedRepliesOfaPost/${ThreadId}/${ParentReplyId}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<any>(url);
@@ -38,20 +41,24 @@ export class ThreadRepliesService {
   getReplyByID(ReplyID: number): Observable<any> {
     const url = `${this.BASE_URL}/${ReplyID}`;
     return this.http.get<any>(url);
-  }  
+  }
 
-  deleteReply(ReplyID:number, ModifyingUser:string){    
-    const url = `${this.BASE_URL}/${ReplyID}?modifierId=${ModifyingUser}`
+  deleteReply(ReplyID: number, ModifyingUser: string) {
+    const url = `${this.BASE_URL}/${ReplyID}?modifierId=${ModifyingUser}`;
     return this.http.delete(url);
-    }
+  }
 
-    editReply(replyID: number, modifierID: string, content: any): Observable<any> {      
-      const url = `${this.BASE_URL}/${replyID}?modifierId=${modifierID}`;
-      return this.http.put(url, JSON.stringify(content), {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: '*/*',
-        },
-      });
-}
+  editReply(
+    replyID: number,
+    modifierID: string,
+    content: any
+  ): Observable<any> {
+    const url = `${this.BASE_URL}/${replyID}?modifierId=${modifierID}`;
+    return this.http.put(url, JSON.stringify(content), {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+      },
+    });
+  }
 }

@@ -3,6 +3,7 @@ import {
   LeaderboardService,
   TopUsers,
 } from 'src/app/service/HttpServices/leaderboard.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -10,9 +11,16 @@ import {
   styleUrls: ['./leaderboard.component.css'],
 })
 export class LeaderboardComponent implements OnInit {
-  constructor(private leaderboardService: LeaderboardService) {}
+  constructor(
+    private leaderboardService: LeaderboardService,
+    private loaderService: LoaderService
+  ) {}
   topUsers: TopUsers[] = [];
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.getTopUsers(16);
   }
 

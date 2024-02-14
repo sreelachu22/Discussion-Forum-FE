@@ -9,6 +9,7 @@ import {
   MsalService,
 } from '@azure/msal-angular';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
+import { environment } from 'src/app/environments/environment';
 
 export type MenuItem = {
   icon: string;
@@ -27,7 +28,7 @@ export class SidenavCustomComponent {
     private router: Router,
     private tokenHandler: TokenHandler,
     private authService: MsalService,
-    private accountService : AccountsService
+    private accountService: AccountsService
   ) {}
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
@@ -76,25 +77,25 @@ export class SidenavCustomComponent {
         if (this.userId) {
           try {
             this.accountService.logoutBackend(this.userId).subscribe(
-              () => {                
+              () => {
                 this.authService.logoutRedirect({
-                  postLogoutRedirectUri: 'http://localhost:4200',
+                  postLogoutRedirectUri: environment.postLogoutRedirectUri,
                 });
                 this.tokenHandler.removeToken();
                 sessionStorage.clear();
                 this.router.navigateByUrl('/logout');
               },
-              (error) => {                
-                console.error('Logout failed:', error);                
+              (error) => {
+                console.error('Logout failed:', error);
               }
             );
-          } catch (error) {            
+          } catch (error) {
             console.error('An error occurred:', error);
           }
         } else {
-          console.error('User ID not found in sessionStorage');        
+          console.error('User ID not found in sessionStorage');
         }
       }
     });
   }
-}  
+}

@@ -26,7 +26,7 @@ mat-sidenav-content {
 }
 
 .user_icon {
-  margin-left: 10px;
+  /* margin-left: 5rem; */
   cursor: pointer;
 }
 
@@ -38,6 +38,21 @@ app-search {
   flex: 1 1 auto;
 }
 
+/* .dropdown-menu.show{
+  background-color: antiquewhite ;
+} */
+app-profile-popup{
+  display: flex;
+  justify-content: right;
+}
+
+.btn-group{
+  width: fit-content;
+}
+
+.profile-dropdown{
+  right: 0%;
+}
 .notification_icon {
   margin-left: 250px;
   font-size: 27px;
@@ -45,5 +60,5 @@ app-search {
 }
 
 .notification_icon:hover {
-  color: rgb(156, 228, 156);
+  color: rgb(255, 255, 255);
 }

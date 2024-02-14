@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface Vote {
   userID: string | null;
@@ -20,16 +21,14 @@ export interface ThreadVote {
   providedIn: 'root',
 })
 export class VoteService {
-  URL = 'https://localhost:7160/api/ReplyVote/vote';
+  apiurl: string = environment.apiUrl;
+  URL = this.apiurl + 'ReplyVote/vote'; // Replace with your actual API endpoint
   constructor(private http: HttpClient) {}
-  sendVote(voteData: Vote): Observable<Vote> {    
+  sendVote(voteData: Vote): Observable<Vote> {
     return this.http.post<any>(`${this.URL}`, voteData);
   }
 
-  sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {    
-    return this.http.post<any>(
-      'https://localhost:7160/api/ThreadVote/vote',
-      voteData
-    );
+  sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {
+    return this.http.post<any>(this.apiurl + 'ThreadVote/vote', voteData);
   }
 }

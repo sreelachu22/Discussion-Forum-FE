@@ -9,7 +9,7 @@
   padding-left: 15px;
   display: flex;
   flex-direction: column;
-  background-color: lightblue;
+  background-color: rgba(214,230,255,255);
 }
 
 .thread-header {

@@ -18,12 +18,29 @@
   >
 
   <span class="spacer"></span>
-  <img
-    (click)="toggleProfilePopup()"
-    class="user_icon"
-    src="assets/images/profile-user.png"
-    style="max-width: 3%; min-width: 3%"
-  />
+
+  <ng-container
+    class="btn-group"
+    dropdown
+    #dropdown="bs-dropdown"
+    [autoClose]="false"
+  >
+    <img
+      dropdownToggle
+      class="user_icon"
+      src="assets/images/profile-user.png"
+      style="max-width: 3%; min-width: 3%"
+      aria-controls="dropdown-basic"
+    />
+    <div
+      *dropdownMenu
+      class="dropdown-menu profile-dropdown"
+      aria-labelledby="button-basic"
+      (click)="toggleProfilePopup()"
+    >
+      <app-profile-popup [user]="user"></app-profile-popup>
+    </div>
+  </ng-container>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav

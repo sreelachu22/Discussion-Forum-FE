@@ -20,7 +20,7 @@ p {
 }
 
 #logo {
-    width: 80%;
+    width: 50%;
 }
 
 a {
@@ -34,6 +34,10 @@ a {
     border-radius: 5px;
 }
 
+.text-white{
+    font-size: 24px;
+    font-weight: bolder;
+}
 .ms-logo {
     display: inline-block;
     width: 20px;
