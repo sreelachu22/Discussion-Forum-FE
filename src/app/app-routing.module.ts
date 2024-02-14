@@ -29,6 +29,7 @@ import { AdminRouteGuard } from './guard/admin.guard';
 import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
+import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -149,6 +150,11 @@ const routes: Routes = [
   {
     component: CreatePostComponent,
     path: 'category-posts/create-posts',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    component: EditPostComponent,
+    path: 'category-posts/edit-posts',
     canActivate: [UserRouteGuard],
   },
   {

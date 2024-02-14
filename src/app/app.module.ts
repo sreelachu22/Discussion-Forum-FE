@@ -120,6 +120,7 @@ import { ThreadViewComponent } from './components/ui/thread-view/thread-view.com
 import { MainComponent } from './features/main/main.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
+import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -193,6 +194,7 @@ const isIE =
     MainComponent,
     ProfilePopupComponent,
     EditReplyComponent,
+    EditPostComponent,
   ],
 
   imports: [

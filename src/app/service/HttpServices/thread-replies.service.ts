@@ -9,13 +9,13 @@ export interface ThreadReplies {
   content: string;
   upvoteCount: number;
   downvoteCount: number;
-  isDeleted:boolean;
-  createdBy:string;
-  createdUserName:string;
-  createdAt:string;
-  modifiedBy:string;
-  modifiedAt:string;
-  threadOwnerEmail:string;
+  isDeleted: boolean;
+  createdBy: string;
+  createdUserName: string;
+  createdAt: string;
+  modifiedBy: string;
+  modifiedAt: string;
+  threadOwnerEmail: string;
   nestedReplies?: ThreadReplies[];
 }
 @Injectable({
@@ -30,7 +30,7 @@ export class ThreadRepliesService {
     ParentReplyId: number | string,
     page: number = 1,
     pageSize: number = 10
-  ): Observable<any> {    
+  ): Observable<any> {
     const url = `${this.BASE_URL}/getAllNestedRepliesOfaPost/${ThreadId}/${ParentReplyId}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<any>(url);
   }
