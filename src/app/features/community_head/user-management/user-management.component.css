@@ -12,6 +12,7 @@
 }
 .navbar {
   border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.881);
 }
 .user_search {
   display: inline-block;

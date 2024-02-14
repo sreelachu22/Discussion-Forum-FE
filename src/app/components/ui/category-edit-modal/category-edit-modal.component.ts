@@ -33,7 +33,7 @@ export class CategoryEditModalComponent {
   // @Input()
   communityCategoryMappingID: number = 0;
   newDescription: string = '';
-  modifiedBy: string = '';
+  modifiedBy: string | null = '';
 
   ngOnInit() {
     this.categoryModalService.communityCategoryMappingID$.subscribe((id) => {
@@ -43,6 +43,8 @@ export class CategoryEditModalComponent {
     this.categoryModalService.description$.subscribe((desc) => {
       this.description = desc;
     });
+
+    this.modifiedBy= sessionStorage.getItem('userID');
   }
 
   @Output() categoryUpdated: EventEmitter<Category> =
@@ -70,22 +72,70 @@ export class CategoryEditModalComponent {
       });
   }
   // BsModalRef stands for Bootstrap Modal Reference.
+  // bsmodalRef?: BsModalRef;
+  //methods for open modal for delete
+  //communityCategoryMappingID: number
+  // openDeleteModal() {
+  //   // console.log('id for delete:', communityCategoryMappingID);
+  //   // this.communityCategoryMappingID = communityCategoryMappingID;
+  //   const initialState = {
+  //     confirmFunction: this.confirm.bind(this),
+  //     declineFunction: this.decline.bind(this),
+  //   };
+
+  //   this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
+  //     initialState,
+  //   });
+  //   this.bsmodalRef.content.subscribe(() => {});
+  // }
+
+  // //after getting confirmation for delete, delete api calls
+  // confirm(): void {
+  //   this.httpService
+  //     .deleteCategoryMapping(this.communityCategoryMappingID)
+  //     .subscribe({
+  //       next: (data: any) => {
+  //         this.categoryUpdated.emit(data);
+  //         this.httpService.getPagedCategories(1, '-createdAt').subscribe({
+  //           next: (data: any) => {
+  //             console.log(data);
+  //           },
+  //           error: (error: Error) => {
+  //             alert('Error has occured, ' + error.message);
+  //           },
+  //         });
+  //         // Close the modal
+  //         this.updateRef.hide();
+  //       },
+  //       error: (error: Error) => {
+  //         alert('Error has occured, ' + error.message);
+  //       },
+  //       complete: () => {
+  //         this.modalRef.hide();
+  //         this.updateRef.hide();
+  //       },
+  //     });
+  // }
+
+  // BsModalRef stands for Bootstrap Modal Reference.
   bsmodalRef?: BsModalRef;
   //methods for open modal for delete
-  openDeleteModal(communityCategoryMappingID: number) {
-    console.log('id for delete:', communityCategoryMappingID);
-    this.communityCategoryMappingID = communityCategoryMappingID;
+  openDeleteModal() {
+    //communityCategoryMappingID: number
+    // console.log('id for delete:', communityCategoryMappingID);
+    // this.communityCategoryMappingID = communityCategoryMappingID;
     const initialState = {
+      communityCategoryMappingID: this.communityCategoryMappingID,
       confirmFunction: this.confirm.bind(this),
       declineFunction: this.decline.bind(this),
     };
-
+ 
     this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
-    this.bsmodalRef.content.subscribe(() => {});
+    // this.bsmodalRef.content.subscribe(() => {});
   }
-
+ 
   //after getting confirmation for delete, delete api calls
   confirm(): void {
     this.httpService
@@ -113,6 +163,7 @@ export class CategoryEditModalComponent {
         },
       });
   }
+ 
 
   decline() {
     this.bsmodalRef?.hide();

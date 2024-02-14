@@ -52,13 +52,38 @@ mat-nav-list {
   color: black;
 }
 
-.logout{
+/* .logout{
   bottom: 10px;
   margin-top:100px;
-  margin-left: 17px;
+  margin-left: 15px;
   color: rgb(0, 0, 0);
+} */
+
+/* .logout:hover{
+  cursor: pointer;
+} */
+
+.logout-wrapper {
+  display: flex;
+  justify-content: left; /* Center the icon horizontally */
+  margin-top: 100px; 
+  margin-left: 15px;
 }
 
-.logout:hover{
+.material-icons.logout{
+  font-size: 24px; /* Set the font size */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: transform 0.3s, background-color 0.3s; /* Add transition effects */
+  color: rgba(0, 0, 0, 0.667); /* Set icon color */
+  padding: 8px; /* Add padding to the icon */
+  
+}
+
+.material-icons.logout:hover {
   cursor: pointer;
+  transform: scale(1.1); /* Increase size on hover */
+  background: linear-gradient(135deg, #00c9ff, #49efec); /* Change gradient on hover */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Add shadow */
+  background: linear-gradient(135deg, #31c5c3, #00c9ff);  /* Add gradient background */
+  border-radius: 50%; /* Make it round */
 }

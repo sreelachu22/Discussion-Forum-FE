@@ -6,6 +6,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 
 @Component({
   selector: 'app-notice-create-modal',
@@ -32,7 +33,8 @@ export class NoticeCreateModalComponent {
   constructor(
     private noticesService: NoticesService,
     private modalRef : BsModalRef,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private communityDataService: CommunityDataService
   ) {}
 
   faEdit = faEdit;
@@ -56,13 +58,16 @@ export class NoticeCreateModalComponent {
   }
 
   addNotice() {
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.newNotice.communityID = id;
+    });
+    console.log(this.newNotice.communityID)
+    this.newNotice.createdBy= sessionStorage.getItem('userID');
     // Ensure all required fields are provided
     if (
-      this.newNotice.communityID &&
       this.newNotice.title &&
       this.newNotice.content &&
-      this.newNotice.expiresAt &&
-      this.newNotice.createdBy
+      this.newNotice.expiresAt
     ) {
       // Format the expiresAt property before sending it to the backend
       // this.newNotice.expiresAt = this.formatBackendDate(

@@ -25,7 +25,7 @@ export class ButtonToggleComponent {
   getOptionLabel(option: string): string {
     switch (option) {
       case 'communityCategoryName':
-        return 'Community Category Name';
+        return 'Category';
       case 'description':
         return 'Description';
       case 'createdAt':
