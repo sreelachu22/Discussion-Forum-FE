@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { forkJoin, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
-import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
@@ -24,13 +23,14 @@ import {
   templateUrl: './thread-replies.component.html',
   styleUrls: ['./thread-replies.component.css'],
 })
+
 export class ThreadRepliesComponent {
   bsModalRef: any;
   threadID: any;
   router: any;
+
   constructor(
-    private threadRepliesService: ThreadRepliesService,
-    private searchService: searchService,
+    private threadRepliesService: ThreadRepliesService,    
     private activateRoute: ActivatedRoute,
     private threadService: ThreadService,
     private voteService: VoteService,
@@ -44,6 +44,8 @@ export class ThreadRepliesComponent {
     { label: 'Category', route: '/community/category-posts' },
     { label: 'Post', route: '/community/post-replies' },
   ];
+
+
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
@@ -69,18 +71,18 @@ export class ThreadRepliesComponent {
         })
       )
       .subscribe((data: any) => {
-        this.thread = data;
-        console.log(data);
+        this.thread = data;        
         this.loadReplies();
       });
   }
+
+
   loadReplies() {
     this.threadRepliesService
       .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
       .subscribe({
         next: (repliesData: any) => {
-          this.threadReplies = repliesData;
-          console.log(repliesData);
+          this.threadReplies = repliesData;          
           this.threadRepliesStatus = true;
         },
         error: (error: Error) => {
@@ -90,12 +92,12 @@ export class ThreadRepliesComponent {
       });
   }
 
+
   onDeleteReply(reply: ThreadReplies) {
     this.threadRepliesService
       .deleteReply(reply.replyID, reply.createdBy)
       .subscribe({
-        next: () => {
-          console.log('Reply deleted successfully');
+        next: () => {          
           this.onSubmit(reply);
         },
         error: (error) => {
@@ -104,13 +106,15 @@ export class ThreadRepliesComponent {
       });
   }
 
+
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
   }
+
+
   handleUpvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {
-        console.log('Upvote Successful', response);
+      next: (response) => {        
       },
       error: (error) => {
         console.error('Error sending upvote', error);
@@ -118,10 +122,11 @@ export class ThreadRepliesComponent {
       },
     });
   }
+
+
   handleDownvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {
-        console.log('Downvote Successful', response);
+      next: (response) => {        
       },
       error: (error) => {
         console.error('Error sending downvote', error);
@@ -130,10 +135,10 @@ export class ThreadRepliesComponent {
     });
   }
 
+
   handleThreadUpvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {
-        console.log('Upvote Successful', response);
+      next: (response) => {        
       },
       error: (error) => {
         console.error('Error sending upvote', error);
@@ -141,10 +146,11 @@ export class ThreadRepliesComponent {
       },
     });
   }
+
+
   handleThreadDownvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {
-        console.log('Downvote Successful', response);
+      next: (response) => {       
       },
       error: (error) => {
         console.error('Error sending downvote', error);
@@ -152,6 +158,7 @@ export class ThreadRepliesComponent {
       },
     });
   }
+
 
   onSubmit(reply: ThreadReplies) {
     const content = '-reply deleted by user-';
@@ -172,44 +179,5 @@ export class ThreadRepliesComponent {
           this.loadReplies();
         },
       });
-  }
-
-  // search the entered term and showing it in a modal - temporary.
-  // In actual implementation search results will pass
-  searchReplies: ThreadReplies[] = [];
-  searchResult(searchTerm: string) {
-    if (searchTerm) {
-      this.searchService.searchReplies(searchTerm).subscribe({
-        next: (results: ThreadReplies[]) => {
-          this.searchReplies = results;
-          // Extract reply IDs from search results
-          const replyIds = this.searchReplies.map((reply) => reply.replyID);
-
-          // Call getReplyByID for each reply ID
-          const requests = replyIds.map((replyId) =>
-            this.threadRepliesService.getReplyByID(replyId)
-          );
-
-          // forkJoin to handle multiple parallel requests
-          forkJoin(requests).subscribe({
-            next: (repliesData: any[]) => {
-              this.threadReplies = repliesData;
-            },
-            error: (error: Error) => {
-              console.log('Error fetching replies by ID:', error);
-            },
-            complete: () => {
-              console.log('Completed');
-            },
-          });
-        },
-        error: (error: Error) => {
-          alert('Error has occurred, ' + error.message);
-        },
-        complete: () => {
-          console.log('Completed');
-        },
-      });
-    }
   }
 }

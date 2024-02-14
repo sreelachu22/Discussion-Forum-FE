@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LatestService } from 'src/app/service/HttpServices/latest.service';
-import { ThreadFormatDatePipe } from 'src/app/pipe/thread-dateFormat.pipe';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
@@ -10,6 +9,7 @@ import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 })
 export class LatestComponent implements OnInit {
   sortOptions = ['Vote', 'Latest'];
+
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     {
@@ -17,6 +17,7 @@ export class LatestComponent implements OnInit {
       route: '/latest',
     },
   ];
+
   latestPosts: any[] = [];
   communityCategoryID: number = 1;
   sortType: string = 'vote';
@@ -41,6 +42,7 @@ export class LatestComponent implements OnInit {
         this.latestPosts = data;
       });
   }
+
   onSortSelectionChange(sortOption: string) {
     this.sortType = sortOption;
     this.subscribeToLatestPosts();

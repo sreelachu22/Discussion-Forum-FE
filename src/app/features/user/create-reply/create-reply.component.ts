@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
@@ -7,7 +7,11 @@ import { environment } from 'src/app/environments/environment';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
-
+export interface EmailModel {
+  toEmail: string;
+  subject: string;
+  body: string;
+}
 @Component({
   selector: 'app-create-reply',
   templateUrl: './create-reply.component.html',
@@ -33,7 +37,6 @@ export class CreateReplyComponent implements OnInit {
     private threadRepliesService: ThreadRepliesService,
     private http: HttpClient,
     private modalService: BsModalService,
-    private renderer: Renderer2,
     private threadService: ThreadService,
     private loaderService: LoaderService
   ) {}
@@ -61,7 +64,6 @@ export class CreateReplyComponent implements OnInit {
         this.parentReplyID = this.reply.replyID;
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
-        // Add the user and content to replyData
         this.replyData.push({
           name: '',
           value: this.replyContent,
@@ -92,13 +94,12 @@ export class CreateReplyComponent implements OnInit {
       })
       .subscribe({
         next: (response) => {
-          console.log('Reply posted successfully:', response);
-          // Show success message
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
-              message: 'Reply posted successfully', //make use of reusable success pop up , sends message to it
+              message: 'Reply posted successfully',
             },
           });
+          this.sendEmailToOwner(this.threadOwnerEmail, this.replyContent);
         },
         error: (error) => {
           console.error('Error creating thread:', error);
@@ -114,6 +115,33 @@ export class CreateReplyComponent implements OnInit {
       });
   }
 
+  sendEmailToOwner(threadOwnerEmail: string, replyContent: string) {
+    const plainTextContent = replyContent.replace(/<[^>]+>/g, '');
+    // Slice plainTextContent after 20 characters and add ellipsis
+    const truncatedContent =
+      plainTextContent.length > 20
+        ? plainTextContent.slice(0, 20) + '...'
+        : plainTextContent;
+    console.log('qwerty', truncatedContent);
+    const emailModel: EmailModel = {
+      toEmail: threadOwnerEmail,
+      subject: 'New Reply on Your Thread',
+      body: `A new reply has been posted on your thread - " ${truncatedContent}"     visit  Discussit!  to view more`,
+    };
+    this.http
+      .post('https://localhost:7160/api/Email', emailModel, {
+        responseType: 'text',
+      })
+      .subscribe(
+        (response) => {
+          console.log('Email sent successfully:', response);
+        },
+        (error) => {
+          console.error('Error sending email:', error);
+        }
+      );
+  }
+
   goBack() {
     const queryParams = {
       threadID: this.threadID,
@@ -122,6 +150,7 @@ export class CreateReplyComponent implements OnInit {
       queryParams: queryParams,
     });
   }
+
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);

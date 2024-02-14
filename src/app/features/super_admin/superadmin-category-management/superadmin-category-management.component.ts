@@ -57,6 +57,8 @@ export class SuperadminCategoryManagementComponent {
 
   alertRef?: BsModalRef;
 
+  bsModalRef!: BsModalRef;
+
   //open modal
   // openDeleteCategoryModal(template: TemplateRef<void>) {
   //   console.log('modal called');
@@ -163,6 +165,11 @@ export class SuperadminCategoryManagementComponent {
       },
       complete: () => {
         console.log('Completed');
+        this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
+          initialState: {
+            message: 'Category Created successfully', //make use of reusable success pop up , sends message to it
+          },
+        });
         this.modalRef?.hide();
       },
     });

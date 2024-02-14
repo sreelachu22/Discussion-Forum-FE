@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 import { NoticeCreateModalComponent } from 'src/app/components/ui/notice-create-modal/notice-create-modal.component';
 import { NoticeUpdateModalComponent } from 'src/app/components/ui/notice-update-modal/notice-update-modal.component';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { environment } from 'src/app/environments/environment';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
@@ -48,17 +49,22 @@ export class NoticesComponent {
     private noticesService: NoticesService,
     private modalService: BsModalService,
     private datePipe: DatePipe,
+    private communityDataService : CommunityDataService,,
     private loaderService: LoaderService
   ) {}
 
   faEdit = faEdit;
   faDelete = faTrash;
   isLoading: boolean = false;
+  communityID : number = 0;
   ngOnInit(): void {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
     this.getValues();
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
   }
 
   openCreateNoticeModal() {

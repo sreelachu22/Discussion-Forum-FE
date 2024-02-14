@@ -4,8 +4,9 @@
   padding: 10px;
   margin-bottom: 20px;
   margin-top: 30px;
-  margin-left: 50px;
+  margin-left: 20px;
   width: 91%;
+  transition: background-color 0.3s ease;
 }
 
 .top-row {
@@ -14,35 +15,25 @@
   margin-bottom: 10px;
 }
 
-.top-row span {
-  font-weight: bold;
-}
-
 .reply {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .reply span {
   display: block;
 }
 
-/* Styling for replies to comments */
 .reply span:nth-child(2) {
   color: #666;
   font-style: italic;
 }
 
-/* Styling for replies to posts */
-.reply span:nth-child(3) {
-  color: #666;
-  font-style: italic;
-}
-
-/* Hover effect */
 .reply:hover {
   background-color: #f0f0f0;
-  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  transition: background-color 0.8s ease;
 }
+
 button {
   background-color: rgb(51, 171, 165);
   color: #fff;
@@ -65,7 +56,6 @@ button:active {
   transform: scale(0.95);
 }
 
-/* Add animation */
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -80,4 +70,23 @@ button:active {
 
 .button-animation {
   animation: pulse 1.5s infinite;
+}
+
+.top-row span:first-child {
+  color: #007bffc2;
+  font-weight: bold;
+}
+
+.top-row span:last-child {
+  color: #904c4c;
+}
+
+.reply-content {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.notification {
+  font-weight: bold;
 }

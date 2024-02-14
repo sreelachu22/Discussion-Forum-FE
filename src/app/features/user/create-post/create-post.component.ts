@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { environment } from 'src/app/environments/environment';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
@@ -32,13 +34,15 @@ export class CreatePostComponent {
     private http: HttpClient,
     private router: Router,
     private tags: TagService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private communityDataService: CommunityDataService,
+    private categoryMappingService: CategoryMappingService
   ) {}
 
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts/:categoryID' },
+    { label: 'Category', route: '/community/category-posts' },
     { label: 'Create Post', route: '/category-posts/create-posts' },
   ];
 
@@ -47,8 +51,8 @@ export class CreatePostComponent {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.route.queryParams.subscribe((params) => {
-      this.communityCategoryMappingID = +params['communityCategoryMappingID'];
+    this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
+      this.communityCategoryMappingID = id;
     });
 
     this.tags.getAllTags().subscribe((data) => {
@@ -60,11 +64,7 @@ export class CreatePostComponent {
   }
 
   goBack() {
-    this.router.navigate(['/community/category-posts'], {
-      queryParams: {
-        communityCategoryMappingID: this.communityCategoryMappingID,
-      },
-    });
+    this.router.navigate(['/community/category-posts']);
   }
   baseUrl: string = environment.apiUrl;
   onSubmit(eventPayload: {
@@ -81,8 +81,6 @@ export class CreatePostComponent {
       Tags: this.tagsAsStringArray,
     };
 
-    const communityCategoryMappingId =
-      +this.route.snapshot.queryParams['communityCategoryMappingID'];
     const creatorId =
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
@@ -111,11 +109,7 @@ export class CreatePostComponent {
           console.error('Error creating post:', error);
         },
         complete: () => {
-          this.router.navigate(['/community/category-posts'], {
-            queryParams: {
-              communityCategoryMappingID: this.communityCategoryMappingID,
-            },
-          });
+          this.router.navigate(['/community/category-posts']);
         },
       });
   }

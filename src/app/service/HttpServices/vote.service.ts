@@ -25,12 +25,13 @@ export class VoteService {
   URL = this.apiurl + 'ReplyVote/vote'; // Replace with your actual API endpoint
   constructor(private http: HttpClient) {}
   sendVote(voteData: Vote): Observable<Vote> {
-    console.log('Vote Data:', voteData); // Log to check if data is correct
     return this.http.post<any>(`${this.URL}`, voteData);
   }
 
   sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {
-    console.log('Vote Data:', voteData); // Log to check if data is correct
-    return this.http.post<any>(this.apiurl + 'ThreadVote/vote', voteData);
+    return this.http.post<any>(
+      'https://localhost:7160/api/ThreadVote/vote',
+      voteData
+    );
   }
 }

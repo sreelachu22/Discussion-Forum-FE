@@ -1,8 +1,7 @@
-.inside{
-  width:auto;
-  color:black; 
-  display: flex; 
-  justify-content: space-between; 
-  /* align-items: stretch; */
+.inside {
+  width: auto;
+  color: black;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: -10px;
 }

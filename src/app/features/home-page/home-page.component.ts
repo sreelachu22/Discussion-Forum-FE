@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
 import {
   CommunityDetails,
@@ -19,6 +20,7 @@ export class HomePageComponent {
     private activateRoute: ActivatedRoute,
     private router: Router,
     private accountService: AccountsService,
+    private communityDataService: CommunityDataService,
     private loaderService: LoaderService
   ) {}
 
@@ -41,6 +43,7 @@ export class HomePageComponent {
   }
 
   navigateToCommunity(communityID: number, communityName: string) {
+    this.communityDataService.setCommunityData(communityID);
     this.router.navigate(['community'], {
       queryParams: {
         communityID: communityID,

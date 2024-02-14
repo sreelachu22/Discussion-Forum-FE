@@ -120,7 +120,8 @@ import { ThreadViewComponent } from './components/ui/thread-view/thread-view.com
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HeaderSearchComponent } from './components/ui/header-search/header-search.component';
+import { MatTooltipModule } from '@angular/material/tooltip';import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from './environments/environment';
 
 const isIE =
@@ -195,6 +196,7 @@ const isIE =
     ProfilePopupComponent,
     EditReplyComponent,
     EditPostComponent,
+    HeaderSearchComponent,
   ],
 
   imports: [
@@ -248,6 +250,7 @@ const isIE =
     TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
+    MatTooltipModule 
     BsDropdownModule.forRoot(),
   ],
   providers: [

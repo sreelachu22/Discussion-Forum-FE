@@ -7,11 +7,7 @@ import { environment } from 'src/app/environments/environment';
   providedIn: 'root',
 })
 export class LatestService {
-  //communityCategoryID!:number;
-  //sortType!:string;
-  //postCount!:number;
   constructor(private http: HttpClient) {}
-  apiurl: string = environment.apiUrl;
 
   getLatest(
     communityCategoryID: number,
@@ -19,8 +15,7 @@ export class LatestService {
     postCount: number
   ): Observable<any> {
     return this.http.get(
-      this.apiurl +
-        `Thread/top-threads?CommunityCategoryMappingID=${communityCategoryID}&sortBy=${sortType}&topCount=${postCount}`
+      `https://localhost:7160/api/Thread/top-threads?CommunityCategoryMappingID=${communityCategoryID}&sortBy=${sortType}&topCount=${postCount}`
     );
   }
 }

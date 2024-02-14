@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../service/HttpServices/users.service';
 import { Router } from '@angular/router';
@@ -12,14 +11,13 @@ import { LoaderService } from 'src/app/service/HttpServices/loader.service';
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-  sortOptions = ['Name', 'Score', 'CreatedAt'];
-  // , 'Department', 'Designation'
+  sortOptions = ['Name', 'Score', 'Date'];
   sortType: string = 'name';
   title: string = 'usersPage';
-  searchText: string = '';
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
+
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
@@ -32,7 +30,6 @@ export class UserManagementComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private http: HttpClient,
     private router: Router,
     private singleUserService: SingleUserService,
     private loaderService: LoaderService
@@ -45,12 +42,13 @@ export class UserManagementComponent implements OnInit {
     });
     this.loadUsers();
   }
-  getSingleUser() {
-    if (this.searchText == '') {
+
+  getSingleUser(searchText: string) {
+    if (searchText == '') {
       this.loadUsers();
     } else {
       this.userService
-        .getAUser(this.currentPage, this.searchText)
+        .getAUser(this.currentPage, searchText)
         .subscribe((data) => {
           this.users = data.users;
           this.pageCount = data.totalPages;
@@ -59,6 +57,9 @@ export class UserManagementComponent implements OnInit {
   }
 
   loadUsers() {
+    if (this.sortType == 'date') {
+      this.sortType = 'createdAt';
+    }
     this.userService
       .getUsers(this.currentPage, this.sortType)
       .subscribe((data) => {
@@ -68,10 +69,8 @@ export class UserManagementComponent implements OnInit {
             createdAt: user.createdAt
               ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US')
               : null,
-            // Add more properties if necessary
           };
         });
-        // console.log(this.users[1].userID);
         this.pageCount = data.totalPages;
       });
   }
@@ -106,8 +105,5 @@ export class UserManagementComponent implements OnInit {
   onSortSelectionChange(selectedValue: string) {
     this.sortType = selectedValue;
     this.loadUsers();
-  }
-  handleButtonClick() {
-    window.alert('hi');
   }
 }

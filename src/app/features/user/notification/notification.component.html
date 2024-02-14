@@ -16,11 +16,14 @@
       (markAsRead)="onMarkAsRead($event)"
     ></app-notfication-list>
   </div>
-  <!-- pagination ui -->
 
-  <app-pagination
-    [currentPage]="currentPage"
-    [totalPages]="totalPages"
-    (pageChange)="changePage($event)"
-  ></app-pagination>
+  <!-- Pagination buttons -->
+  <div class="pagination mt-3">
+    <button (click)="prevPage()" class="prevButton">
+      <span>Back</span>
+    </button>
+    <button (click)="nextPage()" class="nextButton">
+      <span>Next</span>
+    </button>
+  </div>
 </div>

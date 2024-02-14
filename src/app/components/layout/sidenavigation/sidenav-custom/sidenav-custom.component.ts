@@ -73,12 +73,11 @@ export class SidenavCustomComponent {
     }).then(async (result: any) => {
       if (result.isConfirmed) {
         this.userId = sessionStorage.getItem('userID');
-        // this.userId = '90492ff3-901f-4acc-a378-0368c1e9ac9f';
+        // this.userId = 'A889A62C-CC6F-4362-927E-17207875BA25'
         if (this.userId) {
           try {
             this.accountService.logoutBackend(this.userId).subscribe(
               () => {
-                console.log('Logout successful');
                 this.authService.logoutRedirect({
                   postLogoutRedirectUri: environment.postLogoutRedirectUri,
                 });
@@ -87,18 +86,14 @@ export class SidenavCustomComponent {
                 this.router.navigateByUrl('/logout');
               },
               (error) => {
-                // Handle error
                 console.error('Logout failed:', error);
-                // Display error message to the user if needed
               }
             );
           } catch (error) {
-            // Handle other errors
             console.error('An error occurred:', error);
           }
         } else {
           console.error('User ID not found in sessionStorage');
-          // Handle the absence of the user ID, e.g., display an error message to the user
         }
       }
     });

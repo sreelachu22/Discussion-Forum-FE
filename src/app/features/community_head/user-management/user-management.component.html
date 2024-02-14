@@ -5,24 +5,10 @@
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
 
-  <nav class="navbar navbar-dark bg-secondary">
-    <p class="header_text">Manage Users</p>
-    <form class="form-inline"></form>
-    <!-- custom-input.component.html -->
-    <div class="user_search">
-      <input
-        type="text"
-        placeholder="Search"
-        class="search_input"
-        [(ngModel)]="searchText"
-      />
-      <button type="submit" class="search_button" (click)="getSingleUser()">
-        Search
-      </button>
-    </div>
-  </nav>
+  <app-header-search
+    (searchClicked)="getSingleUser($event)"
+  ></app-header-search>
 
-  <!-- toggle button component imported -->
   <div class="button_toggle">
     <button-toggle
       [sortOptions]="sortOptions"
@@ -30,7 +16,6 @@
     ></button-toggle>
   </div>
 
-  <!-- user-management.component.html -->
   <app-table
     [displayedColumns]="['name', 'email', 'score', 'createdAt']"
     [displayedNames]="['Name', 'Email', 'Score', 'Created Date']"
