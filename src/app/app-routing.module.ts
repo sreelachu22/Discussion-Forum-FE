@@ -28,6 +28,7 @@ import { UnauthorisedComponent } from './features/unauthorised/unauthorised.comp
 import { AdminRouteGuard } from './guard/admin.guard';
 import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
+import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 
 const routes: Routes = [
@@ -162,8 +163,18 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: NotificationComponent,
+    component: EditReplyComponent,
+    path: 'thread-replies/edit-reply',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    component: LatestComponent,
     path: 'latest',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    component: NotificationComponent,
+    path: 'notifications',
     canActivate: [UserRouteGuard],
   },
   {

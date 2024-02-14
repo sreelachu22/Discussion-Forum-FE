@@ -22,7 +22,8 @@ export interface Notification {
 
 export class NotificationComponent implements OnInit {
   notifications!: Notification[];
-  userId:string = "211526D8-AB57-4251-8D9B-B19C82BD6C72";
+  userID : string | null = sessionStorage.getItem('userID');
+  userId:string = this.userID || '';
   categoryID:number = 0;
   sortOrder:string = "desc";  
 

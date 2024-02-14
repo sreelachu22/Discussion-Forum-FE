@@ -99,4 +99,8 @@ export class SidenavigationComponent {
       }
     });
   }
+
+  showNotifications(){
+    this.router.navigateByUrl('/notifications');
+  }
 }

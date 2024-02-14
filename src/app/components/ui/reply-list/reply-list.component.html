@@ -1,9 +1,10 @@
-<!-- reply-container.component.html -->
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
+    <!-- sssssssssssssssssssss -->
     <div class="username">{{ reply.createdUserName }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
+
   <div class="reply-content" *ngIf="!isHTML(reply.content)">
     {{ reply.content }}
   </div>
@@ -15,25 +16,40 @@
 
   <div class="reply-footer">
     <div class="votes">
-      <mat-icon class="mat_icons" (click)="emitUpvote(reply)">
+      <mat-icon
+        *ngIf="!reply.isDeleted"
+        class="mat_icons"
+        (click)="emitUpvote(reply)"
+      >
         arrow_upward
       </mat-icon>
-      <p class="vote_count">{{ reply.upvoteCount }}</p>
-      <mat-icon class="mat_icons" (click)="emitDownvote(reply)"
+
+      <p *ngIf="!reply.isDeleted" class="vote_count">{{ reply.upvoteCount }}</p>
+
+      <mat-icon
+        *ngIf="!reply.isDeleted"
+        class="mat_icons"
+        (click)="emitDownvote(reply)"
         >arrow_downward</mat-icon
       >
 
-      <p class="vote_count">{{ reply.downvoteCount }}</p>
+      <p *ngIf="!reply.isDeleted" class="vote_count">
+        {{ reply.downvoteCount }}
+      </p>
+
       <mat-icon class="your_reply_icon" (click)="postReply(reply.replyID)"
         >reply</mat-icon
       >
       <mat-icon
-        *ngIf="isCurrentUser(reply)"
+        *ngIf="isCurrentUser(reply) && !reply.isDeleted"
         class="your_reply_icon"
         (click)="editReply(reply.replyID)"
         >edit</mat-icon
       >
-      <mat-icon *ngIf="isCurrentUser(reply)" class="your_reply_icon"
+      <mat-icon
+        (click)="deleteReply(reply)"
+        *ngIf="isCurrentUser(reply) && !reply.isDeleted"
+        class="your_reply_icon"
         >delete</mat-icon
       >
     </div>
