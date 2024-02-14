@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
@@ -31,7 +32,8 @@ export class CreatePostComponent {
     private http: HttpClient,
     private router: Router,
     private tags: TagService,
-    private communityDataService : CommunityDataService
+    private communityDataService : CommunityDataService,
+    private categoryMappingService : CategoryMappingService
   ) {}
 
   breadcrumbs = [
@@ -45,7 +47,11 @@ export class CreatePostComponent {
     // this.route.queryParams.subscribe((params) => {
     //   this.communityCategoryMappingID = +params['communityCategoryMappingID'];
     // });
-    this.communityDataService.communityID$.subscribe((id) => {
+    // this.communityDataService.communityID$.subscribe((id) => {
+    //   this.communityCategoryMappingID = id;
+    // });
+
+    this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
     });
 

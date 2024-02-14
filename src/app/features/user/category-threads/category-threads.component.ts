@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
@@ -41,6 +42,7 @@ export class CategoryThreadsComponent implements OnInit {
   // templete variables
   CategoryThreads!: ThreadResponse;
   communityCategoryMappingID!: number;
+  communityID!: number;
   currentPage: number = 1;
   pageSize: number = 9;
   totalPages: number = 0;
@@ -60,16 +62,21 @@ export class CategoryThreadsComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private router: Router,
     private loaderService: LoaderService,
-    private communityDataService:CommunityDataService
+    private communityDataService:CommunityDataService,
+    private categoryMappingService : CategoryMappingService
   ) {}
 
   isLoading = false;
   // ng init with method to get url params and display content based on it
+
   ngOnInit() {
     // this.activateRoute.queryParams.subscribe((params) => {
     //   this.communityCategoryMappingID = params['communityCategoryMappingID'];
     // });
     this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
+    this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
     });
     this.loadThreads();

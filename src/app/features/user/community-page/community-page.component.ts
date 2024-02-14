@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
 import {
   CommunityCategory,
@@ -27,7 +28,8 @@ export class CommunityPageComponent {
     private activateRoute: ActivatedRoute,
     private modalService: BsModalService,
     private accountService: AccountsService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private categoryMappingService :  CategoryMappingService
   ) {}
 
   breadcrumbs = [
@@ -165,7 +167,10 @@ export class CommunityPageComponent {
     });
   }
 
-  navigateToPosts() {
+  navigateToPosts(communityCategoryMappingID : number) {
+    this.categoryMappingService.setcategoryMappingIDData(
+      communityCategoryMappingID
+    ); 
     this.router.navigate([`/community/category-posts`])
     //communityCategoryMappingID: number
     //  {

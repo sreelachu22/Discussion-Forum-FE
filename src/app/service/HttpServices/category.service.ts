@@ -54,9 +54,10 @@ export class CategoryService {
 
   BASE_URL = 'https://localhost:7160/api/CommunityCategoryMapping';
 
+  term = '';
   //get paginated categories
   getPagedCategories(page: number, sortType: string): Observable<any> {
-    const url = `${this.BASE_URL}?communityID=1&term=g&sort=${sortType}&page=${page}&limit=6`;
+    const url = `${this.BASE_URL}?communityID=1&term=${this.term}&sort=${sortType}&page=${page}&limit=6`;
     console.log(this.http.get(url));
     return this.http.get<any>(url);
   }
