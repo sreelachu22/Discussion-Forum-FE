@@ -118,6 +118,8 @@ import { jwtDecode } from 'jwt-decode';
 import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
+import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
+import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from './environments/environment';
 
@@ -191,6 +193,8 @@ const isIE =
     UnauthorisedComponent,
     ThreadViewComponent,
     ProfilePopupComponent,
+    EditReplyComponent,
+    EditPostComponent,
   ],
 
   imports: [

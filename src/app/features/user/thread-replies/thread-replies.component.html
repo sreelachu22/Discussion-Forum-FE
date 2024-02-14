@@ -1,9 +1,12 @@
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
-  <app-thread-view [thread]="thread"
-  (upvoteEvent)="handleThreadUpvote($event)"
-  (downvoteEvent)="handleThreadDownvote($event)"> </app-thread-view>
+  <app-thread-view
+    [thread]="thread"
+    (upvoteEvent)="handleThreadUpvote($event)"
+    (downvoteEvent)="handleThreadDownvote($event)"
+  >
+  </app-thread-view>
   <br />
   <div class="card1" *ngFor="let reply of threadReplies; let i = index">
     <app-reply-list
@@ -11,6 +14,7 @@
       (toggleRepliesEvent)="toggleNestedReplies(i)"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
+      (deleteReplyEvent)="onDeleteReply($event)"
     ></app-reply-list>
     <div
       class="card-body1"
@@ -24,6 +28,7 @@
         [nestedReply]="reply"
         (upvoteEvent)="handleUpvote($event)"
         (downvoteEvent)="handleDownvote($event)"
+        (deleteReplyEvent)="onDeleteReply($event)"
       ></app-nested-replies>
     </div>
     <br />
