@@ -4,7 +4,6 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { switchMap } from 'rxjs';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
-import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
@@ -31,8 +30,7 @@ export class ThreadRepliesComponent {
   router: any;
 
   constructor(
-    private threadRepliesService: ThreadRepliesService,
-    private searchService: searchService,
+    private threadRepliesService: ThreadRepliesService,    
     private activateRoute: ActivatedRoute,
     private threadService: ThreadService,
     private voteService: VoteService,

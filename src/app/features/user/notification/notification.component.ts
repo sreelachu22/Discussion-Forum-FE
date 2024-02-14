@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { NotificationService } from 'src/app/service/HttpServices/notification.service';
 
@@ -39,7 +40,7 @@ export class NotificationComponent implements OnInit {
 
   notificationCount!:number;
 
-  constructor(private notificationService: NotificationService, private categoryService:CategoryService) { }
+  constructor(private notificationService: NotificationService, private categoryService:CategoryService,private router:Router) { }
 
   
   ngOnInit(): void {
@@ -124,4 +125,5 @@ export class NotificationComponent implements OnInit {
       this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
     }
   }
+
 }

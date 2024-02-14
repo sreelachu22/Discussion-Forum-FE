@@ -40,8 +40,8 @@
             { value: thread.title },
             {
               value:
-                thread.content.length > 200
-                  ? thread.content.slice(0, 200) + '...'
+                thread.content.length > 70
+                  ? thread.content.slice(0, 70) + '...'
                   : thread.content,
               isHtml: true
             },
