@@ -18,7 +18,11 @@
         <p class="vote_count">{{ thread.downVoteCount }}</p>
       </div>
       <div class="user-control">
-        <mat-icon class="your_icon" (click)="postReply(thread.threadID)">
+        <mat-icon
+          class="your_icon"
+          (click)="postReply(thread.threadID)"
+          style="margin-left: 10px"
+        >
           reply
         </mat-icon>
       </div>
