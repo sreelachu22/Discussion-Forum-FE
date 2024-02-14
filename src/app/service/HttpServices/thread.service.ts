@@ -32,8 +32,7 @@ export class ThreadService {
     pageSize: number
   ): Observable<any> {
     return this.http.get(
-      `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      // `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`      
     );
   }
 
@@ -55,14 +54,12 @@ export class ThreadService {
   }
 
   closeThread(threadID: number, modifierId: string): Observable<any> {
-    const apiUrl = `${this.singleThreadURL}/CloseThread/${threadID}?ModifierId=${modifierId}`;
-    console.log(apiUrl);
+    const apiUrl = `${this.singleThreadURL}/CloseThread/${threadID}?ModifierId=${modifierId}`;    
     return this.http.put(apiUrl, null);
   }
 
   deleteThread(threadID: number, modifierId: string): Observable<any> {
-    const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
-    console.log(apiUrl);
+    const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;    
     return this.http.delete(apiUrl);
   }
 }

@@ -16,7 +16,6 @@ export class BreadcrumbButtonComponent {
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
   handleButtonClick(){
-  // console.log('Button in NewComponent clicked');
       this.buttonClick.emit();
     }
 }

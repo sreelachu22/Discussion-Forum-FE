@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
@@ -34,8 +34,7 @@ export class CreateReplyComponent implements OnInit {
     private route: ActivatedRoute,
     private threadRepliesService: ThreadRepliesService,
     private http: HttpClient,
-    private modalService: BsModalService,
-    private renderer: Renderer2,
+    private modalService: BsModalService,    
     private threadService: ThreadService
   ) {}
 
@@ -58,7 +57,6 @@ export class CreateReplyComponent implements OnInit {
         this.parentReplyID = this.reply.replyID;       
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
-        // Add the user and content to replyData
         this.replyData.push({
           name: '',
           value: this.replyContent,
@@ -83,12 +81,10 @@ export class CreateReplyComponent implements OnInit {
         },
       })
       .subscribe({
-        next: (response) => {
-          console.log('Reply posted successfully:', response);
-          // Show success message
+        next: (response) => {                    
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
-              message: 'Reply posted successfully', //make use of reusable success pop up , sends message to it
+              message: 'Reply posted successfully',
             },
           });
           this.sendEmailToOwner(this.threadOwnerEmail,this.replyContent);
@@ -135,6 +131,8 @@ export class CreateReplyComponent implements OnInit {
       queryParams: queryParams,
     });
   }
+
+
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);

@@ -43,8 +43,7 @@ export class SidenavigationComponent {
     if (this.userID) {
       this.userService.getSingleUser(this.userID).subscribe({
         next: (data: SingleUser) => {
-          this.user = data;
-          console.log(this.user);
+          this.user = data;          
         },
         error: (error: Error) => {
           console.log('Error', error);

@@ -6,7 +6,6 @@
     (searchClicked)="getSingleUser($event)"
   ></app-header-search>
 
-  <!-- toggle button component imported -->
   <div class="button_toggle">
     <button-toggle
       [sortOptions]="sortOptions"
@@ -14,7 +13,6 @@
     ></button-toggle>
   </div>
 
-  <!-- user-management.component.html -->
   <app-table
     [displayedColumns]="['name', 'email', 'score', 'createdAt']"
     [displayedNames]="['Name', 'Email', 'Score', 'Created Date']"

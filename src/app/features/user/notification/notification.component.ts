@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { NotificationService } from 'src/app/service/HttpServices/notification.service';
 
@@ -14,6 +15,7 @@ export interface Notification {
   communityName: string;
   threadContent: string;
 }
+
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
@@ -32,17 +34,19 @@ export class NotificationComponent implements OnInit {
   sortOptions = ['Oldest', 'Latest'];
 
   pageNumber:number = 1;
-  pageSize:number = 1;  
+  pageSize:number = 10;  
   currentPage: number =1;
   totalPages!: number;
 
   notificationCount!:number;
 
-  constructor(private notificationService: NotificationService, private categoryService:CategoryService) { }
+  constructor(private notificationService: NotificationService, private categoryService:CategoryService,private router:Router) { }
 
+  
   ngOnInit(): void {
     this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);    
   }
+
 
   getNotifications(userId:string,categoryID:number, sortOrder:string, pageNumber:number, pageSize:number) {
     this.notificationService.getNotifications(userId, categoryID, sortOrder, pageNumber, pageSize)
@@ -59,13 +63,15 @@ export class NotificationComponent implements OnInit {
       });
   }
 
+
   getCategories() {
-    this.categoryService.getCategories(1) // Assuming 1 is the community ID, adjust accordingly
+    this.categoryService.getCategories(1)
       .subscribe((data: any[]) => {
         this.categories = data;
         this.parentDropdownOptions = ['All', ...data.map(category => category.communityCategoryName)];
       });
   }
+
 
   onMarkAsRead(replyId: number) {   
     this.notificationService.markAsRead(replyId).subscribe(
@@ -78,9 +84,8 @@ export class NotificationComponent implements OnInit {
     );
   } 
 
-  handleOptionSelected(option: string) {
-    console.log('Selected option:', option);
-  
+
+  handleOptionSelected(option: string) {  
     if (option === 'All') {      
       this.categoryID = 0;
     } else {
@@ -94,6 +99,7 @@ export class NotificationComponent implements OnInit {
     }    
     this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
   }
+
 
   onSortSelectionChange(selectedValue: string) {
     if (selectedValue === 'oldest') {
@@ -112,10 +118,12 @@ export class NotificationComponent implements OnInit {
     }
   }
 
+
   prevPage() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
       this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
     }
   }
+
 }

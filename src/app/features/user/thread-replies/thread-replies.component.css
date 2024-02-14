@@ -2,12 +2,8 @@
   width: 96%;
 }
 
-/* .card {
-  margin: 1rem;
-  color: blue;
-} */
 .card-body1 {
-  margin-left: 20px; /* Adjust the value based on your preference for the right offset */
+  margin-left: 20px;
 }
 .page_top {
   display: flex;
