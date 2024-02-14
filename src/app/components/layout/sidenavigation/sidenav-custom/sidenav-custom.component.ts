@@ -71,7 +71,8 @@ export class SidenavCustomComponent {
       cancelButtonText: 'Cancel',
     }).then(async (result: any) => {
       if (result.isConfirmed) {
-        this.userId = sessionStorage.getItem('userID'); // Assuming 'userID' is the key used to store the user ID in sessionStorage
+        this.userId = sessionStorage.getItem('userID');
+        this.userId = '45ed269d-9a80-4aa9-af54-bd274e33116b'; // Assuming 'userID' is the key used to store the user ID in sessionStorage
         if (this.userId) {
           try {
             this.accountService.logoutBackend(this.userId).subscribe(

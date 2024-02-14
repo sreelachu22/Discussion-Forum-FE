@@ -58,7 +58,8 @@ export class CategoryService {
 
   //get paginated categories
   getPagedCategories(page: number, sortType: string): Observable<any> {
-    const url = `${this.BASE_URL}?communityID=1&term=g&sort=${sortType}&page=${page}&limit=6`;
+    const term = '';
+    const url = `${this.BASE_URL}?communityID=1&term=${term}&sort=${sortType}&page=${page}&limit=6`;
     console.log(this.http.get(url));
     return this.http.get<any>(url);
   }
