@@ -8,30 +8,32 @@
   >
   </app-thread-view>
   <br />
-  <div class="card1" *ngFor="let reply of threadReplies; let i = index">
-    <app-reply-list
-      [reply]="reply"
-      (toggleRepliesEvent)="toggleNestedReplies(i)"
-      (upvoteEvent)="handleUpvote($event)"
-      (downvoteEvent)="handleDownvote($event)"
-      (deleteReplyEvent)="onDeleteReply($event)"
-    ></app-reply-list>
-    <div
-      class="card-body1"
-      *ngIf="
-        reply.nestedReplies &&
-        reply.nestedReplies.length > 0 &&
-        showNestedReplies[i]
-      "
-    >
-      <app-nested-replies
-        [nestedReply]="reply"
+  <div *ngIf="threadRepliesStatus">
+    <div class="card1" *ngFor="let reply of threadReplies; let i = index">
+      <app-reply-list
+        [reply]="reply"
+        (toggleRepliesEvent)="toggleNestedReplies(i)"
         (upvoteEvent)="handleUpvote($event)"
         (downvoteEvent)="handleDownvote($event)"
         (deleteReplyEvent)="onDeleteReply($event)"
-      ></app-nested-replies>
+      ></app-reply-list>
+      <div
+        class="card-body1"
+        *ngIf="
+          reply.nestedReplies &&
+          reply.nestedReplies.length > 0 &&
+          showNestedReplies[i]
+        "
+      >
+        <app-nested-replies
+          [nestedReply]="reply"
+          (upvoteEvent)="handleUpvote($event)"
+          (downvoteEvent)="handleDownvote($event)"
+          (deleteReplyEvent)="onDeleteReply($event)"
+        ></app-nested-replies>
+      </div>
+      <br />
     </div>
-    <br />
   </div>
 </div>
 <ng-container class="container"
