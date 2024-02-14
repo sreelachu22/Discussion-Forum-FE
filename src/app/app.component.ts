@@ -35,6 +35,11 @@ export class AppComponent implements OnInit {
   userID: string | null = '';
 
   ngOnInit(): void {
+    //the component subscribes to the isLoading$ observable provided by the LoaderService.
+    //This subscription listens for changes in the loading state.
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.accountService.isUserLoggedIn.subscribe((data) => {
       this.isLogged = data;
     });
@@ -45,11 +50,5 @@ export class AppComponent implements OnInit {
         this.accountService.Logout();
       }
     }
-
-    //the component subscribes to the isLoading$ observable provided by the LoaderService.
-    //This subscription listens for changes in the loading state.
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
 }

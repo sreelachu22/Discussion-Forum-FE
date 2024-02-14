@@ -1,3 +1,6 @@
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <div class="leader-cardlist" *ngFor="let user of topUsers">
     <div *ngIf="user.name != 'System User'">

@@ -43,14 +43,14 @@ export class CommunityPageComponent {
   isLoading = false;
   isAdmin: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
       this.communityName = params['communityName'] || 'PM-Hub';
     });
     this.loadCategories();
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
     this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
   }
 

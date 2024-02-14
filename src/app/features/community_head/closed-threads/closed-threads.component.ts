@@ -66,14 +66,14 @@ export class ClosedThreadsComponent {
   isLoading = false;
   // ng init with method to get url params and display content based on it
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = 1;
     });
     console.log(this.communityID);
     this.loadThreads();
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
 
   loadThreads() {

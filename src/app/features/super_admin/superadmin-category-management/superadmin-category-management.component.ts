@@ -11,6 +11,7 @@ import {
   Category,
   superAdminCategoryService,
 } from 'src/app/service/HttpServices/superadmin-category.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-superadmin-category-management',
@@ -37,10 +38,15 @@ export class SuperadminCategoryManagementComponent {
   ];
   constructor(
     private httpService: superAdminCategoryService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.getCategoriesInCommunity();
   }
 
@@ -128,10 +134,10 @@ export class SuperadminCategoryManagementComponent {
 
   createCategory() {
     // Check if the category already exists locally
-    const categoryExists = this.categories.some(category =>
-      category.communityCategoryName === this.newCategoryName
+    const categoryExists = this.categories.some(
+      (category) => category.communityCategoryName === this.newCategoryName
     );
-  
+
     if (categoryExists) {
       // Category name already exists, show error message or take appropriate action
       this.alertRef = this.modalService.show(InvalidPopupComponent, {
@@ -142,7 +148,7 @@ export class SuperadminCategoryManagementComponent {
       this.newCategoryName = '';
       return; // Exit function early
     }
-  
+
     // If the category doesn't exist locally, proceed to create it
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
@@ -151,7 +157,6 @@ export class SuperadminCategoryManagementComponent {
         // Hide the modal after successfully creating the category
         this.modalRef?.hide();
         this.newCategoryName = '';
-        
       },
       error: (error: Error) => {
         alert('Error has occurred: ' + error.message);
@@ -162,7 +167,6 @@ export class SuperadminCategoryManagementComponent {
       },
     });
   }
-  
 
   updateCategory(id: number) {
     this.httpService.updateCategory(id, this.newCategoryName, false).subscribe({

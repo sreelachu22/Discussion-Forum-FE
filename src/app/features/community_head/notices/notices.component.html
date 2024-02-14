@@ -1,4 +1,6 @@
-<!-- notices.component.html -->
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
@@ -8,7 +10,7 @@
     (ButtonClick)="openCreateNoticeModal()"
     ButtonName="Create Notice"
     navClass="navbar navbar-dark bg-secondary Page_header"
-      ></app-page-header>
+  ></app-page-header>
 
   <!-- dislays active notices -->
   <div *ngFor="let notice of notices">
@@ -17,7 +19,11 @@
         {
           title: 'Notice Details',
           metadataItems: [
-            { name: 'Title', value: notice.title,style: { color: '#64A2F5', fontSize: '16px' } },
+            {
+              name: 'Title',
+              value: notice.title,
+              style: { color: '#64A2F5', fontSize: '16px' }
+            },
             { name: 'Content', value: notice.content }
           ]
         },
@@ -53,4 +59,4 @@
     </app-notice-list>
     <hr />
   </div>
-  </div>
+</div>

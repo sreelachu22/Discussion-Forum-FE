@@ -26,12 +26,12 @@ export class HomePageComponent {
   communities: CommunityDetails[] = [];
   isLoading = false;
   ngOnInit(): void {
-    this.activateRoute.queryParams.subscribe();
-    this.loadCommunities();
-    this.isSuperAdmin = sessionStorage.getItem('isSuperAdmin') == 'true';
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
+    this.activateRoute.queryParams.subscribe();
+    this.loadCommunities();
+    this.isSuperAdmin = sessionStorage.getItem('isSuperAdmin') == 'true';
   }
 
   loadCommunities() {

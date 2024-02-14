@@ -10,6 +10,7 @@ import {
   LeaderboardService,
   TopUsers,
 } from 'src/app/service/HttpServices/leaderboard.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-community-management-dashboard',
@@ -20,7 +21,8 @@ export class CommunityManagementDashboardComponent {
   constructor(
     private router: Router,
     private httpService: CategoryService,
-    private leaderboardService: LeaderboardService
+    private leaderboardService: LeaderboardService,
+    private loaderService: LoaderService
   ) {}
 
   breadcrumbs = [
@@ -58,7 +60,11 @@ export class CommunityManagementDashboardComponent {
     this.router.navigate([route]);
   }
 
+  isLoading: boolean = false;
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.getCategoriesInCommunity();
   }
 

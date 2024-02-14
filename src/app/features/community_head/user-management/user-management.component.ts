@@ -4,6 +4,7 @@ import { UserService } from '../../../service/HttpServices/users.service';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { SingleUserService } from 'src/app/service/DataServices/singleUser.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-user-management',
@@ -33,10 +34,15 @@ export class UserManagementComponent implements OnInit {
     private userService: UserService,
     private http: HttpClient,
     private router: Router,
-    private singleUserService: SingleUserService
+    private singleUserService: SingleUserService,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading: boolean = false;
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.loadUsers();
   }
   getSingleUser() {

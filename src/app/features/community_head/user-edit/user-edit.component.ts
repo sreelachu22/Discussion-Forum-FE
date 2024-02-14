@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SingleUserService } from 'src/app/service/DataServices/singleUser.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { UserEditService } from 'src/app/service/HttpServices/user-edit.service';
 
 //interface for user DTO
@@ -24,7 +25,8 @@ export class UserEditComponent {
   constructor(
     private useredit: UserEditService,
     private activatedroute: ActivatedRoute,
-    private singleUserService: SingleUserService
+    private singleUserService: SingleUserService,
+    private loaderService: LoaderService
   ) {}
 
   breadcrumbs = [
@@ -83,8 +85,12 @@ export class UserEditComponent {
       });
   }
 
+  isLoading: boolean = false;
   //ng init method loading current user details from url params
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     var userID: string = '';
     this.activatedroute.params.subscribe((params) => {
       this.singleUserService.userID$.subscribe((uid) => {

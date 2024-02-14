@@ -64,13 +64,13 @@ export class CategoryThreadsComponent implements OnInit {
   isLoading = false;
   // ng init with method to get url params and display content based on it
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityCategoryMappingID = params['communityCategoryMappingID'];
     });
     this.loadThreads();
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
 
   loadThreads() {
@@ -83,6 +83,7 @@ export class CategoryThreadsComponent implements OnInit {
       .subscribe({
         next: (data: ThreadResponse) => {
           this.CategoryThreads = data;
+          console.log(this.CategoryThreads);
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
           );

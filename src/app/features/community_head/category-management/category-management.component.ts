@@ -24,6 +24,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { formatDate } from '@angular/common';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -55,10 +56,15 @@ export class CategoryManagementComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private categoryModalService: CategoryModalService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.sortType = 'communityCategoryName';
     this.loadCategories();
   }

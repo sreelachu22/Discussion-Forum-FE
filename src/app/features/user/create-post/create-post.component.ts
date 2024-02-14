@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
 export interface Tag {
@@ -29,7 +30,8 @@ export class CreatePostComponent {
     private modalService: BsModalService,
     private http: HttpClient,
     private router: Router,
-    private tags: TagService
+    private tags: TagService,
+    private loaderService: LoaderService
   ) {}
 
   breadcrumbs = [
@@ -39,7 +41,11 @@ export class CreatePostComponent {
     { label: 'Create Post', route: '/category-posts/create-posts' },
   ];
 
+  isLoading: boolean = false;
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.route.queryParams.subscribe((params) => {
       this.communityCategoryMappingID = +params['communityCategoryMappingID'];
     });

@@ -9,6 +9,8 @@ import { DatePipe } from '@angular/common';
 import { DeleteModalComponent } from 'src/app/components/ui/delete-modal/delete-modal.component';
 import { NoticeCreateModalComponent } from 'src/app/components/ui/notice-create-modal/notice-create-modal.component';
 import { NoticeUpdateModalComponent } from 'src/app/components/ui/notice-update-modal/notice-update-modal.component';
+import { environment } from 'src/app/environments/environment';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 // Decorate the component with @Component
 @Component({
@@ -22,7 +24,8 @@ export class NoticesComponent {
   public newNotice: any = {};
   public selectedNotice: any = {};
 
-  private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
+  baseUrl: string = environment.apiUrl;
+  private apiUrl = this.baseUrl + 'Notice'; // Initial URL, you can set it dynamically based on your requirement
 
   breadcrumbs = [
     { label: 'Home', route: '/home' },
@@ -44,13 +47,17 @@ export class NoticesComponent {
   constructor(
     private noticesService: NoticesService,
     private modalService: BsModalService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private loaderService: LoaderService
   ) {}
 
   faEdit = faEdit;
   faDelete = faTrash;
-
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.getValues();
   }
 
@@ -76,15 +83,13 @@ export class NoticesComponent {
   openUpdateNoticeModal(notice: any) {
     this.modalRef = this.modalService.show(NoticeUpdateModalComponent, {
       initialState: {
-        notice: notice
-      }
+        notice: notice,
+      },
     });
     this.modalRef.content?.noticeUpdated.subscribe(() => {
       this.getValues();
     });
   }
-
-  
 
   // Function to format the date in the desired format
   private formatBackendDate(date: Date | null): string | null {

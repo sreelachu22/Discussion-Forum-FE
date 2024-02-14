@@ -3,6 +3,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
@@ -31,13 +32,18 @@ export class CreateReplyComponent implements OnInit {
     private http: HttpClient,
     private modalService: BsModalService,
     private renderer: Renderer2,
-    private threadService: ThreadService
+    private threadService: ThreadService,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     if (this.route.snapshot.queryParams['threadID']) {
       this.threadID = this.route.snapshot.queryParams['threadID'];
-      this.threadService.getSingleThread(this.threadID).subscribe((data) => {        
+      this.threadService.getSingleThread(this.threadID).subscribe((data) => {
         this.thread = data;
         this.replyData.push(
           { name: '', value: this.thread.title, isHtml: true },
@@ -50,7 +56,7 @@ export class CreateReplyComponent implements OnInit {
         this.reply = data[0];
         this.replyContent = this.reply.content;
         this.threadID = this.reply.threadID;
-        this.parentReplyID = this.reply.replyID;       
+        this.parentReplyID = this.reply.replyID;
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
         // Add the user and content to replyData
@@ -63,11 +69,16 @@ export class CreateReplyComponent implements OnInit {
     }
   }
   onSubmit(content: any) {
-        
     if (this.parentReplyID) {
-      this.postBaseURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${this.replyID}`;
+      this.postBaseURL = `${this.postBaseURL}/${
+        this.threadID
+      }?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${
+        this.replyID
+      }`;
     } else {
-      this.postBaseURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}`;
+      this.postBaseURL = `${this.postBaseURL}/${
+        this.threadID
+      }?creatorId=${sessionStorage.getItem('userID')}`;
     }
 
     this.http
