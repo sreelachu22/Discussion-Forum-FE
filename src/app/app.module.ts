@@ -121,6 +121,7 @@ import { MainComponent } from './features/main/main.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
+import { HeaderSearchComponent } from './components/ui/header-search/header-search.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -195,6 +196,7 @@ const isIE =
     ProfilePopupComponent,
     EditReplyComponent,
     EditPostComponent,
+    HeaderSearchComponent,
   ],
 
   imports: [
