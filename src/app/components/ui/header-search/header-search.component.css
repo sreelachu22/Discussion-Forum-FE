@@ -37,8 +37,8 @@
   transition: 0.9s ease;
 }
 .header_text {
-  font-weight: 500;
+  font-weight: bolder;
   font-size: x-large;
   padding-left: 30px;
-  color: #ffffff;
+  color: black;
 }

@@ -44,12 +44,6 @@ export class CreatePostComponent {
   ];
 
   ngOnInit() {
-    // this.route.queryParams.subscribe((params) => {
-    //   this.communityCategoryMappingID = +params['communityCategoryMappingID'];
-    // });
-    // this.communityDataService.communityID$.subscribe((id) => {
-    //   this.communityCategoryMappingID = id;
-    // });
 
     this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
@@ -65,11 +59,6 @@ export class CreatePostComponent {
 
   goBack() {
     this.router.navigate(['/community/category-posts'])
-    // , {
-    //   queryParams: {
-    //     communityCategoryMappingID: this.communityCategoryMappingID,
-    //   },
-    // });
   }
 
   onSubmit(eventPayload: {
@@ -86,8 +75,6 @@ export class CreatePostComponent {
       Tags: this.tagsAsStringArray,
     };
 
-    // const communityCategoryMappingId =
-    //   +this.route.snapshot.queryParams['communityCategoryMappingID'];
     const creatorId =
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
@@ -115,11 +102,6 @@ export class CreatePostComponent {
         },
         complete: () => {
           this.router.navigate(['/community/category-posts'])
-          // , {
-          //   queryParams: {
-          //     communityCategoryMappingID: this.communityCategoryMappingID,
-          //   },
-          // });
         },
       });
   }

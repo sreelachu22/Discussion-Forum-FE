@@ -65,38 +65,6 @@
       <div *ngIf="contentInput.errors?.['pattern']">Community ID cannot be just empty spaces.</div>
     </div>
   </div>
-  <!-- <div class="form-group">
-    <label for="communityID">Community ID<span class="required-field"></span></label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="newNotice.communityID"
-      name="communityID"
-      required
-      pattern=".*\S+.*"
-      #communityIDInput="ngModel"
-    />
-    <div *ngIf="communityIDInput?.invalid && (communityIDInput?.dirty || communityIDInput?.touched)" class="error-message">
-      <div *ngIf="communityIDInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="communityIDInput.errors?.['pattern']">Community ID cannot be just empty spaces.</div>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="createdBy">Created By<span class="required-field"></span></label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="newNotice.createdBy"
-      name="createdBy"
-      required
-      pattern=".*\S+.*"
-      #createdByInput="ngModel"
-    />
-    <div *ngIf="createdByInput?.invalid && (createdByInput?.dirty || createdByInput?.touched)" class="error-message">
-      <div *ngIf="createdByInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="createdByInput.errors?.['pattern']">Created By cannot be just empty spaces.</div>
-    </div>
-  </div> -->
 </div>
 <div class="modal-footer">
   <app-button
