@@ -8,6 +8,9 @@
   >
   </app-thread-view>
   <br />
+  <div *ngIf="!threadRepliesStatus">
+    <h3>No Replies.Be the First one to reply✏️</h3>
+  </div>
   <div *ngIf="threadRepliesStatus">
     <div class="card1" *ngFor="let reply of threadReplies; let i = index">
       <app-reply-list
