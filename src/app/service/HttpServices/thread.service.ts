@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface Thread {
   threadID: number;
@@ -22,16 +23,18 @@ export interface Thread {
 })
 export class ThreadService {
   constructor(private http: HttpClient) {}
+  apiurl: string = environment.apiUrl;
   BASE_URL =
-    'https://localhost:7160/api/Thread?CommunityCategoryMappingID=1&pageNumber=1&pageSize=1';
+    this.apiurl + 'Thread?CommunityCategoryMappingID=1&pageNumber=1&pageSize=1';
   getThread(
     CommunityCategoryMappingID: number,
     pageNumber: number,
     pageSize: number
   ): Observable<any> {
     return this.http.get(
-      `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      // `https://localhost:7160/api/Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      this.apiurl +
+        `Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      // this.apiurl +`Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 
@@ -42,11 +45,12 @@ export class ThreadService {
   ): Observable<any> {
     console.log('hello api ');
     return this.http.get(
-      `https://localhost:7160/api/Thread/ClosedThreads?CommunityID=${CommunityID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      this.apiurl +
+        `Thread/ClosedThreads?CommunityID=${CommunityID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 
-  singleThreadURL = 'https://localhost:7160/api/Thread';
+  singleThreadURL = this.apiurl + 'Thread';
 
   getSingleThread(threadID: number): Observable<any> {
     return this.http.get(`${this.singleThreadURL}/${threadID}`);

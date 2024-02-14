@@ -1,26 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
-export interface CommunityDetails{
-  communityID : number;
-  communityName : string;
-  communityStatusName : string;
-  createdBy : string;
-  createdAt : Date;
-  modifiedBy : string | null;
-  modifiedAt : Date | null;
-  categoryCount : number | null;
-  postCount : number | null;
-  topCategories : string [] | null;
+export interface CommunityDetails {
+  communityID: number;
+  communityName: string;
+  communityStatusName: string;
+  createdBy: string;
+  createdAt: Date;
+  modifiedBy: string | null;
+  modifiedAt: Date | null;
+  categoryCount: number | null;
+  postCount: number | null;
+  topCategories: string[] | null;
 }
 @Injectable({
   providedIn: 'root',
 })
 export class CommunityService {
   constructor(private http: HttpClient) {}
+  apiurl: string = environment.apiUrl;
 
-  BASE_URL = 'https://localhost:7160/api/Community'
+  BASE_URL = this.apiurl + 'Community';
 
   getAllCommunities(): Observable<CommunityDetails[]> {
     return this.http.get<CommunityDetails[]>(this.BASE_URL);

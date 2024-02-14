@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface AllUsers {
   users: {
@@ -37,7 +38,8 @@ export interface User {
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  BASE_URL = 'https://localhost:7160/api/users/GetAllUsersWithPagination';
+  apiurl: string = environment.apiUrl;
+  BASE_URL = this.apiurl + 'users/GetAllUsersWithPagination';
 
   getUsers(
     page: number,
@@ -55,6 +57,6 @@ export class UserService {
     return this.http.get<AllUsers>(url);
   }
   getUserByID(userID: string): Observable<User> {
-    return this.http.get<User>(`https://localhost:7160/api/users/${userID}`);
+    return this.http.get<User>(this.apiurl + `users/${userID}`);
   }
 }

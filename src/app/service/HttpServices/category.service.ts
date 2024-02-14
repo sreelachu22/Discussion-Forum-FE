@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface AllCategories {
   categories: {
@@ -51,8 +52,9 @@ export interface Categories {
 })
 export class CategoryService {
   constructor(private http: HttpClient) {}
+  apiurl: string = environment.apiUrl;
 
-  BASE_URL = 'https://localhost:7160/api/CommunityCategoryMapping';
+  BASE_URL = this.apiurl + 'CommunityCategoryMapping';
 
   //get paginated categories
   getPagedCategories(page: number, sortType: string): Observable<any> {
@@ -71,13 +73,13 @@ export class CategoryService {
   //get categories inside a community
   getCategories(id: number): Observable<any> {
     return this.http.get(
-      `https://localhost:7160/api/CommunityCategoryMapping/InCommunity/${id}`
+      this.apiurl + `CommunityCategoryMapping/InCommunity/${id}`
     );
   }
 
   getCategoriesNotInCommunity(id: number): Observable<any> {
     return this.http.get(
-      `https://localhost:7160/api/CommunityCategoryMapping/GetCategoriesNotInCommunity/${id}`
+      this.apiurl + `CommunityCategoryMapping/GetCategoriesNotInCommunity/${id}`
     );
   }
 
@@ -92,7 +94,7 @@ export class CategoryService {
     };
 
     return this.http.put(
-      `https://localhost:7160/api/CommunityCategoryMapping/UpdateCategoryDescription/${id}`,
+      this.apiurl + `CommunityCategoryMapping/UpdateCategoryDescription/${id}`,
       body
     );
   }
@@ -110,14 +112,12 @@ export class CategoryService {
     };
 
     return this.http.post(
-      `https://localhost:7160/api/CommunityCategoryMapping/CreateCategoryMapping/${id}`,
+      this.apiurl + `CommunityCategoryMapping/CreateCategoryMapping/${id}`,
       body
     );
   }
 
   deleteCategoryMapping(id: number): Observable<any> {
-    return this.http.delete(
-      `https://localhost:7160/api/CommunityCategoryMapping/${id}`
-    );
+    return this.http.delete(this.apiurl + `CommunityCategoryMapping/${id}`);
   }
 }
