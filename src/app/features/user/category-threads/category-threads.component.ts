@@ -70,9 +70,6 @@ export class CategoryThreadsComponent implements OnInit {
   // ng init with method to get url params and display content based on it
 
   ngOnInit() {
-    // this.activateRoute.queryParams.subscribe((params) => {
-    //   this.communityCategoryMappingID = params['communityCategoryMappingID'];
-    // });
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
@@ -154,7 +151,6 @@ export class CategoryThreadsComponent implements OnInit {
   // create a post
   createPost() {
     const queryParams = {
-      // communityCategoryMappingID: this.communityCategoryMappingID,
       creatorId: this.creatorId || sessionStorage.getItem('userID'), // Replace this with the actual creatorId
     };
 
@@ -167,7 +163,6 @@ export class CategoryThreadsComponent implements OnInit {
     , {
       queryParams: {
         threadID: threadID,
-        // communityCategoryMappingID: this.communityCategoryMappingID,
       },
     });
   }

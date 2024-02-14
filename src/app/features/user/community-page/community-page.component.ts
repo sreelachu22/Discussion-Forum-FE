@@ -172,10 +172,6 @@ export class CommunityPageComponent {
       communityCategoryMappingID
     ); 
     this.router.navigate([`/community/category-posts`])
-    //communityCategoryMappingID: number
-    //  {
-    //   queryParams: { communityCategoryMappingID: communityCategoryMappingID },
-    // });
   }
   navigateToCommunityManagement(communityID: number) {
     this.router.navigate(['community-management-dashboard'], {
