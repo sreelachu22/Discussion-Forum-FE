@@ -12,10 +12,10 @@ export class EditorComponent {
   title: string = '';
   tags: { display: string; value: string }[] = [];
 
-  @Input() showSpan:boolean=true;
-  @Input() showTitle:boolean=true;
-  @Input() showBody:boolean=true;
-  @Input() showTag:boolean=true;
+  @Input() showSpan: boolean = true;
+  @Input() showTitle: boolean = true;
+  @Input() showBody: boolean = true;
+  @Input() showTag: boolean = true;
   @Input() existingTags!: { display: string; value: string }[];
   @Input() heading: string = '';
   @Input() firstButtonName: string = '';
@@ -34,7 +34,6 @@ export class EditorComponent {
     editorContent: string;
   }> = new EventEmitter<{
     editorContent: string;
-    
   }>();
   @Output() onSecondButtonClick: EventEmitter<void> = new EventEmitter<void>();
 
@@ -91,21 +90,18 @@ export class EditorComponent {
   }
 
   FirstButton() {
-    if(!this.showTitle && !this.showTag){      
+    if (!this.showTitle && !this.showTag) {
       if (!this.validContent()) {
         this.isContentValid = false;
         this.contentErrorMessage = `Content must have minimum of ${this.minContentLength} characters.`;
-      }
-      else{
-        this.isContentValid=true;
-        this.contentErrorMessage=''
+      } else {
+        this.isContentValid = true;
+        this.contentErrorMessage = '';
         this.onFirstButtonClickReply.emit({
-          editorContent: this.editorContent
+          editorContent: this.editorContent,
         });
-
       }
-    }
-    else{
+    } else {
       this.titleTouched = true;
       const tagsvalidaterarray = this.validateTags();
       if (
@@ -127,8 +123,8 @@ export class EditorComponent {
           this.contentErrorMessage = `Content must be between ${this.minContentLength} and ${this.maxContentLength} characters.`;
         }
       } else {
-        this.isContentValid=true;
-        this.contentErrorMessage=''
+        this.isContentValid = true;
+        this.contentErrorMessage = '';
         this.isTitleValid = true;
         this.titleErrorMessage = '';
         this.isTagValid = true;
@@ -140,7 +136,6 @@ export class EditorComponent {
         });
       }
     }
-    
   }
 
   SecondButton() {
@@ -155,7 +150,7 @@ export class EditorComponent {
   isTitleValid: boolean = false;
   titleErrorMessage: string = '';
   minTitleLength: number = 5;
-  maxTitleLength: number = 150;
+  maxTitleLength: number = 100;
   titleTouched: boolean = false;
 
   isTagValid: boolean = false;
@@ -184,7 +179,6 @@ export class EditorComponent {
 
   public validContent(): boolean {
     if (this.editorContent) {
-      console.log(this.editorContent.length);
       if (
         this.editorContent.length < this.minContentLength ||
         this.editorContent.length > this.maxContentLength
