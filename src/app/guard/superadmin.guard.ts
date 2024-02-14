@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { TokenHandler } from '../util/tokenHandler';
 import { jwtDecode } from 'jwt-decode';
 import { AccountsService } from '../service/HttpServices/account.service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -32,10 +33,7 @@ export class SuperAdminRouteGuard implements CanActivate {
     const token = sessionStorage.getItem('token');
     if (token != null) {
       const decodedToken: any = jwtDecode(token);
-      var role =
-        decodedToken[
-          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-        ];
+      var role = decodedToken[environment.decodedRole];
       if (role == 'SuperAdmin') {
         return true;
       }

@@ -1,11 +1,19 @@
 // Import necessary modules and components
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-notice-update-modal',
@@ -14,12 +22,12 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class NoticeUpdateModalComponent {
-  // public notice: any ={}; 
+  // public notice: any ={};
   public newNotice: any = {};
   public selectedNotice: any = {};
 
-  private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
-
+  baseUrl: string = environment.apiUrl;
+  private apiUrl = this.baseUrl + 'Notice'; // Initial URL, you can set it dynamically based on your requirement
 
   // Configuration object for the ngx-bootstrap datepicker
   bsDatepickerConfig: any = {
@@ -29,14 +37,13 @@ export class NoticeUpdateModalComponent {
 
   constructor(
     private noticesService: NoticesService,
-    private modalRef : BsModalRef,
+    private modalRef: BsModalRef,
     private datePipe: DatePipe
   ) {}
 
   @Input() notice: any = {};
 
-  @Output() noticeUpdated: EventEmitter<any> =  new EventEmitter<any>();
-
+  @Output() noticeUpdated: EventEmitter<any> = new EventEmitter<any>();
 
   faEdit = faEdit;
   faDelete = faTrash;
@@ -56,7 +63,6 @@ export class NoticeUpdateModalComponent {
       this.selectedNotice.createdBy &&
       this.selectedNotice.modifiedBy
     ) {
-
       // Create a new object with only the required properties
       const requestData = {
         noticeID: this.selectedNotice.noticeID,

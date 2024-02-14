@@ -47,7 +47,7 @@ export class SearchResultComponent implements OnInit {
   searchTerm: string = '';
   isResultFound = false;
   pageNumber: number = 1;
-  pageSize: number = 9;
+  pageSize: number = 40;
   totalPages: number = 0;
   currentPage: number = 1;
 

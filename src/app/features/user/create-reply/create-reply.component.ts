@@ -3,6 +3,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { environment } from 'src/app/environments/environment';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
@@ -24,7 +25,8 @@ export class CreateReplyComponent implements OnInit {
   replyData: { name: string; value: any; isHtml?: boolean }[] = [];
   justifyPosition: string = 'flex-start';
   bsModalRef!: BsModalRef;
-  postBaseURL: string = 'https://localhost:7160/api/Reply';
+  baseUrl: string = environment.apiUrl;
+  postBaseURL: string = this.baseUrl + 'Reply';
   constructor(
     private router: Router,
     private route: ActivatedRoute,

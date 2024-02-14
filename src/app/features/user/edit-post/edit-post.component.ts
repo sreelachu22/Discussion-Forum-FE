@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { environment } from 'src/app/environments/environment';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
 @Component({
@@ -55,7 +56,7 @@ export class EditPostComponent {
       },
     });
   }
-
+  baseUrl: string = environment.apiUrl;
   onSubmit(eventPayload: {
     title: string;
     editorContent: string;
@@ -76,7 +77,8 @@ export class EditPostComponent {
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
 
-    const url = `https://localhost:7160/api/Thread/${this.threadID}?ModifierId=${ActiveUserId}`;
+    const url =
+      this.baseUrl + `Thread/${this.threadID}?ModifierId=${ActiveUserId}`;
 
     this.http
       .put(url, JSON.stringify(content), {

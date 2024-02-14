@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { environment } from 'src/app/environments/environment';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
@@ -65,7 +66,7 @@ export class CreatePostComponent {
       },
     });
   }
-
+  baseUrl: string = environment.apiUrl;
   onSubmit(eventPayload: {
     title: string;
     editorContent: string;
@@ -86,7 +87,9 @@ export class CreatePostComponent {
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
 
-    const url = `https://localhost:7160/api/Thread?communityMappingId=${communityCategoryMappingId}&userId=${creatorId}`;
+    const url =
+      this.baseUrl +
+      `Thread?communityMappingId=${communityCategoryMappingId}&userId=${creatorId}`;
 
     this.http
       .post(url, JSON.stringify(content), {
