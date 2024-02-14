@@ -47,7 +47,7 @@
         >edit</mat-icon
       >
       <mat-icon
-        (click)="deleteReply(reply)"
+        (click)="openDeleteModal(reply)"
         *ngIf="isCurrentUser(reply) && !reply.isDeleted"
         class="your_reply_icon"
         >delete</mat-icon

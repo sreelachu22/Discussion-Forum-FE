@@ -1,15 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ThreadReplies, ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
+import {
+  ThreadReplies,
+  ThreadRepliesService,
+} from 'src/app/service/HttpServices/thread-replies.service';
 import { VoteService } from 'src/app/service/HttpServices/vote.service';
 import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-reply-list',
   templateUrl: './reply-list.component.html',
   styleUrls: ['./reply-list.component.css'],
 })
-
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
   @Output() upvoteEvent = new EventEmitter<Vote>();
@@ -18,10 +22,17 @@ export class ReplyListComponent {
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
   showReplies: { [key: number]: boolean } = {};
-  ActiveUserID : string | null = sessionStorage.getItem('userID');
-  constructor(private voteService: VoteService, private router: Router, private threadRepliesService: ThreadRepliesService) {}
+  ActiveUserID: string | null = sessionStorage.getItem('userID');
+  confirmModal!: BsModalRef;
 
-  emitUpvote(reply: ThreadReplies) {    
+  constructor(
+    private voteService: VoteService,
+    private router: Router,
+    private threadRepliesService: ThreadRepliesService,
+    private modalService: BsModalService
+  ) {}
+
+  emitUpvote(reply: ThreadReplies) {
     const vote: Vote = {
       userID: sessionStorage.getItem('userID'),
       replyID: reply.replyID,
@@ -59,14 +70,29 @@ export class ReplyListComponent {
     this.router.navigate(['thread-replies/edit-reply'], { queryParams });
   }
 
-  deleteReply(reply: ThreadReplies) {
-    this.deleteReplyEvent.emit(reply);
+  openDeleteModal(reply: ThreadReplies) {
+    this.reply = reply;
+    const initialState = {
+      confirmFunction: this.confirmDeleteReply.bind(this),
+      declineFunction: this.declineDeleteReply.bind(this),
+    };
+    this.confirmModal = this.modalService.show(DeleteModalComponent, {
+      initialState,
+    });
   }
+  confirmDeleteReply() {
+    this.deleteReplyEvent.emit(this.reply);
+  }
+  declineDeleteReply() {
+    this.confirmModal?.hide();
+  }
+
+  deleteReply(reply: ThreadReplies) {}
 
   isCurrentUser(reply: ThreadReplies): boolean {
     return this.ActiveUserID === reply.createdBy;
   }
-  
+
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
