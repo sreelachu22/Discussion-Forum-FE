@@ -72,7 +72,7 @@ export class SidenavCustomComponent {
     }).then(async (result: any) => {
       if (result.isConfirmed) {
         this.userId = sessionStorage.getItem('userID'); // Assuming 'userID' is the key used to store the user ID in sessionStorage
-        // this.userId="32D57F42-8398-4C56-8A3C-FAA8A9012C65";
+        // this.userId="A889A62C-CC6F-4362-927E-17207875BA25";
         if (this.userId) {
           try {
             this.accountService.logoutBackend(this.userId).subscribe(
