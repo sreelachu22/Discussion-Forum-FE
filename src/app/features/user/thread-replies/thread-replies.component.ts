@@ -25,7 +25,7 @@ import {
   styleUrls: ['./thread-replies.component.css'],
 })
 export class ThreadRepliesComponent {
-  bsModalRef: any;  
+  bsModalRef: any;
   threadID: any;
   router: any;
   constructor(
@@ -35,7 +35,7 @@ export class ThreadRepliesComponent {
     private threadService: ThreadService,
     private voteService: VoteService,
     private loaderService: LoaderService,
-    private modalService: BsModalService,
+    private modalService: BsModalService
   ) {}
 
   breadcrumbs = [
@@ -47,9 +47,10 @@ export class ThreadRepliesComponent {
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
-  threadReplies: ThreadReplies[] = [];  
+  threadReplies: ThreadReplies[] = [];
   showNestedReplies: boolean[] = [];
   thread!: Thread;
+  threadRepliesStatus: boolean = true;
 
   isLoading = false;
   ngOnInit() {
@@ -67,7 +68,7 @@ export class ThreadRepliesComponent {
           return this.threadService.getSingleThread(this.threadId);
         })
       )
-      .subscribe((data: any) => {        
+      .subscribe((data: any) => {
         this.thread = data;
         console.log(data);
         this.loadReplies();
@@ -80,23 +81,27 @@ export class ThreadRepliesComponent {
         next: (repliesData: any) => {
           this.threadReplies = repliesData;
           console.log(repliesData);
+          this.threadRepliesStatus = true;
         },
         error: (error: Error) => {
           console.log('Error', error);
+          this.threadRepliesStatus = false;
         },
       });
   }
 
-  onDeleteReply(reply: ThreadReplies) {    
-    this.threadRepliesService.deleteReply(reply.replyID, reply.createdBy).subscribe({
-      next: () => {
-        console.log('Reply deleted successfully');  
-        this.onSubmit(reply)   
-      },
-      error: (error) => {
-        console.error('Error deleting reply:', error);        
-      }
-    });
+  onDeleteReply(reply: ThreadReplies) {
+    this.threadRepliesService
+      .deleteReply(reply.replyID, reply.createdBy)
+      .subscribe({
+        next: () => {
+          console.log('Reply deleted successfully');
+          this.onSubmit(reply);
+        },
+        error: (error) => {
+          console.error('Error deleting reply:', error);
+        },
+      });
   }
 
   toggleNestedReplies(index: number) {
@@ -148,11 +153,12 @@ export class ThreadRepliesComponent {
     });
   }
 
-  onSubmit(reply:ThreadReplies) {   
-    const content = "-reply deleted by user-"
-    this.threadRepliesService.editReply(reply.replyID, reply.createdBy, content)
+  onSubmit(reply: ThreadReplies) {
+    const content = '-reply deleted by user-';
+    this.threadRepliesService
+      .editReply(reply.replyID, reply.createdBy, content)
       .subscribe({
-        next: (response) => {          
+        next: (response) => {
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Reply deleted successfully',
@@ -163,7 +169,7 @@ export class ThreadRepliesComponent {
           console.error('Error deleting reply:', error);
         },
         complete: () => {
-         this.loadReplies();
+          this.loadReplies();
         },
       });
   }
