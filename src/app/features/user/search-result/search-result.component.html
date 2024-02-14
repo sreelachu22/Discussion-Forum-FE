@@ -62,4 +62,9 @@
       <p>No search results found.</p>
     </div>
   </div>
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="changePage($event)"
+  ></app-pagination>
 </div>
