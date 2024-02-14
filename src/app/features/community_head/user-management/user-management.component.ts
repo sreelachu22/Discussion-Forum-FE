@@ -10,11 +10,9 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-  sortOptions = ['Name', 'Score', 'CreatedAt'];
-  // , 'Department', 'Designation'
+  sortOptions = ['Name', 'Score', 'Date'];  
   sortType: string = 'name';
-  title: string = 'usersPage';
-  searchText: string = '';
+  title: string = 'usersPage';  
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
@@ -37,12 +35,13 @@ export class UserManagementComponent implements OnInit {
   ngOnInit() {
     this.loadUsers();
   }
-  getSingleUser() {
-    if (this.searchText == '') {
+
+  getSingleUser(searchText:string) {
+    if (searchText == '') {
       this.loadUsers();
     } else {
       this.userService
-        .getAUser(this.currentPage, this.searchText)
+        .getAUser(this.currentPage, searchText)
         .subscribe((data) => {
           this.users = data.users;
           this.pageCount = data.totalPages;
@@ -50,18 +49,19 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
-  loadUsers() {
+  loadUsers() {     
+    if (this.sortType == "date"){
+      this.sortType = "createdAt"
+    }
     this.userService
       .getUsers(this.currentPage, this.sortType)
       .subscribe((data) => {
         this.users = data.users.map(user => {
           return {
             ...user,
-            createdAt: user.createdAt ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US') : null
-            // Add more properties if necessary
+            createdAt: user.createdAt ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US') : null            
           };
-        });
-        // console.log(this.users[1].userID);
+        });        
         this.pageCount = data.totalPages;
       });
   }
@@ -96,6 +96,7 @@ export class UserManagementComponent implements OnInit {
     this.sortType = selectedValue;
     this.loadUsers();
   }
+  
   handleButtonClick() {
     window.alert('hi');
   }
