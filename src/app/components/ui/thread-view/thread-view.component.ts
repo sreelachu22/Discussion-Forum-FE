@@ -115,7 +115,11 @@ export class ThreadViewComponent {
         console.error('Error closing thread:', error);
       },
       complete: () => {
-        this.router.navigate(['community']);
+        this.router.navigate(['/community/category-posts'], {
+          queryParams: {
+            communityCategoryMappingID: this.communityCategoryMappingID,
+          },
+        });
       },
     });
   }
@@ -149,7 +153,11 @@ export class ThreadViewComponent {
         console.error('Error closing thread:', error);
       },
       complete: () => {
-        this.router.navigate(['community']);
+        this.router.navigate(['/community/category-posts'], {
+          queryParams: {
+            communityCategoryMappingID: this.communityCategoryMappingID,
+          },
+        });
       },
     });
   }
