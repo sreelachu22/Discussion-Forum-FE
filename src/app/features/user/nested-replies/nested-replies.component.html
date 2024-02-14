@@ -2,16 +2,18 @@
   class="nested-replies"
   *ngIf="nestedReply.nestedReplies && nestedReply.nestedReplies.length > 0"
 >
-  <div class="card1" *ngFor="let nested of nestedReply.nestedReplies">
+  <div class="card1" *ngFor="let nestedreply of nestedReply.nestedReplies">
     <app-reply-list
-      [reply]="nested"
+      [reply]="nestedreply"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
+      (deleteReplyEvent)="onDeleteReply($event)"
     ></app-reply-list>
     <app-nested-replies
-      [nestedReply]="nested"
+      [nestedReply]="nestedreply"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
+      (deleteReplyEvent)="onDeleteReply($event)"
     ></app-nested-replies>
   </div>
 </div>

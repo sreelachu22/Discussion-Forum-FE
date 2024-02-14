@@ -20,15 +20,16 @@ interface Thread {
   threadID: number;
   title: string;
   content: string;
-  createdBy: string;
+  createdByUser: string;
   createdAt: string;
-  modifiedBy: string;
+  modifiedByUser: string;
   modifiedAt: string;
   threadStatusName: string;
   isAnswered: boolean;
   upVoteCount: number;
   downVoteCount: number;
   tagNames: string[];
+  replyCount: number;
 }
 
 @Component({
@@ -39,7 +40,6 @@ interface Thread {
 export class CategoryThreadsComponent implements OnInit {
   // templete variables
   CategoryThreads!: ThreadResponse;
-  pages: number[] = [];
   communityCategoryMappingID!: number;
   currentPage: number = 1;
   pageSize: number = 9;
@@ -99,16 +99,6 @@ export class CategoryThreadsComponent implements OnInit {
   }
 
   // paginations logics
-  updatePageNumbers() {
-    const pagesToShow = Math.min(this.totalPages, 3);
-    const startPage = Math.max(1, this.currentPage - 1);
-    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
-
-    this.pages = Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
-  }
 
   changePage(newPage: number) {
     if (newPage >= 1 && newPage <= this.totalPages) {
@@ -174,12 +164,4 @@ export class CategoryThreadsComponent implements OnInit {
       },
     });
   }
-
-  // searchTerm: string = '';
-
-  // searchResult(searchTerm: string) {
-  //   this.router.navigate(['/search-results'], {
-  //     queryParams: { searchTerm: this.searchTerm },
-  //   });
-  // }
 }

@@ -24,7 +24,7 @@ export class CreateReplyComponent implements OnInit {
   replyContent!: string;
   threadID!: number;
   parentReplyID!: number;
-  replyData: { name: string; value: any }[] = [];
+  replyData: { name: string; value: any; isHtml?: boolean }[] = [];
   justifyPosition: string = 'flex-start';
   bsModalRef!: BsModalRef;
   postBaseURL: string = 'https://localhost:7160/api/Reply';
@@ -42,12 +42,11 @@ export class CreateReplyComponent implements OnInit {
   ngOnInit(): void {
     if (this.route.snapshot.queryParams['threadID']) {
       this.threadID = this.route.snapshot.queryParams['threadID'];
-      this.threadService.getSingleThread(this.threadID).subscribe((data) => {
-        console.log(data);
+      this.threadService.getSingleThread(this.threadID).subscribe((data) => {        
         this.thread = data;
         this.replyData.push(
-          { name: '', value: this.thread.title },
-          { name: '', value: this.thread.content }
+          { name: '', value: this.thread.title, isHtml: true },
+          { name: '', value: this.thread.content, isHtml: true }
         );
       });
     } else {
@@ -56,27 +55,26 @@ export class CreateReplyComponent implements OnInit {
         this.reply = data[0];
         this.replyContent = this.reply.content;
         this.threadID = this.reply.threadID;
-        this.parentReplyID = this.reply.replyID;
+        this.parentReplyID = this.reply.replyID;       
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
         // Add the user and content to replyData
-        this.replyData.push({ name: '', value: this.replyContent });
+        this.replyData.push({
+          name: '',
+          value: this.replyContent,
+          isHtml: true,
+        });
       });
     }
   }
   onSubmit(content: any) {
-    console.log(content.editorContent);
+        
     if (this.parentReplyID) {
-      this.postBaseURL = `${this.postBaseURL}/${
-        this.threadID
-      }?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${
-        this.replyID
-      }`;
+      this.postBaseURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}&parentReplyId=${this.replyID}`;
     } else {
-      this.postBaseURL = `${this.postBaseURL}/${
-        this.threadID
-      }?creatorId=${sessionStorage.getItem('userID')}`;
+      this.postBaseURL = `${this.postBaseURL}/${this.threadID}?creatorId=${sessionStorage.getItem('userID')}`;
     }
+
     this.http
       .post(this.postBaseURL, JSON.stringify(content.editorContent), {
         headers: {
@@ -136,5 +134,9 @@ export class CreateReplyComponent implements OnInit {
     this.router.navigate(['community', 'post-replies'], {
       queryParams: queryParams,
     });
+  }
+  isHTML(content: string): boolean {
+    const doc = new DOMParser().parseFromString(content, 'text/html');
+    return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
 }

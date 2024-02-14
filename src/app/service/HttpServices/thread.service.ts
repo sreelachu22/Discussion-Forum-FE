@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Thread {
@@ -7,8 +7,10 @@ export interface Thread {
   title: string;
   content: string;
   createdBy: string;
+  createdByUser: string;
   createdAt: Date;
   modifiedBy: string;
+  modifiedByUser: string;
   modifiedAt: Date;
   threadStatusName: string;
   isAnswered: boolean;
@@ -46,8 +48,21 @@ export class ThreadService {
     );
   }
 
+  singleThreadURL = 'https://localhost:7160/api/Thread';
+
   getSingleThread(threadID: number): Observable<any> {
-    const singleThreadURL = 'https://localhost:7160/api/Thread';
-    return this.http.get(`${singleThreadURL}/${threadID}`);
+    return this.http.get(`${this.singleThreadURL}/${threadID}`);
+  }
+
+  closeThread(threadID: number, modifierId: string): Observable<any> {
+    const apiUrl = `${this.singleThreadURL}/CloseThread/${threadID}?ModifierId=${modifierId}`;
+    console.log(apiUrl);
+    return this.http.put(apiUrl, null);
+  }
+
+  deleteThread(threadID: number, modifierId: string): Observable<any> {
+    const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
+    console.log(apiUrl);
+    return this.http.delete(apiUrl);
   }
 }

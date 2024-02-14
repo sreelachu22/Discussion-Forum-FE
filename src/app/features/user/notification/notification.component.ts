@@ -22,19 +22,20 @@ export interface Notification {
 
 export class NotificationComponent implements OnInit {
   notifications!: Notification[];
-  userId:string = "211526D8-AB57-4251-8D9B-B19C82BD6C72";
+  userID : string | null = sessionStorage.getItem('userID');
+  userId:string = this.userID || '';
   categoryID:number = 0;
   sortOrder:string = "desc";  
 
   categories:any[] = [];
   parentDropdownOptions: string[] = ['All'];
-  sortOptions = ['Old to New', 'New to Old'];
+  sortOptions = ['Oldest', 'Latest'];
 
   pageNumber:number = 1;
-  pageSize:number = 10;
-  pages: number[] = [];  
-  currentPage: number = 1;  
-  totalPages: number = 10;
+  pageSize:number = 1;  
+  currentPage: number =1;
+  totalPages!: number;
+
   notificationCount!:number;
 
   constructor(private notificationService: NotificationService, private categoryService:CategoryService) { }
@@ -47,11 +48,10 @@ export class NotificationComponent implements OnInit {
     this.notificationService.getNotifications(userId, categoryID, sortOrder, pageNumber, pageSize)
       .subscribe({
         next: (data: any) => {
-          this.notifications = data.replies;  
-        this.notificationCount = data.totalCount;    
-        this.totalPages = Math.ceil(this.notificationCount/this.pageSize);
-        this.updatePageNumbers();        
-        this.getCategories();  
+          this.notifications = data.replies;          
+          this.notificationCount = data.totalCount;    
+          this.totalPages = Math.ceil(this.notificationCount/this.pageSize);                      
+          this.getCategories();  
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -76,7 +76,8 @@ export class NotificationComponent implements OnInit {
             console.error('Error marking reply as read:', error);
         }
     );
-  }    
+  } 
+
   handleOptionSelected(option: string) {
     console.log('Selected option:', option);
   
@@ -93,30 +94,27 @@ export class NotificationComponent implements OnInit {
     }    
     this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
   }
+
   onSortSelectionChange(selectedValue: string) {
-    if (selectedValue === 'old to new') {
+    if (selectedValue === 'oldest') {
       this.sortOrder = 'asc';
-    } else if (selectedValue === 'new to old') {
+    } else if (selectedValue === 'latest') {
       this.sortOrder = 'desc';
     }
     this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
   }
 
   // paginations logics
-  updatePageNumbers() {
-    const pagesToShow = Math.min(this.totalPages, 3);
-    const startPage = Math.max(1, this.currentPage - 1);
-    const endPage = Math.min(this.totalPages, startPage + pagesToShow - 1);
-
-    this.pages = Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
+  nextPage() {
+    if (this.pageNumber <= this.totalPages - 1) {
+      this.pageNumber++;  
+      this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);      
+    }
   }
 
-  changePage(newPage: number) {
-    if (newPage >= 1 && newPage <= this.totalPages) {
-      this.currentPage = newPage;
+  prevPage() {
+    if (this.pageNumber > 1) {
+      this.pageNumber--;
       this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
     }
   }

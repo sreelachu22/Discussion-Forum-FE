@@ -8,51 +8,71 @@
       navClass="navbar navbar-dark bg-secondary Page_header"
       [pageHeaderTitle]="CategoryThreads.categoryName"
       (ButtonClick)="createPost()"
-      ButtonName="Create Post"
+      ButtonName="＋Create Post"
     ></app-page-header>
     <!-- post displayed here -->
-
-    <div *ngFor="let thread of CategoryThreads.threads">
-      <app-list
-        (click)="navigateToThreadReplies(thread.threadID)"
-        [sections]="[
-          {
-            title: 'Column 1',
-            metadataItems: [
-              { value: thread.createdBy },
-              { value: 'Asked ' + formatDate(thread.createdAt) },
+    <div class="page_body mt-3">
+      <div *ngIf="CategoryThreads.threads.length > 0">
+        <div *ngFor="let thread of CategoryThreads.threads">
+          <app-list
+            (click)="navigateToThreadReplies(thread.threadID)"
+            [sections]="[
               {
-                value:
-                  '↑ ' +
-                  thread.upVoteCount +
-                  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ ' +
-                  thread.downVoteCount,
-                isHtml: true
-              }
-            ]
-          },
-          {
-            title: 'Column 2',
-            metadataItems: [
-              { value: thread.title },
-              {
-                value:
-                  thread.content.length > 200
-                    ? thread.content.slice(0, 200) + '...'
-                    : thread.content,
-                isHtml: true
+                title: 'Column 1',
+                metadataItems: [
+                  { value: thread.createdByUser },
+                  { value: 'Asked ' + formatDate(thread.createdAt) },
+                  {
+                    value:
+                      '<b>' +
+                      (thread.replyCount > 0
+                        ? thread.replyCount + ' replies'
+                        : '0 reply') +
+                      '</b>',
+                    isHtml: true
+                  },
+                  {
+                    value:
+                      '🡹 ' +
+                      thread.upVoteCount +
+                      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🡻 ' +
+                      thread.downVoteCount,
+                    isHtml: true
+                  }
+                ]
               },
-
               {
-                value:
-                  'Tags : ' + '<span>' + thread.tagNames.join(',') + '</span>',
-                isHtml: true
+                title: 'Column 2',
+                metadataItems: [
+                  { value: thread.title },
+                  {
+                    value:
+                      '<i>' +
+                      (thread.content.length > 200
+                        ? thread.content.slice(0, 90) + '...'
+                        : thread.content) +
+                      '</i>',
+                    isHtml: true
+                  },
+
+                  {
+                    value:
+                      '<b>Tags :</b> ' +
+                      '<span>' +
+                      thread.tagNames.join(',') +
+                      '</span>',
+                    isHtml: true
+                  }
+                ]
               }
-            ]
-          }
-        ]"
-      >
-      </app-list>
+            ]"
+          >
+          </app-list>
+        </div>
+      </div>
+      <div *ngIf="CategoryThreads.threads.length === 0">
+        <h3>No Posts.Be the First one to post✏️</h3>
+      </div>
     </div>
 
     <!-- pagination ui -->
