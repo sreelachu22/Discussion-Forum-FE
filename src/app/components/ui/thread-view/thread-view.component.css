@@ -9,6 +9,7 @@
   padding-left: 15px;
   display: flex;
   flex-direction: column;
+  background-color: lightblue;
 }
 
 .thread-header {
@@ -18,10 +19,10 @@
 }
 .username {
   font-weight: bold;
-  color: #3498db;
+  color: green;
 }
 .date {
-  color: #3498db; /* Green color for date */
+  color: green;
 }
 
 .thread-data {
@@ -51,16 +52,17 @@
 }
 
 .content {
-  margin-left: 0px;
+  margin-left: 15px;
 }
 .thread-title {
   padding-top: 10px;
   font-size: x-large;
   font-weight: bold;
+  line-height: normal;
 }
-.thread-content {
+/* .thread-content {
   font-size: medium;
-}
+} */
 
 .owner-controls {
   display: flex;
