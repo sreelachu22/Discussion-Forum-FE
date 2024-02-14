@@ -32,7 +32,7 @@ export class ThreadRepliesService {
     ThreadId: number,
     ParentReplyId: number | string,
     page: number = 1,
-    pageSize: number = 10
+    pageSize: number = 20
   ): Observable<any> {
     const url = `${this.BASE_URL}/getAllNestedRepliesOfaPost/${ThreadId}/${ParentReplyId}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<any>(url);
