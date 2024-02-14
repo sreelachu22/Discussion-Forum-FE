@@ -23,8 +23,7 @@ export interface ThreadReplies {
 })
 export class ThreadRepliesService {
   constructor(private http: HttpClient) {}
-  BASE_URL = 'https://localhost:7160/api/Reply';
-  // BASE_URL = 'https://localhost:7160/api/Reply/getAllNestedRepliesOfaPost';
+  BASE_URL = 'https://localhost:7160/api/Reply';  
 
   getRepliesOfThread(
     ThreadId: number,
@@ -39,5 +38,21 @@ export class ThreadRepliesService {
   getReplyByID(ReplyID: number): Observable<any> {
     const url = `${this.BASE_URL}/${ReplyID}`;
     return this.http.get<any>(url);
-  }
+  }  
+
+  deleteReply(ReplyID:number, ModifyingUser:string){    
+    const url = `${this.BASE_URL}/${ReplyID}?modifierId=${ModifyingUser}`
+    return this.http.delete(url);
+    }
+
+    editReply(replyID: number, modifierID: string, content: any): Observable<any> {
+      //https://localhost:7160/api/Reply/126?modifierId=150F06A6-1B0D-43DC-A8BD-2378697E3782
+      const url = `${this.BASE_URL}/${replyID}?modifierId=${modifierID}`;
+      return this.http.put(url, JSON.stringify(content), {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: '*/*',
+        },
+      });
+}
 }

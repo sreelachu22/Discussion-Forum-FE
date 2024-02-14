@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ThreadReplies } from 'src/app/service/HttpServices/thread-replies.service';
-import { MatIcon } from '@angular/material/icon';
+import { ThreadReplies, ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
 import { VoteService } from 'src/app/service/HttpServices/vote.service';
 import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
@@ -10,17 +9,19 @@ import { Router } from '@angular/router';
   templateUrl: './reply-list.component.html',
   styleUrls: ['./reply-list.component.css'],
 })
+
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
   @Output() upvoteEvent = new EventEmitter<Vote>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
+  @Output() deleteReplyEvent = new EventEmitter<any>();
+
   showReplies: { [key: number]: boolean } = {};
   ActiveUserID : string | null = sessionStorage.getItem('userID');
-  constructor(private voteService: VoteService, private router: Router) {}
+  constructor(private voteService: VoteService, private router: Router, private threadRepliesService: ThreadRepliesService) {}
 
-  emitUpvote(reply: ThreadReplies) {
-    //should change the vote to the person who votes
+  emitUpvote(reply: ThreadReplies) {    
     const vote: Vote = {
       userID: sessionStorage.getItem('userID'),
       replyID: reply.replyID,
@@ -43,22 +44,29 @@ export class ReplyListComponent {
   toggleReplies() {
     this.toggleRepliesEvent.emit();
   }
+
   postReply(replyID: number) {
     const queryParams = {
       replyID: replyID,
     };
-
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
+
   editReply(replyID: number) {
     const queryParams = {
       replyID: replyID,
     };
-    this.router.navigate(['thread-replies/post-reply'], { queryParams });
+    this.router.navigate(['thread-replies/edit-reply'], { queryParams });
   }
+
+  deleteReply(reply: ThreadReplies) {
+    this.deleteReplyEvent.emit(reply);
+  }
+
   isCurrentUser(reply: ThreadReplies): boolean {
     return this.ActiveUserID === reply.createdBy;
   }
+  
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
