@@ -18,10 +18,10 @@ export class ReplyListComponent {
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
   showReplies: { [key: number]: boolean } = {};
-  ActiveUserID : string | null = sessionStorage.getItem('userID');
-  confirmModal!: BsModalRef;
-  constructor(private router: Router,
-    private modalService: BsModalService) {}
+  ActiveUserID: string | null = sessionStorage.getItem('userID');
+  confirmModal: any;
+  modalService: any;
+  constructor(private router: Router) {}
 
   emitUpvote(reply: ThreadReplies) {
     const vote: Vote = {

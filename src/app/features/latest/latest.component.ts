@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { LatestService } from 'src/app/service/HttpServices/latest.service';
-import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-latest',
@@ -9,6 +10,8 @@ import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 })
 export class LatestComponent implements OnInit {
   sortOptions = ['Vote', 'Latest'];
+  parentDropdownOptions: string[] = [];
+  categories: any[] = [];
 
   breadcrumbs = [
     { label: 'Home', route: '/home' },
@@ -22,16 +25,14 @@ export class LatestComponent implements OnInit {
   communityCategoryID: number = 1;
   sortType: string = 'vote';
   postCount: number = 10;
+
   constructor(
     private latestService: LatestService,
-    private loaderService: LoaderService
-  ) {} // Inject your service
+    private categoryService: CategoryService,
+    private router: Router
+  ) {}
 
-  isLoading: boolean = false;
   ngOnInit(): void {
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
     this.subscribeToLatestPosts();
   }
 
@@ -40,11 +41,46 @@ export class LatestComponent implements OnInit {
       .getLatest(this.communityCategoryID, this.sortType, this.postCount)
       .subscribe((data: any) => {
         this.latestPosts = data;
+        this.getCategories();
       });
   }
 
   onSortSelectionChange(sortOption: string) {
     this.sortType = sortOption;
     this.subscribeToLatestPosts();
+  }
+
+  getCategories() {
+    this.categoryService.getCategories(1).subscribe((data: any[]) => {
+      this.categories = data;
+      this.parentDropdownOptions = data.map(
+        (category) => category.communityCategoryName
+      );
+    });
+  }
+
+  handleOptionSelected(option: string) {
+    if (option === 'All') {
+      this.communityCategoryID = 0;
+    } else {
+      const selectedCategory = this.categories.find(
+        (category) => category.communityCategoryName === option
+      );
+      if (selectedCategory) {
+        this.communityCategoryID = selectedCategory.communityCategoryID;
+      } else {
+        console.error('Category not found:', option);
+        return;
+      }
+    }
+    this.subscribeToLatestPosts();
+  }
+
+  goToThread(threadID: number) {
+    this.router.navigate([`/community/post-replies`], {
+      queryParams: {
+        threadID: threadID,
+      },
+    });
   }
 }
