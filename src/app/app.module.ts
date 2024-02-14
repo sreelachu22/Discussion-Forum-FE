@@ -121,7 +121,8 @@ import { ProfilePopupComponent } from './components/layout/profile-popup/profile
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 import { HeaderSearchComponent } from './components/ui/header-search/header-search.component';
-import { MatTooltipModule } from '@angular/material/tooltip';import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from './environments/environment';
 
 const isIE =
@@ -250,7 +251,7 @@ const isIE =
     TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
-    MatTooltipModule 
+    MatTooltipModule,
     BsDropdownModule.forRoot(),
   ],
   providers: [

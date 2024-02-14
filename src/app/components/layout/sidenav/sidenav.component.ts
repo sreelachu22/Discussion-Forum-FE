@@ -101,7 +101,6 @@ export class SidenavComponent {
     if (label === 'Notifications') {
       this.navigateToUserNotices();
     } else if (label === 'Guidelines') {
-      console.log('helllooo');
       this.navigateToGuidelines();
     } else if (label === 'Leaderboards') {
       this.navigateToLeaderboard();

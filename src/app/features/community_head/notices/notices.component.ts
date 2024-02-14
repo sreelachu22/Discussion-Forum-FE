@@ -49,14 +49,14 @@ export class NoticesComponent {
     private noticesService: NoticesService,
     private modalService: BsModalService,
     private datePipe: DatePipe,
-    private communityDataService : CommunityDataService,,
+    private communityDataService: CommunityDataService,
     private loaderService: LoaderService
   ) {}
 
   faEdit = faEdit;
   faDelete = faTrash;
   isLoading: boolean = false;
-  communityID : number = 0;
+  communityID: number = 0;
   ngOnInit(): void {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -125,7 +125,6 @@ export class NoticesComponent {
 
       this.noticesService.deleteData(this.apiUrl, noticeId).subscribe(
         (response) => {
-          console.log('DELETE Request Successful:', response);
           this.getValues();
         },
         (error) => {

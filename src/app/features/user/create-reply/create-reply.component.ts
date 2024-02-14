@@ -72,6 +72,7 @@ export class CreateReplyComponent implements OnInit {
       });
     }
   }
+
   onSubmit(content: any) {
     if (this.parentReplyID) {
       this.postBaseURL = `${this.postBaseURL}/${
@@ -122,20 +123,17 @@ export class CreateReplyComponent implements OnInit {
       plainTextContent.length > 20
         ? plainTextContent.slice(0, 20) + '...'
         : plainTextContent;
-    console.log('qwerty', truncatedContent);
     const emailModel: EmailModel = {
       toEmail: threadOwnerEmail,
       subject: 'New Reply on Your Thread',
       body: `A new reply has been posted on your thread - " ${truncatedContent}"     visit  Discussit!  to view more`,
     };
     this.http
-      .post('https://localhost:7160/api/Email', emailModel, {
+      .post(this.baseUrl + 'Email', emailModel, {
         responseType: 'text',
       })
       .subscribe(
-        (response) => {
-          console.log('Email sent successfully:', response);
-        },
+        (response) => {},
         (error) => {
           console.error('Error sending email:', error);
         }

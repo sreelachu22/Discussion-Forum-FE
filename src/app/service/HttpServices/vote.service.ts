@@ -29,9 +29,6 @@ export class VoteService {
   }
 
   sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {
-    return this.http.post<any>(
-      'https://localhost:7160/api/ThreadVote/vote',
-      voteData
-    );
+    return this.http.post<any>(this.apiurl + 'ThreadVote/vote', voteData);
   }
 }

@@ -21,7 +21,6 @@ export class TableComponent {
     new EventEmitter();
   constructor(private cdRef: ChangeDetectorRef) {}
   onIconClick(icon: string, data: any): void {
-    console.log('onIconClick called');
     // this.iconClick.emit({ icon, data });
     this.iconClick.emit({ icon, data });
   }

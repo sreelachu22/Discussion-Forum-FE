@@ -137,7 +137,6 @@ export class CategoryManagementComponent implements OnInit {
 
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
-    console.log(this.modalRef);
     this.modalRef.content.categoryCreated.subscribe(() => {
       this.loadCategories();
     });
@@ -145,7 +144,6 @@ export class CategoryManagementComponent implements OnInit {
 
   updateRef?: BsModalRef;
   onCategoryIconClick(event: { icon: string; data: any }): void {
-    console.log('onCategoryIconClick');
     const communityCategoryMappingID = event.data.communityCategoryMappingID;
     const description = event.data.description;
 
@@ -157,13 +155,10 @@ export class CategoryManagementComponent implements OnInit {
       communityCategoryMappingID,
       description
     );
-    console.log('before show', this.updateRef);
-    console.log('update Ref : ');
     this.updateRef = this.modalService.show(CategoryEditModalComponent, {
       initialState,
     });
     this.updateRef.content.categoryUpdated.subscribe(() => {
-      console.log('called loadCategories inside funtion');
       this.loadCategories();
     });
   }
@@ -180,14 +175,11 @@ export class CategoryManagementComponent implements OnInit {
     this.httpService.getCategories(this.id).subscribe({
       next: (data: any) => {
         this.categories = data;
-        console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
       },
-      complete: () => {
-        console.log('Completed');
-      },
+      complete: () => {},
     });
   }
 }

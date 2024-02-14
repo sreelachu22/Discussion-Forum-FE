@@ -76,7 +76,6 @@ export class CommunityManagementDashboardComponent {
       next: (data: any) => {
         this.categories = data;
         this.updateCategoriesChartOptions();
-        console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);

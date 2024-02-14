@@ -59,7 +59,6 @@ export class NoticeUpdateModalComponent {
     this.communityDataService.communityID$.subscribe((id) => {
       this.selectedNotice.communityID = id;
     });
-    console.log(this.newNotice.communityID);
     this.selectedNotice.modifiedBy = sessionStorage.getItem('userID');
     if (
       this.selectedNotice.noticeID &&
@@ -78,12 +77,10 @@ export class NoticeUpdateModalComponent {
         createdBy: this.selectedNotice.createdBy,
         modifiedBy: this.selectedNotice.modifiedBy,
       };
-      console.log(requestData);
       this.noticesService
         .updateData(this.apiUrl, this.selectedNotice.noticeID, requestData)
         .subscribe(
           (response) => {
-            console.log('PUT Request Successful:', response);
             this.noticeUpdated.emit();
             // this.getValues();
             this.modalRef?.hide(); // Close the modal after updating the notice

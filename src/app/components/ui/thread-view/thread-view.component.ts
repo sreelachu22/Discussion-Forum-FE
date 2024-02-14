@@ -104,7 +104,6 @@ export class ThreadViewComponent {
     const ModifierId = sessionStorage.getItem('userID') || '';
     this.threadService.closeThread(this.threadID, ModifierId).subscribe({
       next: (response) => {
-        console.log(response);
         this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
             message: 'Thread closed successfully', //make use of reusable success pop up , sends message to it
@@ -142,7 +141,6 @@ export class ThreadViewComponent {
     const ModifierId = sessionStorage.getItem('userID') || '';
     this.threadService.deleteThread(this.threadID, ModifierId).subscribe({
       next: (response) => {
-        console.log(response);
         this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
             message: 'Thread deleted successfully', //make use of reusable success pop up , sends message to it

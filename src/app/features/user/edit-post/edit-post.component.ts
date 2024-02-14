@@ -31,7 +31,7 @@ export class EditPostComponent {
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts/:categoryID' },
+    { label: 'Category', route: '/community/category-posts' },
     { label: 'Edit Post', route: '/category-posts/edit-posts' },
   ];
 
@@ -71,8 +71,6 @@ export class EditPostComponent {
       Tags: this.tagsAsStringArray,
     };
 
-    console.log(JSON.stringify(content));
-
     const ActiveUserId =
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
@@ -89,7 +87,6 @@ export class EditPostComponent {
       })
       .subscribe({
         next: (response) => {
-          console.log('Post edited successfully:', response);
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Post edited successfully',

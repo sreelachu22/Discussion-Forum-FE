@@ -66,13 +66,10 @@ export class UserEditComponent {
       )
       .subscribe({
         next: (response) => {
-          console.log('API call successful:', response);
-
           // Reload user details after successful API call
           this.useredit.getSingleUser(this.user.userID).subscribe({
             next: (data: SingleUser) => {
               this.user = data;
-              console.log('User details reloaded:', this.user);
             },
             error: (error: Error) => {
               console.error('Error reloading user details:', error);
@@ -96,12 +93,10 @@ export class UserEditComponent {
       this.singleUserService.userID$.subscribe((uid) => {
         userID = uid;
       });
-      alert(userID);
       if (userID) {
         this.useredit.getSingleUser(userID).subscribe({
           next: (data: SingleUser) => {
             this.user = data;
-            console.log(this.user);
           },
           error: (error: Error) => {
             console.log('Error', error);
@@ -116,7 +111,6 @@ export class UserEditComponent {
         this.userRoles.forEach((role) => {
           if (role.roleName === this.user.roleName) {
             this.selectedRoleID = role.roleID;
-            console.log('');
           } else {
             console.log('error matching role');
           }

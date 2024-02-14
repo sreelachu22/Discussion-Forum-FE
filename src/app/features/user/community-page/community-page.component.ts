@@ -29,7 +29,7 @@ export class CommunityPageComponent {
     private modalService: BsModalService,
     private accountService: AccountsService,
     private loaderService: LoaderService,
-    private categoryMappingService :  CategoryMappingService
+    private categoryMappingService: CategoryMappingService
   ) {}
 
   breadcrumbs = [
@@ -115,7 +115,6 @@ export class CommunityPageComponent {
         this.categoriesList = data.categories;
 
         this.pageCount = data.totalPages;
-        // console.log(this.pageCount);
       });
   }
 
@@ -149,7 +148,6 @@ export class CommunityPageComponent {
     this.httpService.getCategories(this.id).subscribe({
       next: (data: any) => {
         this.categories = data;
-        console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
@@ -166,11 +164,11 @@ export class CommunityPageComponent {
     });
   }
 
-  navigateToPosts(communityCategoryMappingID : number) {
+  navigateToPosts(communityCategoryMappingID: number) {
     this.categoryMappingService.setcategoryMappingIDData(
       communityCategoryMappingID
-    ); 
-    this.router.navigate([`/community/category-posts`])
+    );
+    this.router.navigate([`/community/category-posts`]);
   }
   navigateToCommunityManagement(communityID: number) {
     this.router.navigate(['community-management-dashboard'], {

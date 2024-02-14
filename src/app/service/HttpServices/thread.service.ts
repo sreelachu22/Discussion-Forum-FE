@@ -36,7 +36,6 @@ export class ThreadService {
     return this.http.get(
       this.apiurl +
         `Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
-      // this.apiurl +`Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 
@@ -45,7 +44,6 @@ export class ThreadService {
     pageNumber: number,
     pageSize: number
   ): Observable<any> {
-    console.log('hello api ');
     return this.http.get(
       this.apiurl +
         `Thread/ClosedThreads?CommunityID=${CommunityID}&pageNumber=${pageNumber}&pageSize=${pageSize}`

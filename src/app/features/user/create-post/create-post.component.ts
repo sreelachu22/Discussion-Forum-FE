@@ -87,7 +87,7 @@ export class CreatePostComponent {
 
     const url =
       this.baseUrl +
-      `Thread?communityMappingId=${communityCategoryMappingId}&userId=${creatorId}`;
+      `Thread?communityMappingId=${this.communityCategoryMappingID}&userId=${creatorId}`;
 
     this.http
       .post(url, JSON.stringify(content), {
@@ -98,7 +98,6 @@ export class CreatePostComponent {
       })
       .subscribe({
         next: (response) => {
-          console.log('Post created successfully:', response);
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Post created successfully',

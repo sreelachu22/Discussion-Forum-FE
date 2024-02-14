@@ -59,14 +59,7 @@ export class SuperadminCategoryManagementComponent {
 
   bsModalRef!: BsModalRef;
 
-  //open modal
-  // openDeleteCategoryModal(template: TemplateRef<void>) {
-  //   console.log('modal called');
-  //   this.bsmodalRef = this.modalService.show(template, { class: 'modal-sm' });
-  // }
-
   openDeleteModal(communityCategoryID: number) {
-    console.log('id for delete:', communityCategoryID);
     this.communityCategoryID = communityCategoryID;
     const initialState = {
       confirmFunction: this.confirm.bind(this),
@@ -88,7 +81,6 @@ export class SuperadminCategoryManagementComponent {
   }
 
   closeModal(): void {
-    console.log('Closing modal...');
     this.modalRef?.hide();
   }
 
@@ -178,15 +170,14 @@ export class SuperadminCategoryManagementComponent {
   updateCategory(id: number) {
     this.httpService.updateCategory(id, this.newCategoryName, false).subscribe({
       next: (data: any) => {
-        // alert('Category updated successfully');
         this.alertRef = this.modalService.show(SuccessPopupComponent, {
           initialState: {
-            message: 'Category updated successfully', //make use of reusable success pop up , sends message to it
+            message: 'Category updated successfully',
           },
         });
         this.getCategoriesInCommunity();
-        this.modalRef?.hide(); // Close the modal after updating
-        this.newCategoryName = ''; // Clear fields for the next update
+        this.modalRef?.hide();
+        this.newCategoryName = '';
       },
       error: (error: any) => {
         console.error('Error updating category:', error);

@@ -92,7 +92,6 @@ export class CategoryThreadsComponent implements OnInit {
       .subscribe({
         next: (data: ThreadResponse) => {
           this.CategoryThreads = data;
-          console.log(this.CategoryThreads);
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
           );

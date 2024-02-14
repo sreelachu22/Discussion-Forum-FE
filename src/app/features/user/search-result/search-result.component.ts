@@ -111,7 +111,6 @@ export class SearchResultComponent implements OnInit {
   changePage(newPage: number) {
     if (newPage >= 1 && newPage <= this.totalPages) {
       this.currentPage = newPage;
-      console.log(this.currentPage);
       this.loadThreads();
     }
   }
@@ -123,7 +122,6 @@ export class SearchResultComponent implements OnInit {
         .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
         .subscribe({
           next: (results: SearchThreadResult) => {
-            console.log(results);
             this.threads = results.searchThreadDtoList;
             this.totalPages = Math.ceil(
               results.searchThreadDtoListLength / this.pageSize

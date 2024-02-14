@@ -60,7 +60,6 @@ export class AccountsService {
   }
 
   Logout() {
-    console.log('logout');
     this.isLogged = false;
     this.authService.logoutRedirect({
       postLogoutRedirectUri: environment.postLogoutRedirectUri,

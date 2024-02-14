@@ -72,7 +72,6 @@ export class ClosedThreadsComponent {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = 1;
     });
-    console.log(this.communityID);
     this.loadThreads();
   }
 
@@ -82,7 +81,6 @@ export class ClosedThreadsComponent {
       .subscribe({
         next: (data: ThreadResponse) => {
           this.CategoryThreads = data;
-          console.log(this.CategoryThreads);
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
           ); // Calculate totalPages
