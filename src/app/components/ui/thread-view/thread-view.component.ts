@@ -78,7 +78,7 @@ export class ThreadViewComponent {
     const queryParams = {
       threadID: threadID,
     };
-    this.router.navigate(['category-posts/create-posts'], { queryParams });
+    this.router.navigate(['category-posts/edit-posts'], { queryParams });
   }
 
   threadID!: number;

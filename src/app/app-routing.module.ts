@@ -28,6 +28,7 @@ import { UnauthorisedComponent } from './features/unauthorised/unauthorised.comp
 import { AdminRouteGuard } from './guard/admin.guard';
 import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
+import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -148,6 +149,11 @@ const routes: Routes = [
   {
     component: CreatePostComponent,
     path: 'category-posts/create-posts',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    component: EditPostComponent,
+    path: 'category-posts/edit-posts',
     canActivate: [UserRouteGuard],
   },
   {
