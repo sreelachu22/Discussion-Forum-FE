@@ -25,12 +25,17 @@
 
   <span class="spacer"></span>
 
-  <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+  <ng-container
+    class="btn-group"
+    dropdown
+    #dropdown="bs-dropdown"
+    [autoClose]="false"
+  >
     <img
       dropdownToggle
       class="user_icon"
       src="assets/images/profile-user.png"
-      style="max-width: 10%; min-width: 10%"
+      style="max-width: 3%; min-width: 3%"
       aria-controls="dropdown-basic"
     />
     <div
@@ -41,7 +46,7 @@
     >
       <app-profile-popup [user]="user"></app-profile-popup>
     </div>
-  </div>
+  </ng-container>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav

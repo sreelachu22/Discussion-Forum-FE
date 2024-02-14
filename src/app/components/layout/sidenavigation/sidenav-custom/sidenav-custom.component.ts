@@ -9,6 +9,7 @@ import {
   MsalService,
 } from '@azure/msal-angular';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
+import { environment } from 'src/app/environments/environment';
 
 export type MenuItem = {
   icon: string;
@@ -72,14 +73,14 @@ export class SidenavCustomComponent {
     }).then(async (result: any) => {
       if (result.isConfirmed) {
         this.userId = sessionStorage.getItem('userID');
-        this.userId = '45ed269d-9a80-4aa9-af54-bd274e33116b'; // Assuming 'userID' is the key used to store the user ID in sessionStorage
+        // this.userId = '90492ff3-901f-4acc-a378-0368c1e9ac9f';
         if (this.userId) {
           try {
             this.accountService.logoutBackend(this.userId).subscribe(
               () => {
                 console.log('Logout successful');
                 this.authService.logoutRedirect({
-                  postLogoutRedirectUri: 'http://localhost:4200',
+                  postLogoutRedirectUri: environment.postLogoutRedirectUri,
                 });
                 this.tokenHandler.removeToken();
                 sessionStorage.clear();

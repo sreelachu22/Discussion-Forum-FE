@@ -1,4 +1,6 @@
-<!-- category-threads.component.html -->
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <!-- bread crumbs -->
   <div class="top_nav">
@@ -63,6 +65,3 @@
     ></app-pagination>
   </div>
 </div>
-<ng-container class="container"
-  ><app-loader *ngIf="isLoading"></app-loader
-></ng-container>

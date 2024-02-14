@@ -53,36 +53,7 @@ export class SidenavigationComponent {
     this.showProfilePopup = !this.showProfilePopup;
   }
 
-  handleLogOut() {
-    Swal.fire({
-      title: 'Are you sure?',
-
-      text: 'Do you want to log out?',
-
-      icon: 'warning',
-
-      showCancelButton: true,
-
-      confirmButtonText: 'Logout',
-
-      cancelButtonText: 'Cancel',
-    }).then((result: any) => {
-      if (result.isConfirmed) {
-        this.authService.logoutRedirect({
-          postLogoutRedirectUri: 'http://localhost:4200',
-        });
-        this.tokenHandler.removeToken();
-        this.accountService.isLogged = false;
-        this.accountService.updateUserLoggedInStatus(
-          this.accountService.isLogged
-        );
-        sessionStorage.clear();
-        this.router.navigateByUrl('/logout');
-      }
-    });
-  }
-
-  showNotifications(){
+  showNotifications() {
     this.router.navigateByUrl('/notifications');
   }
 }
