@@ -9,7 +9,6 @@ import { UserEditService } from 'src/app/service/HttpServices/user-edit.service'
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import Swal from 'sweetalert2';
 import { ProfilePopupComponent } from '../profile-popup/profile-popup.component';
-import { SidenavComponent } from '../sidenav/sidenav.component';
 
 @Component({
   selector: 'app-sidenavigation',
@@ -39,7 +38,7 @@ export class SidenavigationComponent {
     if (this.userID) {
       this.userService.getSingleUser(this.userID).subscribe({
         next: (data: SingleUser) => {
-          this.user = data;          
+          this.user = data;
         },
         error: (error: Error) => {
           console.log('Error', error);
