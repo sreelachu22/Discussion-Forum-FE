@@ -13,6 +13,7 @@
           {{ item.name }}
           <div *ngIf="!item.isHtml">{{ item.value }}</div>
           <div *ngIf="item.isHtml" [innerHTML]="item.value"></div>
+          <div *ngIf="item.isMatIcon" [innerHtml]="item.value"></div>
         </div>
       </div>
       <div class="icons-container">

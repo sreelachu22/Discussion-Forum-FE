@@ -17,6 +17,7 @@
   background-color: rgb(217, 224, 224);
   transform: scale(1.01);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .is-active-now {
@@ -53,9 +54,14 @@
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0),
-    rgb(157, 152, 152),
+    rgb(112, 112, 112),
     rgba(255, 255, 255, 0)
   );
+}
+
+.metadata-column-1 .metadata-item-1 {
+  color: #ba5047;
+  font-weight: bold;
 }
 
 .metadata-column-1 .metadata-item-2 {
@@ -63,7 +69,9 @@
 }
 
 .metadata-column-1 .metadata-item-3 {
+  margin-top: 4px;
   font-size: small;
+  margin-bottom: 4px;
 }
 
 .metadata-column-2 {
@@ -71,8 +79,9 @@
 }
 
 .metadata-column-2 .metadata-item-1 {
-  font-size: large;
-  color: #64a2f5;
+  font-size: larger;
+  color: rgb(100, 162, 245);
+  font-weight: bolder;
 }
 
 .metadata-column-2 .metadata-item-2 {
@@ -81,6 +90,7 @@
 
 .metadata-column-2 .metadata-item-3 {
   font-size: x-small;
+  margin-top: 27px;
 }
 
 .metadata-item {
