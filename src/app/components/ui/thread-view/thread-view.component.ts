@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {
   Thread,
@@ -29,12 +29,19 @@ export class ThreadViewComponent {
   successModal!: BsModalRef;
   constructor(
     private voteService: VoteService,
+    private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     private threadService: ThreadService,
     private modalService: BsModalService
   ) {}
 
+  communityCategoryMappingID!: number;
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.communityCategoryMappingID = +params['communityCategoryMappingID'];
+    });
+  }
   user!: User;
   getUserName(thread: Thread) {
     this.userService.getUserByID(thread.createdBy).subscribe((data: User) => {
@@ -77,6 +84,7 @@ export class ThreadViewComponent {
   editThread(threadID: number) {
     const queryParams = {
       threadID: threadID,
+      communityCategoryMappingID: this.communityCategoryMappingID,
     };
     this.router.navigate(['category-posts/edit-posts'], { queryParams });
   }
