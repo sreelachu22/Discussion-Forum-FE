@@ -1,6 +1,6 @@
 // list.component.ts
 import { Component, Input } from '@angular/core';
- 
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -9,10 +9,15 @@ import { Component, Input } from '@angular/core';
 export class ListComponent {
   @Input() sections: {
     title: string;
-    metadataItems: { name?: string; value: any; isHtml?: boolean }[];
+    metadataItems: {
+      name?: string;
+      value: any;
+      isHtml?: boolean;
+      isMatIcon?: boolean;
+    }[];
   }[] = [];
   @Input() click!: () => void;
- 
+
   onClick() {
     this.click();
   }

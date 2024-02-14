@@ -1,10 +1,5 @@
-import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
-import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   CategoryThreadDto,
   SearchThreadResult,
@@ -27,13 +22,14 @@ export interface Threads {
   createdByUser: string;
   modifiedByUser: string;
   threadVotes: any;
+  replyCount: number;
 }
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.css'],
 })
-export class SearchResultComponent {
+export class SearchResultComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -51,34 +47,19 @@ export class SearchResultComponent {
   searchTerm: string = '';
   isResultFound = false;
   pageNumber: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 9;
+  totalPages: number = 0;
+  currentPage: number = 1;
 
   ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.searchTerm = queryParams['searchTerm'];
-      if (this.searchTerm) {
-        // Call the search service with the updated logic
-        this.searchService
-          .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
-          .subscribe({
-            next: (results: SearchThreadResult) => {
-              console.log(results);
-              this.threads = results.searchThreadDtoList;
-            },
-            error: (error: Error) => {
-              alert('Error has occurred, ' + error.message);
-            },
-            complete: () => {
-              //console.log('Completed');
-            },
-          });
-      }
+      this.loadThreads();
     });
   }
 
   searchResult(searchTerm: string) {
     if (searchTerm) {
-      // Call the search service with the updated logic
       this.router.navigate(['/search-results'], {
         queryParams: { searchTerm: searchTerm },
       });
@@ -124,6 +105,35 @@ export class SearchResultComponent {
       } ago`;
     } else {
       return '1 minute ago';
+    }
+  }
+
+  changePage(newPage: number) {
+    if (newPage >= 1 && newPage <= this.totalPages) {
+      this.currentPage = newPage;
+      console.log(this.currentPage);
+      this.loadThreads();
+    }
+  }
+
+  loadThreads() {
+    if (this.searchTerm) {
+      // Call the search service with the updated logic
+      this.searchService
+        .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
+        .subscribe({
+          next: (results: SearchThreadResult) => {
+            console.log(results);
+            this.threads = results.searchThreadDtoList;
+            this.totalPages = Math.ceil(
+              results.searchThreadDtoListLength / this.pageSize
+            );
+          },
+          error: (error: Error) => {
+            alert('Error has occurred, ' + error.message);
+          },
+          complete: () => {},
+        });
     }
   }
 }

@@ -23,6 +23,7 @@ export interface CategoryThreadDto {
   upVoteCount: number;
   downVoteCount: number;
   tagNames: string[];
+  replyCount: number;
 }
 
 export interface Thread {
