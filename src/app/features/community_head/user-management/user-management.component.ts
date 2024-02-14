@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../service/HttpServices/users.service';
 import { Router } from '@angular/router';
@@ -16,6 +15,7 @@ export class UserManagementComponent implements OnInit {
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
+
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
@@ -28,7 +28,6 @@ export class UserManagementComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private http: HttpClient,
     private router: Router
   ) {}
 
@@ -95,9 +94,5 @@ export class UserManagementComponent implements OnInit {
   onSortSelectionChange(selectedValue: string) {
     this.sortType = selectedValue;
     this.loadUsers();
-  }
-  
-  handleButtonClick() {
-    window.alert('hi');
   }
 }

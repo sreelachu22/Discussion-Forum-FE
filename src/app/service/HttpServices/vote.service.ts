@@ -20,15 +20,13 @@ export interface ThreadVote {
   providedIn: 'root',
 })
 export class VoteService {
-  URL = 'https://localhost:7160/api/ReplyVote/vote'; // Replace with your actual API endpoint
+  URL = 'https://localhost:7160/api/ReplyVote/vote';
   constructor(private http: HttpClient) {}
-  sendVote(voteData: Vote): Observable<Vote> {
-    console.log('Vote Data:', voteData); // Log to check if data is correct
+  sendVote(voteData: Vote): Observable<Vote> {    
     return this.http.post<any>(`${this.URL}`, voteData);
   }
 
-  sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {
-    console.log('Vote Data:', voteData); // Log to check if data is correct
+  sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {    
     return this.http.post<any>(
       'https://localhost:7160/api/ThreadVote/vote',
       voteData

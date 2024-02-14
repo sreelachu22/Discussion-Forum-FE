@@ -1,10 +1,12 @@
 <div class="latest_container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
   <app-page-header
     navClass="navbar navbar-dark bg-secondary Page_header"
     [pageHeaderTitle]="'Latest Posts'"
     [showButton]="false"
   ></app-page-header>
+
   <br />
   <div class="button_toggle">
     <button-toggle
@@ -13,6 +15,7 @@
     ></button-toggle>
   </div>
   <br />
+
   <div *ngFor="let thread of latestPosts">
     <app-list
       [sections]="[

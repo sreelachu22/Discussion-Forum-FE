@@ -1,6 +1,5 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
-    <!-- sssssssssssssssssssss -->
     <div class="username">{{ reply.createdUserName }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
@@ -8,6 +7,7 @@
   <div class="reply-content" *ngIf="!isHTML(reply.content)">
     {{ reply.content }}
   </div>
+
   <div
     class="reply-content"
     *ngIf="isHTML(reply.content)"

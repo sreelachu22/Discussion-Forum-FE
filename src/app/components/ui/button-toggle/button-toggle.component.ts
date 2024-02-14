@@ -14,12 +14,12 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 export class ButtonToggleComponent { 
   
   @Input() sortOptions: string[] = [];
-  @Output() sortSelectionChange = new EventEmitter<string>(); // Event emitter for output
+  @Output() sortSelectionChange = new EventEmitter<string>();
 
   sortSelection: string = '';
   onToggleChange(event: any) {
     this.sortSelection = event.value;
-    this.sortSelectionChange.emit(this.sortSelection); // Emit the selected value
+    this.sortSelectionChange.emit(this.sortSelection);
   }
 
   getOptionLabel(option: string): string {
@@ -34,5 +34,4 @@ export class ButtonToggleComponent {
         return option;
     }
   }
-  
 }

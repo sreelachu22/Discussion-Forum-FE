@@ -1,5 +1,3 @@
-/* reply-container.component.css */
-
 .reply-container {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -26,7 +24,7 @@
 }
 
 .date {
-  color: #3498db; /* Green color for date */
+  color: #3498db;
 }
 
 .reply-footer {
@@ -48,7 +46,7 @@
 
 .show-replies-button {
   font-weight: bold;
-  color: #db978f; /* Red color for replies button */
+  color: #db978f;
   cursor: pointer;
   transition: color 0.3s ease-in-out;
 }

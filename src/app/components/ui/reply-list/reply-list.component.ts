@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ThreadReplies, ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
-import { VoteService } from 'src/app/service/HttpServices/vote.service';
+import { ThreadReplies } from 'src/app/service/HttpServices/thread-replies.service';
 import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
 
@@ -19,7 +18,7 @@ export class ReplyListComponent {
 
   showReplies: { [key: number]: boolean } = {};
   ActiveUserID : string | null = sessionStorage.getItem('userID');
-  constructor(private voteService: VoteService, private router: Router, private threadRepliesService: ThreadRepliesService) {}
+  constructor(private router: Router) {}
 
   emitUpvote(reply: ThreadReplies) {    
     const vote: Vote = {

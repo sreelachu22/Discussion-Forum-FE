@@ -26,23 +26,21 @@
   display: block;
 }
 
-/* Styling for replies to comments */
 .reply span:nth-child(2) {
   color: #666;
   font-style: italic;
 }
 
-/* Styling for replies to posts */
 .reply span:nth-child(3) {
   color: #666;
   font-style: italic;
 }
 
-/* Hover effect */
 .reply:hover {
   background-color: #f0f0f0;
   transition: background-color 0.3s ease;
 }
+
 button {
   background-color: rgb(51, 171, 165);
   color: #fff;
@@ -65,7 +63,6 @@ button:active {
   transform: scale(0.95);
 }
 
-/* Add animation */
 @keyframes pulse {
   0% {
     transform: scale(1);
