@@ -1,0 +1,14 @@
+<div class="container">
+  <app-card [metadataItems]="replyData" [justifyPosition]="'start'"></app-card>
+  <!-- <app-thread-reply> </app-thread-reply> -->
+  <app-editor
+    [heading]="'Edit Reply'"
+    [firstButtonName]="'Save'"
+    [secondButtonName]="'Cancel'"
+    (onFirstButtonClickReply)="onSubmit($event)"
+    (onSecondButtonClick)="goBack()"
+    [showTitle]="false"
+    [showTag]="false"
+    [showSpan]="false"
+  ></app-editor>
+</div>

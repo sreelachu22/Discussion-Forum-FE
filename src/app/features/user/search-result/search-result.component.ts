@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
-import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   CategoryThreadDto,
   SearchThreadResult,
@@ -24,9 +19,10 @@ export interface Threads {
   modifiedAt: Date;
   communityCategoryMapping: any;
   threadStatus: any;
-  createdByUser: any;
-  modifiedByUser: any;
+  createdByUser: string;
+  modifiedByUser: string;
   threadVotes: any;
+  replyCount: number;
 }
 @Component({
   selector: 'app-search-result',
@@ -64,7 +60,6 @@ export class SearchResultComponent implements OnInit {
 
   searchResult(searchTerm: string) {
     if (searchTerm) {
-      // Call the search service with the updated logic
       this.router.navigate(['/search-results'], {
         queryParams: { searchTerm: searchTerm },
       });
@@ -128,12 +123,11 @@ export class SearchResultComponent implements OnInit {
         .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
         .subscribe({
           next: (results: SearchThreadResult) => {
+            console.log(results);
             this.threads = results.searchThreadDtoList;
             this.totalPages = Math.ceil(
               results.searchThreadDtoListLength / this.pageSize
             );
-            console.log('currentPage:', this.currentPage);
-            console.log('totalPages:', this.totalPages);
           },
           error: (error: Error) => {
             alert('Error has occurred, ' + error.message);

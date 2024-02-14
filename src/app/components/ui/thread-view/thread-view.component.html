@@ -1,6 +1,6 @@
 <div class="thread-container" *ngIf="thread">
   <div class="thread-header">
-    <div class="username">{{ thread.createdBy }}</div>
+    <div class="username">{{ thread.createdByUser }}</div>
     <div class="date">{{ thread.createdAt | timeDifference }}</div>
   </div>
   <div class="thread-data">
@@ -18,7 +18,11 @@
         <p class="vote_count">{{ thread.downVoteCount }}</p>
       </div>
       <div class="user-control">
-        <mat-icon class="your_icon" (click)="postReply(thread.threadID)">
+        <mat-icon
+          class="your_icon"
+          (click)="postReply(thread.threadID)"
+          style="margin-left: 10px"
+        >
           reply
         </mat-icon>
       </div>
@@ -42,19 +46,19 @@
         [innerHTML]="thread.content"
       ></div>
     </div>
-    <div class="owner-controls">
+    <div class="owner-controls" *ngIf="isCurrentUser(thread)">
       <div class="owner-control">
         <mat-icon class="your_icon" (click)="editThread(thread.threadID)">
           edit
         </mat-icon>
       </div>
       <div class="owner-control">
-        <mat-icon class="your_icon" (click)="closeThread(thread.threadID)">
+        <mat-icon class="your_icon" (click)="openCloseModal(thread.threadID)">
           cancel
         </mat-icon>
       </div>
       <div class="owner-control">
-        <mat-icon class="your_icon" (click)="deleteThread(thread.threadID)">
+        <mat-icon class="your_icon" (click)="openDeleteModal(thread.threadID)">
           delete
         </mat-icon>
       </div>

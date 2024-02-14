@@ -7,11 +7,13 @@
       [reply]="nestedreply"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
+      (deleteReplyEvent)="onDeleteReply($event)"
     ></app-reply-list>
     <app-nested-replies
       [nestedReply]="nestedreply"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
+      (deleteReplyEvent)="onDeleteReply($event)"
     ></app-nested-replies>
   </div>
 </div>

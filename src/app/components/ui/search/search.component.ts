@@ -14,15 +14,16 @@ export interface CategoryThreadDto {
   threadID: number;
   title: string;
   content: string;
-  createdBy: string;
+  createdByUser: string;
   createdAt: string;
-  modifiedBy: string | null;
+  modifiedByUser: string | null;
   modifiedAt: string;
   threadStatusName: string;
   isAnswered: boolean;
   upVoteCount: number;
   downVoteCount: number;
   tagNames: string[];
+  replyCount: number;
 }
 
 export interface Thread {

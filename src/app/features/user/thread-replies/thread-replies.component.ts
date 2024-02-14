@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { forkJoin, switchMap } from 'rxjs';
+import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import {
@@ -23,13 +25,17 @@ import {
   styleUrls: ['./thread-replies.component.css'],
 })
 export class ThreadRepliesComponent {
+  bsModalRef: any;
+  threadID: any;
+  router: any;
   constructor(
     private threadRepliesService: ThreadRepliesService,
     private searchService: searchService,
     private activateRoute: ActivatedRoute,
     private threadService: ThreadService,
     private voteService: VoteService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private modalService: BsModalService
   ) {}
 
   breadcrumbs = [
@@ -42,13 +48,9 @@ export class ThreadRepliesComponent {
   parent_replyID: number | string = '';
   searchTerm: string = '';
   threadReplies: ThreadReplies[] = [];
-  // showReplies: { [key: number]: boolean } = {};
   showNestedReplies: boolean[] = [];
-  // threadInfo: any;
-  // threadData: { name: string; value: any; isHtml: boolean }[] = [];
-  // threadTitle!: string;
-  // threadContent!: string;
   thread!: Thread;
+  threadRepliesStatus: boolean = true;
 
   isLoading = false;
   ngOnInit() {
@@ -67,13 +69,6 @@ export class ThreadRepliesComponent {
         })
       )
       .subscribe((data: any) => {
-        // this.threadInfo = data;
-        // this.threadTitle = this.threadInfo.title;
-        // this.threadContent = this.threadInfo.content;
-        // this.threadData.push(
-        //   { name: '', value: this.threadTitle, isHtml: true },
-        //   { name: '', value: this.threadContent, isHtml: true }
-        // );
         this.thread = data;
         console.log(data);
         this.loadReplies();
@@ -86,9 +81,25 @@ export class ThreadRepliesComponent {
         next: (repliesData: any) => {
           this.threadReplies = repliesData;
           console.log(repliesData);
+          this.threadRepliesStatus = true;
         },
         error: (error: Error) => {
           console.log('Error', error);
+          this.threadRepliesStatus = false;
+        },
+      });
+  }
+
+  onDeleteReply(reply: ThreadReplies) {
+    this.threadRepliesService
+      .deleteReply(reply.replyID, reply.createdBy)
+      .subscribe({
+        next: () => {
+          console.log('Reply deleted successfully');
+          this.onSubmit(reply);
+        },
+        error: (error) => {
+          console.error('Error deleting reply:', error);
         },
       });
   }
@@ -140,6 +151,27 @@ export class ThreadRepliesComponent {
         this.loadThread();
       },
     });
+  }
+
+  onSubmit(reply: ThreadReplies) {
+    const content = '-reply deleted by user-';
+    this.threadRepliesService
+      .editReply(reply.replyID, reply.createdBy, content)
+      .subscribe({
+        next: (response) => {
+          this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
+            initialState: {
+              message: 'Reply deleted successfully',
+            },
+          });
+        },
+        error: (error) => {
+          console.error('Error deleting reply:', error);
+        },
+        complete: () => {
+          this.loadReplies();
+        },
+      });
   }
 
   // search the entered term and showing it in a modal - temporary.
