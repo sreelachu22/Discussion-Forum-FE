@@ -7,8 +7,10 @@ export interface Thread {
   title: string;
   content: string;
   createdBy: string;
+  createdByUser: string;
   createdAt: Date;
   modifiedBy: string;
+  modifiedByUser: string;
   modifiedAt: Date;
   threadStatusName: string;
   isAnswered: boolean;
@@ -56,5 +58,11 @@ export class ThreadService {
     const apiUrl = `${this.singleThreadURL}/CloseThread/${threadID}?ModifierId=${modifierId}`;
     console.log(apiUrl);
     return this.http.put(apiUrl, null);
+  }
+
+  deleteThread(threadID: number, modifierId: string): Observable<any> {
+    const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
+    console.log(apiUrl);
+    return this.http.delete(apiUrl);
   }
 }
