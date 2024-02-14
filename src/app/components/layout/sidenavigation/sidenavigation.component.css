@@ -45,9 +45,5 @@ app-search {
 }
 
 .notification_icon:hover {
-  color: rgb(
-    156,
-    228,
-    156
-  ); /* Change the color on hover to red (you can adjust the color as needed) */
+  color: rgb(156, 228, 156);
 }

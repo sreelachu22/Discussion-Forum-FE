@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
-import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
 @Component({
   selector: 'app-edit-reply',
   templateUrl: './edit-reply.component.html',
   styleUrls: ['./edit-reply.component.css']
 })
+
 export class EditReplyComponent implements OnInit {
   reply: any;
   thread: any;
@@ -25,30 +25,26 @@ export class EditReplyComponent implements OnInit {
   justifyPosition: string = 'flex-start';
   bsModalRef!: BsModalRef;
   putBaseURL: string = 'https://localhost:7160/api/Reply';
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private threadRepliesService: ThreadRepliesService,
     private http: HttpClient,
     private modalService: BsModalService,
-    private renderer: Renderer2,
-    private threadService: ThreadService
   ) {}
 
   ngOnInit(): void {    
       this.replyID = +this.route.snapshot.queryParams['replyID'];
 
       this.threadRepliesService.getReplyByID(this.replyID).subscribe((data) => {
-        this.reply = data[0];
-        console.log(this.reply)
+        this.reply = data[0];        
         this.replyContent = this.reply.content;
         this.threadID = this.reply.threadID;
         this.parentReplyID = this.reply.replyID;
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
-        this.replyCreatedBy = this.reply.createdBy;
-
-      // Add the user and content to replyData
-      this.replyData.push({ name: '', value: this.replyContent , isHtml:true});
+        this.replyCreatedBy = this.reply.createdBy;      
+        this.replyData.push({ name: '', value: this.replyContent , isHtml:true});
     });
   }
 
@@ -65,7 +61,7 @@ export class EditReplyComponent implements OnInit {
         next: (response) => {          
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
-              message: 'Reply edited successfully', //make use of reusable success pop up , sends message to it
+              message: 'Reply edited successfully',
             },
           });
         },
@@ -82,6 +78,7 @@ export class EditReplyComponent implements OnInit {
         },
       });
   }
+
 
   goBack() {
     const queryParams = {

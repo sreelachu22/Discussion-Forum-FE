@@ -7,11 +7,11 @@
     <span>{{ notification.childReplyCreatedAt | date : "medium" }}</span>
   </div>
 
-  <!-- Replies -->
+  <!-- From -->
   <div class="replies">
     <div class="reply">
-      <span
-        >{{ notification.childReplyUserName }} replied
+      <span class="notification">
+        {{ notification.childReplyUserName }} replied
         <div
           class="reply-content"
           *ngIf="!isHTML(notification.childReplyContent)"
@@ -21,15 +21,60 @@
         <div
           class="reply-content"
           *ngIf="isHTML(notification.childReplyContent)"
-          [innerHTML]="notification.childReplyContent"
-        ></div>
+        >
+          <span
+            [innerHTML]="notification.childReplyContent | slice : 0 : 110"
+          ></span>
+        </div>
       </span>
 
+      <!-- To -->
+
       <span *ngIf="notification.parentReplyID; else parentPost">
-        to your comment "{{ notification.parentReplyContent }}"
+        to your comment
+        <div
+          class="reply-content"
+          *ngIf="
+            !notification.parentReplyContent ||
+            !isHTML(notification.parentReplyContent)
+          "
+        >
+          "{{ notification.parentReplyContent | slice : 0 : 110 }}"
+        </div>
+        <div
+          class="reply-content"
+          *ngIf="
+            notification.parentReplyContent &&
+            isHTML(notification.parentReplyContent)
+          "
+        >
+          <span
+            [innerHTML]="notification.parentReplyContent | slice : 0 : 110"
+          ></span>
+        </div>
       </span>
       <ng-template #parentPost>
-        to your post "{{ notification.parentReplyContent }}"
+        to your post
+        <div
+          class="reply-content"
+          *ngIf="
+            !notification.parentReplyContent ||
+            !isHTML(notification.parentReplyContent | slice : 0 : 110)
+          "
+        >
+          "{{ notification.parentReplyContent }}"
+        </div>
+        <div
+          class="reply-content"
+          *ngIf="
+            notification.parentReplyContent &&
+            isHTML(notification.parentReplyContent)
+          "
+        >
+          <span
+            [innerHTML]="notification.parentReplyContent | slice : 0 : 110"
+          ></span>
+        </div>
       </ng-template>
     </div>
 

@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  ThreadReplies,
-  ThreadRepliesService,
-} from 'src/app/service/HttpServices/thread-replies.service';
-import { VoteService } from 'src/app/service/HttpServices/vote.service';
+import { ThreadReplies } from 'src/app/service/HttpServices/thread-replies.service';
 import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
@@ -22,15 +18,8 @@ export class ReplyListComponent {
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
   showReplies: { [key: number]: boolean } = {};
-  ActiveUserID: string | null = sessionStorage.getItem('userID');
-  confirmModal!: BsModalRef;
-
-  constructor(
-    private voteService: VoteService,
-    private router: Router,
-    private threadRepliesService: ThreadRepliesService,
-    private modalService: BsModalService
-  ) {}
+  ActiveUserID : string | null = sessionStorage.getItem('userID');
+  constructor(private router: Router) {}
 
   emitUpvote(reply: ThreadReplies) {
     const vote: Vote = {

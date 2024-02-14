@@ -71,13 +71,11 @@ export class SidenavCustomComponent {
       cancelButtonText: 'Cancel',
     }).then(async (result: any) => {
       if (result.isConfirmed) {
-        this.userId = sessionStorage.getItem('userID'); // Assuming 'userID' is the key used to store the user ID in sessionStorage
-        // this.userId="A889A62C-CC6F-4362-927E-17207875BA25";
+        this.userId = sessionStorage.getItem('userID');
         if (this.userId) {
           try {
             this.accountService.logoutBackend(this.userId).subscribe(
-              () => {
-                console.log('Logout successful');
+              () => {                
                 this.authService.logoutRedirect({
                   postLogoutRedirectUri: 'http://localhost:4200',
                 });
@@ -85,19 +83,15 @@ export class SidenavCustomComponent {
                 sessionStorage.clear();
                 this.router.navigateByUrl('/logout');
               },
-              (error) => {
-                // Handle error
-                console.error('Logout failed:', error);
-                // Display error message to the user if needed
+              (error) => {                
+                console.error('Logout failed:', error);                
               }
             );
-          } catch (error) {
-            // Handle other errors
+          } catch (error) {            
             console.error('An error occurred:', error);
           }
         } else {
-          console.error('User ID not found in sessionStorage');
-          // Handle the absence of the user ID, e.g., display an error message to the user
+          console.error('User ID not found in sessionStorage');        
         }
       }
     });
