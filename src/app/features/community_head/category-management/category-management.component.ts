@@ -142,17 +142,17 @@ export class CategoryManagementComponent implements OnInit {
     const communityCategoryMappingID = event.data.communityCategoryMappingID;
     const description = event.data.description;
 
-    // const initialState = {
-    //   communityCategoryMappingID: event.data.communityCategoryMappingID,
-    //   description: event.data.description,
-    // };
-    // this.categoryModalService.setCategoryData(
-    //   communityCategoryMappingID,
-    //   description
-    // );
+    const initialState = {
+      communityCategoryMappingID: event.data.communityCategoryMappingID,
+      description: event.data.description,
+    };
+    this.categoryModalService.setCategoryData(
+      communityCategoryMappingID,
+      description
+    );
     console.log('before show', this.updateRef);
     console.log('update Ref : ');
-    // this.updateRef = this.modalService.show(CategoryEditModalComponent);
+    this.updateRef = this.modalService.show(CategoryEditModalComponent,{initialState});
     console.log(
       'update Ref : ',
       this.modalService.show(CategoryEditModalComponent)

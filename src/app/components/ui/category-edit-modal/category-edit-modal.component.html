@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="modifiedBy"
         ><span class="required">*</span>Modified By:</label
       >
@@ -70,7 +70,7 @@
       >
         *Modified By is required for update
       </span>
-    </div>
+    </div> -->
 
     <br />
     <div class="buttons">
@@ -92,8 +92,10 @@
           textColor="white"
           hoverColor="red"
           hoverTextColor="white"
-          (buttonClick)="openDeleteModal(communityCategoryMappingID)"
+          buttonType="button"
+          (buttonClick)="openDeleteModal()"
         ></app-button>
+        <!-- communityCategoryMappingID -->
       </span>
     </div>
   </form>

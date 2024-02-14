@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
@@ -50,7 +51,7 @@ export class CategoryThreadsComponent implements OnInit {
     { label: 'Community', route: '/community' },
     {
       label: 'Category',
-      route: `/community/category-posts/${this.communityCategoryMappingID}`,
+      route: '/community/category-posts',
     },
   ];
 
@@ -58,14 +59,18 @@ export class CategoryThreadsComponent implements OnInit {
     private threadService: ThreadService,
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private communityDataService:CommunityDataService
   ) {}
 
   isLoading = false;
   // ng init with method to get url params and display content based on it
   ngOnInit() {
-    this.activateRoute.queryParams.subscribe((params) => {
-      this.communityCategoryMappingID = params['communityCategoryMappingID'];
+    // this.activateRoute.queryParams.subscribe((params) => {
+    //   this.communityCategoryMappingID = params['communityCategoryMappingID'];
+    // });
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityCategoryMappingID = id;
     });
     this.loadThreads();
     this.loaderService.isLoading$.subscribe((isLoading) => {
@@ -152,7 +157,7 @@ export class CategoryThreadsComponent implements OnInit {
   // create a post
   createPost() {
     const queryParams = {
-      communityCategoryMappingID: this.communityCategoryMappingID,
+      // communityCategoryMappingID: this.communityCategoryMappingID,
       creatorId: this.creatorId || sessionStorage.getItem('userID'), // Replace this with the actual creatorId
     };
 
@@ -161,10 +166,11 @@ export class CategoryThreadsComponent implements OnInit {
     });
   }
   navigateToThreadReplies(threadID: number) {
-    this.router.navigate([`/community/post-replies`], {
+    this.router.navigate([`/community/post-replies`]
+    , {
       queryParams: {
         threadID: threadID,
-        communityCategoryMappingID: this.communityCategoryMappingID,
+        // communityCategoryMappingID: this.communityCategoryMappingID,
       },
     });
   }

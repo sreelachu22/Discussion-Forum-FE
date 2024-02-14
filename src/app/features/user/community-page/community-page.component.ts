@@ -165,10 +165,12 @@ export class CommunityPageComponent {
     });
   }
 
-  navigateToPosts(communityCategoryMappingID: number) {
-    this.router.navigate([`/community/category-posts`], {
-      queryParams: { communityCategoryMappingID: communityCategoryMappingID },
-    });
+  navigateToPosts() {
+    this.router.navigate([`/community/category-posts`])
+    //communityCategoryMappingID: number
+    //  {
+    //   queryParams: { communityCategoryMappingID: communityCategoryMappingID },
+    // });
   }
   navigateToCommunityManagement(communityID: number) {
     this.router.navigate(['community-management-dashboard'], {

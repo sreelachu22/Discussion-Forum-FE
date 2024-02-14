@@ -84,7 +84,7 @@ export class CategoryService {
   updateCategoryDescription(
     id: number,
     description: string,
-    modifiedBy: string
+    modifiedBy: string | null
   ): Observable<any> {
     const body = {
       description: description,
@@ -101,7 +101,7 @@ export class CategoryService {
     id: number,
     description: string,
     communityCategoryName: string,
-    createdBy: string
+    createdBy: string | null
   ): Observable<any> {
     const body = {
       communityCategoryName: communityCategoryName,

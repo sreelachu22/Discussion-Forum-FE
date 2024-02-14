@@ -56,7 +56,7 @@ export class CreateReplyComponent implements OnInit {
         this.reply = data[0];
         this.replyContent = this.reply.content;
         this.threadID = this.reply.threadID;
-        this.parentReplyID = this.reply.parentReplyID;
+        this.parentReplyID = this.reply.replyID;
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
 
         // Add the user and content to replyData
@@ -93,7 +93,7 @@ export class CreateReplyComponent implements OnInit {
               message: 'Reply posted successfully', //make use of reusable success pop up , sends message to it
             },
           });
-          this.sendEmailToOwner(this.threadOwnerEmail, this.threadID, this.replyContent);
+          this.sendEmailToOwner(this.threadOwnerEmail,this.replyContent);
         },
         error: (error) => {
           console.error('Error creating thread:', error);
@@ -109,15 +109,17 @@ export class CreateReplyComponent implements OnInit {
       });
   }
 
-  sendEmailToOwner(threadOwnerEmail: string, threadID: number, replyContent: string) {
+  sendEmailToOwner(threadOwnerEmail: string, replyContent: string) {
+    const plainTextContent = replyContent.replace(/<[^>]+>/g, '');
+    // Slice plainTextContent after 20 characters and add ellipsis
+    const truncatedContent = plainTextContent.length > 20 ? plainTextContent.slice(0, 20) + '...' : plainTextContent;
+    console.log("qwerty",truncatedContent);
     const emailModel: EmailModel = {
       toEmail: threadOwnerEmail,
       subject: 'New Reply on Your Thread',
-      body: `A new reply has been posted on your thread. Reply content: ${replyContent}. Thread ID: ${threadID}`
+      body: `A new reply has been posted on your thread - " ${truncatedContent}"     visit  Discussit!  to view more`
     };
-  
-    this.http.post('https://your-backend-api-url/send-email', emailModel)
-      .subscribe(
+    this.http.post('https://localhost:7160/api/Email', emailModel, { responseType: 'text' }).subscribe(
         response => {
           console.log('Email sent successfully:', response);
         },

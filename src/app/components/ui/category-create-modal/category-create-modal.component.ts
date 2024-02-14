@@ -98,7 +98,7 @@ export class CategoryCreateModalComponent implements OnInit {
     const body = {
       communitCategoryName: this.newCategoryName,
       description: this.description,
-      createdBy: this.createdBy,
+      createdBy: sessionStorage.getItem('userID')
     };
 
     this.httpService

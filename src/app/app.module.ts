@@ -119,7 +119,7 @@ import { AccountsService } from './service/HttpServices/account.service';
 import { ThreadViewComponent } from './components/ui/thread-view/thread-view.component';
 import { MainComponent } from './features/main/main.component';
 import { ProfilePopupComponent } from './components/layout/profile-popup/profile-popup.component';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
   window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -245,6 +245,7 @@ const isIE =
     TagInputModule,
     MsalModule,
     SweetAlert2Module.forRoot(),
+    MatTooltipModule 
   ],
   providers: [
     CategoryService,
