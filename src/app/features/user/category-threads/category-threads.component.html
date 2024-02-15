@@ -48,7 +48,7 @@
                   {
                     value:
                       '<i>' +
-                      (thread.content.length > 200
+                      (thread.content.length > 90
                         ? thread.content.slice(0, 90) + '...'
                         : thread.content) +
                       '</i>',
@@ -71,10 +71,13 @@
         </div>
       </div>
       <div class="centered-container">
-      <div *ngIf="CategoryThreads.threads.length === 0" class="content">
-        <h3>No Posts Yet. Be the First one to post ✏️</h3>
-        <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%;">
-      </div>
+        <div *ngIf="CategoryThreads.threads.length === 0" class="content">
+          <h3>No Posts Yet. Be the First one to post ✏️</h3>
+          <img
+            src="/assets/images/no-posts.jpg"
+            style="width: 50%; height: 50%"
+          />
+        </div>
       </div>
     </div>
 

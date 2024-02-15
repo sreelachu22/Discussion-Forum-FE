@@ -19,6 +19,8 @@ export class ReplyListComponent {
 
   showReplies: { [key: number]: boolean } = {};
   ActiveUserID : string | null = sessionStorage.getItem('userID');
+  confirmModal: any;
+  modalService: any;
   constructor(private router: Router) {}
 
   emitUpvote(reply: ThreadReplies) {

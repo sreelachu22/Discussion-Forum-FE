@@ -3,3 +3,12 @@
   margin-left: 50px;
   width: 91%;
 }
+
+.view_options {
+  margin-top: 20px;
+  display: flex;
+}
+
+.spacer {
+  flex: 1; /* Take up remaining space */
+}

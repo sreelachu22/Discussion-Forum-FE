@@ -7,17 +7,26 @@
     [showButton]="false"
   ></app-page-header>
 
-  <br />
-  <div class="button_toggle">
-    <button-toggle
-      [sortOptions]="sortOptions"
-      (sortSelectionChange)="onSortSelectionChange($event)"
-    ></button-toggle>
+  <div class="view_options">
+    <app-dropdown-select
+      [dropdownOptions]="parentDropdownOptions"
+      (optionSelected)="handleOptionSelected($event)"
+    ></app-dropdown-select>
+
+    <div class="spacer"></div>
+
+    <div class="button_toggle">
+      <button-toggle
+        [sortOptions]="sortOptions"
+        (sortSelectionChange)="onSortSelectionChange($event)"
+      ></button-toggle>
+    </div>
   </div>
   <br />
 
   <div *ngFor="let thread of latestPosts">
     <app-list
+      (click)="goToThread(thread.threadID)"
       [sections]="[
         {
           title: 'Column 1',

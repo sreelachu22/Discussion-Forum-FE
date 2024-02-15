@@ -17,4 +17,12 @@ export class NotficationListComponent {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
   }
+
+  appendEllipsis(content: string, sliced: boolean): string {
+    if (sliced) {
+      return  content.slice(0, 80) + '.....';
+    } else {
+      return content;
+    }
+  }
 }
