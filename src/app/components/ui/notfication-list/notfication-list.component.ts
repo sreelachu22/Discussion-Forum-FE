@@ -3,7 +3,7 @@ import { Notification } from 'src/app/features/user/notification/notification.co
 @Component({
   selector: 'app-notfication-list',
   templateUrl: './notfication-list.component.html',
-  styleUrls: ['./notfication-list.component.css']
+  styleUrls: ['./notfication-list.component.css'],
 })
 export class NotficationListComponent {
   @Input() notification!: Notification;
@@ -15,14 +15,15 @@ export class NotficationListComponent {
 
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
-    return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
+    return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
 
   appendEllipsis(content: string, sliced: boolean): string {
     if (sliced) {
-      return  content.slice(0, 80) + '.....';
+      return content.slice(0, 80) + '.....';
     } else {
       return content;
     }
   }
+
 }

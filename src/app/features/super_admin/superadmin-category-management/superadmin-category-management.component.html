@@ -1,3 +1,6 @@
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
@@ -69,15 +72,6 @@
           >
             Close
           </button>
-          <!-- <app-button
-            buttonClass="button"
-            buttonName="Close"
-            buttonColor="#6c757d"
-            textColor="white"
-            hoverColor="#5c636a"
-            hoverTextColor="white"
-            (buttonClick)="closeModal()"
-          ></app-button> -->
         </div>
       </form>
     </div>

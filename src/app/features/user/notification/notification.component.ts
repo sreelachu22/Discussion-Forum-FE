@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserNotificationService } from 'src/app/service/DataServices/userNotification.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { NotificationService } from 'src/app/service/HttpServices/notification.service';
 
@@ -40,7 +41,10 @@ export class NotificationComponent implements OnInit {
 
   notificationCount!:number;
 
-  constructor(private notificationService: NotificationService, private categoryService:CategoryService,private router:Router) { }
+  constructor(private notificationService: NotificationService,
+     private categoryService:CategoryService,
+     private userNotificationService: UserNotificationService,
+     private router:Router) { }
 
   
   ngOnInit(): void {
@@ -76,7 +80,8 @@ export class NotificationComponent implements OnInit {
   onMarkAsRead(replyId: number) {   
     this.notificationService.markAsRead(replyId).subscribe(
         () => {
-          this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);                
+          this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);     
+          this.notificationService.getNotificationCount(this.userID);
         },
         (error) => {            
             console.error('Error marking reply as read:', error);

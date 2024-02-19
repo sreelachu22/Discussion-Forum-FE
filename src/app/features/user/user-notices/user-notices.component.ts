@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { environment } from 'src/app/environments/environment';
 import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 
 @Component({
@@ -10,19 +11,13 @@ import { NoticesService } from 'src/app/service/HttpServices/notices.service';
 })
 export class UserNoticesComponent {
   public notices: any[] = [];
-
-  private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
+  baseUrl: string = environment.apiUrl;
+  private apiUrl = this.baseUrl + 'Notice'; // Initial URL, you can set it dynamically based on your requirement
 
   constructor(
     private noticesService: NoticesService,
     private datePipe: DatePipe
   ) {}
-
-  // breadcrumbs = [
-  //   { label: 'Home', route: '/home_page' },
-  //   { label: 'Community', route: '/community_page' },
-  //   { label: 'Notice', route: '/user-notices'}
-  // ];
 
   ngOnInit(): void {
     this.getValues();

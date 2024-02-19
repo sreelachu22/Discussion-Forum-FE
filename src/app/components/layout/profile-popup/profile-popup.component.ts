@@ -14,7 +14,7 @@ import { SingleUser } from 'src/app/features/community_head/user-edit/user-edit.
   styleUrls: ['./profile-popup.component.css'],
 })
 export class ProfilePopupComponent {
-  constructor(public modalRef: BsModalRef) {}
+  constructor() {}
   @Input() user!: SingleUser;
 
   getBadge(score: number): string {

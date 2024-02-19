@@ -11,6 +11,7 @@ import {
   Category,
   superAdminCategoryService,
 } from 'src/app/service/HttpServices/superadmin-category.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-superadmin-category-management',
@@ -38,9 +39,14 @@ export class SuperadminCategoryManagementComponent {
   constructor(
     private httpService: superAdminCategoryService,
     private modalService: BsModalService,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.getCategoriesInCommunity();
   }
 
@@ -53,16 +59,7 @@ export class SuperadminCategoryManagementComponent {
 
   bsModalRef!: BsModalRef;
 
-
-
-  //open modal
-  // openDeleteCategoryModal(template: TemplateRef<void>) {
-  //   console.log('modal called');
-  //   this.bsmodalRef = this.modalService.show(template, { class: 'modal-sm' });
-  // }
-
   openDeleteModal(communityCategoryID: number) {
-    console.log('id for delete:', communityCategoryID);
     this.communityCategoryID = communityCategoryID;
     const initialState = {
       confirmFunction: this.confirm.bind(this),
@@ -84,7 +81,6 @@ export class SuperadminCategoryManagementComponent {
   }
 
   closeModal(): void {
-    console.log('Closing modal...');
     this.modalRef?.hide();
   }
 
@@ -132,10 +128,10 @@ export class SuperadminCategoryManagementComponent {
 
   createCategory() {
     // Check if the category already exists locally
-    const categoryExists = this.categories.some(category =>
-      category.communityCategoryName === this.newCategoryName
+    const categoryExists = this.categories.some(
+      (category) => category.communityCategoryName === this.newCategoryName
     );
-  
+
     if (categoryExists) {
       // Category name already exists, show error message or take appropriate action
       this.alertRef = this.modalService.show(InvalidPopupComponent, {
@@ -146,7 +142,7 @@ export class SuperadminCategoryManagementComponent {
       this.newCategoryName = '';
       return; // Exit function early
     }
-  
+
     // If the category doesn't exist locally, proceed to create it
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
@@ -155,7 +151,6 @@ export class SuperadminCategoryManagementComponent {
         // Hide the modal after successfully creating the category
         this.modalRef?.hide();
         this.newCategoryName = '';
-        
       },
       error: (error: Error) => {
         alert('Error has occurred: ' + error.message);
@@ -171,20 +166,18 @@ export class SuperadminCategoryManagementComponent {
       },
     });
   }
-  
 
   updateCategory(id: number) {
     this.httpService.updateCategory(id, this.newCategoryName, false).subscribe({
       next: (data: any) => {
-        // alert('Category updated successfully');
         this.alertRef = this.modalService.show(SuccessPopupComponent, {
           initialState: {
-            message: 'Category updated successfully', //make use of reusable success pop up , sends message to it
+            message: 'Category updated successfully',
           },
         });
         this.getCategoriesInCommunity();
-        this.modalRef?.hide(); // Close the modal after updating
-        this.newCategoryName = ''; // Clear fields for the next update
+        this.modalRef?.hide();
+        this.newCategoryName = '';
       },
       error: (error: any) => {
         console.error('Error updating category:', error);

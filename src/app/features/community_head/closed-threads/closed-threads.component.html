@@ -1,4 +1,6 @@
-<!-- category-threads.component.html -->
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <!-- bread crumbs -->
   <div class="top_nav">
@@ -36,8 +38,8 @@
               { value: thread.title },
               {
                 value:
-                  thread.content.length > 200
-                    ? thread.content.slice(0, 200) + '...'
+                  thread.content.length > 70
+                    ? thread.content.slice(0, 70) + '...'
                     : thread.content,
                 isHtml: true
               },

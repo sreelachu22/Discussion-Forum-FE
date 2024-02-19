@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
+import { environment } from 'src/app/environments/environment';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
 @Component({
@@ -30,7 +31,7 @@ export class EditPostComponent {
   breadcrumbs = [
     { label: 'Home', route: '/home' },
     { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts/:categoryID' },
+    { label: 'Category', route: '/community/category-posts' },
     { label: 'Edit Post', route: '/category-posts/edit-posts' },
   ];
 
@@ -55,7 +56,7 @@ export class EditPostComponent {
       },
     });
   }
-
+  baseUrl: string = environment.apiUrl;
   onSubmit(eventPayload: {
     title: string;
     editorContent: string;
@@ -70,13 +71,12 @@ export class EditPostComponent {
       Tags: this.tagsAsStringArray,
     };
 
-    console.log(JSON.stringify(content));
-
     const ActiveUserId =
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
 
-    const url = `https://localhost:7160/api/Thread/${this.threadID}?ModifierId=${ActiveUserId}`;
+    const url =
+      this.baseUrl + `Thread/${this.threadID}?ModifierId=${ActiveUserId}`;
 
     this.http
       .put(url, JSON.stringify(content), {
@@ -87,7 +87,6 @@ export class EditPostComponent {
       })
       .subscribe({
         next: (response) => {
-          console.log('Post edited successfully:', response);
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Post edited successfully',

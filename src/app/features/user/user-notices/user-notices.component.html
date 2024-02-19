@@ -1,42 +1,49 @@
 <!-- notices.component.html -->
 <div class="container">
-    <br>
-    <app-page-header
+  <br />
+  <app-page-header
     pageHeaderTitle="Notices"
     navClass="navbar navbar-dark bg-secondary Page_header"
     [showButton]="false"
-      ></app-page-header>
-      <br>
-    <div class="row">
-        <div *ngFor="let notice of notices">
-  
-            <app-notice-list
-          [sections]="[
-            {
-              title: 'Notice Details',
-              metadataItems: [
-                { name: '', value: notice.title , style: { color: '#64A2F5', fontSize: '16px' } },
-              ]
-            },
-            {
-                title: 'Notice Content',
-                metadataItems: [
-                  { name: '', value: notice.content }
-                ]
-            },
-            {
-              title: 'Timestamps',
-              metadataItems: [
-                { name: 'Created At', value: notice.createdAt | date : 'dd-MM-yyyy' },
-                {
-                  name: 'Modified At',
-                  value: notice.modifiedAt | date : 'dd-MM-yyyy' 
-                },
-                { name: 'Expires At', value: notice.expiresAt | date : 'dd-MM-yyyy' }
-              ]
-            }
-          ]"
-        ></app-notice-list>
-        
+  ></app-page-header>
+  <br />
+  <div class="row">
+    <div *ngFor="let notice of notices">
+      <app-notice-list
+        [sections]="[
+          {
+            title: 'Notice Details',
+            metadataItems: [
+              {
+                name: '',
+                value: notice.title,
+                style: { color: '#64A2F5', fontSize: '16px' }
+              }
+            ]
+          },
+          {
+            title: 'Notice Content',
+            metadataItems: [{ name: '', value: notice.content }]
+          },
+          {
+            title: 'Timestamps',
+            metadataItems: [
+              {
+                name: 'Created At',
+                value: notice.createdAt | date : 'dd-MM-yyyy'
+              },
+              {
+                name: 'Modified At',
+                value: notice.modifiedAt | date : 'dd-MM-yyyy'
+              },
+              {
+                name: 'Expires At',
+                value: notice.expiresAt | date : 'dd-MM-yyyy'
+              }
+            ]
+          }
+        ]"
+      ></app-notice-list>
     </div>
+  </div>
 </div>

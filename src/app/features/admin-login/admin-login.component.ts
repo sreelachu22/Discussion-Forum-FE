@@ -27,6 +27,7 @@ import {
 } from 'src/app/service/HttpServices/account.service';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 interface MicrosoftTokenPayload extends JwtPayload {
   name: string;
 }
@@ -111,14 +112,8 @@ export class AdminLoginComponent {
         this.accountsService.isLogged = true;
         sessionStorage.setItem('token', res.token);
         const decodedToken: any = jwtDecode(res.token);
-        var role =
-          decodedToken[
-            'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-          ];
-        var userID =
-          decodedToken[
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-          ];
+        var role = decodedToken[environment.decodedRole];
+        var userID = decodedToken[environment.decodedUserID];
         sessionStorage.setItem('userID', userID);
         if (role == 'SuperAdmin') {
           this.router.navigateByUrl('/admin-dashboard');
@@ -166,27 +161,20 @@ export class AdminLoginComponent {
             this.accountsService.microsoftLogin(this.azureObj).subscribe({
               next: (res: any) => {
                 this.accountsService.isLogged = true;
-                this.accountsService.updateUserLoggedInStatus(
-                  this.accountsService.isLogged
-                );
+                this.accountsService.updateUserLoggedInStatus(true);
                 sessionStorage.setItem('token', res.token);
                 const decodedToken: any = jwtDecode(res.token);
-                var role =
-                  decodedToken[
-                    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-                  ];
-                var userID =
-                  decodedToken[
-                    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-                  ];
+                var role = decodedToken[environment.decodedRole];
+                var userID = decodedToken[environment.decodedUserID];
+
                 sessionStorage.setItem('userID', userID);
                 if (role == 'SuperAdmin') {
-                  this.accountsService.isSuperAdmin = true;
-                  this.accountsService.isAdmin = true;
-                  this.router.navigateByUrl('/admin-dashboard');
+                  sessionStorage.setItem('isSuperAdmin', true.toString());
+                  sessionStorage.setItem('isAdmin', true.toString());
+                  this.router.navigateByUrl('/home');
                 } else if (role == 'CommunityHead') {
-                  this.accountsService.isAdmin = true;
-                  this.router.navigateByUrl('/community-management-dashboard');
+                  sessionStorage.setItem('isAdmin', true.toString());
+                  this.router.navigateByUrl('/home');
                 } else if (role == 'User') {
                   this.router.navigateByUrl('/home');
                 } else {

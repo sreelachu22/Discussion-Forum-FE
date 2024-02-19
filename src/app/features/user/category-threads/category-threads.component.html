@@ -1,4 +1,6 @@
-<!-- category-threads.component.html -->
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <!-- bread crumbs -->
   <div class="top_nav">
@@ -70,8 +72,11 @@
           </app-list>
         </div>
       </div>
-      <div class="centered-container">
-        <div *ngIf="CategoryThreads.threads.length === 0" class="content">
+      <div
+        *ngIf="CategoryThreads.threads.length === 0"
+        class="centered-container"
+      >
+        <div class="content">
           <h3>No Posts Yet. Be the First one to post ✏️</h3>
           <img
             src="/assets/images/no-posts.jpg"
@@ -89,6 +94,3 @@
     ></app-pagination>
   </div>
 </div>
-<ng-container class="container"
-  ><app-loader *ngIf="isLoading"></app-loader
-></ng-container>

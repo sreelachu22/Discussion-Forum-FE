@@ -66,14 +66,13 @@ export class ClosedThreadsComponent {
   isLoading = false;
   // ng init with method to get url params and display content based on it
   ngOnInit() {
-    this.activateRoute.queryParams.subscribe((params) => {
-      this.communityID = 1;
-    });
-    console.log(this.communityID);
-    this.loadThreads();
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
+    this.activateRoute.queryParams.subscribe((params) => {
+      this.communityID = 1;
+    });
+    this.loadThreads();
   }
 
   loadThreads() {
@@ -82,7 +81,6 @@ export class ClosedThreadsComponent {
       .subscribe({
         next: (data: ThreadResponse) => {
           this.CategoryThreads = data;
-          console.log(this.CategoryThreads);
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
           ); // Calculate totalPages

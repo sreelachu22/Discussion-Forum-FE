@@ -70,11 +70,8 @@ export class CategoryCreateModalComponent implements OnInit {
     new EventEmitter<Category>();
 
   createCategory() {
-    console.log('hi');
-    // alert('selected community category' + this.selectedCommunityCategory);
     if (this.selectedCommunityCategory != 'other') {
       this.newCategoryName = this.selectedCommunityCategory;
-      // alert('inside - name : ' + this.newCategoryName);
     }
     if (this.selectedCommunityCategory === 'other') {
       // Check if the new category name already exists
@@ -93,12 +90,11 @@ export class CategoryCreateModalComponent implements OnInit {
         return; // Exit function early
       }
     }
-    // alert('new category name outside:' + this.newCategoryName);
     const id = 1;
     const body = {
       communitCategoryName: this.newCategoryName,
       description: this.description,
-      createdBy: sessionStorage.getItem('userID')
+      createdBy: sessionStorage.getItem('userID'),
     };
 
     this.httpService
@@ -110,7 +106,6 @@ export class CategoryCreateModalComponent implements OnInit {
       )
       .subscribe({
         next: (data: any) => {
-          // alert('New category added');
           this.categoryCreated.emit(data); // Emit event with created category data
           this.bsModalRef.hide();
         },

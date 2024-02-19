@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SingleUserService } from 'src/app/service/DataServices/singleUser.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { UserEditService } from 'src/app/service/HttpServices/user-edit.service';
 
 //interface for user DTO
@@ -22,7 +24,9 @@ export interface SingleUser {
 export class UserEditComponent {
   constructor(
     private useredit: UserEditService,
-    private activatedroute: ActivatedRoute
+    private activatedroute: ActivatedRoute,
+    private singleUserService: SingleUserService,
+    private loaderService: LoaderService
   ) {}
 
   breadcrumbs = [
@@ -62,13 +66,10 @@ export class UserEditComponent {
       )
       .subscribe({
         next: (response) => {
-          console.log('API call successful:', response);
-
           // Reload user details after successful API call
           this.useredit.getSingleUser(this.user.userID).subscribe({
             next: (data: SingleUser) => {
               this.user = data;
-              console.log('User details reloaded:', this.user);
             },
             error: (error: Error) => {
               console.error('Error reloading user details:', error);
@@ -81,15 +82,21 @@ export class UserEditComponent {
       });
   }
 
+  isLoading: boolean = false;
   //ng init method loading current user details from url params
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+    var userID: string = '';
     this.activatedroute.params.subscribe((params) => {
-      const userID = params['userID'];
+      this.singleUserService.userID$.subscribe((uid) => {
+        userID = uid;
+      });
       if (userID) {
         this.useredit.getSingleUser(userID).subscribe({
           next: (data: SingleUser) => {
             this.user = data;
-            console.log(this.user);
           },
           error: (error: Error) => {
             console.log('Error', error);
@@ -104,7 +111,6 @@ export class UserEditComponent {
         this.userRoles.forEach((role) => {
           if (role.roleName === this.user.roleName) {
             this.selectedRoleID = role.roleID;
-            console.log('');
           } else {
             console.log('error matching role');
           }
