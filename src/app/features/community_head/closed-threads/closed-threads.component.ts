@@ -180,4 +180,12 @@ export class ClosedThreadsComponent {
       this.loadThreads();
     }
   }
+
+  navigateToThreadReplies(threadID: number) {
+    this.router.navigate([`/community/post-replies`], {
+      queryParams: {
+        threadID: threadID,
+      },
+    });
+  }
 }
