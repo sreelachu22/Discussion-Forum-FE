@@ -12,6 +12,7 @@ import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { tap } from 'rxjs';
 import { Category } from 'src/app/service/HttpServices/superadmin-category.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 @Component({
   selector: 'app-category-edit-modal',
   templateUrl: './category-edit-modal.component.html',
@@ -26,7 +27,8 @@ export class CategoryEditModalComponent {
     private activateRoute: ActivatedRoute,
     private modalRef: BsModalRef,
     private updateRef: BsModalRef,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private communityDataService: CommunityDataService
   ) {}
   @Input()
   description: string = '';
@@ -34,7 +36,7 @@ export class CategoryEditModalComponent {
   communityCategoryMappingID: number = 0;
   newDescription: string = '';
   modifiedBy: string | null = '';
-
+  communityID: number = 0;
   ngOnInit() {
     this.categoryModalService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
@@ -42,6 +44,10 @@ export class CategoryEditModalComponent {
 
     this.categoryModalService.description$.subscribe((desc) => {
       this.description = desc;
+    });
+
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
     });
 
     this.modifiedBy = sessionStorage.getItem('userID');
@@ -93,12 +99,14 @@ export class CategoryEditModalComponent {
       .deleteCategoryMapping(this.communityCategoryMappingID)
       .subscribe({
         next: (data: any) => {
-          this.httpService.getPagedCategories(1, '-createdAt').subscribe({
-            next: (data: any) => {},
-            error: (error: Error) => {
-              alert('Error has occured, ' + error.message);
-            },
-          });
+          this.httpService
+            .getPagedCategories(this.communityID, 1, '-createdAt')
+            .subscribe({
+              next: (data: any) => {},
+              error: (error: Error) => {
+                alert('Error has occured, ' + error.message);
+              },
+            });
         },
         error: (error: Error) => {
           alert('Error has occured, ' + error.message);

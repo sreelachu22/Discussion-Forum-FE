@@ -16,6 +16,8 @@ import {
   UserEditComponent,
 } from './features/community_head/user-edit/user-edit.component';
 import { UserEditService } from './service/HttpServices/user-edit.service';
+import { environment } from './environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +45,6 @@ export class AppComponent implements OnInit {
     this.accountService.isUserLoggedIn.subscribe((data) => {
       this.isLogged = data;
     });
-    this.userID = sessionStorage.getItem('userID');
     const token = sessionStorage.getItem('token');
     if (token == null) {
       if (this.isLogged == false) {

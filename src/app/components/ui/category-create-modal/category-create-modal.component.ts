@@ -7,6 +7,7 @@ import {
   superAdminCategoryService,
 } from 'src/app/service/HttpServices/superadmin-category.service';
 import { InvalidPopupComponent } from '../invalid-popup/invalid-popup.component';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 
 @Component({
   selector: 'app-category-create-modal',
@@ -14,7 +15,6 @@ import { InvalidPopupComponent } from '../invalid-popup/invalid-popup.component'
   styleUrls: ['./category-create-modal.component.css'],
 })
 export class CategoryCreateModalComponent implements OnInit {
-  id: number = 1;
   categoriesNotInCommunity: Category[] = [];
   allCategories: any[] = [];
   selectedCommunityCategory: string = '';
@@ -28,17 +28,22 @@ export class CategoryCreateModalComponent implements OnInit {
     private modalService: BsModalService,
     private httpService: CategoryService,
     private categoryService: superAdminCategoryService,
-    private router: Router
+    private router: Router,
+    private communityDataService: CommunityDataService
   ) {}
 
   alertRef?: BsModalRef;
 
+  communityID: number = 0;
   ngOnInit() {
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
     this.getCategoriesNotinCommunity();
   }
 
   getCategoriesNotinCommunity() {
-    this.httpService.getCategoriesNotInCommunity(this.id).subscribe({
+    this.httpService.getCategoriesNotInCommunity(this.communityID).subscribe({
       next: (data: any) => {
         this.categoriesNotInCommunity = data;
       },
@@ -90,7 +95,6 @@ export class CategoryCreateModalComponent implements OnInit {
         return; // Exit function early
       }
     }
-    const id = 1;
     const body = {
       communitCategoryName: this.newCategoryName,
       description: this.description,
@@ -99,7 +103,7 @@ export class CategoryCreateModalComponent implements OnInit {
 
     this.httpService
       .createCategoryDescription(
-        id,
+        this.communityID,
         body.description,
         body.communitCategoryName,
         body.createdBy

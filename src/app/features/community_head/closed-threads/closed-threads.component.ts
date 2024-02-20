@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { ThreadService } from 'src/app/service/HttpServices/thread.service';
 
@@ -37,7 +38,6 @@ export class ClosedThreadsComponent {
   // templete variables
   CategoryThreads!: ThreadResponse;
   pages: number[] = [];
-  communityID!: number;
   currentPage: number = 1;
   pageSize: number = 5;
   totalPages: number = 0;
@@ -60,17 +60,22 @@ export class ClosedThreadsComponent {
     private threadService: ThreadService,
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private communityDataService: CommunityDataService
   ) {}
 
   isLoading = false;
+  communityID: number = 0;
   // ng init with method to get url params and display content based on it
   ngOnInit() {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.activateRoute.queryParams.subscribe((params) => {
-      this.communityID = 1;
+    // this.activateRoute.queryParams.subscribe((params) => {
+    //   this.communityID = 1;
+    // });
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
     });
     this.loadThreads();
   }

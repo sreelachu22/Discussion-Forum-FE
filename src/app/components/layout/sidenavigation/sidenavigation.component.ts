@@ -9,6 +9,8 @@ import { UserEditService } from 'src/app/service/HttpServices/user-edit.service'
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import Swal from 'sweetalert2';
 import { ProfilePopupComponent } from '../profile-popup/profile-popup.component';
+import { AppUserService } from 'src/app/service/DataServices/appUser.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-sidenavigation',
@@ -21,7 +23,8 @@ export class SidenavigationComponent {
     private tokenHandler: TokenHandler,
     private authService: MsalService,
     private accountService: AccountsService,
-    private userService: UserEditService
+    private userService: UserEditService,
+    private appUserService: AppUserService
   ) {}
   collapsed = signal(false); //signals which will pass the state with the parent component
   //Automatically update the sidenav width according to the collapsed state
@@ -30,21 +33,30 @@ export class SidenavigationComponent {
   faUser = faUser;
 
   showProfilePopup: boolean = false;
-  @Input() userID: string | null = '';
+  // userID: string | null = '';
+  userID: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
+
   user!: SingleUser;
 
   ngOnInit() {
-    this.userID = sessionStorage.getItem('userID');
-    if (this.userID) {
-      this.userService.getSingleUser(this.userID).subscribe({
-        next: (data: SingleUser) => {
-          this.user = data;
-        },
-        error: (error: Error) => {
-          console.log('Error', error);
-        },
-      });
-    }
+    // this.userID = sessionStorage.getItem('userID');
+    this.userID.next(sessionStorage.getItem('userID'));
+    // console.log('sidenavigation ngoninit - userID :' + this.userID);
+    this.userID.subscribe((userID) => {
+      if (userID) {
+        console.log('sidenavigation ngoninit - userID :' + userID);
+        this.userService.getSingleUser(userID).subscribe({
+          next: (data: SingleUser) => {
+            this.user = data;
+          },
+          error: (error: Error) => {
+            console.log('Error', error);
+          },
+        });
+      }
+    });
   }
 
   toggleProfilePopup(): void {

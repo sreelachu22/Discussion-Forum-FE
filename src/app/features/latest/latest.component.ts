@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { LatestService } from 'src/app/service/HttpServices/latest.service';
 
@@ -29,10 +30,15 @@ export class LatestComponent implements OnInit {
   constructor(
     private latestService: LatestService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private communityDataService: CommunityDataService
   ) {}
 
+  communityID: number = 0;
   ngOnInit(): void {
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
     this.subscribeToLatestPosts();
   }
 
@@ -51,12 +57,14 @@ export class LatestComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getCategories(1).subscribe((data: any[]) => {
-      this.categories = data;
-      this.parentDropdownOptions = data.map(
-        (category) => category.communityCategoryName
-      );
-    });
+    this.categoryService
+      .getCategories(this.communityID)
+      .subscribe((data: any[]) => {
+        this.categories = data;
+        this.parentDropdownOptions = data.map(
+          (category) => category.communityCategoryName
+        );
+      });
   }
 
   handleOptionSelected(option: string) {

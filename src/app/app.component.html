@@ -2,7 +2,7 @@
   ><app-loader *ngIf="isLoading"></app-loader
 ></ng-container>
 <ng-container *ngIf="isLogged">
-  <app-sidenavigation [userID]="userID"></app-sidenavigation>
+  <app-sidenavigation></app-sidenavigation>
 </ng-container>
 <app-admin-login *ngIf="!isLogged"></app-admin-login>
 <!-- <router-outlet></router-outlet> -->
