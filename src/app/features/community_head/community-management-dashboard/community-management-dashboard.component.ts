@@ -11,6 +11,7 @@ import {
   TopUsers,
 } from 'src/app/service/HttpServices/leaderboard.service';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 
 @Component({
   selector: 'app-community-management-dashboard',
@@ -22,7 +23,8 @@ export class CommunityManagementDashboardComponent {
     private router: Router,
     private httpService: CategoryService,
     private leaderboardService: LeaderboardService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private communityDataService: CommunityDataService
   ) {}
 
   breadcrumbs = [
@@ -61,18 +63,21 @@ export class CommunityManagementDashboardComponent {
   }
 
   isLoading: boolean = false;
+  communityID: number = 0;
   ngOnInit() {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
+    });
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
     });
     this.getCategoriesInCommunity();
   }
 
   categories: CommunityCategory[] = [];
   categoryChartOptions: any;
-  id: number = 1;
   getCategoriesInCommunity() {
-    this.httpService.getCategories(this.id).subscribe({
+    this.httpService.getCategories(this.communityID).subscribe({
       next: (data: any) => {
         this.categories = data;
         this.updateCategoriesChartOptions();

@@ -1,7 +1,16 @@
 mat-toolbar {
   position: relative;
+  display: flex;
+  justify-content: space-between;
   z-index: 5;
   font-family: "Montserrat" !important;
+}
+
+.header_icons{
+  width: 7rem;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 mat-sidenav-container {
@@ -26,7 +35,6 @@ mat-sidenav-content {
 }
 
 .user_icon {
-  /* margin-left: 5rem; */
   cursor: pointer;
 }
 
@@ -38,27 +46,34 @@ app-search {
   flex: 1 1 auto;
 }
 
-/* .dropdown-menu.show{
-  background-color: antiquewhite ;
-} */
+.dropdown-menu.show{
+  background-color: rgb(51, 171, 165);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
 app-profile-popup{
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
 }
 
 .btn-group{
   width: fit-content;
 }
 
-.profile-dropdown{
-  right: 0%;
-}
+
 .notification_icon {
-  margin-left: 250px;
+  margin-right: 0%;
   font-size: 27px;
   cursor: pointer;
 }
 
 .notification_icon:hover {
   color: rgb(255, 255, 255);
+}
+
+.dropdown-menu.profile-dropdown {
+  position: absolute !important;
+  width: max-content;
+  left: 64rem !important;
+  right: 2% !important;
+  top: 100% !important;
 }

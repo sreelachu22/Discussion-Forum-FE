@@ -2,6 +2,7 @@ import { Component, Input, SimpleChanges, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
 import {
   CommunityCategory,
@@ -29,7 +30,8 @@ export class CommunityPageComponent {
     private modalService: BsModalService,
     private accountService: AccountsService,
     private loaderService: LoaderService,
-    private categoryMappingService: CategoryMappingService
+    private categoryMappingService: CategoryMappingService,
+    private communityDataService: CommunityDataService
   ) {}
 
   breadcrumbs = [
@@ -51,6 +53,9 @@ export class CommunityPageComponent {
     this.activateRoute.queryParams.subscribe((params) => {
       this.communityID = params['communityID'];
       this.communityName = params['communityName'] || 'PM-Hub';
+    });
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
     });
     this.loadCategories();
     this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
@@ -81,7 +86,7 @@ export class CommunityPageComponent {
       this.loadCategories();
     } else {
       this.httpService
-        .getPagedCategories(this.currentPage, this.searchText)
+        .getPagedCategories(this.communityID, this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categoriesList = data.categories;
           this.totalPages = Math.ceil(data.totalCount / this.pageSize);
@@ -110,7 +115,7 @@ export class CommunityPageComponent {
 
   loadCategories() {
     this.httpService
-      .getPagedCategories(this.currentPage, this.sortType)
+      .getPagedCategories(this.communityID, this.currentPage, this.sortType)
       .subscribe((data) => {
         this.categoriesList = data.categories;
 
@@ -143,9 +148,8 @@ export class CommunityPageComponent {
 
   threads: Thread[] = [];
 
-  id: number = 1;
   getCategoriesInCommunity() {
-    this.httpService.getCategories(this.id).subscribe({
+    this.httpService.getCategories(this.communityID).subscribe({
       next: (data: any) => {
         this.categories = data;
       },

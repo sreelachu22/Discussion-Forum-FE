@@ -10,7 +10,7 @@
 }
 
 .card:hover {
-  transform: scale(1.05); /* Increase size on hover */
+  transform: scale(1.02); /* Increase size on hover */
   color: #02746e; /* Change text color to white on hover */
   background: linear-gradient(135deg, #d0cfcf, #ffffff);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
