@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { ProfilePopupComponent } from '../profile-popup/profile-popup.component';
 import { NotificationService } from 'src/app/service/HttpServices/notification.service';
 import { UserNotificationService } from 'src/app/service/DataServices/userNotification.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-sidenavigation',
@@ -24,12 +25,14 @@ export class SidenavigationComponent {
     private authService: MsalService,
     private accountService: AccountsService,
     private userService: UserEditService,
+    private notificationService: NotificationService,
     private userNotificationService: UserNotificationService
   ) {}
   collapsed = signal(false); //signals which will pass the state with the parent component
   //Automatically update the sidenav width according to the collapsed state
   sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
   notificationCount!:number;
+  private updateInterval: number = 60000;
 
   faUser = faUser;
 
@@ -40,6 +43,10 @@ export class SidenavigationComponent {
   ngOnInit() {
     this.userNotificationService.notificationCount$.subscribe((count) => {
       this.notificationCount = count;
+    });
+    interval(this.updateInterval).subscribe(() => {
+      // Call the service to get updated count
+      this.notificationService.getNotificationCount(this.userID)
     });
     this.userID = sessionStorage.getItem('userID');
     if (this.userID) {

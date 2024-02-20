@@ -35,6 +35,7 @@ export class NotificationService {
         )
         .subscribe(count => {
           this.userNotificationService.setNotificationCount(count);
+          console.log(count)
         });
     } else {      
       this.userNotificationService.setNotificationCount(0);
