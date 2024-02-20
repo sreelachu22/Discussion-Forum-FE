@@ -6,13 +6,21 @@
   <div class="thread-data">
     <div class="user-controls">
       <div class="user-control">
-        <mat-icon class="mat_icons" (click)="emitUpvote(thread)">
+        <mat-icon
+          class="mat_icons"
+          (click)="emitUpvote(thread)"
+          matTooltip="Upvote"
+        >
           arrow_upward
         </mat-icon>
         <p class="vote_count">{{ thread.upVoteCount }}</p>
       </div>
       <div class="user-control">
-        <mat-icon class="mat_icons" (click)="emitDownvote(thread)">
+        <mat-icon
+          class="mat_icons"
+          (click)="emitDownvote(thread)"
+          matTooltip="Downvote"
+        >
           arrow_downward
         </mat-icon>
         <p class="vote_count">{{ thread.downVoteCount }}</p>
@@ -22,6 +30,7 @@
           class="your_icon"
           (click)="postReply(thread.threadID)"
           style="margin-left: 10px"
+          matTooltip="Reply"
         >
           reply
         </mat-icon>
@@ -48,17 +57,29 @@
     </div>
     <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">
       <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
-        <mat-icon class="your_icon" (click)="editThread(thread.threadID)">
+        <mat-icon
+          class="your_icon"
+          (click)="editThread(thread.threadID)"
+          matTooltip="Edit Thread"
+        >
           edit
         </mat-icon>
       </div>
       <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
-        <mat-icon class="your_icon" (click)="openCloseModal(thread.threadID)">
+        <mat-icon
+          class="your_icon"
+          (click)="openCloseModal(thread.threadID)"
+          matTooltip="Close Thread"
+        >
           cancel
         </mat-icon>
       </div>
       <div *ngIf="thread.threadStatusName == 'Closed'" class="owner-control">
-        <mat-icon class="your_icon" (click)="openReopenModal(thread.threadID)">
+        <mat-icon
+          class="your_icon"
+          (click)="openReopenModal(thread.threadID)"
+          matTooltip="Reopen Thread"
+        >
           replay
         </mat-icon>
       </div>

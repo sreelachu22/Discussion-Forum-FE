@@ -20,6 +20,7 @@
         *ngIf="!reply.isDeleted"
         class="mat_icons"
         (click)="emitUpvote(reply)"
+        matTooltip="Upvote"
       >
         arrow_upward
       </mat-icon>
@@ -30,8 +31,10 @@
         *ngIf="!reply.isDeleted"
         class="mat_icons"
         (click)="emitDownvote(reply)"
-        >arrow_downward</mat-icon
+        matTooltip="Downvote"
       >
+        arrow_downward
+      </mat-icon>
 
       <p *ngIf="!reply.isDeleted" class="vote_count">
         {{ reply.downvoteCount }}
@@ -41,20 +44,26 @@
         *ngIf="isOpenThread"
         class="your_reply_icon"
         (click)="postReply(reply.replyID)"
-        >reply</mat-icon
+        matTooltip="Reply"
       >
+        reply
+      </mat-icon>
       <mat-icon
         *ngIf="isCurrentUser(reply) && !reply.isDeleted && isOpenThread"
         class="your_reply_icon"
         (click)="editReply(reply.replyID)"
-        >edit</mat-icon
+        matTooltip="Edit Reply"
       >
+        edit
+      </mat-icon>
       <mat-icon
         (click)="openDeleteModal(reply)"
         *ngIf="isCurrentUser(reply) && !reply.isDeleted && isOpenThread"
         class="your_reply_icon"
-        >delete</mat-icon
+        matTooltip="Delete Reply"
       >
+        delete
+      </mat-icon>
     </div>
 
     <div class="show-replies">
