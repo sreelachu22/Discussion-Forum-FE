@@ -61,6 +61,11 @@ export class ThreadService {
     return this.http.put(apiUrl, null);
   }
 
+  reopenThread(threadID: number, modifierId: string): Observable<any> {
+    const apiUrl = `${this.singleThreadURL}/ReopenThread/${threadID}?ModifierId=${modifierId}`;
+    return this.http.put(apiUrl, null);
+  }
+
   deleteThread(threadID: number, modifierId: string): Observable<any> {
     const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
     return this.http.delete(apiUrl);
