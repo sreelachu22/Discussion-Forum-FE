@@ -44,21 +44,20 @@ export class UserEditComponent {
   userRoleToggle: boolean = false;
   userRoles!: [{ roleID: number; roleName: string }];
   selectedRoleID!: number;
-
+  modifiedBy: any;
   //change user role
   editUserRole() {
     this.userRoleToggle = !this.userRoleToggle;
   }
 
-  //save the canged user role
+  //save the changed user role
   saveChanges() {
     this.userRoleToggle = !this.userRoleToggle;
-
     this.useredit
       .changeUserRole(
         this.user.userID,
         this.selectedRoleID,
-        '477D9E0A-6C59-49CF-B7C5-ED8A624FF2AE'
+        this.modifiedBy
       )
       .subscribe({
         next: (response) => {
@@ -96,7 +95,7 @@ export class UserEditComponent {
           },
         });
       }
-
+      this.modifiedBy= sessionStorage.getItem('userID');
       this.useredit.getUserRoles().subscribe((data) => {
         this.userRoles = data;
 
