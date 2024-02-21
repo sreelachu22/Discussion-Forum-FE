@@ -8,28 +8,28 @@
   width: 90%;
   transition: background-color 0.3s ease;
 }
- 
+
 .top-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
- 
+
 .reply {
   margin-bottom: 10px;
 }
- 
+
 .notification {
   font-weight: bold;
 }
- 
+
 .reply-content {
   font-size: 14px;
   line-height: 1.4;
   margin-top: 8px;
   font-style: italic;
 }
- 
+
 button {
   background-color: rgb(51, 171, 165);
   color: #fff;
@@ -40,19 +40,19 @@ button {
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-size: 14px;
 }
- 
+
 button:hover {
   background-color: rgb(7, 217, 207);
 }
- 
+
 button:focus {
   outline: none;
 }
- 
+
 button:active {
   transform: scale(0.95);
 }
- 
+
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -64,16 +64,16 @@ button:active {
     transform: scale(1);
   }
 }
- 
+
 .button-animation {
   animation: pulse 1.5s infinite;
 }
- 
+
 .top-row span:first-child {
   color: #007bffc2;
   font-weight: bold;
 }
- 
+
 .top-row span:last-child {
   color: #904c4c;
 }

@@ -13,37 +13,37 @@
   <app-search></app-search>
 
   <span class="spacer"></span>
-  <div class="header_icons">
-    <mat-icon
-      class="notification_icon"
-      (click)="showNotifications()"
-      matTooltip="Notifications"
-      >notifications</mat-icon
-    >
+  <mat-icon class="notification_icon" (click)="showNotifications()"
+    >notifications</mat-icon
+  >
+  <span class="notification_count" *ngIf="notificationCount !== 0">{{
+    notificationCount
+  }}</span>
 
-    <ng-container
-      class="btn-group"
-      dropdown
-      #dropdown="bs-dropdown"
-      [autoClose]="true"
+  <span class="spacer"></span>
+
+  <ng-container
+    class="btn-group"
+    dropdown
+    #dropdown="bs-dropdown"
+    [autoClose]="true"
+  >
+    <img
+      dropdownToggle
+      class="user_icon"
+      src="assets/images/profile-user.png"
+      style="max-width: 40px; min-width: 40px"
+      aria-controls="dropdown-basic"
+    />
+    <div
+      *dropdownMenu
+      class="dropdown-menu profile-dropdown"
+      aria-labelledby="button-basic"
+      (click)="toggleProfilePopup()"
     >
-      <img
-        dropdownToggle
-        class="user_icon"
-        src="assets/images/profile-user.png"
-        style="max-width: 40px; min-width: 40px"
-        aria-controls="dropdown-basic"
-      />
-      <div
-        *dropdownMenu
-        class="dropdown-menu profile-dropdown"
-        aria-labelledby="button-basic"
-        (click)="toggleProfilePopup()"
-      >
-        <app-profile-popup [user]="user"></app-profile-popup>
-      </div>
-    </ng-container>
-  </div>
+      <app-profile-popup [user]="user"></app-profile-popup>
+    </div>
+  </ng-container>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav
