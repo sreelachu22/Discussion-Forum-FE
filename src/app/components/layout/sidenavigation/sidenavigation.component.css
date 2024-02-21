@@ -60,23 +60,37 @@ app-profile-popup {
 }
 
 .notification_icon {
-  margin-right: 0%;
   font-size: 27px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
-  position: relative;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification_icon:hover::before {
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  background-color: rgba(0, 0, 0, 0.091);
+  border-radius: 50%;
+  z-index: 1;
 }
 
 .notification_count {
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 75px; /* Adjust as needed */
+  position: relative;
+  left: 35px;
+  bottom: 12px;
   background-color: black;
   color: white;
-  border-radius: 50%; /* Ensures perfect circle */
+  border-radius: 50%;
   padding: 4px 8px;
   font-size: 12px;
-  width: 20px; /* Adjust as needed */
-  height: 20px; /* Adjust as needed */
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
