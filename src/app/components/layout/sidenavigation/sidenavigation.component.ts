@@ -9,6 +9,8 @@ import { UserEditService } from 'src/app/service/HttpServices/user-edit.service'
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import Swal from 'sweetalert2';
 import { ProfilePopupComponent } from '../profile-popup/profile-popup.component';
+import { AppUserService } from 'src/app/service/DataServices/appUser.service';
+import { BehaviorSubject } from 'rxjs';
 import { NotificationService } from 'src/app/service/HttpServices/notification.service';
 import { UserNotificationService } from 'src/app/service/DataServices/userNotification.service';
 import { interval } from 'rxjs';
@@ -25,6 +27,7 @@ export class SidenavigationComponent {
     private authService: MsalService,
     private accountService: AccountsService,
     private userService: UserEditService,
+    private appUserService: AppUserService,
     private notificationService: NotificationService,
     private userNotificationService: UserNotificationService
   ) {}
@@ -37,28 +40,38 @@ export class SidenavigationComponent {
   faUser = faUser;
 
   showProfilePopup: boolean = false;
-  @Input() userID: string | null = '';
+  // userID: string | null = '';
+  userID: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
+
   user!: SingleUser;
 
   ngOnInit() {
     this.userNotificationService.notificationCount$.subscribe((count) => {
       this.notificationCount = count;
     });
-    interval(this.updateInterval).subscribe(() => {
-      // Call the service to get updated count
-      this.notificationService.getNotificationCount(this.userID)
+    interval(this.updateInterval).subscribe(() => {      
+      const userID = this.userID.getValue(); // Extract the value from BehaviorSubject
+    if (userID) {
+      this.notificationService.getNotificationCount(userID);}
     });
-    this.userID = sessionStorage.getItem('userID');
-    if (this.userID) {
-      this.userService.getSingleUser(this.userID).subscribe({
-        next: (data: SingleUser) => {
-          this.user = data;                       
-        },
-        error: (error: Error) => {
-          console.log('Error', error);
-        },
-      });
-    }
+    // this.userID = sessionStorage.getItem('userID');
+    this.userID.next(sessionStorage.getItem('userID'));
+    // console.log('sidenavigation ngoninit - userID :' + this.userID);
+    this.userID.subscribe((userID) => {
+      if (userID) {
+        console.log('sidenavigation ngoninit - userID :' + userID);
+        this.userService.getSingleUser(userID).subscribe({
+          next: (data: SingleUser) => {
+            this.user = data;                       
+          },
+          error: (error: Error) => {
+            console.log('Error', error);
+          },
+        });
+      }
+    });
   }
 
   toggleProfilePopup(): void {

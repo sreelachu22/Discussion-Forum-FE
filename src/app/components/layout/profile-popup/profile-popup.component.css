@@ -12,7 +12,8 @@
     align-items: center;
     padding: 5px;
     border-radius: 10%;
-    background-color: rgb(224, 244, 242);
+    background-color: black;
+    color: white;
   }
   
   .upper_side img {

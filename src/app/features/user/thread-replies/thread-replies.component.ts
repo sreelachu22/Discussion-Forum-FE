@@ -50,6 +50,7 @@ export class ThreadRepliesComponent {
   threadReplies: ThreadReplies[] = [];
   showNestedReplies: boolean[] = [];
   thread!: Thread;
+  isOpenThread: boolean = true;
   threadRepliesStatus: boolean = true;
 
   isLoading = false;
@@ -71,6 +72,9 @@ export class ThreadRepliesComponent {
       .subscribe((data: any) => {
         this.thread = data;
         this.loadReplies();
+        if (this.thread.threadStatusName === 'Closed') {
+          this.isOpenThread = false;
+        }
       });
   }
 

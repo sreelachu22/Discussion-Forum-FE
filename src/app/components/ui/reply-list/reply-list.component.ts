@@ -16,6 +16,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
+  @Input() isOpenThread?: boolean;
   @Output() upvoteEvent = new EventEmitter<Vote>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();

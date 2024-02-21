@@ -16,6 +16,7 @@
 
     <div *ngFor="let thread of CategoryThreads.threads">
       <app-list
+        (click)="navigateToThreadReplies(thread.threadID)"
         [sections]="[
           {
             title: 'Column 1',
