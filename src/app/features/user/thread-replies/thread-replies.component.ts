@@ -65,7 +65,7 @@ export class ThreadRepliesComponent {
     this.activateRoute.queryParams
       .pipe(
         switchMap((params) => {
-          this.threadId = params['threadID'];
+          this.threadId = params['threadID'];          
           return this.threadService.getSingleThread(this.threadId);
         })
       )

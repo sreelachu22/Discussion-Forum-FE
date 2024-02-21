@@ -16,6 +16,7 @@ import {
   UserEditComponent,
 } from './features/community_head/user-edit/user-edit.component';
 import { UserEditService } from './service/HttpServices/user-edit.service';
+import { NotificationService } from './service/HttpServices/notification.service';
 import { environment } from './environments/environment';
 import { jwtDecode } from 'jwt-decode';
 
@@ -29,7 +30,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private loaderService: LoaderService,
     private accountService: AccountsService,
-    private userService: UserEditService
+    private userService: UserEditService,
+    private notificationService : NotificationService
   ) {}
   isLogged: boolean = false;
   //this subscribes to the isLoading$ observable provided by the LoaderService.
@@ -45,6 +47,8 @@ export class AppComponent implements OnInit {
     this.accountService.isUserLoggedIn.subscribe((data) => {
       this.isLogged = data;
     });
+    this.userID = sessionStorage.getItem('userID');
+    this.notificationService.getNotificationCount(this.userID);
     const token = sessionStorage.getItem('token');
     if (token == null) {
       if (this.isLogged == false) {

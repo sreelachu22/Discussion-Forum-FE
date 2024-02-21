@@ -6,7 +6,7 @@ mat-toolbar {
   font-family: "Montserrat" !important;
 }
 
-.header_icons{
+.header_icons {
   width: 7rem;
   align-items: center;
   display: flex;
@@ -46,28 +46,40 @@ app-search {
   flex: 1 1 auto;
 }
 
-.dropdown-menu.show{
+.dropdown-menu.show {
   background-color: rgb(51, 171, 165);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
-app-profile-popup{
+app-profile-popup {
   display: flex;
   justify-content: flex-end;
 }
 
-.btn-group{
+.btn-group {
   width: fit-content;
 }
-
 
 .notification_icon {
   margin-right: 0%;
   font-size: 27px;
   cursor: pointer;
+  position: relative;
 }
 
-.notification_icon:hover {
-  color: rgb(255, 255, 255);
+.notification_count {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 75px; /* Adjust as needed */
+  background-color: black;
+  color: white;
+  border-radius: 50%; /* Ensures perfect circle */
+  padding: 4px 8px;
+  font-size: 12px;
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dropdown-menu.profile-dropdown {

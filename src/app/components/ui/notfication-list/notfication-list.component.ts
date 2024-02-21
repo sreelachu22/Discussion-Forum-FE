@@ -25,4 +25,5 @@ export class NotficationListComponent {
       return content;
     }
   }
+
 }
