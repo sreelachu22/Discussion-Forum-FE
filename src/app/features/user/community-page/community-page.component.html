@@ -1,3 +1,6 @@
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
 <div class="container">
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
@@ -20,39 +23,45 @@
 
   <br />
 
-  <div class="row">
-    <div *ngFor="let category of categoriesList" class="col-md-4">
-      <app-card
-        [metadataItems]="[
-        {
-          name: '',
-          value: '',
-          imageSrc: 'assets/images/category.png'
-        },
-          {
-            name: '',
-            value: category.communityCategoryName,
-            style: { color: '#64A2F5', fontSize: '16px' },
-          },
-          { value: category.threadCount + ' posts' }
-        ]"
-        (click)="navigateToPosts(category.communityCategoryMappingID)"
-      >
-      <!-- category.communityCategoryMappingID -->
-      </app-card>
+  <div *ngIf="categoriesList.length <= 0" class="centered-container">
+    <div class="content">
+      <br />
+      <h3>No categories Yet</h3>
+      <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%" />
     </div>
   </div>
+  <div *ngIf="categoriesList.length > 0">
+    <div class="row">
+      <div *ngFor="let category of categoriesList" class="col-md-4">
+        <app-card
+          [metadataItems]="[
+          {
+            name: '',
+            value: '',
+            imageSrc: 'assets/images/category.png'
+          },
+            {
+              name: '',
+              value: category.communityCategoryName,
+              style: { color: '#64A2F5', fontSize: '16px' },
+            },
+            { value: category.threadCount + ' posts' }
+          ]"
+          (click)="navigateToPosts(category.communityCategoryMappingID)"
+        >
+          <!-- category.communityCategoryMappingID -->
+        </app-card>
+      </div>
+    </div>
 
-  <br /><br />
-  <div class="pagination mt-3">
-    <button (click)="prevPage()" class="prevButton">
-      <span>Back</span>
-    </button>
-    <button (click)="nextPage()" class="nextButton">
-      <span>Next</span>
-    </button>
+    <br /><br />
+    <div class="pagination mt-3">
+      <button (click)="prevPage()" class="prevButton">
+        <span>Back</span>
+      </button>
+      <button (click)="nextPage()" class="nextButton">
+        <span>Next</span>
+      </button>
+    </div>
   </div>
 </div>
-<ng-container class="container"
-  ><app-loader *ngIf="isLoading"></app-loader
-></ng-container>

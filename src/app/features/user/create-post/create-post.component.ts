@@ -5,6 +5,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
+import { environment } from 'src/app/environments/environment';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
 export interface Tag {
@@ -32,8 +34,9 @@ export class CreatePostComponent {
     private http: HttpClient,
     private router: Router,
     private tags: TagService,
-    private communityDataService : CommunityDataService,
-    private categoryMappingService : CategoryMappingService
+    private loaderService: LoaderService,
+    private communityDataService: CommunityDataService,
+    private categoryMappingService: CategoryMappingService
   ) {}
 
   breadcrumbs = [
@@ -43,8 +46,11 @@ export class CreatePostComponent {
     { label: 'Create Post', route: '/category-posts/create-posts' },
   ];
 
+  isLoading: boolean = false;
   ngOnInit() {
-
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
     });
@@ -58,9 +64,9 @@ export class CreatePostComponent {
   }
 
   goBack() {
-    this.router.navigate(['/community/category-posts'])
+    this.router.navigate(['/community/category-posts']);
   }
-
+  baseUrl: string = environment.apiUrl;
   onSubmit(eventPayload: {
     title: string;
     editorContent: string;
@@ -79,7 +85,9 @@ export class CreatePostComponent {
       this.route.snapshot.queryParams['creatorId'] ||
       sessionStorage.getItem('userID');
 
-    const url = `https://localhost:7160/api/Thread?communityMappingId=${this.communityCategoryMappingID}&userId=${creatorId}`;
+    const url =
+      this.baseUrl +
+      `Thread?communityMappingId=${this.communityCategoryMappingID}&userId=${creatorId}`;
 
     this.http
       .post(url, JSON.stringify(content), {
@@ -90,7 +98,6 @@ export class CreatePostComponent {
       })
       .subscribe({
         next: (response) => {
-          console.log('Post created successfully:', response);
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Post created successfully',
@@ -101,7 +108,7 @@ export class CreatePostComponent {
           console.error('Error creating post:', error);
         },
         complete: () => {
-          this.router.navigate(['/community/category-posts'])
+          this.router.navigate(['/community/category-posts']);
         },
       });
   }

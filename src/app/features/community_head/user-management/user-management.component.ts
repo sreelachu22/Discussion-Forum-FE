@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../service/HttpServices/users.service';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { SingleUserService } from 'src/app/service/DataServices/singleUser.service';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 
 @Component({
   selector: 'app-user-management',
@@ -9,9 +11,9 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./user-management.component.css'],
 })
 export class UserManagementComponent implements OnInit {
-  sortOptions = ['Name', 'Score', 'Date'];  
+  sortOptions = ['Name', 'Score', 'Date'];
   sortType: string = 'name';
-  title: string = 'usersPage';  
+  title: string = 'usersPage';
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
@@ -28,14 +30,20 @@ export class UserManagementComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private singleUserService: SingleUserService,
+    private loaderService: LoaderService
   ) {}
 
+  isLoading: boolean = false;
   ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
     this.loadUsers();
   }
 
-  getSingleUser(searchText:string) {
+  getSingleUser(searchText: string) {
     if (searchText == '') {
       this.loadUsers();
     } else {
@@ -48,19 +56,21 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
-  loadUsers() {     
-    if (this.sortType == "date"){
-      this.sortType = "createdAt"
+  loadUsers() {
+    if (this.sortType == 'date') {
+      this.sortType = 'createdAt';
     }
     this.userService
       .getUsers(this.currentPage, this.sortType)
       .subscribe((data) => {
-        this.users = data.users.map(user => {
+        this.users = data.users.map((user) => {
           return {
             ...user,
-            createdAt: user.createdAt ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US') : null            
+            createdAt: user.createdAt
+              ? formatDate(user.createdAt, 'dd-MM-yyyy', 'en-US')
+              : null,
           };
-        });        
+        });
         this.pageCount = data.totalPages;
       });
   }
@@ -81,13 +91,14 @@ export class UserManagementComponent implements OnInit {
 
   onUserIconClick(event: { icon: string; data: any }): void {
     if (event.icon === 'edit') {
+      this.singleUserService.setUserData(event.data.userID);
       this.GoToSingleUserPage(event.data.userID);
     }
   }
 
   GoToSingleUserPage(userID: string): void {
     this.router.navigate([
-      `community-management-dashboard/user-management/user-edit/${userID}`,
+      `community-management-dashboard/user-management/user-edit`,
     ]);
   }
 

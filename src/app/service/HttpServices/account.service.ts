@@ -52,7 +52,7 @@ export class AccountsService {
   ) {}
 
   loginUser(model: { email: string; password: string }) {
-    return this.http.post('https://localhost:7160/api/Login/login', model);
+    return this.http.post(this.apiurl + 'Login/login', model);
   }
 
   updateUserLoggedInStatus(loggedIn: boolean): void {
@@ -60,22 +60,17 @@ export class AccountsService {
   }
 
   Logout() {
-    console.log('logout');
     this.isLogged = false;
     this.authService.logoutRedirect({
-      postLogoutRedirectUri: 'http://localhost:4200',
+      postLogoutRedirectUri: environment.postLogoutRedirectUri,
     });
     sessionStorage.clear();
   }
   microsoftLogin(model: any) {
-    return this.http.post(
-      'https://localhost:7160/api/Login/ExternalLogin',
-      model
-    );
+    return this.http.post(this.apiurl + 'Login/ExternalLogin', model);
   }
-  logoutBackend(userID : string): Observable<any> {
-    const url = `https://localhost:7160/api/Login/Logout?userId=${userID}`;
+  logoutBackend(userID: string): Observable<any> {
+    const url = this.apiurl + `Login/Logout?userId=${userID}`;
     return this.http.post(url, null);
   }
- 
 }

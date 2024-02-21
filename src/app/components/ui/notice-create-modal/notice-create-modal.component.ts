@@ -15,7 +15,6 @@ import { CommunityDataService } from 'src/app/service/DataServices/community-dat
   providers: [DatePipe],
 })
 export class NoticeCreateModalComponent {
-
   public notices: any[] = [];
   public newNotice: any = {};
 
@@ -32,7 +31,7 @@ export class NoticeCreateModalComponent {
 
   constructor(
     private noticesService: NoticesService,
-    private modalRef : BsModalRef,
+    private modalRef: BsModalRef,
     private datePipe: DatePipe,
     private communityDataService: CommunityDataService
   ) {}
@@ -40,7 +39,7 @@ export class NoticeCreateModalComponent {
   faEdit = faEdit;
   faDelete = faTrash;
 
-  @Output() noticeCreated: EventEmitter<any> =  new EventEmitter<any>();
+  @Output() noticeCreated: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit(): void {
     this.getValues();
@@ -61,18 +60,15 @@ export class NoticeCreateModalComponent {
     this.communityDataService.communityID$.subscribe((id) => {
       this.newNotice.communityID = id;
     });
-    console.log(this.newNotice.communityID)
-    this.newNotice.createdBy= sessionStorage.getItem('userID');
+    this.newNotice.createdBy = sessionStorage.getItem('userID');
     // Ensure all required fields are provided
     if (
       this.newNotice.title &&
       this.newNotice.content &&
       this.newNotice.expiresAt
     ) {
-
       this.noticesService.addData(this.apiUrl, this.newNotice).subscribe(
         (response) => {
-          console.log('POST Request Successful:', response);
           // this.getValues();
           this.noticeCreated.emit();
         },
@@ -92,5 +88,3 @@ export class NoticeCreateModalComponent {
     this.modalRef?.hide();
   }
 }
-
-

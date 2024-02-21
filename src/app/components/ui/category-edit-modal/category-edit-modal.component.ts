@@ -12,6 +12,7 @@ import { CategoryService } from 'src/app/service/HttpServices/category.service';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { tap } from 'rxjs';
 import { Category } from 'src/app/service/HttpServices/superadmin-category.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 @Component({
   selector: 'app-category-edit-modal',
   templateUrl: './category-edit-modal.component.html',
@@ -26,15 +27,16 @@ export class CategoryEditModalComponent {
     private activateRoute: ActivatedRoute,
     private modalRef: BsModalRef,
     private updateRef: BsModalRef,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private communityDataService: CommunityDataService
   ) {}
-  // @Input()
+  @Input()
   description: string = '';
-  // @Input()
+  @Input()
   communityCategoryMappingID: number = 0;
   newDescription: string = '';
   modifiedBy: string | null = '';
-
+  communityID: number = 0;
   ngOnInit() {
     this.categoryModalService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
@@ -44,7 +46,11 @@ export class CategoryEditModalComponent {
       this.description = desc;
     });
 
-    this.modifiedBy= sessionStorage.getItem('userID');
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
+
+    this.modifiedBy = sessionStorage.getItem('userID');
   }
 
   @Output() categoryUpdated: EventEmitter<Category> =
@@ -71,99 +77,45 @@ export class CategoryEditModalComponent {
         },
       });
   }
-  // BsModalRef stands for Bootstrap Modal Reference.
-  // bsmodalRef?: BsModalRef;
-  //methods for open modal for delete
-  //communityCategoryMappingID: number
-  // openDeleteModal() {
-  //   // console.log('id for delete:', communityCategoryMappingID);
-  //   // this.communityCategoryMappingID = communityCategoryMappingID;
-  //   const initialState = {
-  //     confirmFunction: this.confirm.bind(this),
-  //     declineFunction: this.decline.bind(this),
-  //   };
-
-  //   this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
-  //     initialState,
-  //   });
-  //   this.bsmodalRef.content.subscribe(() => {});
-  // }
-
-  // //after getting confirmation for delete, delete api calls
-  // confirm(): void {
-  //   this.httpService
-  //     .deleteCategoryMapping(this.communityCategoryMappingID)
-  //     .subscribe({
-  //       next: (data: any) => {
-  //         this.categoryUpdated.emit(data);
-  //         this.httpService.getPagedCategories(1, '-createdAt').subscribe({
-  //           next: (data: any) => {
-  //             console.log(data);
-  //           },
-  //           error: (error: Error) => {
-  //             alert('Error has occured, ' + error.message);
-  //           },
-  //         });
-  //         // Close the modal
-  //         this.updateRef.hide();
-  //       },
-  //       error: (error: Error) => {
-  //         alert('Error has occured, ' + error.message);
-  //       },
-  //       complete: () => {
-  //         this.modalRef.hide();
-  //         this.updateRef.hide();
-  //       },
-  //     });
-  // }
 
   // BsModalRef stands for Bootstrap Modal Reference.
   bsmodalRef?: BsModalRef;
   //methods for open modal for delete
   openDeleteModal() {
-    //communityCategoryMappingID: number
-    // console.log('id for delete:', communityCategoryMappingID);
-    // this.communityCategoryMappingID = communityCategoryMappingID;
     const initialState = {
       communityCategoryMappingID: this.communityCategoryMappingID,
       confirmFunction: this.confirm.bind(this),
       declineFunction: this.decline.bind(this),
     };
- 
+
     this.bsmodalRef = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
-    // this.bsmodalRef.content.subscribe(() => {});
   }
- 
+
   //after getting confirmation for delete, delete api calls
   confirm(): void {
     this.httpService
       .deleteCategoryMapping(this.communityCategoryMappingID)
       .subscribe({
         next: (data: any) => {
-          // this.categoryUpdated.emit(data);
-          this.httpService.getPagedCategories(1, '-createdAt').subscribe({
-            next: (data: any) => {
-              console.log(data);
-            },
-            error: (error: Error) => {
-              alert('Error has occured, ' + error.message);
-            },
-          });
-          // Close the modal
-          // this.updateRef.hide();
+          this.httpService
+            .getPagedCategories(this.communityID, 1, '-createdAt')
+            .subscribe({
+              next: (data: any) => {},
+              error: (error: Error) => {
+                alert('Error has occured, ' + error.message);
+              },
+            });
         },
         error: (error: Error) => {
           alert('Error has occured, ' + error.message);
         },
         complete: () => {
           this.modalRef.hide();
-          // this.updateRef.hide();
         },
       });
   }
- 
 
   decline() {
     this.bsmodalRef?.hide();

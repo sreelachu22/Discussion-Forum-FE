@@ -24,6 +24,7 @@ export class ThreadViewComponent {
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
   ActiveUserID: string | null = sessionStorage.getItem('userID');
+  isAdmin?: boolean = false;
 
   confirmModal!: BsModalRef;
   successModal!: BsModalRef;
@@ -41,6 +42,7 @@ export class ThreadViewComponent {
     this.route.queryParams.subscribe((params) => {
       this.communityCategoryMappingID = +params['communityCategoryMappingID'];
     });
+    this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
   }
   user!: User;
   getUserName(thread: Thread) {
@@ -104,7 +106,6 @@ export class ThreadViewComponent {
     const ModifierId = sessionStorage.getItem('userID') || '';
     this.threadService.closeThread(this.threadID, ModifierId).subscribe({
       next: (response) => {
-        console.log(response);
         this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
             message: 'Thread closed successfully', //make use of reusable success pop up , sends message to it
@@ -128,29 +129,28 @@ export class ThreadViewComponent {
     this.successModal?.hide();
   }
 
-  openDeleteModal(threadID: number) {
+  openReopenModal(threadID: number) {
     this.threadID = threadID;
     const initialState = {
-      confirmFunction: this.confirmDeleteThread.bind(this),
-      declineFunction: this.declineDeleteThread.bind(this),
+      confirmFunction: this.confirmReopenThread.bind(this),
+      declineFunction: this.declineReopenThread.bind(this),
     };
     this.confirmModal = this.modalService.show(DeleteModalComponent, {
       initialState,
     });
   }
-  confirmDeleteThread() {
+  confirmReopenThread(): void {
     const ModifierId = sessionStorage.getItem('userID') || '';
-    this.threadService.deleteThread(this.threadID, ModifierId).subscribe({
+    this.threadService.reopenThread(this.threadID, ModifierId).subscribe({
       next: (response) => {
-        console.log(response);
         this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
-            message: 'Thread deleted successfully', //make use of reusable success pop up , sends message to it
+            message: 'Thread reopened successfully', //make use of reusable success pop up , sends message to it
           },
         });
       },
       error: (error) => {
-        console.error('Error closing thread:', error);
+        console.error('Error reopening thread:', error);
       },
       complete: () => {
         this.router.navigate(['/community/category-posts'], {
@@ -161,10 +161,47 @@ export class ThreadViewComponent {
       },
     });
   }
-  declineDeleteThread() {
+  declineReopenThread() {
     this.confirmModal?.hide();
     this.successModal?.hide();
   }
+
+  // openDeleteModal(threadID: number) {
+  //   this.threadID = threadID;
+  //   const initialState = {
+  //     confirmFunction: this.confirmDeleteThread.bind(this),
+  //     declineFunction: this.declineDeleteThread.bind(this),
+  //   };
+  //   this.confirmModal = this.modalService.show(DeleteModalComponent, {
+  //     initialState,
+  //   });
+  // }
+  // confirmDeleteThread() {
+  //   const ModifierId = sessionStorage.getItem('userID') || '';
+  //   this.threadService.deleteThread(this.threadID, ModifierId).subscribe({
+  //     next: (response) => {
+  //       this.successModal = this.modalService.show(SuccessPopupComponent, {
+  //         initialState: {
+  //           message: 'Thread deleted successfully', //make use of reusable success pop up , sends message to it
+  //         },
+  //       });
+  //     },
+  //     error: (error) => {
+  //       console.error('Error closing thread:', error);
+  //     },
+  //     complete: () => {
+  //       this.router.navigate(['/community/category-posts'], {
+  //         queryParams: {
+  //           communityCategoryMappingID: this.communityCategoryMappingID,
+  //         },
+  //       });
+  //     },
+  //   });
+  // }
+  // declineDeleteThread() {
+  //   this.confirmModal?.hide();
+  //   this.successModal?.hide();
+  // }
 
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');

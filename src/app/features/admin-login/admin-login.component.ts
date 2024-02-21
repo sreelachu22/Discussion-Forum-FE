@@ -26,7 +26,9 @@ import {
   azureObj,
 } from 'src/app/service/HttpServices/account.service';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, filter, takeUntil } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
+import { AppUserService } from 'src/app/service/DataServices/appUser.service';
 interface MicrosoftTokenPayload extends JwtPayload {
   name: string;
 }
@@ -58,32 +60,19 @@ export class AdminLoginComponent {
   azureReturn: AzureReturn = {
     token: '',
   };
+  userID: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
+
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private msalBroadCastService: MsalBroadcastService,
     private accountsService: AccountsService,
     private tokenHandler: TokenHandler,
     private authService: MsalService,
-    private router: Router
-  ) {
-    // const token = this.tokenHandler.getToken();
-    // if (token != null) {
-    //   const role = this.tokenHandler.getRoleFromToken(token);
-    //   if (role == 'SuperAdmin') {
-    //     this.router.navigateByUrl('/admin-dashboard');
-    //   } else if (role == 'CommunityHead') {
-    //     this.router.navigateByUrl('/community-management-dashboard');
-    //   } else if (role == 'User') {
-    //     this.router.navigateByUrl('/home');
-    //   } else {
-    //     Swal.fire(
-    //       '401- Unauthorized',
-    //       'You are not authorised to use the system',
-    //       'error'
-    //     );
-    //   }
-    // }
-  }
+    private router: Router,
+    private appUserService: AppUserService
+  ) {}
 
   ngOnInit() {
     this.msalBroadCastService.inProgress$
@@ -99,9 +88,9 @@ export class AdminLoginComponent {
           this.authService.instance.getAllAccounts().length > 0;
         console.log(this.authService.instance.getAllAccounts());
         const account = this.authService.instance.getAllAccounts();
-        this.azureObj.name = account[0].name ?? '';
-
-        this.accountsService.isUserLoggedIn.next(this.isUserLoggedIn);
+        if (sessionStorage.getItem('userID')) {
+          this.accountsService.isUserLoggedIn.next(this.isUserLoggedIn);
+        }
       });
   }
 
@@ -111,15 +100,10 @@ export class AdminLoginComponent {
         this.accountsService.isLogged = true;
         sessionStorage.setItem('token', res.token);
         const decodedToken: any = jwtDecode(res.token);
-        var role =
-          decodedToken[
-            'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-          ];
-        var userID =
-          decodedToken[
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-          ];
+        var role = decodedToken[environment.decodedRole];
+        var userID = decodedToken[environment.decodedUserID];
         sessionStorage.setItem('userID', userID);
+        this.userID.next(userID);
         if (role == 'SuperAdmin') {
           this.router.navigateByUrl('/admin-dashboard');
         } else if (role == 'CommunityHead') {
@@ -157,36 +141,28 @@ export class AdminLoginComponent {
           ...this.msalGuardConfig.authRequest,
         } as RedirectRequest)
         .subscribe((authenticationResult) => {
-          this.accountsService.isLogged = true;
           this.azureObj.Token = authenticationResult.idToken;
           this.azureObj.Provider = 'Microsoft';
-          this.accountsService.isLogged = true;
           sessionStorage.setItem('AzureJwt', authenticationResult.idToken);
           if (!sessionStorage.getItem('token')) {
             this.accountsService.microsoftLogin(this.azureObj).subscribe({
               next: (res: any) => {
-                this.accountsService.isLogged = true;
-                this.accountsService.updateUserLoggedInStatus(
-                  this.accountsService.isLogged
-                );
                 sessionStorage.setItem('token', res.token);
                 const decodedToken: any = jwtDecode(res.token);
-                var role =
-                  decodedToken[
-                    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-                  ];
-                var userID =
-                  decodedToken[
-                    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-                  ];
+                var role = decodedToken[environment.decodedRole];
+                var userID = decodedToken[environment.decodedUserID];
+                // this.appUserService.setUserData(userID);
                 sessionStorage.setItem('userID', userID);
+                this.userID.next(userID);
+                this.accountsService.isLogged = true;
+                this.accountsService.updateUserLoggedInStatus(true);
                 if (role == 'SuperAdmin') {
-                  this.accountsService.isSuperAdmin = true;
-                  this.accountsService.isAdmin = true;
-                  this.router.navigateByUrl('/admin-dashboard');
+                  sessionStorage.setItem('isSuperAdmin', true.toString());
+                  sessionStorage.setItem('isAdmin', true.toString());
+                  this.router.navigateByUrl('/home');
                 } else if (role == 'CommunityHead') {
-                  this.accountsService.isAdmin = true;
-                  this.router.navigateByUrl('/community-management-dashboard');
+                  sessionStorage.setItem('isAdmin', true.toString());
+                  this.router.navigateByUrl('/home');
                 } else if (role == 'User') {
                   this.router.navigateByUrl('/home');
                 } else {

@@ -5,7 +5,7 @@
   margin-bottom: 20px;
   margin-top: 30px;
   margin-left: 20px;
-  width: 91%;
+  width: 90%;
   transition: background-color 0.3s ease;
 }
 
@@ -16,22 +16,18 @@
 }
 
 .reply {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-.reply span {
-  display: block;
+.notification {
+  font-weight: bold;
 }
 
-.reply span:nth-child(2) {
-  color: #666;
+.reply-content {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 8px;
   font-style: italic;
-}
-
-.reply:hover {
-  background-color: #f0f0f0;
-  border-radius: 5px;
-  transition: background-color 0.8s ease;
 }
 
 button {
@@ -39,9 +35,10 @@ button {
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 14px;
 }
 
 button:hover {
@@ -79,14 +76,4 @@ button:active {
 
 .top-row span:last-child {
   color: #904c4c;
-}
-
-.reply-content {
-  margin-top: 10px;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.notification {
-  font-weight: bold;
 }

@@ -24,6 +24,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-modal/category-edit-modal.component';
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { formatDate } from '@angular/common';
+import { LoaderService } from 'src/app/service/HttpServices/loader.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -55,13 +57,22 @@ export class CategoryManagementComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router,
     private categoryModalService: CategoryModalService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private loaderService: LoaderService,
+    private communityDataService: CommunityDataService
   ) {}
 
+  isLoading: boolean = false;
+  communityID: number = 0;
   ngOnInit(): void {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
     this.sortType = 'communityCategoryName';
     this.loadCategories();
-    // this.getCategoriesInCommunity();
   }
 
   breadcrumbs = [
@@ -79,7 +90,7 @@ export class CategoryManagementComponent implements OnInit {
       this.loadCategories();
     } else {
       this.httpService
-        .getPagedCategories(this.currentPage, this.searchText)
+        .getPagedCategories(this.communityID, this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categories = data.categories;
           this.pageCount = data.totalPages;
@@ -93,14 +104,16 @@ export class CategoryManagementComponent implements OnInit {
   //categories pagination api
   loadCategories() {
     this.httpService
-      .getPagedCategories(this.currentPage, this.sortType)
+      .getPagedCategories(this.communityID, this.currentPage, this.sortType)
       .subscribe((data) => {
-        this.categories = data.categories.map((category: { createdAt: string | number | Date; }) => {
-          return {
-            ...category,
-            createdAt: formatDate(category.createdAt, 'dd-MM-yyyy', 'en-US')
-          };
-        });
+        this.categories = data.categories.map(
+          (category: { createdAt: string | number | Date }) => {
+            return {
+              ...category,
+              createdAt: formatDate(category.createdAt, 'dd-MM-yyyy', 'en-US'),
+            };
+          }
+        );
         this.pageCount = data.totalPages;
       });
   }
@@ -130,7 +143,6 @@ export class CategoryManagementComponent implements OnInit {
 
   openCreateCategoryModal() {
     this.modalRef = this.modalService.show(CategoryCreateModalComponent);
-    console.log(this.modalRef);
     this.modalRef.content.categoryCreated.subscribe(() => {
       this.loadCategories();
     });
@@ -138,7 +150,6 @@ export class CategoryManagementComponent implements OnInit {
 
   updateRef?: BsModalRef;
   onCategoryIconClick(event: { icon: string; data: any }): void {
-    console.log('onCategoryIconClick');
     const communityCategoryMappingID = event.data.communityCategoryMappingID;
     const description = event.data.description;
 
@@ -150,17 +161,12 @@ export class CategoryManagementComponent implements OnInit {
       communityCategoryMappingID,
       description
     );
-    console.log('before show', this.updateRef);
-    console.log('update Ref : ');
-    this.updateRef = this.modalService.show(CategoryEditModalComponent,{initialState});
-    console.log(
-      'update Ref : ',
-      this.modalService.show(CategoryEditModalComponent)
-    );
-    // this.updateRef.content.categoryUpdated.subscribe(() => {
-    //   console.log('called loadCategories inside funtion');
-    //   this.loadCategories();
-    // });
+    this.updateRef = this.modalService.show(CategoryEditModalComponent, {
+      initialState,
+    });
+    this.updateRef.content.categoryUpdated.subscribe(() => {
+      this.loadCategories();
+    });
   }
 
   communityCategoryMappingID: number = 0;
@@ -175,14 +181,11 @@ export class CategoryManagementComponent implements OnInit {
     this.httpService.getCategories(this.id).subscribe({
       next: (data: any) => {
         this.categories = data;
-        console.log(data);
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
       },
-      complete: () => {
-        console.log('Completed');
-      },
+      complete: () => {},
     });
   }
 }

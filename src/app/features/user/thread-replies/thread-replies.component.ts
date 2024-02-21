@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { switchMap } from 'rxjs';
@@ -23,14 +23,13 @@ import {
   templateUrl: './thread-replies.component.html',
   styleUrls: ['./thread-replies.component.css'],
 })
-
 export class ThreadRepliesComponent {
   bsModalRef: any;
   threadID: any;
   router: any;
 
   constructor(
-    private threadRepliesService: ThreadRepliesService,    
+    private threadRepliesService: ThreadRepliesService,
     private activateRoute: ActivatedRoute,
     private threadService: ThreadService,
     private voteService: VoteService,
@@ -45,13 +44,13 @@ export class ThreadRepliesComponent {
     { label: 'Post', route: '/community/post-replies' },
   ];
 
-
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
   threadReplies: ThreadReplies[] = [];
   showNestedReplies: boolean[] = [];
   thread!: Thread;
+  isOpenThread: boolean = true;
   threadRepliesStatus: boolean = true;
 
   isLoading = false;
@@ -66,23 +65,25 @@ export class ThreadRepliesComponent {
     this.activateRoute.queryParams
       .pipe(
         switchMap((params) => {
-          this.threadId = params['threadID'];
+          this.threadId = params['threadID'];          
           return this.threadService.getSingleThread(this.threadId);
         })
       )
       .subscribe((data: any) => {
-        this.thread = data;        
+        this.thread = data;
         this.loadReplies();
+        if (this.thread.threadStatusName === 'Closed') {
+          this.isOpenThread = false;
+        }
       });
   }
 
-
   loadReplies() {
     this.threadRepliesService
-      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 10)
+      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 20)
       .subscribe({
         next: (repliesData: any) => {
-          this.threadReplies = repliesData;          
+          this.threadReplies = repliesData;
           this.threadRepliesStatus = true;
         },
         error: (error: Error) => {
@@ -92,12 +93,11 @@ export class ThreadRepliesComponent {
       });
   }
 
-
   onDeleteReply(reply: ThreadReplies) {
     this.threadRepliesService
       .deleteReply(reply.replyID, reply.createdBy)
       .subscribe({
-        next: () => {          
+        next: () => {
           this.onSubmit(reply);
         },
         error: (error) => {
@@ -106,16 +106,13 @@ export class ThreadRepliesComponent {
       });
   }
 
-
   toggleNestedReplies(index: number) {
     this.showNestedReplies[index] = !this.showNestedReplies[index];
   }
 
-
   handleUpvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {        
-      },
+      next: (response) => {},
       error: (error) => {
         console.error('Error sending upvote', error);
         this.loadReplies();
@@ -123,11 +120,9 @@ export class ThreadRepliesComponent {
     });
   }
 
-
   handleDownvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {        
-      },
+      next: (response) => {},
       error: (error) => {
         console.error('Error sending downvote', error);
         this.loadThread();
@@ -135,11 +130,9 @@ export class ThreadRepliesComponent {
     });
   }
 
-
   handleThreadUpvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {        
-      },
+      next: (response) => {},
       error: (error) => {
         console.error('Error sending upvote', error);
         this.loadThread();
@@ -147,18 +140,15 @@ export class ThreadRepliesComponent {
     });
   }
 
-
   handleThreadDownvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {       
-      },
+      next: (response) => {},
       error: (error) => {
         console.error('Error sending downvote', error);
         this.loadThread();
       },
     });
   }
-
 
   onSubmit(reply: ThreadReplies) {
     const content = '-reply deleted by user-';

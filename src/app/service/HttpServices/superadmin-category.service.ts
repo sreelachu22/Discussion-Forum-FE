@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface Category {
   communityCategoryID: number;
@@ -12,24 +13,23 @@ export interface Category {
 })
 export class superAdminCategoryService {
   constructor(private http: HttpClient) {}
+  apiurl: string = environment.apiUrl;
 
   getCategories(): Observable<any> {
-    return this.http.get(`https://localhost:7160/api/CommunityCategory`);
+    return this.http.get(this.apiurl + `CommunityCategory`);
   }
 
   createCategory(communityCategoryName: string): Observable<any> {
     const body = {};
 
     return this.http.post(
-      `https://localhost:7160/api/CommunityCategory/${communityCategoryName}`,
+      this.apiurl + `CommunityCategory/${communityCategoryName}`,
       body
     );
   }
 
   deleteCategory(id: number): Observable<any> {
-    return this.http.delete(
-      `https://localhost:7160/api/CommunityCategory/${id}`
-    );
+    return this.http.delete(this.apiurl + `CommunityCategory/${id}`);
   }
 
   updateCategory(
@@ -42,9 +42,6 @@ export class superAdminCategoryService {
       isDeleted: isDeleted,
     };
 
-    return this.http.put(
-      `https://localhost:7160/api/CommunityCategory/${id}`,
-      body
-    );
+    return this.http.put(this.apiurl + `CommunityCategory/${id}`, body);
   }
 }

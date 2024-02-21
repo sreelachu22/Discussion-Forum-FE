@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/app/environments/environment';
 
 export interface TopUsers {
   userID: string;
@@ -16,10 +17,9 @@ export interface TopUsers {
 })
 export class LeaderboardService {
   constructor(private http: HttpClient) {}
+  apiurl: string = environment.apiUrl;
 
   getTopUsers(limit: number): Observable<any> {
-    return this.http.get(
-      `https://localhost:7160/api/users/TopUsersByScore/${limit}`
-    );
+    return this.http.get(this.apiurl + `users/TopUsersByScore/${limit}`);
   }
 }
