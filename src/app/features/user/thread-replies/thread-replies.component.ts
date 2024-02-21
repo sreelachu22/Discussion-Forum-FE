@@ -50,6 +50,7 @@ export class ThreadRepliesComponent {
   threadReplies: ThreadReplies[] = [];
   showNestedReplies: boolean[] = [];
   thread!: Thread;
+  isOpenThread: boolean = true;
   threadRepliesStatus: boolean = true;
 
   isLoading = false;
@@ -64,13 +65,16 @@ export class ThreadRepliesComponent {
     this.activateRoute.queryParams
       .pipe(
         switchMap((params) => {
-          this.threadId = params['threadID'];
+          this.threadId = params['threadID'];          
           return this.threadService.getSingleThread(this.threadId);
         })
       )
       .subscribe((data: any) => {
         this.thread = data;
         this.loadReplies();
+        if (this.thread.threadStatusName === 'Closed') {
+          this.isOpenThread = false;
+        }
       });
   }
 

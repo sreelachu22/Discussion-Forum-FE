@@ -25,6 +25,7 @@ import { CategoryEditModalComponent } from 'src/app/components/ui/category-edit-
 import { CategoryModalService } from 'src/app/service/DataServices/category-modal.service';
 import { formatDate } from '@angular/common';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 export interface TableColumn {
   name: string; // column name
   dataKey: string; // name of key of the actual data in this column
@@ -57,13 +58,18 @@ export class CategoryManagementComponent implements OnInit {
     private router: Router,
     private categoryModalService: CategoryModalService,
     private activateRoute: ActivatedRoute,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private communityDataService: CommunityDataService
   ) {}
 
   isLoading: boolean = false;
+  communityID: number = 0;
   ngOnInit(): void {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
+    });
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
     });
     this.sortType = 'communityCategoryName';
     this.loadCategories();
@@ -84,7 +90,7 @@ export class CategoryManagementComponent implements OnInit {
       this.loadCategories();
     } else {
       this.httpService
-        .getPagedCategories(this.currentPage, this.searchText)
+        .getPagedCategories(this.communityID, this.currentPage, this.searchText)
         .subscribe((data) => {
           this.categories = data.categories;
           this.pageCount = data.totalPages;
@@ -98,7 +104,7 @@ export class CategoryManagementComponent implements OnInit {
   //categories pagination api
   loadCategories() {
     this.httpService
-      .getPagedCategories(this.currentPage, this.sortType)
+      .getPagedCategories(this.communityID, this.currentPage, this.sortType)
       .subscribe((data) => {
         this.categories = data.categories.map(
           (category: { createdAt: string | number | Date }) => {

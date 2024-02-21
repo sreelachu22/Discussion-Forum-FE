@@ -16,20 +16,21 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 })
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
+  @Input() isOpenThread?: boolean;
   @Output() upvoteEvent = new EventEmitter<Vote>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
   showReplies: { [key: number]: boolean } = {};
-  ActiveUserID: string | null = sessionStorage.getItem('userID');
+  ActiveUserID: string | null = sessionStorage.getItem('userID');  
+  modalService: any;
   confirmModal!: BsModalRef;
 
   constructor(
     private voteService: VoteService,
     private router: Router,
-    private threadRepliesService: ThreadRepliesService,
-    private modalService: BsModalService
+    private threadRepliesService: ThreadRepliesService,    
   ) {}
 
   emitUpvote(reply: ThreadReplies) {

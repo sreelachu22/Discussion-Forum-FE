@@ -181,3 +181,14 @@
 .nextButton:hover span {
   padding-right: 15px;
 }
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.content {
+  text-align: center;
+}

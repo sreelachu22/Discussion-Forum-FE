@@ -63,7 +63,6 @@ export class CreateReplyComponent implements OnInit {
         this.threadID = this.reply.threadID;
         this.parentReplyID = this.reply.replyID;
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
-
         this.replyData.push({
           name: '',
           value: this.replyContent,
@@ -100,7 +99,7 @@ export class CreateReplyComponent implements OnInit {
               message: 'Reply posted successfully',
             },
           });
-          this.sendEmailToOwner(this.threadOwnerEmail, this.replyContent);
+          this.sendEmailToOwner(this.threadOwnerEmail, this.replyContent);          
         },
         error: (error) => {
           console.error('Error creating thread:', error);

@@ -54,6 +54,7 @@ export class UserEditComponent {
     this.userRoleToggle = !this.userRoleToggle;
   }
 
+  //singleUserID : string = sessionStorage.getItem('userID')
   //save the canged user role
   saveChanges() {
     this.userRoleToggle = !this.userRoleToggle;

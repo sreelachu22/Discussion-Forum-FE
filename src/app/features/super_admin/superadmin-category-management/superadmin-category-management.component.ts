@@ -47,7 +47,7 @@ export class SuperadminCategoryManagementComponent {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.getCategoriesInCommunity();
+    this.getGenericCategories();
   }
 
   modalRef?: BsModalRef;
@@ -112,7 +112,7 @@ export class SuperadminCategoryManagementComponent {
 
   id: number = 1;
 
-  getCategoriesInCommunity() {
+  getGenericCategories() {
     this.httpService.getCategories().subscribe({
       next: (data: any) => {
         this.categories = data;
@@ -147,7 +147,7 @@ export class SuperadminCategoryManagementComponent {
     this.httpService.createCategory(this.newCategoryName).subscribe({
       next: (data: any) => {
         // Update the list of categories in the community
-        this.getCategoriesInCommunity();
+        this.getGenericCategories();
         // Hide the modal after successfully creating the category
         this.modalRef?.hide();
         this.newCategoryName = '';
@@ -175,7 +175,7 @@ export class SuperadminCategoryManagementComponent {
             message: 'Category updated successfully',
           },
         });
-        this.getCategoriesInCommunity();
+        this.getGenericCategories();
         this.modalRef?.hide();
         this.newCategoryName = '';
       },
@@ -188,7 +188,7 @@ export class SuperadminCategoryManagementComponent {
   confirm(categoryID: number): void {
     this.httpService.deleteCategory(this.communityCategoryID).subscribe({
       next: (data: any) => {
-        this.getCategoriesInCommunity();
+        this.getGenericCategories();
         this.bsmodalRef?.hide();
       },
       error: (error: Error) => {

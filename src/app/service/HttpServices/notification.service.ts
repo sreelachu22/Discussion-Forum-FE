@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
+import { UserNotificationService } from '../DataServices/userNotification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userNotificationService:UserNotificationService) {}
   apiurl: string = environment.apiUrl;
   Base_URL: string = this.apiurl + 'Reply/unviewed';
 
@@ -25,5 +26,19 @@ export class NotificationService {
   markAsRead(replyID: number): Observable<any> {
     const url = this.apiurl + `Reply/${replyID}/updateHasViewed`;
     return this.http.post(url, {});
+  }
+  getNotificationCount(userID: string | null): void {
+    if (userID !== null) {
+      this.http.get<any>(`${this.Base_URL}?userId=${userID}&sortDirection=desc&pageNumber=1&pageSize=100`)
+        .pipe(
+          map((data: any) => data.totalCount)
+        )
+        .subscribe(count => {
+          this.userNotificationService.setNotificationCount(count);
+          console.log(count)
+        });
+    } else {      
+      this.userNotificationService.setNotificationCount(0);
+    }
   }
 }
