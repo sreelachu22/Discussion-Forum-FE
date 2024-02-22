@@ -11,6 +11,7 @@
     <mat-icon
       [fontSet]="rla.isActive ? 'material-icons' : 'material-icons-outlined'"
       matListItemIcon
+      [matTooltip]="item.label"
       >{{ item.icon }}</mat-icon
     >
     <span
