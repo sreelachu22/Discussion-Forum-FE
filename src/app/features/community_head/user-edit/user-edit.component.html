@@ -11,6 +11,7 @@
   <app-page-header
     navClass="navbar navbar-dark bg-secondary Page_header"
     pageHeaderTitle="User Details"
+    [showButton]="user.roleName !== 'SuperAdmin'"
     [ButtonName]="userRoleToggle ? 'Save Changes' : 'Change User Role'"
     (ButtonClick)="userRoleToggle ? saveChanges() : editUserRole()"
   ></app-page-header>
