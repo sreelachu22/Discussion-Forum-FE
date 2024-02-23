@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CategoryThreadDto,
-  SearchThreadResult,
+  IsSearchThreadResult,
 } from 'src/app/components/ui/search/search.component';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 
@@ -51,19 +51,13 @@ export class SearchResultComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 1;
 
+  isSearchTag: boolean = false;
+
   ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
       this.searchTerm = queryParams['searchTerm'];
-      this.loadThreads();
+      this.loadThreads(queryParams['isSearchTag']);
     });
-  }
-
-  searchResult(searchTerm: string) {
-    if (searchTerm) {
-      this.router.navigate(['/search-results'], {
-        queryParams: { searchTerm: searchTerm },
-      });
-    }
   }
 
   navigateToThreadReplies(threadID: number) {
@@ -111,27 +105,45 @@ export class SearchResultComponent implements OnInit {
   changePage(newPage: number) {
     if (newPage >= 1 && newPage <= this.totalPages) {
       this.currentPage = newPage;
-      this.loadThreads();
+      this.loadThreads(false);
     }
   }
 
-  loadThreads() {
+  loadThreads(isSearchTag: boolean) {
     if (this.searchTerm) {
-      // Call the search service with the updated logic
-      this.searchService
-        .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
-        .subscribe({
-          next: (results: SearchThreadResult) => {
-            this.threads = results.searchThreadDtoList;
-            this.totalPages = Math.ceil(
-              results.searchThreadDtoListLength / this.pageSize
-            );
-          },
-          error: (error: Error) => {
-            alert('Error has occurred, ' + error.message);
-          },
-          complete: () => {},
-        });
+      if (isSearchTag == false) {
+        this.isSearchTag = false;
+        this.searchService
+          .searchThreads(this.searchTerm, this.pageNumber, this.pageSize)
+          .subscribe({
+            next: (results: IsSearchThreadResult) => {
+              this.threads = results.searchThreadDtoList;
+              this.totalPages = Math.ceil(
+                results.searchThreadDtoListLength / this.pageSize
+              );
+            },
+            error: (error: Error) => {
+              alert('Error has occurred, ' + error.message);
+            },
+            complete: () => {},
+          });
+      } else {
+        this.isSearchTag = true;
+        this.searchService
+          .displayThreadsByTags(this.searchTerm, this.pageNumber, this.pageSize)
+          .subscribe({
+            next: (results: IsSearchThreadResult) => {
+              this.threads = results.searchThreadDtoList;
+              this.totalPages = Math.ceil(
+                results.searchThreadDtoListLength / this.pageSize
+              );
+            },
+            error: (error: Error) => {
+              alert('Error has occurred, ' + error.message);
+            },
+            complete: () => {},
+          });
+      }
     }
   }
 }

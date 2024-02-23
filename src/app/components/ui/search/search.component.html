@@ -1,7 +1,7 @@
 <div class="search-container">
   <div class="Search_Bar">
     <app-input
-      placeholder="Search"
+      placeholder="What is java"
       inputClass="Search_input"
       (inputChange)="InputChange($event)"
     ></app-input>
@@ -16,7 +16,7 @@
 
   <div class="Drop_Down" #dropdown>
     <app-dropdown
-      *ngIf="SearchThreadsDropDown.length > 0 && dropdowntoggle"
+      *ngIf="dropdowntoggle"
       [results]="SearchThreadsDropDown"
       (emitselectResult)="selectResult($event)"
     ></app-dropdown>
