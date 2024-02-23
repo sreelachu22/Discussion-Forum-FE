@@ -46,6 +46,7 @@
         "
       >
         <app-nested-replies
+          [isOpenThread]="isOpenThread"
           [nestedReply]="reply"
           (upvoteEvent)="handleUpvote($event)"
           (downvoteEvent)="handleDownvote($event)"

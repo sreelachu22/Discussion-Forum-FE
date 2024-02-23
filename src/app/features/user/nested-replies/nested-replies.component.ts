@@ -4,25 +4,24 @@ import { Vote } from 'src/app/service/HttpServices/vote.service';
 @Component({
   selector: 'app-nested-replies',
   templateUrl: './nested-replies.component.html',
-  styleUrls: ['./nested-replies.component.css']
+  styleUrls: ['./nested-replies.component.css'],
 })
-
-export class NestedRepliesComponent {  
+export class NestedRepliesComponent {
+  @Input() isOpenThread!: boolean;
   @Input() nestedReply!: ThreadReplies;
   @Output() upvoteEvent = new EventEmitter<Vote>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
-  
   handleUpvote(vote: Vote) {
     this.upvoteEvent.emit(vote);
   }
 
-  handleDownvote(vote: Vote) {       
+  handleDownvote(vote: Vote) {
     this.downvoteEvent.emit(vote);
   }
 
-  onDeleteReply(reply: ThreadReplies) {        
+  onDeleteReply(reply: ThreadReplies) {
     this.deleteReplyEvent.emit(reply);
   }
 }

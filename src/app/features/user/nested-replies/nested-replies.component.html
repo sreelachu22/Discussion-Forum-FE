@@ -4,6 +4,7 @@
 >
   <div class="card1" *ngFor="let nestedreply of nestedReply.nestedReplies">
     <app-reply-list
+      [isOpenThread]="isOpenThread"
       [reply]="nestedreply"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
@@ -11,6 +12,7 @@
     ></app-reply-list>
 
     <app-nested-replies
+      [isOpenThread]="isOpenThread"
       [nestedReply]="nestedreply"
       (upvoteEvent)="handleUpvote($event)"
       (downvoteEvent)="handleDownvote($event)"
