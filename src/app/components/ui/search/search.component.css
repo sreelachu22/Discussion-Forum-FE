@@ -1,3 +1,12 @@
 .Search_Bar {
   display: flex;
+  position: relative;
+}
+.Search_dropdown {
+  height: 40px;
+  margin-top: 20px;
+  position: absolute;
+  border-radius: 0px;
+  font-size: smaller;
+  border: 1px solid #ccc;
 }

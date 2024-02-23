@@ -6,7 +6,7 @@
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-  margin-left: 19px;
+  margin-left: 18px;
   margin-top: -20px;
   width: 382px;
 }
@@ -16,7 +16,7 @@
 }
 
 .no-matches {
-  color: #ff0000;
+  font-size: small;
 }
 
 .result-item {

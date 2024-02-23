@@ -1,11 +1,26 @@
 <div class="custom-dropdown">
-  <div *ngIf="results.length > 0; else noMatches">
+  <div *ngIf="results && results.length > 0; else noMatches">
     <div
       *ngFor="let result of results"
       (click)="selectResult(result)"
       class="result-item"
     >
-      {{ result.title }}
+      <ng-container *ngIf="isCategoryThreadDto(result); else tagTemplate">
+        {{
+          result.title.length > 45
+            ? result.title.slice(0, 45) + "...."
+            : result.title
+        }}
+      </ng-container>
+      <ng-template #tagTemplate>
+        {{
+          "#" +
+            result.tagName +
+            "&nbsp;&nbsp;&nbsp;&nbsp;" +
+            result.tagCount +
+            (result.tagCount <= 1 ? " post" : " posts")
+        }}
+      </ng-template>
     </div>
   </div>
 
