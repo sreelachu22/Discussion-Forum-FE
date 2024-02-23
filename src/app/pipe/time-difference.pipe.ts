@@ -2,7 +2,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'timeDifference'
+  name: 'timeDifference',
 })
 export class TimeDifferencePipe implements PipeTransform {
   transform(value: Date | string): string {

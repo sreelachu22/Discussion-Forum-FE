@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     private loaderService: LoaderService,
     private accountService: AccountsService,
     private userService: UserEditService,
-    private notificationService : NotificationService
+    private notificationService: NotificationService
   ) {}
   isLogged: boolean = false;
   //this subscribes to the isLoading$ observable provided by the LoaderService.

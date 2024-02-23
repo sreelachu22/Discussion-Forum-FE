@@ -8,7 +8,7 @@ describe('ThreadReplyComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ThreadReplyComponent]
+      declarations: [ThreadReplyComponent],
     });
     fixture = TestBed.createComponent(ThreadReplyComponent);
     component = fixture.componentInstance;

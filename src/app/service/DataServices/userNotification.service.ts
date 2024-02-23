@@ -5,11 +5,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class UserNotificationService {
-    private notificationCountSubject = new BehaviorSubject<number>(0);
+  private notificationCountSubject = new BehaviorSubject<number>(0);
 
-    notificationCount$ = this.notificationCountSubject.asObservable();
+  notificationCount$ = this.notificationCountSubject.asObservable();
 
-    setNotificationCount(count: number): void {
-        this.notificationCountSubject.next(count);
-    }
+  setNotificationCount(count: number): void {
+    this.notificationCountSubject.next(count);
+  }
 }

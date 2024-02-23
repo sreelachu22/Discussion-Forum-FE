@@ -8,7 +8,7 @@ describe('SuccessPopupComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SuccessPopupComponent]
+      declarations: [SuccessPopupComponent],
     });
     fixture = TestBed.createComponent(SuccessPopupComponent);
     component = fixture.componentInstance;

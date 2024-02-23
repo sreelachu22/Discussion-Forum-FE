@@ -8,7 +8,7 @@ describe('SuperadminCategoryManagementComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SuperadminCategoryManagementComponent]
+      declarations: [SuperadminCategoryManagementComponent],
     });
     fixture = TestBed.createComponent(SuperadminCategoryManagementComponent);
     component = fixture.componentInstance;

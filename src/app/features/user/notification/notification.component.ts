@@ -9,7 +9,7 @@ export interface Notification {
   childReplyContent: string;
   childReplyCreatedAt: string;
   childReplyUserName: string;
-  parentReplyID:string | null;
+  parentReplyID: string | null;
   parentReplyUserName: string | null;
   parentReplyContent: string | null;
   categoryName: string;
@@ -20,46 +20,58 @@ export interface Notification {
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css']
+  styleUrls: ['./notification.component.css'],
 })
-
 export class NotificationComponent implements OnInit {
   notifications!: Notification[];
-  userID : string | null = sessionStorage.getItem('userID');
-  userId:string = this.userID || '';
-  categoryID:number = 0;
-  sortOrder:string = "desc";  
+  userID: string | null = sessionStorage.getItem('userID');
+  userId: string = this.userID || '';
+  categoryID: number = 0;
+  sortOrder: string = 'desc';
 
-  categories:any[] = [];
+  categories: any[] = [];
   parentDropdownOptions: string[] = ['All'];
   sortOptions = ['Oldest', 'Latest'];
 
-  pageNumber:number = 1;
-  pageSize:number = 10;  
-  currentPage: number =1;
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  currentPage: number = 1;
   totalPages!: number;
 
-  notificationCount!:number;
+  notificationCount!: number;
 
-  constructor(private notificationService: NotificationService,
-     private categoryService:CategoryService,
-     private userNotificationService: UserNotificationService,
-     private router:Router) { }
+  constructor(
+    private notificationService: NotificationService,
+    private categoryService: CategoryService,
+    private userNotificationService: UserNotificationService,
+    private router: Router
+  ) {}
 
-  
   ngOnInit(): void {
-    this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);    
+    this.getNotifications(
+      this.userId,
+      this.categoryID,
+      this.sortOrder,
+      this.pageNumber,
+      this.pageSize
+    );
   }
 
-
-  getNotifications(userId:string,categoryID:number, sortOrder:string, pageNumber:number, pageSize:number) {
-    this.notificationService.getNotifications(userId, categoryID, sortOrder, pageNumber, pageSize)
+  getNotifications(
+    userId: string,
+    categoryID: number,
+    sortOrder: string,
+    pageNumber: number,
+    pageSize: number
+  ) {
+    this.notificationService
+      .getNotifications(userId, categoryID, sortOrder, pageNumber, pageSize)
       .subscribe({
         next: (data: any) => {
-          this.notifications = data.replies;          
-          this.notificationCount = data.totalCount;    
-          this.totalPages = Math.ceil(this.notificationCount/this.pageSize);                      
-          this.getCategories();  
+          this.notifications = data.replies;
+          this.notificationCount = data.totalCount;
+          this.totalPages = Math.ceil(this.notificationCount / this.pageSize);
+          this.getCategories();
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -67,44 +79,56 @@ export class NotificationComponent implements OnInit {
       });
   }
 
-
   getCategories() {
-    this.categoryService.getCategories(1)
-      .subscribe((data: any[]) => {
-        this.categories = data;
-        this.parentDropdownOptions = ['All', ...data.map(category => category.communityCategoryName)];
-      });
+    this.categoryService.getCategories(1).subscribe((data: any[]) => {
+      this.categories = data;
+      this.parentDropdownOptions = [
+        'All',
+        ...data.map((category) => category.communityCategoryName),
+      ];
+    });
   }
 
-
-  onMarkAsRead(replyId: number) {   
+  onMarkAsRead(replyId: number) {
     this.notificationService.markAsRead(replyId).subscribe(
-        () => {
-          this.getNotifications(this.userId,this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);     
-          this.notificationService.getNotificationCount(this.userID);
-        },
-        (error) => {            
-            console.error('Error marking reply as read:', error);
-        }
+      () => {
+        this.getNotifications(
+          this.userId,
+          this.categoryID,
+          this.sortOrder,
+          this.pageNumber,
+          this.pageSize
+        );
+        this.notificationService.getNotificationCount(this.userID);
+      },
+      (error) => {
+        console.error('Error marking reply as read:', error);
+      }
     );
-  } 
+  }
 
-
-  handleOptionSelected(option: string) {  
-    if (option === 'All') {      
+  handleOptionSelected(option: string) {
+    if (option === 'All') {
       this.categoryID = 0;
     } else {
-      const selectedCategory = this.categories.find(category => category.communityCategoryName === option);
-      if (selectedCategory) {        
+      const selectedCategory = this.categories.find(
+        (category) => category.communityCategoryName === option
+      );
+      if (selectedCategory) {
         this.categoryID = selectedCategory.communityCategoryID;
       } else {
         console.error('Category not found:', option);
         return;
       }
-    }    
-    this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+    }
+    this.getNotifications(
+      this.userId,
+      this.categoryID,
+      this.sortOrder,
+      this.pageNumber,
+      this.pageSize
+    );
   }
-
 
   onSortSelectionChange(selectedValue: string) {
     if (selectedValue === 'oldest') {
@@ -112,23 +136,39 @@ export class NotificationComponent implements OnInit {
     } else if (selectedValue === 'latest') {
       this.sortOrder = 'desc';
     }
-    this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+    this.getNotifications(
+      this.userId,
+      this.categoryID,
+      this.sortOrder,
+      this.pageNumber,
+      this.pageSize
+    );
   }
 
   // paginations logics
   nextPage() {
     if (this.pageNumber <= this.totalPages - 1) {
-      this.pageNumber++;  
-      this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);      
+      this.pageNumber++;
+      this.getNotifications(
+        this.userId,
+        this.categoryID,
+        this.sortOrder,
+        this.pageNumber,
+        this.pageSize
+      );
     }
   }
-
 
   prevPage() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
-      this.getNotifications(this.userId, this.categoryID, this.sortOrder, this.pageNumber, this.pageSize);
+      this.getNotifications(
+        this.userId,
+        this.categoryID,
+        this.sortOrder,
+        this.pageNumber,
+        this.pageSize
+      );
     }
   }
-
 }

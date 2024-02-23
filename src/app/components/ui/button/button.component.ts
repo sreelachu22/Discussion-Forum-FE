@@ -13,7 +13,7 @@ export class ButtonComponent {
   @Input() textColor: string = '';
   @Input() hoverColor: string = '';
   @Input() hoverTextColor: string = '';
-  @Input() buttonType : string =''
+  @Input() buttonType: string = '';
   @Input() defaultTextColor: string = '';
   @Input() disableButton: boolean | null = false;
   @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();

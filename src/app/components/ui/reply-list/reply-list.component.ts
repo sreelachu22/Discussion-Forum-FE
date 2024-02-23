@@ -23,14 +23,14 @@ export class ReplyListComponent {
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
   showReplies: { [key: number]: boolean } = {};
-  ActiveUserID: string | null = sessionStorage.getItem('userID');  
+  ActiveUserID: string | null = sessionStorage.getItem('userID');
   modalService: any;
   confirmModal!: BsModalRef;
 
   constructor(
     private voteService: VoteService,
     private router: Router,
-    private threadRepliesService: ThreadRepliesService,    
+    private threadRepliesService: ThreadRepliesService
   ) {}
 
   emitUpvote(reply: ThreadReplies) {

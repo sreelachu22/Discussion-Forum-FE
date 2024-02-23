@@ -26,15 +26,28 @@
       pattern=".*\S+.*"
       #titleInput="ngModel"
     />
-    <div *ngIf="titleInput?.invalid && (titleInput?.dirty || titleInput?.touched)" class="error-message">
-      <div *ngIf="titleInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="titleInput.errors?.['minlength']">Title must be at least 6 characters long.</div>
-      <div *ngIf="titleInput.errors?.['maxlength']">Title cannot exceed 50 characters.</div>
-      <div *ngIf="titleInput.errors?.['pattern']">Title cannot be just empty spaces.</div>
+    <div
+      *ngIf="titleInput?.invalid && (titleInput?.dirty || titleInput?.touched)"
+      class="error-message"
+    >
+      <div *ngIf="titleInput.errors?.['required']">
+        Please fill out this field.
+      </div>
+      <div *ngIf="titleInput.errors?.['minlength']">
+        Title must be at least 6 characters long.
+      </div>
+      <div *ngIf="titleInput.errors?.['maxlength']">
+        Title cannot exceed 50 characters.
+      </div>
+      <div *ngIf="titleInput.errors?.['pattern']">
+        Title cannot be just empty spaces.
+      </div>
     </div>
   </div>
   <div class="form-group">
-    <label for="expiresAt">Expires At<span class="required-field"></span></label>
+    <label for="expiresAt"
+      >Expires At<span class="required-field"></span
+    ></label>
     <input
       type="text"
       class="form-control"
@@ -47,49 +60,74 @@
       [bsConfig]="bsDatepickerConfig"
       #expiresAtInput="ngModel"
     />
-    <div *ngIf="expiresAtInput?.invalid && (expiresAtInput?.dirty || expiresAtInput?.touched)" class="error-message">
-      <div *ngIf="expiresAtInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="expiresAtInput.errors?.['pattern']">Expires At cannot be just empty spaces.</div>
-  </div>
-  <div class="form-group">
-    <label for="content">Content<span class="required-field"></span></label>
-    <textarea
-      class="form-control"
-      [(ngModel)]="selectedNotice.content"
-      name="content"
-      id="content"
-      required
-      minlength="6"
-      maxlength="250"
-      pattern=".*\S+.*"
-      #contentInput="ngModel"
-    ></textarea>
-    <div *ngIf="contentInput?.invalid && (contentInput?.dirty || contentInput?.touched)" class="error-message">
-      <div *ngIf="contentInput.errors?.['required']">Please fill out this field.</div>
-      <div *ngIf="contentInput.errors?.['minlength']">Content must be at least 6 characters long.</div>
-      <div *ngIf="contentInput.errors?.['maxlength']">Content cannot exceed 250 characters.</div>
-      <div *ngIf="contentInput.errors?.['pattern']">Content cannot be just empty spaces.</div>
+    <div
+      *ngIf="
+        expiresAtInput?.invalid &&
+        (expiresAtInput?.dirty || expiresAtInput?.touched)
+      "
+      class="error-message"
+    >
+      <div *ngIf="expiresAtInput.errors?.['required']">
+        Please fill out this field.
+      </div>
+      <div *ngIf="expiresAtInput.errors?.['pattern']">
+        Expires At cannot be just empty spaces.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="content">Content<span class="required-field"></span></label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="selectedNotice.content"
+        name="content"
+        id="content"
+        required
+        minlength="6"
+        maxlength="250"
+        pattern=".*\S+.*"
+        #contentInput="ngModel"
+      ></textarea>
+      <div
+        *ngIf="
+          contentInput?.invalid &&
+          (contentInput?.dirty || contentInput?.touched)
+        "
+        class="error-message"
+      >
+        <div *ngIf="contentInput.errors?.['required']">
+          Please fill out this field.
+        </div>
+        <div *ngIf="contentInput.errors?.['minlength']">
+          Content must be at least 6 characters long.
+        </div>
+        <div *ngIf="contentInput.errors?.['maxlength']">
+          Content cannot exceed 250 characters.
+        </div>
+        <div *ngIf="contentInput.errors?.['pattern']">
+          Content cannot be just empty spaces.
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div class="modal-footer">
-  <app-button
-    buttonClass="button"
-    buttonName="Update Notice"
-    buttonColor="rgb(31, 151, 145)"
-    textColor="white"
-    hoverColor="rgb(51, 171, 165)"
-    hoverTextColor="white"
-    (buttonClick)="updateNotice()"
-  ></app-button>
- <app-button
-    buttonClass="button"
-    buttonName="Close"
-    buttonColor="#6c757d"
-    textColor="white"
-    hoverColor="#5c636a"
-    hoverTextColor="white"
-    buttonType="button"
-    (buttonClick)="decline()"
-  ></app-button>
+  <div class="modal-footer">
+    <app-button
+      buttonClass="button"
+      buttonName="Update Notice"
+      buttonColor="rgb(31, 151, 145)"
+      textColor="white"
+      hoverColor="rgb(51, 171, 165)"
+      hoverTextColor="white"
+      (buttonClick)="updateNotice()"
+    ></app-button>
+    <app-button
+      buttonClass="button"
+      buttonName="Close"
+      buttonColor="#6c757d"
+      textColor="white"
+      hoverColor="#5c636a"
+      hoverTextColor="white"
+      buttonType="button"
+      (buttonClick)="decline()"
+    ></app-button>
+  </div>
 </div>

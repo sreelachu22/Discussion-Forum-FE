@@ -8,7 +8,7 @@ describe('InvalidPopupComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [InvalidPopupComponent]
+      declarations: [InvalidPopupComponent],
     });
     fixture = TestBed.createComponent(InvalidPopupComponent);
     component = fixture.componentInstance;

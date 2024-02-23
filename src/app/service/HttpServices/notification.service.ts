@@ -8,7 +8,10 @@ import { UserNotificationService } from '../DataServices/userNotification.servic
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private http: HttpClient, private userNotificationService:UserNotificationService) {}
+  constructor(
+    private http: HttpClient,
+    private userNotificationService: UserNotificationService
+  ) {}
   apiurl: string = environment.apiUrl;
   Base_URL: string = this.apiurl + 'Reply/unviewed';
 
@@ -29,15 +32,15 @@ export class NotificationService {
   }
   getNotificationCount(userID: string | null): void {
     if (userID !== null) {
-      this.http.get<any>(`${this.Base_URL}?userId=${userID}&sortDirection=desc&pageNumber=1&pageSize=100`)
-        .pipe(
-          map((data: any) => data.totalCount)
+      this.http
+        .get<any>(
+          `${this.Base_URL}?userId=${userID}&sortDirection=desc&pageNumber=1&pageSize=100`
         )
-        .subscribe(count => {
+        .pipe(map((data: any) => data.totalCount))
+        .subscribe((count) => {
           this.userNotificationService.setNotificationCount(count);
-          console.log(count)
         });
-    } else {      
+    } else {
       this.userNotificationService.setNotificationCount(0);
     }
   }

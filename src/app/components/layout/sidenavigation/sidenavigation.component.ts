@@ -34,7 +34,7 @@ export class SidenavigationComponent {
   collapsed = signal(false); //signals which will pass the state with the parent component
   //Automatically update the sidenav width according to the collapsed state
   sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
-  notificationCount!:number;
+  notificationCount!: number;
   private updateInterval: number = 60000;
 
   faUser = faUser;
@@ -51,20 +51,19 @@ export class SidenavigationComponent {
     this.userNotificationService.notificationCount$.subscribe((count) => {
       this.notificationCount = count;
     });
-    interval(this.updateInterval).subscribe(() => {      
+    interval(this.updateInterval).subscribe(() => {
       const userID = this.userID.getValue(); // Extract the value from BehaviorSubject
-    if (userID) {
-      this.notificationService.getNotificationCount(userID);}
+      if (userID) {
+        this.notificationService.getNotificationCount(userID);
+      }
     });
     // this.userID = sessionStorage.getItem('userID');
     this.userID.next(sessionStorage.getItem('userID'));
-    // console.log('sidenavigation ngoninit - userID :' + this.userID);
     this.userID.subscribe((userID) => {
       if (userID) {
-        console.log('sidenavigation ngoninit - userID :' + userID);
         this.userService.getSingleUser(userID).subscribe({
           next: (data: SingleUser) => {
-            this.user = data;                       
+            this.user = data;
           },
           error: (error: Error) => {
             console.log('Error', error);
