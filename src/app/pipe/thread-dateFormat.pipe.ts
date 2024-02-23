@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'formatDate'
+  name: 'formatDate',
 })
 export class ThreadFormatDatePipe implements PipeTransform {
   transform(date: string | null): string {
@@ -28,9 +28,13 @@ export class ThreadFormatDatePipe implements PipeTransform {
         })
       );
     } else if (hoursDifference >= 1) {
-      return `${hoursDifference} ${hoursDifference === 1 ? 'hour' : 'hours'} ago`;
+      return `${hoursDifference} ${
+        hoursDifference === 1 ? 'hour' : 'hours'
+      } ago`;
     } else if (minutesDifference >= 1) {
-      return `${minutesDifference} ${minutesDifference === 1 ? 'minute' : 'minutes'} ago`;
+      return `${minutesDifference} ${
+        minutesDifference === 1 ? 'minute' : 'minutes'
+      } ago`;
     } else {
       return '1 minute ago';
     }

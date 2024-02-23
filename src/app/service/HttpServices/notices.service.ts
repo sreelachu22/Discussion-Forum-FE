@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NoticesService {
   constructor(private http: HttpClient) {}
@@ -16,7 +16,11 @@ export class NoticesService {
     return this.http.post(url, notice);
   }
 
-  updateData(url: string, noticeId: number, updatedNotice: any): Observable<any> {
+  updateData(
+    url: string,
+    noticeId: number,
+    updatedNotice: any
+  ): Observable<any> {
     const apiUrl = `${url}/${noticeId}`;
     return this.http.put(apiUrl, updatedNotice);
   }
@@ -25,5 +29,4 @@ export class NoticesService {
     const apiUrl = `${url}/${noticeId}`;
     return this.http.delete(apiUrl);
   }
-
 }

@@ -120,9 +120,6 @@ export class SuperadminCategoryManagementComponent {
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
       },
-      complete: () => {
-        console.log('Completed');
-      },
     });
   }
 
@@ -156,7 +153,6 @@ export class SuperadminCategoryManagementComponent {
         alert('Error has occurred: ' + error.message);
       },
       complete: () => {
-        console.log('Completed');
         this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
           initialState: {
             message: 'Category Created successfully', //make use of reusable success pop up , sends message to it
@@ -193,9 +189,6 @@ export class SuperadminCategoryManagementComponent {
       },
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
-      },
-      complete: () => {
-        console.log('Completed');
       },
     });
     this.modalRef?.hide();

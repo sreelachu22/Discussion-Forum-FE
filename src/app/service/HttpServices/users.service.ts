@@ -41,11 +41,8 @@ export class UserService {
   apiurl: string = environment.apiUrl;
   BASE_URL = this.apiurl + 'users/GetAllUsersWithPagination';
 
-  getUsers(
-    page: number,
-    sortType: string,    
-  ): Observable<AllUsers> {
-    const url = `${this.BASE_URL}?sort=${sortType}&page=${page}&limit=10`;    
+  getUsers(page: number, sortType: string): Observable<AllUsers> {
+    const url = `${this.BASE_URL}?sort=${sortType}&page=${page}&limit=10`;
     return this.http.get<AllUsers>(url);
   }
   getAUser(page: number, name: string): Observable<AllUsers> {

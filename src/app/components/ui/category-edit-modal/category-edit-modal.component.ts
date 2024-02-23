@@ -72,9 +72,6 @@ export class CategoryEditModalComponent {
         error: (error: any) => {
           console.error('Error updating category:', error);
         },
-        complete: () => {
-          console.log('Completed');
-        },
       });
   }
 

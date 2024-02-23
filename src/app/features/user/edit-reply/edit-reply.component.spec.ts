@@ -8,7 +8,7 @@ describe('EditReplyComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EditReplyComponent]
+      declarations: [EditReplyComponent],
     });
     fixture = TestBed.createComponent(EditReplyComponent);
     component = fixture.componentInstance;

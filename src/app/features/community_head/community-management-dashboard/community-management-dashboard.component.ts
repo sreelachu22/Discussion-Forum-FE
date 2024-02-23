@@ -85,9 +85,6 @@ export class CommunityManagementDashboardComponent {
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
       },
-      complete: () => {
-        console.log('Completed');
-      },
     });
   }
 
