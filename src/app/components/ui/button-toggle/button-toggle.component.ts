@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 /**
  * @title Basic button-toggles
@@ -11,8 +11,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
   standalone: true,
   imports: [MatButtonToggleModule, CommonModule],
 })
-export class ButtonToggleComponent { 
-  
+export class ButtonToggleComponent {
   @Input() sortOptions: string[] = [];
   @Output() sortSelectionChange = new EventEmitter<string>();
 

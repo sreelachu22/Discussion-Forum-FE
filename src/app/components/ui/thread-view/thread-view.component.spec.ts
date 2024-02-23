@@ -8,7 +8,7 @@ describe('ThreadViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ThreadViewComponent]
+      declarations: [ThreadViewComponent],
     });
     fixture = TestBed.createComponent(ThreadViewComponent);
     component = fixture.componentInstance;

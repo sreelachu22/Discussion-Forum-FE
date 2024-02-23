@@ -1,18 +1,18 @@
-.buttons{
-    display: flex;
-    justify-content: space-evenly;
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .form_error {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 5px;
-    display: block;
-  }
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  display: block;
+}
 
-  .required{
-    color: #dc3545;
-    font-size: 0.875rem;
+.required {
+  color: #dc3545;
+  font-size: 0.875rem;
 }
 
 .error-message {

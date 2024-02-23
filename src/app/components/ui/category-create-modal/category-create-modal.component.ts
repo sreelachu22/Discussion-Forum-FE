@@ -51,7 +51,6 @@ export class CategoryCreateModalComponent implements OnInit {
         alert('Error has occured, ' + error.message);
       },
       complete: () => {
-        console.log('Completed');
         this.getCategories();
       },
     });
@@ -66,7 +65,6 @@ export class CategoryCreateModalComponent implements OnInit {
         alert('Error has occured, ' + error.message);
       },
       complete: () => {
-        console.log('Completed');
       },
     });
   }

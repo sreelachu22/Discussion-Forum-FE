@@ -8,7 +8,7 @@ describe('LatestComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LatestComponent]
+      declarations: [LatestComponent],
     });
     fixture = TestBed.createComponent(LatestComponent);
     component = fixture.componentInstance;

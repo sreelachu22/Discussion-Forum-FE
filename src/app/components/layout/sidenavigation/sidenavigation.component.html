@@ -14,7 +14,10 @@
 
   <span class="spacer"></span>
   <div class="header_icons">
-    <mat-icon class="notification_icon" (click)="showNotifications()"
+    <mat-icon
+      class="notification_icon"
+      (click)="showNotifications()"
+      matTooltip="Notifications"
       >notifications</mat-icon
     >
     <span class="notification_count" *ngIf="notificationCount !== 0">{{
@@ -35,6 +38,7 @@
         src="assets/images/profile-user.png"
         style="max-width: 40px; min-width: 40px"
         aria-controls="dropdown-basic"
+        [matTooltip]="user.name"
       />
       <div
         *dropdownMenu

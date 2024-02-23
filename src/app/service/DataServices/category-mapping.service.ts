@@ -11,9 +11,7 @@ export class CategoryMappingService {
   communityCategoryMappingID$ =
     this.communityCategoryMappingIDSubject.asObservable();
 
-    setcategoryMappingIDData(
-    communityCategoryMappingID: number,
-  ): void {
+  setcategoryMappingIDData(communityCategoryMappingID: number): void {
     this.communityCategoryMappingIDSubject.next(communityCategoryMappingID);
   }
 }

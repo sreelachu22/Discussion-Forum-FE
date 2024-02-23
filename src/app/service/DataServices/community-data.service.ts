@@ -8,12 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 export class CommunityDataService {
   private communityIDSubject = new BehaviorSubject<number>(0);
 
-  communityID$ =
-    this.communityIDSubject.asObservable();
+  communityID$ = this.communityIDSubject.asObservable();
 
-  setCommunityData(
-    communityID: number,
-  ): void {
+  setCommunityData(communityID: number): void {
     this.communityIDSubject.next(communityID);
   }
 }

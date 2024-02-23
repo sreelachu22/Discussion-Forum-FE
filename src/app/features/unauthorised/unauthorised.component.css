@@ -1,14 +1,14 @@
 main {
-    background-image: url("../../../assets/images/bg-login.jpg");
-    background-size: cover;
-    min-height: 100vh;
+  background-image: url("../../../assets/images/bg-login.jpg");
+  background-size: cover;
+  min-height: 100vh;
 }
 
 img {
-    height: 40vh;
-    border: none;
+  height: 40vh;
+  border: none;
 }
 
 .caption {
-    font-size: 0.9em;
+  font-size: 0.9em;
 }
