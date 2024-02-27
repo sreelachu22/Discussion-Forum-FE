@@ -54,6 +54,7 @@ export class CreateReplyComponent implements OnInit {
           { name: '', value: this.thread.title, isHtml: true },
           { name: '', value: this.thread.content, isHtml: true }
         );
+        this.threadOwnerEmail = this.thread.threadOwnerEmail;
       });
     } else {
       this.replyID = +this.route.snapshot.queryParams['replyID'];
@@ -116,7 +117,8 @@ export class CreateReplyComponent implements OnInit {
   }
 
   sendEmailToOwner(threadOwnerEmail: string, replyContent: string) {
-    const plainTextContent = replyContent.replace(/<[^>]+>/g, '');
+    const emailContent = replyContent ? replyContent : this.thread.content;
+    const plainTextContent = emailContent.replace(/<[^>]+>/g, '');
     // Slice plainTextContent after 20 characters and add ellipsis
     const truncatedContent =
       plainTextContent.length > 20

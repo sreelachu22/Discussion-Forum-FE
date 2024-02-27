@@ -42,5 +42,6 @@ img {
 }
 
 .card_content {
+  position: relative;
   left: 10%;
 }
