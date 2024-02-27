@@ -1,19 +1,18 @@
-.notice_modal_header_close{
-    background-color: rgb(51, 171, 165); 
-    border-color: rgb(51, 171, 165); 
-    color: #fff; 
-    border:1 px solid ;
-    border-radius: 5px;
-    padding-right:5px;
-    padding-left:5px;
+.notice_modal_header_close {
+  background-color: rgb(51, 171, 165);
+  border-color: rgb(51, 171, 165);
+  color: #fff;
+  border: 1 px solid;
+  border-radius: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 .error-message {
-    color: red;
-  }
-  
-  .required-field::after {
-    content: "*";
-    color: red;
-    margin-left: 5px;
-  }
-  
+  color: red;
+}
+
+.required-field::after {
+  content: "*";
+  color: red;
+  margin-left: 5px;
+}

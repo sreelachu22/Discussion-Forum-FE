@@ -8,7 +8,7 @@ describe('DeleteModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DeleteModalComponent]
+      declarations: [DeleteModalComponent],
     });
     fixture = TestBed.createComponent(DeleteModalComponent);
     component = fixture.componentInstance;

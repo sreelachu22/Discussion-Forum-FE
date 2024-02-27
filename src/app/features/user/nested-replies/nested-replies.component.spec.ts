@@ -8,7 +8,7 @@ describe('NestedRepliesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NestedRepliesComponent]
+      declarations: [NestedRepliesComponent],
     });
     fixture = TestBed.createComponent(NestedRepliesComponent);
     component = fixture.componentInstance;

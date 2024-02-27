@@ -8,6 +8,7 @@
           : { 'background-color': 'red' }
       "
       class="pillbox"
+      matTooltip="Thread Status"
     >
       {{ thread.threadStatusName }}
     </div>
@@ -45,6 +46,7 @@
         "
       >
         <app-nested-replies
+          [isOpenThread]="isOpenThread"
           [nestedReply]="reply"
           (upvoteEvent)="handleUpvote($event)"
           (downvoteEvent)="handleDownvote($event)"

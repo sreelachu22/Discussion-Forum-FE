@@ -58,11 +58,7 @@ export class UserEditComponent {
   saveChanges() {
     this.userRoleToggle = !this.userRoleToggle;
     this.useredit
-      .changeUserRole(
-        this.user.userID,
-        this.selectedRoleID,
-        this.modifiedBy
-      )
+      .changeUserRole(this.user.userID, this.selectedRoleID, this.modifiedBy)
       .subscribe({
         next: (response) => {
           // Reload user details after successful API call
@@ -82,47 +78,47 @@ export class UserEditComponent {
   }
 
   isLoading: boolean = false;
-ngOnInit() {
-  this.loaderService.isLoading$.subscribe((isLoading) => {
-    this.isLoading = isLoading;
-  });
-
-  let userID: string;
-
-  this.activatedroute.params.subscribe((params) => {
-    this.singleUserService.userID$.subscribe((uid) => {
-      userID = uid;
-
-      if (userID) {
-        this.useredit.getSingleUser(userID).subscribe({
-          next: (data: SingleUser) => {
-            this.user = data;
-          },
-          error: (error: Error) => {
-            console.log('Error', error);
-          },
-          complete: () => {
-            this.modifiedBy = sessionStorage.getItem('userID');
-
-            this.useredit.getUserRoles().subscribe({
-              next: (data) => {
-                this.userRoles = data;
-
-                // Find the role that matches the user's roleName
-                this.userRoles.forEach((role) => {
-                  if (role.roleName === this.user.roleName) {
-                    this.selectedRoleID = role.roleID;
-                  }
-                });
-              },
-              error: (error) => {
-                console.error('Error fetching user roles:', error);
-              },
-            });
-          },
-        });
-      }
+  ngOnInit() {
+    this.loaderService.isLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
-  });
-}
+
+    let userID: string;
+
+    this.activatedroute.params.subscribe((params) => {
+      this.singleUserService.userID$.subscribe((uid) => {
+        userID = uid;
+
+        if (userID) {
+          this.useredit.getSingleUser(userID).subscribe({
+            next: (data: SingleUser) => {
+              this.user = data;
+            },
+            error: (error: Error) => {
+              console.log('Error', error);
+            },
+            complete: () => {
+              this.modifiedBy = sessionStorage.getItem('userID');
+
+              this.useredit.getUserRoles().subscribe({
+                next: (data) => {
+                  this.userRoles = data;
+
+                  // Find the role that matches the user's roleName
+                  this.userRoles.forEach((role) => {
+                    if (role.roleName === this.user.roleName) {
+                      this.selectedRoleID = role.roleID;
+                    }
+                  });
+                },
+                error: (error) => {
+                  console.error('Error fetching user roles:', error);
+                },
+              });
+            },
+          });
+        }
+      });
+    });
+  }
 }

@@ -100,7 +100,7 @@ export class CreateReplyComponent implements OnInit {
               message: 'Reply posted successfully',
             },
           });
-          this.sendEmailToOwner(this.threadOwnerEmail, this.replyContent);          
+          this.sendEmailToOwner(this.threadOwnerEmail, this.replyContent);
         },
         error: (error) => {
           console.error('Error creating thread:', error);
