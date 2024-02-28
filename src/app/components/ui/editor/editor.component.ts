@@ -178,11 +178,28 @@ export class EditorComponent {
     }
   }
 
+  // public validContent(): boolean {
+  //   if (this.editorContent) {
+  //     if (
+  //       this.editorContent.length < this.minContentLength ||
+  //       this.editorContent.length > this.maxContentLength
+  //     ) {
+  //       return false;
+  //     } else {
+  //       this.isContentValid = true;
+  //       this.contentErrorMessage = '';
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
   public validContent(): boolean {
     if (this.editorContent) {
+      // Strip HTML tags from the content
+      const strippedContent = this.stripHtmlTags(this.editorContent);
       if (
-        this.editorContent.length < this.minContentLength ||
-        this.editorContent.length > this.maxContentLength
+        strippedContent.length < this.minContentLength ||
+        strippedContent.length > this.maxContentLength
       ) {
         return false;
       } else {
@@ -192,6 +209,11 @@ export class EditorComponent {
       }
     }
     return false;
+  }
+
+  private stripHtmlTags(html: string): string {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
   }
 
   private validateTags(): number[] {
