@@ -14,7 +14,7 @@ yarn-error.log
 #environment
 /src/app/environments/environment.ts
 
-# IDEs and editors
+# IDEs and editors 
 .idea/
 .project
 .classpath

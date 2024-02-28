@@ -4,8 +4,9 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
+import { InputComponent } from '../input/input.component';
 
-export interface SearchThreadResult {
+export interface IsSearchThreadResult {
   searchThreadDtoList: CategoryThreadDto[];
   searchThreadDtoListLength: number;
 }
@@ -45,6 +46,17 @@ export interface Thread {
   title: string;
 }
 
+export interface IsSearchTagResult {
+  isSearchTag: boolean;
+  searchTagList: TagDto[];
+}
+
+export interface TagDto {
+  tagId: number;
+  tagName: string;
+  tagCount: number;
+}
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -55,17 +67,57 @@ export class SearchComponent {
   pageSize: number = 10;
 
   searchTerm: string = '';
-  SearchThreadsDropDown: CategoryThreadDto[] = [];
+  SearchThreadsDropDown: CategoryThreadDto[] | TagDto[] = [];
   dropdowntoggle: boolean = false;
   private searchTermSubject = new Subject<string>();
 
-  @ViewChild('dropdown') dropdown!: ElementRef;
+  isSearchTag: boolean = true;
+  initialUrl: string = '';
 
-  constructor(private router: Router, private searchService: searchService) {}
+  @ViewChild('dropdown') dropdown!: ElementRef;
+  @ViewChild(InputComponent) inputComponent!: InputComponent;
+
+  ngAfterViewInit() {
+    this.changePlaceholderValues(this.placeholderoptions, this.inputComponent);
+  }
+
+  placeholderoptions: string[] = [
+    'Search using keywords or #tagnames...',
+    'Java exceptions',
+    '#cloud',
+    'Continuous Testing Strategies',
+    'Importance of Automated Testing',
+    '#python',
+    '#java,#network',
+  ];
+
+  changePlaceholderValues(
+    placeholderoptions: string[],
+    inputComponent: InputComponent
+  ) {
+    let index = 0;
+
+    const intervalId = setInterval(() => {
+      inputComponent.placeholder = placeholderoptions[index];
+      index++;
+      if (index === placeholderoptions.length) {
+        index = 0;
+      }
+    }, 3000);
+  }
+
+  constructor(
+    private router: Router,
+    private searchService: searchService,
+    private elementRef: ElementRef
+  ) {}
 
   InputChange(event: any) {
     this.searchTermSubject.next((event as string).trim());
     this.searchTerm = (event as string).trim();
+    if (this.searchTerm.length == 0) {
+      this.dropdowntoggle = false;
+    }
   }
 
   ngOnInit() {
@@ -81,13 +133,21 @@ export class SearchComponent {
               this.pageSize
             );
           } else {
+            this.dropdowntoggle = false;
             return of([]);
           }
         })
       )
       .subscribe({
-        next: (results: SearchThreadResult) => {
-          this.SearchThreadsDropDown = results.searchThreadDtoList;
+        next: (results: any) => {
+          if (results.isSearchTag) {
+            this.SearchThreadsDropDown = results.searchTagList;
+            this.isSearchTag = true;
+          } else {
+            this.SearchThreadsDropDown = results.searchThreadDtoList;
+            this.isSearchTag = false;
+          }
+
           this.dropdowntoggle = true;
         },
         error: (error: any) => {
@@ -98,21 +158,45 @@ export class SearchComponent {
 
   searchResult() {
     this.router.navigate(['/search-results'], {
-      queryParams: { searchTerm: this.searchTerm },
+      queryParams: {
+        searchTerm: this.searchTerm,
+        isSearchTag: this.isSearchTag,
+      },
     });
   }
 
-  selectResult(selectedThread: Thread) {
+  selectResult(selectedItem: any) {
     this.dropdowntoggle = false;
-    this.router.navigate([`/community/post-replies`], {
-      queryParams: { threadID: selectedThread.threadID },
-    });
+    if (this.isSearchTag) {
+      this.router.navigate(['/search-results'], {
+        queryParams: {
+          searchTerm: selectedItem.tagName,
+          isSearchTag: this.isSearchTag,
+        },
+      });
+    } else {
+      this.router.navigate([`/community/post-replies`], {
+        queryParams: { threadID: selectedItem.threadID },
+      });
+    }
   }
 
+  currentUrl: string = '';
   @HostListener('document:click', ['$event'])
   clickoutside(event: { target: any }) {
+    if (this.elementRef.nativeElement.contains(event.target)) {
+      this.currentUrl = this.router.url;
+    }
+
     if (!this.dropdown.nativeElement.contains(event.target)) {
       this.dropdowntoggle = false;
+    }
+    if (
+      this.currentUrl !== this.router.url &&
+      !this.elementRef.nativeElement.contains(event.target) &&
+      !this.dropdown.nativeElement.contains(event.target)
+    ) {
+      this.inputComponent.inputValue = '';
     }
   }
 }

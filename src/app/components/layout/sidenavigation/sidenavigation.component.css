@@ -46,8 +46,14 @@ app-search {
   flex: 1 1 auto;
 }
 
+.dropdown-menu {
+  --bs-dropdown-padding-y: 0rem !important;
+}
 .dropdown-menu.show {
-  background-color: rgb(51, 171, 165);
+  /* background-color: #0163e2; */
+  background: linear-gradient(135deg, #00a6a6, #49efec);
+  color:black;
+  border: 2px solid white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 app-profile-popup {
@@ -99,7 +105,25 @@ app-profile-popup {
 .dropdown-menu.profile-dropdown {
   position: absolute !important;
   width: max-content;
-  left: 64rem !important;
+  left: 63rem !important;
   right: 2% !important;
-  top: 100% !important;
+  top: 80% !important;
+  padding: 22px;
+  opacity: 0; /* Initially set opacity to 0 */
+  animation: fadeIn 0.5s ease-in forwards; /* Apply fade-in and slide-in animations */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start from opacity 0 */
+  }
+  to {
+    opacity: 1; /* Fade in to opacity 1 */
+  }
+}
+
+
+.logo-icon {
+  width: 150px; /* Adjust the width as needed */
+  height: auto;
 }

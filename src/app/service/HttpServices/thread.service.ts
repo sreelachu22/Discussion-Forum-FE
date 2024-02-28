@@ -18,6 +18,7 @@ export interface Thread {
   upVoteCount: number;
   downVoteCount: number;
   tagNames: string[];
+  threadOwnerEmail: string;
 }
 
 @Injectable({

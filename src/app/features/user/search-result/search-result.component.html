@@ -43,7 +43,12 @@
             {
               title: 'Column 2',
               metadataItems: [
-                { value: thread.title },
+                {
+                  value:
+                    thread.title.length > 45
+                      ? thread.title.slice(0, 45) + '...'
+                      : thread.title
+                },
                 {
                   value:
                     thread.content.length > 90
