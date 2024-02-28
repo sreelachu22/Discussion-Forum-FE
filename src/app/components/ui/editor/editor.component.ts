@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Tag } from 'src/app/features/user/create-post/create-post.component';
 
 @Component({
   selector: 'app-editor',
@@ -12,6 +11,21 @@ export class EditorComponent {
   title: string = '';
   tags: { display: string; value: string }[] = [];
 
+  isTitleValid: boolean = false;
+  titleErrorMessage: string = '';
+  minTitleLength: number = 5;
+  maxTitleLength: number = 100;
+  titleTouched: boolean = false;
+
+  isTagValid: boolean = false;
+  tagErrorMessage: string = '';
+  minTagCount: number = 1;
+
+  isContentValid: boolean = false;
+  contentErrorMessage: string = '';
+  minContentLength: number = 20;
+  maxContentLength: number = 10000;
+
   @Input() showSpan: boolean = true;
   @Input() showTitle: boolean = true;
   @Input() showBody: boolean = true;
@@ -20,6 +34,7 @@ export class EditorComponent {
   @Input() heading: string = '';
   @Input() firstButtonName: string = '';
   @Input() secondButtonName: string = '';
+
   @Output() onFirstButtonClick: EventEmitter<{
     title: string;
     editorContent: string;
@@ -35,6 +50,7 @@ export class EditorComponent {
   }> = new EventEmitter<{
     editorContent: string;
   }>();
+
   @Output() onSecondButtonClick: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}
@@ -111,7 +127,7 @@ export class EditorComponent {
       ) {
         if (!this.validateTitle()) {
           this.isTitleValid = false;
-          this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters.`;
+          this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters and should not start with special characters.`;
         }
         if (!tagsvalidaterarray.includes(0)) {
           this.isTagValid = false;
@@ -146,29 +162,14 @@ export class EditorComponent {
     this.title = (event as string).trim();
   }
 
-  // validations
-  isTitleValid: boolean = false;
-  titleErrorMessage: string = '';
-  minTitleLength: number = 5;
-  maxTitleLength: number = 100;
-  titleTouched: boolean = false;
-
-  isTagValid: boolean = false;
-  tagErrorMessage: string = '';
-  minTagCount: number = 1;
-
-  isContentValid: boolean = false;
-  contentErrorMessage: string = '';
-  minContentLength: number = 10;
-  maxContentLength: number = 10000;
-
   public validateTitle(): boolean {
     if (
       this.title.length < this.minTitleLength ||
-      this.title.length > this.maxTitleLength
+      this.title.length > this.maxTitleLength ||
+      this.title.trim()[0] === '#'
     ) {
       this.isTitleValid = false;
-      this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters.`;
+      this.titleErrorMessage = `Title must be between ${this.minTitleLength} and ${this.maxTitleLength} characters and should not start with special charcters.`;
       return false;
     } else {
       this.isTitleValid = true;
@@ -209,7 +210,7 @@ export class EditorComponent {
     }
     return false;
   }
-  
+
   private stripHtmlTags(html: string): string {
     const doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || '';
