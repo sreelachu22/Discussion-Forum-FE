@@ -46,7 +46,7 @@ export class CommunityManagementDashboardComponent {
       imageSrc: 'assets/images/settings.png',
     },
     {
-      title: 'Notice Management',
+      title: 'Announcement Management',
       path: 'notice-management',
       imageSrc: 'assets/images/settings.png',
     },

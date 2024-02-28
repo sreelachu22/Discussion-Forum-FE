@@ -46,7 +46,7 @@ export class SidenavCustomComponent {
     },
     {
       icon: 'announcement',
-      label: 'Notices',
+      label: 'Announcements',
       routes: 'notices',
     },
     {

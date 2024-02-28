@@ -33,7 +33,7 @@ export class NoticesComponent {
     { label: 'Community', route: '/community' },
     { label: 'Community Management', route: '/community-management-dashboard' },
     {
-      label: 'Notice Management',
+      label: 'Announcement Management',
       route: '/community-management-dashboard/notice-management',
     },
   ];

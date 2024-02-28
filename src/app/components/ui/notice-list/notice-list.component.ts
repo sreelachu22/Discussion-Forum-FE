@@ -10,9 +10,10 @@ export class NoticeListComponent {
     title: string;
     metadataItems: {
       name: string;
-      value: any;
+      value?: any;
       isHtml?: boolean;
       style?: object;
+      icon?: string;
     }[];
   }[] = [];
   @Input() click!: () => void;
