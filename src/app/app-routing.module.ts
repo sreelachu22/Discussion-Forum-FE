@@ -30,6 +30,7 @@ import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
+import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -168,7 +169,7 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: LatestComponent,
+    component: Replies20Component,
     path: 'latest',
     canActivate: [UserRouteGuard],
   },

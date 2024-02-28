@@ -1,6 +1,7 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
     <div class="username">{{ reply.createdUserName }}</div>
+    <div>parent = {{ reply.parentReplyID }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
 

@@ -61,4 +61,9 @@ export class ThreadRepliesService {
       },
     });
   }
+
+  getReplyByParentID(ParentReplyID :number | string):Observable<ThreadReplies>{  
+    const url = `${this.BASE_URL}/Reply/parentReply/${ParentReplyID}`;
+    return this.http.get<ThreadReplies>(url);
+  }
 }
