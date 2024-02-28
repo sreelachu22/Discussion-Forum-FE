@@ -5,21 +5,23 @@
       (click)="selectResult(result)"
       class="result-item"
     >
-      <ng-container *ngIf="isCategoryThreadDto(result); else tagTemplate">
-        {{
-          result.title.length > 45
-            ? result.title.slice(0, 45) + "...."
-            : result.title
-        }}
-      </ng-container>
+      <div class="dropdown-post-item">
+        <ng-container *ngIf="isCategoryThreadDto(result); else tagTemplate">
+          {{
+            result.title.length > 45
+              ? result.title.slice(0, 45) + "...."
+              : result.title
+          }}
+        </ng-container>
+      </div>
+
       <ng-template #tagTemplate>
-        {{
-          "#" +
-            result.tagName +
-            "&nbsp;&nbsp;&nbsp;&nbsp;" +
-            result.tagCount +
-            (result.tagCount <= 1 ? " post" : " posts")
-        }}
+        <div class="dropdown-tag-item">
+          <div class="dropdown-tag-item-name">{{ "#" + result.tagName }}</div>
+          <div class="dropdown-tag-item-count">
+            {{ result.tagCount + (result.tagCount <= 1 ? " post" : " posts") }}
+          </div>
+        </div>
       </ng-template>
     </div>
   </div>

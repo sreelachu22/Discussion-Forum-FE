@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { searchService } from 'src/app/service/HttpServices/search.service';
+import { InputComponent } from '../input/input.component';
 
 export interface IsSearchThreadResult {
   searchThreadDtoList: CategoryThreadDto[];
@@ -71,10 +72,45 @@ export class SearchComponent {
   private searchTermSubject = new Subject<string>();
 
   isSearchTag: boolean = true;
+  initialUrl: string = '';
 
   @ViewChild('dropdown') dropdown!: ElementRef;
+  @ViewChild(InputComponent) inputComponent!: InputComponent;
 
-  constructor(private router: Router, private searchService: searchService) {}
+  ngAfterViewInit() {
+    this.changePlaceholderValues(this.placeholderoptions, this.inputComponent);
+  }
+
+  placeholderoptions: string[] = [
+    'Search using keywords or #tagnames...',
+    'Java exceptions',
+    '#cloud',
+    'Continuous Testing Strategies',
+    'Importance of Automated Testing',
+    '#python',
+    '#java,#network',
+  ];
+
+  changePlaceholderValues(
+    placeholderoptions: string[],
+    inputComponent: InputComponent
+  ) {
+    let index = 0;
+
+    const intervalId = setInterval(() => {
+      inputComponent.placeholder = placeholderoptions[index];
+      index++;
+      if (index === placeholderoptions.length) {
+        index = 0;
+      }
+    }, 3000);
+  }
+
+  constructor(
+    private router: Router,
+    private searchService: searchService,
+    private elementRef: ElementRef
+  ) {}
 
   InputChange(event: any) {
     this.searchTermSubject.next((event as string).trim());
@@ -145,10 +181,22 @@ export class SearchComponent {
     }
   }
 
+  currentUrl: string = '';
   @HostListener('document:click', ['$event'])
   clickoutside(event: { target: any }) {
+    if (this.elementRef.nativeElement.contains(event.target)) {
+      this.currentUrl = this.router.url;
+    }
+
     if (!this.dropdown.nativeElement.contains(event.target)) {
       this.dropdowntoggle = false;
+    }
+    if (
+      this.currentUrl !== this.router.url &&
+      !this.elementRef.nativeElement.contains(event.target) &&
+      !this.dropdown.nativeElement.contains(event.target)
+    ) {
+      this.inputComponent.inputValue = '';
     }
   }
 }
