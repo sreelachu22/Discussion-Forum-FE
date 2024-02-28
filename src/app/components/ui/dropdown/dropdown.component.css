@@ -17,6 +17,7 @@
 
 .no-matches {
   font-size: small;
+  font-style: italic;
 }
 
 .result-item {
@@ -24,8 +25,28 @@
   transition: background-color 0.5s ease;
   padding-left: 15px;
   padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
 .result-item:hover {
-  background-color: #b2d1ff;
+  background-color: #b1b1b1;
+}
+
+.dropdown-post-item {
+  font-weight: bold;
+}
+.dropdown-tag-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-tag-item-name {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.dropdown-tag-item-count {
+  margin-right: 5px;
+  font-size: smaller;
+  font-weight: normal;
 }
