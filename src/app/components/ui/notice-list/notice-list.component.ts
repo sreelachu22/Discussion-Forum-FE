@@ -1,13 +1,20 @@
-import { Component, Input  } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-notice-list',
   templateUrl: './notice-list.component.html',
-  styleUrls: ['./notice-list.component.css']
+  styleUrls: ['./notice-list.component.css'],
 })
 export class NoticeListComponent {
-
-  @Input() sections: { title: string; metadataItems: { name: string; value: any; isHtml?: boolean; style?: object}[] }[] = [];
+  @Input() sections: {
+    title: string;
+    metadataItems: {
+      name: string;
+      value: any;
+      isHtml?: boolean;
+      style?: object;
+    }[];
+  }[] = [];
   @Input() click!: () => void;
 
   onClick() {

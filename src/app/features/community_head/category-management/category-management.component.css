@@ -1,52 +1,51 @@
-.container{
+.container {
   width: 96%;
 }
 
 /* breadcrumb navigations arrangement */
-.top_nav{
+.top_nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-
 /* table styling */
-.odd_value{
-    background-color: aliceblue;
+.odd_value {
+  background-color: aliceblue;
 }
 
-.even_value{
-    background-color: beige;
+.even_value {
+  background-color: beige;
 }
 
+th,
+td {
+  padding: 15px;
+  text-align: left;
+}
 
-  th, td {
-    padding: 15px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #c9c9c9;
-  }
+th {
+  background-color: #c9c9c9;
+}
 
-  td:last-child {
-    position: relative;
-  }
+td:last-child {
+  position: relative;
+}
 
 /* edit icon styling */
 .edit_icon {
-    font-size: 10px;
-    cursor: pointer;
-  }
-  
-  .edit_icon {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-  }
+  font-size: 10px;
+  cursor: pointer;
+}
 
-  /* modal style */
+.edit_icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+/* modal style */
 .modal-body {
   padding: 20px;
 }
@@ -75,7 +74,7 @@
   background-color: rgb(31, 151, 145);
 }
 
-.buttons_arrangement{
+.buttons_arrangement {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -132,7 +131,6 @@
   color: rgb(255, 255, 255);
 }
 
-
 .button_toggle {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -150,8 +148,8 @@
   color: #ffffff;
   text-align: center;
   font-size: 14px;
-  padding: 10px; 
-  width: 100px; 
+  padding: 10px;
+  width: 100px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;

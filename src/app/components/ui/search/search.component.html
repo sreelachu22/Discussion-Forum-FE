@@ -1,7 +1,7 @@
 <div class="search-container">
   <div class="Search_Bar">
     <app-input
-      placeholder="Search"
+      placeholder=""
       inputClass="Search_input"
       (inputChange)="InputChange($event)"
     ></app-input>
@@ -10,12 +10,13 @@
       buttonName="Search"
       buttonClass="Search_button"
       (click)="searchResult()"
-    ></app-button>
+    >
+    </app-button>
   </div>
 
   <div class="Drop_Down" #dropdown>
     <app-dropdown
-      *ngIf="SearchThreadsDropDown.length > 0 && dropdowntoggle"
+      *ngIf="dropdowntoggle"
       [results]="SearchThreadsDropDown"
       (emitselectResult)="selectResult($event)"
     ></app-dropdown>

@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-notice-create-modal',
@@ -18,7 +19,8 @@ export class NoticeCreateModalComponent {
   public notices: any[] = [];
   public newNotice: any = {};
 
-  private apiUrl = 'https://localhost:7160/api/Notice'; // Initial URL, you can set it dynamically based on your requirement
+  baseUrl: string = environment.apiUrl;
+  private apiUrl = this.baseUrl + `Notice`; // Initial URL, you can set it dynamically based on your requirement
 
   // variable to hold a reference to the modal
   // modalRef?: BsModalRef;

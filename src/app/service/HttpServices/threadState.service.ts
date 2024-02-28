@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostStateService {
   private showRepliesMap: Map<number, boolean> = new Map<number, boolean>();

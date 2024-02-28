@@ -10,10 +10,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5px;
-    border-radius: 10%;
+    /* padding: 5px; */
+    border-radius: 3%;
     background-color: black;
+    width:80%;
     color: white;
+    margin-top: 20px;
   }
   
   .upper_side img {
@@ -31,4 +33,5 @@
     margin: 0%;
     padding-left: 5px;
     padding-right: 5px;
+    padding-top: 5px;
   }

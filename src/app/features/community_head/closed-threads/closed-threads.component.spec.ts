@@ -8,7 +8,7 @@ describe('ClosedThreadsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ClosedThreadsComponent]
+      declarations: [ClosedThreadsComponent],
     });
     fixture = TestBed.createComponent(ClosedThreadsComponent);
     component = fixture.componentInstance;

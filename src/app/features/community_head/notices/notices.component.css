@@ -1,80 +1,82 @@
- .container{
-    width: 100%;
+.container {
+  width: 100%;
 }
-hr{
-    width: 95%;
+hr {
+  width: 95%;
 }
 
 .notices_body_delete_icon {
-    margin-left: 3%; 
+  margin-left: 3%;
 }
 .notices_body_edit_icon {
-    margin-left: 700px; 
+  margin-left: 700px;
 }
 
 @media (max-width: 768px) {
-    /* Adjust the styles for smaller screens */
-    .notices_body_delete_button, .notices_body_edit_button {
-        margin-left: 0; /* Reset margin for smaller screens or adjust as needed */
-    }
+  /* Adjust the styles for smaller screens */
+  .notices_body_delete_button,
+  .notices_body_edit_button {
+    margin-left: 0; /* Reset margin for smaller screens or adjust as needed */
+  }
 }
 
-.modal_close_button{
-    color: grey;
-    background-color: rgb(217, 224, 224);
-    border-radius: 5px;
-    border: 1px solid rgb(217, 224, 224); /* Added border style */
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-  }
+.modal_close_button {
+  color: grey;
+  background-color: rgb(217, 224, 224);
+  border-radius: 5px;
+  border: 1px solid rgb(217, 224, 224); /* Added border style */
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
+}
 
 .modal_close_button:hover {
-    background-color: rgb(217, 224, 224); /* New background color on hover */
-    border-color: rgb(217, 224, 224); /* New border color on hover */
-    color: grey; /* New text color on hover */
+  background-color: rgb(217, 224, 224); /* New background color on hover */
+  border-color: rgb(217, 224, 224); /* New border color on hover */
+  color: grey; /* New text color on hover */
 }
 
-.notice_title{
-    font-weight: 500
+.notice_title {
+  font-weight: 500;
 }
-.notice_id{  
-    background-color: rgb(51, 171, 165,0.8); 
-    border-color: rgb(51, 171, 165,0.8); 
-    color: #fff; 
-    border-radius: 5px;
-    padding:5px;
-}
-
-.notice_modal_header_close{
-    background-color: rgb(51, 171, 165); 
-    border-color: rgb(51, 171, 165); 
-    color: #fff; 
-    border:1 px solid ;
-    border-radius: 5px;
-    padding-right:5px;
-    padding-left:5px;
+.notice_id {
+  background-color: rgb(51, 171, 165, 0.8);
+  border-color: rgb(51, 171, 165, 0.8);
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
 }
 
-.breadcrumb_navigation{
-    text-decoration: none;
+.notice_modal_header_close {
+  background-color: rgb(51, 171, 165);
+  border-color: rgb(51, 171, 165);
+  color: #fff;
+  border: 1 px solid;
+  border-radius: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.breadcrumb_navigation {
+  text-decoration: none;
 }
 .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 /* Custom styles for the card */
 .card {
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
 }
 
 /* Hover effect for the card */
 .card:hover {
-    transform: scale(1.05);
-    background-color: rgb(217, 224, 224);
+  transform: scale(1.05);
+  background-color: rgb(217, 224, 224);
 }

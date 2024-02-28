@@ -156,9 +156,6 @@ export class CommunityPageComponent {
       error: (error: Error) => {
         alert('Error has occured, ' + error.message);
       },
-      complete: () => {
-        console.log('Completed');
-      },
     });
   }
 

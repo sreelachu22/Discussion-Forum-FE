@@ -106,7 +106,7 @@ import {
   LogLevel,
   PublicClientApplication,
 } from '@azure/msal-browser';
-import { TokenInterceptor } from './interceptor/token.interceptor';
+import { AuthInterceptor } from './interceptor/token.interceptor';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TokenHandler } from './util/tokenHandler';
 import { AdminLoginComponent } from './features/admin-login/admin-login.component';
@@ -261,6 +261,11 @@ const isIE =
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
     MsalService,
