@@ -16,10 +16,18 @@
     [showButton]="false"
   ></app-page-header>
   <br />
-  <div class="page_body">
-    <div *ngFor="let community of communities">
-      <app-card
-        [metadataItems]="[
+  <div *ngIf="communities.length <= 0" class="centered-container">
+    <div class="content">
+      <br />
+      <h3>No Communities Yet</h3>
+      <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%" />
+    </div>
+  </div>
+  <div *ngIf="communities.length > 0">
+    <div class="page_body">
+      <div *ngFor="let community of communities">
+        <app-card
+          [metadataItems]="[
           {
             name: '',
             value: '',
@@ -43,14 +51,15 @@
             value: 'Top categories : ' + community.topCategories,
           }
         ]"
-        [defaultImageWidth]="'50px'"
-        [defaultImageHeight]="'50px'"
-        [marginTop]="'10px'"
-        (click)="
-          navigateToCommunity(community.communityID, community.communityName)
-        "
-      >
-      </app-card>
+          [defaultImageWidth]="'50px'"
+          [defaultImageHeight]="'50px'"
+          [marginTop]="'10px'"
+          (click)="
+            navigateToCommunity(community.communityID, community.communityName)
+          "
+        >
+        </app-card>
+      </div>
     </div>
   </div>
 </div>

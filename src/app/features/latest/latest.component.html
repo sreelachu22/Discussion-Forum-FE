@@ -23,47 +23,56 @@
     </div>
   </div>
   <br />
-
-  <div *ngFor="let thread of latestPosts">
-    <app-list
-      (click)="goToThread(thread.threadID)"
-      [sections]="[
-        {
-          title: 'Column 1',
-          metadataItems: [
-            { value: thread.createdByUser },
-            { value: 'Asked ' + (thread.createdAt | formatThreadDate) },
-            {
-              value:
-                '↑ ' +
-                thread.upVoteCount +
-                '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ ' +
-                thread.downVoteCount,
-              isHtml: true
-            }
-          ]
-        },
-        {
-          title: 'Column 2',
-          metadataItems: [
-            { value: thread.title },
-            {
-              value:
-                thread.content.length > 70
-                  ? thread.content.slice(0, 70) + '...'
-                  : thread.content,
-              isHtml: true
-            },
-
-            {
-              value:
-                'Tags : ' + '<span>' + thread.tagNames.join(',') + '</span>',
-              isHtml: true
-            }
-          ]
-        }
-      ]"
-    >
-    </app-list>
+  <div *ngIf="latestPosts.length <= 0" class="centered-container">
+    <div class="content">
+      <br />
+      <h3>No Latest posts Yet</h3>
+      <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%" />
+    </div>
   </div>
+  <div *ngIf="latestPosts.length > 0">
+    <div *ngFor="let thread of latestPosts">
+      <app-list
+        (click)="goToThread(thread.threadID)"
+        [sections]="[
+          {
+            title: 'Column 1',
+            metadataItems: [
+              { value: thread.createdByUser },
+              { value: 'Asked ' + (thread.createdAt | formatThreadDate) },
+              {
+                value:
+                  '↑ ' +
+                  thread.upVoteCount +
+                  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ ' +
+                  thread.downVoteCount,
+                isHtml: true
+              }
+            ]
+          },
+          {
+            title: 'Column 2',
+            metadataItems: [
+              { value: thread.title },
+              {
+                value:
+                  thread.content.length > 70
+                    ? thread.content.slice(0, 70) + '...'
+                    : thread.content,
+                isHtml: true
+              },
+
+              {
+                value:
+                  'Tags : ' + '<span>' + thread.tagNames.join(',') + '</span>',
+                isHtml: true
+              }
+            ]
+          }
+        ]"
+      >
+      </app-list>
+    </div>
+  </div>
+  4
 </div>
