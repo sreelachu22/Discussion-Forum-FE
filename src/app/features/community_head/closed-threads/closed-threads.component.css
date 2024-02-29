@@ -4,6 +4,17 @@
   width: 95%;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.content {
+  text-align: center;
+}
+
 /* CSS for categorythreads_header */
 .categorythreads_header {
   display: flex;

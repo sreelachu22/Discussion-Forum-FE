@@ -81,6 +81,10 @@ export class SidenavigationComponent {
     this.router.navigateByUrl('/notifications');
   }
 
+  goToHome() {
+    this.router.navigateByUrl('/home');
+  }
+
   // getNotificationCount(): void {
   //   this.notificationService.getNotificationCount(sessionStorage.getItem('userID')).subscribe(
   //     (count: number) => {
