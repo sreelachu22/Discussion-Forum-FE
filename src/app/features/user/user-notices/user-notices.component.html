@@ -2,7 +2,7 @@
 <div class="container">
   <br />
   <app-page-header
-    pageHeaderTitle="Notices"
+    pageHeaderTitle="Announcements"
     navClass="navbar navbar-dark bg-secondary Page_header"
     [showButton]="false"
   ></app-page-header>
@@ -11,6 +11,10 @@
     <div *ngFor="let notice of notices">
       <app-notice-list
         [sections]="[
+          {
+            title: 'Icon',
+            metadataItems: [{ name: '', icon: 'assets/images/announcement.png' }]
+          },
           {
             title: 'Notice Details',
             metadataItems: [
@@ -25,23 +29,6 @@
             title: 'Notice Content',
             metadataItems: [{ name: '', value: notice.content }]
           },
-          {
-            title: 'Timestamps',
-            metadataItems: [
-              {
-                name: 'Created At',
-                value: notice.createdAt | date : 'dd-MM-yyyy'
-              },
-              {
-                name: 'Modified At',
-                value: notice.modifiedAt | date : 'dd-MM-yyyy'
-              },
-              {
-                name: 'Expires At',
-                value: notice.expiresAt | date : 'dd-MM-yyyy'
-              }
-            ]
-          }
         ]"
       ></app-notice-list>
     </div>
