@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CategoryThreadDto,
@@ -29,11 +29,13 @@ export interface Threads {
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.css'],
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private searchService: searchService
+    private searchService: searchService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {}
 
   breadcrumbs = [
@@ -60,6 +62,29 @@ export class SearchResultComponent implements OnInit {
     });
   }
 
+  ngAfterContentInit() {
+    setTimeout(() => {
+      this.applyStylesToElementByClassName('tags');
+    }, 300);
+  }
+
+  private applyStylesToElementByClassName(className: string): void {
+    const elements = this.el.nativeElement.getElementsByClassName(className);
+    console.log(elements);
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      this.renderer.setStyle(element, 'width', '100px');
+      this.renderer.setStyle(element, 'border-radius', '5px');
+      this.renderer.setStyle(element, 'margin-left', '2px');
+      this.renderer.setStyle(element, 'margin-right', '2px');
+      this.renderer.setStyle(
+        element,
+        'background-color',
+        'rgb(100 156 245 / 20%)'
+      );
+      this.renderer.setStyle(element, 'padding', '3px 4px');
+    }
+  }
   navigateToThreadReplies(threadID: number) {
     this.router.navigate([`/community/post-replies`], {
       queryParams: { threadID: threadID },
