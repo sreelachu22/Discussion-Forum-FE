@@ -102,13 +102,6 @@ export class SearchResultComponent implements OnInit {
     }
   }
 
-  changePage(newPage: number) {
-    if (newPage >= 1 && newPage <= this.totalPages) {
-      this.currentPage = newPage;
-      this.loadThreads(false);
-    }
-  }
-
   loadThreads(isSearchTag: boolean) {
     if (this.searchTerm) {
       if (isSearchTag == false) {
@@ -130,7 +123,13 @@ export class SearchResultComponent implements OnInit {
       } else {
         this.isSearchTag = true;
         this.searchService
-          .displayThreadsByTags(this.searchTerm, this.pageNumber, this.pageSize)
+          .displaySearchedThreads(
+            this.searchTerm,
+            this.pageNumber,
+            this.pageSize,
+            this.selectedFilterOption,
+            this.selectedSortOption
+          )
           .subscribe({
             next: (results: IsSearchThreadResult) => {
               this.threads = results.searchThreadDtoList;
@@ -145,5 +144,30 @@ export class SearchResultComponent implements OnInit {
           });
       }
     }
+  }
+
+  filterOptions: string[] = ['Replies', 'Votes', 'Date Posted'];
+
+  selectedFilterOption: number = 0;
+  selectedSortOption: number = 2;
+  dateSelected: boolean = false;
+
+  onFilterSelectionChange(event: string) {
+    const lowerCaseSelectedOption = event.toLowerCase();
+    const lowerCaseFilterOptions = this.filterOptions.map((option) =>
+      option.toLowerCase()
+    );
+    this.selectedFilterOption = lowerCaseFilterOptions.indexOf(
+      lowerCaseSelectedOption
+    );
+    this.selectedFilterOption == 2
+      ? (this.dateSelected = true)
+      : (this.dateSelected = false);
+    this.loadThreads(this.isSearchTag);
+  }
+
+  onSortSelectionChange(event: number) {
+    this.selectedSortOption = event;
+    this.loadThreads(this.isSearchTag);
   }
 }
