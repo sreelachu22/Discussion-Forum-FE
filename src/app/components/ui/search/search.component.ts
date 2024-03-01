@@ -82,7 +82,7 @@ export class SearchComponent {
   }
 
   placeholderoptions: string[] = [
-    'Search using keywords or #tagnames...',
+    'Search using keywords or #tagnames',
     'Java exceptions',
     '#cloud',
     'Continuous Testing Strategies',
@@ -96,7 +96,6 @@ export class SearchComponent {
     inputComponent: InputComponent
   ) {
     let index = 0;
-
     const intervalId = setInterval(() => {
       inputComponent.placeholder = placeholderoptions[index];
       index++;

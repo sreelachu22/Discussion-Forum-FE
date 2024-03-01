@@ -12,6 +12,28 @@
       (ButtonClick)="createPost()"
       ButtonName="Create Post"
     ></app-page-header>
+    <!-- filter options -->
+    <div *ngIf="CategoryThreads.totalCount > 0" class="filterClass">
+      <button-toggle
+        [sortOptions]="filterOptions"
+        (sortSelectionChange)="onFilterSelectionChange($event)"
+      ></button-toggle>
+      <span>Sort By:</span>
+      <select
+        name="sortOptions"
+        id="sortOptions"
+        [(ngModel)]="selectedSortOption"
+        (ngModelChange)="onSortSelectionChange($event)"
+      >
+        <option value="1">
+          {{ this.dateSelected ? "Oldest" : "Least to Most" }}
+        </option>
+        <option value="2">
+          {{ this.dateSelected ? "Newest" : "Most to Least" }}
+        </option>
+      </select>
+    </div>
+
     <!-- post displayed here -->
     <div class="page_body mt-3">
       <div *ngIf="CategoryThreads.threads.length > 0">

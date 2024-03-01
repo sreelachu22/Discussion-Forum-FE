@@ -44,7 +44,7 @@ export class CategoryThreadsComponent implements OnInit {
   communityCategoryMappingID!: number;
   communityID!: number;
   currentPage: number = 1;
-  pageSize: number = 9;
+  pageSize: number = 10;
   totalPages: number = 0;
   creatorId!: string;
 
@@ -87,7 +87,9 @@ export class CategoryThreadsComponent implements OnInit {
       .getThread(
         this.communityCategoryMappingID,
         this.currentPage,
-        this.pageSize
+        this.pageSize,
+        this.selectedFilterOption,
+        this.selectedSortOption
       )
       .subscribe({
         next: (data: ThreadResponse) => {
@@ -164,5 +166,30 @@ export class CategoryThreadsComponent implements OnInit {
         threadID: threadID,
       },
     });
+  }
+
+  filterOptions: string[] = ['Replies', 'Votes', 'Date Posted'];
+
+  selectedFilterOption: number = 0;
+  selectedSortOption: number = 2;
+  dateSelected: boolean = false;
+
+  onFilterSelectionChange(event: string) {
+    const lowerCaseSelectedOption = event.toLowerCase();
+    const lowerCaseFilterOptions = this.filterOptions.map((option) =>
+      option.toLowerCase()
+    );
+    this.selectedFilterOption = lowerCaseFilterOptions.indexOf(
+      lowerCaseSelectedOption
+    );
+    this.selectedFilterOption == 2
+      ? (this.dateSelected = true)
+      : (this.dateSelected = false);
+    this.loadThreads();
+  }
+
+  onSortSelectionChange(event: number) {
+    this.selectedSortOption = event;
+    this.loadThreads();
   }
 }
