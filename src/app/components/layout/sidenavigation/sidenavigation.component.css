@@ -126,4 +126,5 @@ app-profile-popup {
 .logo-icon {
   width: 150px; /* Adjust the width as needed */
   height: auto;
+  cursor: pointer;
 }

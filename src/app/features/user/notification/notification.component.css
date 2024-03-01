@@ -4,6 +4,17 @@
   width: 91%;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.content {
+  text-align: center;
+}
+
 .header_options {
   display: flex;
   justify-content: space-between;

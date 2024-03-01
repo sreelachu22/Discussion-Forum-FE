@@ -78,123 +78,134 @@
   </ng-template>
   <br />
   <!-- Display Category Cards -->
-  <div class="card-container">
-    <div
-      *ngFor="let category of categories"
-      (mouseover)="setHoveredCategoryId(category.communityCategoryID)"
-      (mouseout)="setHoveredCategoryId(null)"
-    >
-      <app-card
-        [metadataItems]="[
-          {
-            name: '',
-            value: '',
-            imageSrc: 'assets/images/edit.png'
-          },
-          { name: '', value: category.communityCategoryName }
-        ]"
-        [marginTop]="'-5px'"
-        [defaultImageWidth]="'20px'"
-        [defaultImageHeight]="'20px'"
-        (click)="openUpdateModal(update)"
-      ></app-card>
-      <!-- update modal -->
-      <ng-template #update>
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Category</h4>
-          <button
-            type="button"
-            class="close"
-            aria-label="Close"
-            (click)="closeModal()"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form
-            (ngSubmit)="updateCategory(category.communityCategoryID)"
-            #categoryForm="ngForm"
-          >
-            <div class="form-group">
-              <label for="oldCategoryName">Old Category Name:</label>
-              <textarea
-                class="form-control"
-                name="oldCategoryName"
-                [(ngModel)]="category.communityCategoryName"
-                readonly
-              ></textarea>
-            </div>
+  <div *ngIf="categories.length <= 0" class="centered-container">
+    <div class="content">
+      <br />
+      <h3>No categories Yet</h3>
+      <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%" />
+    </div>
+  </div>
+  <div *ngIf="categories.length > 0">
+    <div class="card-container">
+      <div
+        *ngFor="let category of categories"
+        (mouseover)="setHoveredCategoryId(category.communityCategoryID)"
+        (mouseout)="setHoveredCategoryId(null)"
+      >
+        <app-card
+          [metadataItems]="[
+            {
+              name: '',
+              value: '',
+              imageSrc: 'assets/images/edit.png'
+            },
+            { name: '', value: category.communityCategoryName }
+          ]"
+          [marginTop]="'-5px'"
+          [defaultImageWidth]="'20px'"
+          [defaultImageHeight]="'20px'"
+          (click)="openUpdateModal(update)"
+          [matTooltip]="'Click to edit'"
+        ></app-card>
+        <!-- update modal -->
+        <ng-template #update>
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Category</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="closeModal()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              (ngSubmit)="updateCategory(category.communityCategoryID)"
+              #categoryForm="ngForm"
+            >
+              <div class="form-group">
+                <label for="oldCategoryName">Old Category Name:</label>
+                <textarea
+                  class="form-control"
+                  name="oldCategoryName"
+                  [(ngModel)]="category.communityCategoryName"
+                  readonly
+                ></textarea>
+              </div>
 
-            <div class="form-group">
-              <label for="newCategoryName"
-                ><span class="required">*</span>New Category Name:</label
-              >
-              <textarea
-                class="form-control"
-                name="newCategoryName"
-                required
-                minlength="2"
-                maxlength="50"
-                pattern=".*\S+.*"
-                #newcategoryNameInput="ngModel"
-                [(ngModel)]="newCategoryName"
-              ></textarea>
-              <div
-                *ngIf="
-                  newcategoryNameInput?.invalid &&
-                  (newcategoryNameInput?.dirty || newcategoryNameInput?.touched)
-                "
-                class="error-message"
-              >
-                <div *ngIf="newcategoryNameInput.errors?.['required']">
-                  Please fill out this field.
-                </div>
-                <div *ngIf="newcategoryNameInput.errors?.['minlength']">
-                  New category name must be at least 2 characters long.
-                </div>
-                <div *ngIf="newcategoryNameInput.errors?.['maxlength']">
-                  New category name cannot exceed 50 characters.
-                </div>
-                <div *ngIf="newcategoryNameInput.errors?.['pattern']">
-                  New category name cannot be just empty spaces.
+              <div class="form-group">
+                <label for="newCategoryName"
+                  ><span class="required">*</span>New Category Name:</label
+                >
+                <textarea
+                  class="form-control"
+                  name="newCategoryName"
+                  required
+                  minlength="2"
+                  maxlength="50"
+                  pattern=".*\S+.*"
+                  #newcategoryNameInput="ngModel"
+                  [(ngModel)]="newCategoryName"
+                ></textarea>
+                <div
+                  *ngIf="
+                    newcategoryNameInput?.invalid &&
+                    (newcategoryNameInput?.dirty ||
+                      newcategoryNameInput?.touched)
+                  "
+                  class="error-message"
+                >
+                  <div *ngIf="newcategoryNameInput.errors?.['required']">
+                    Please fill out this field.
+                  </div>
+                  <div *ngIf="newcategoryNameInput.errors?.['minlength']">
+                    New category name must be at least 2 characters long.
+                  </div>
+                  <div *ngIf="newcategoryNameInput.errors?.['maxlength']">
+                    New category name cannot exceed 50 characters.
+                  </div>
+                  <div *ngIf="newcategoryNameInput.errors?.['pattern']">
+                    New category name cannot be just empty spaces.
+                  </div>
                 </div>
               </div>
-            </div>
-            <br />
-            <div class="buttons">
-              <app-button
-                buttonClass="custom-btn"
-                buttonName="Submit"
-                buttonColor="rgb(31, 151, 145)"
-                textColor="white"
-                hoverColor="rgb(51, 171, 165)"
-                hoverTextColor="white"
-                [disableButton]="!categoryForm.valid"
-              ></app-button>
-              <span></span>
-              <app-button
-                buttonClass="button"
-                buttonName="Delete"
-                buttonColor="#5c636a"
-                textColor="white"
-                hoverColor="red"
-                hoverTextColor="white"
-                (buttonClick)="openDeleteModal(category.communityCategoryID)"
-              ></app-button>
-            </div>
-          </form>
-        </div>
-      </ng-template>
-      <!-- end of update modal -->
-      <span
-        class="icon-container"
-        [ngClass]="{
-          hovered: isCategoryOrIconsHovered(category.communityCategoryID)
-        }"
-        *ngIf="isCategoryOrIconsHovered(category.communityCategoryID)"
-      >
-      </span>
+              <br />
+              <div class="buttons">
+                <app-button
+                  buttonClass="custom-btn"
+                  buttonName="Submit"
+                  buttonColor="rgb(31, 151, 145)"
+                  textColor="white"
+                  hoverColor="rgb(51, 171, 165)"
+                  hoverTextColor="white"
+                  [disableButton]="!categoryForm.valid"
+                ></app-button>
+                <span></span>
+                <app-button
+                  buttonClass="button"
+                  buttonName="Delete"
+                  buttonColor="#5c636a"
+                  textColor="white"
+                  hoverColor="red"
+                  hoverTextColor="white"
+                  (buttonClick)="openDeleteModal(category.communityCategoryID)"
+                ></app-button>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+        <!-- end of update modal -->
+        <span
+          class="icon-container"
+          [ngClass]="{
+            hovered: isCategoryOrIconsHovered(category.communityCategoryID)
+          }"
+          *ngIf="isCategoryOrIconsHovered(category.communityCategoryID)"
+        >
+        </span>
+      </div>
     </div>
   </div>
 </div>

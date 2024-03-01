@@ -2,6 +2,17 @@
   width: 96%;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.content {
+  text-align: center;
+}
+
 .page_top {
   display: flex;
   flex-direction: row;

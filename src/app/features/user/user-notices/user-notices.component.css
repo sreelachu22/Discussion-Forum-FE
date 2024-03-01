@@ -2,6 +2,17 @@
   width: 95%;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.content {
+  text-align: center;
+}
+
 .notice_title {
   font-weight: 500;
 }
