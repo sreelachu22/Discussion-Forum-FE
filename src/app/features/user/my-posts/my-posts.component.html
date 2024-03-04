@@ -1,0 +1,121 @@
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
+<div class="container">
+  <!-- bread crumbs -->
+  <div class="top_nav">
+    <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+
+    <app-page-header
+      pageHeaderTitle="My Posts"
+      navClass="navbar navbar-dark bg-secondary Page_header"
+      [showButton]="false"
+    />
+    <br />
+    <!-- filter options -->
+    <div *ngIf="CategoryThreads.totalCount > 0" class="filterClass">
+      <button-toggle
+        [sortOptions]="filterOptions"
+        (sortSelectionChange)="onFilterSelectionChange($event)"
+      ></button-toggle>
+      <span>Sort By:</span>
+      <select
+        name="sortOptions"
+        id="sortOptions"
+        [(ngModel)]="selectedSortOption"
+        (ngModelChange)="onSortSelectionChange($event)"
+      >
+        <option value="1">
+          {{ this.dateSelected ? "Oldest" : "Least to Most" }}
+        </option>
+        <option value="2">
+          {{ this.dateSelected ? "Newest" : "Most to Least" }}
+        </option>
+      </select>
+    </div>
+
+    <!-- post displayed here -->
+    <div class="page_body mt-3">
+      <div *ngIf="CategoryThreads.threads.length > 0">
+        <div *ngFor="let thread of CategoryThreads.threads">
+          <app-list
+            (click)="navigateToThreadReplies(thread.threadID)"
+            [sections]="[
+              {
+                title: 'Column 1',
+                metadataItems: [
+                  { value: thread.createdByUser },
+                  { value: 'Asked ' + formatDate(thread.createdAt) },
+                  {
+                    value:
+                      '<b>' +
+                      (thread.replyCount > 0
+                        ? thread.replyCount + ' replies'
+                        : '0 reply') +
+                      '</b>',
+                    isHtml: true
+                  },
+                  {
+                    value:
+                      '🡹 ' +
+                      thread.upVoteCount +
+                      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🡻 ' +
+                      thread.downVoteCount,
+                    isHtml: true
+                  }
+                ]
+              },
+              {
+                title: 'Column 2',
+                metadataItems: [
+                  { value: thread.title },
+                  {
+                    value:
+                      '<i>' +
+                      (thread.content.length > 90
+                        ? thread.content.slice(0, 90) + '...'
+                        : thread.content) +
+                      '</i>',
+                    isHtml: true
+                  },
+
+                  {
+                    value:
+                      '<span class=' +
+                      'tags' +
+                      '>' +
+                      thread.tagNames.join(
+                        '</span><span class=' + 'tags' + '>'
+                      ) +
+                      '</span>',
+                    isHtml: true
+                  }
+                ]
+              }
+            ]"
+          >
+          </app-list>
+        </div>
+      </div>
+      <div
+        *ngIf="CategoryThreads.threads.length === 0"
+        class="centered-container"
+      >
+        <div class="content">
+          <h3>No Posts Yet. Be the First one to post ✏️</h3>
+          <img
+            src="/assets/images/no-posts.jpg"
+            style="width: 50%; height: 50%"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- pagination ui -->
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChange)="changePage($event)"
+    ></app-pagination>
+  </div>
+</div>
