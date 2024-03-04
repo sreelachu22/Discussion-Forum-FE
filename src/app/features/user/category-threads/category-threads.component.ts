@@ -100,7 +100,7 @@ export class CategoryThreadsComponent implements OnInit {
     this.loadThreads();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewChecked() {
     this.applyStylesToElementByClassName('tags');
   }
 
