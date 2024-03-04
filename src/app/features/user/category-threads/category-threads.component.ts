@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
@@ -63,8 +62,27 @@ export class CategoryThreadsComponent implements OnInit {
     private router: Router,
     private loaderService: LoaderService,
     private communityDataService: CommunityDataService,
-    private categoryMappingService: CategoryMappingService
+    private categoryMappingService: CategoryMappingService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {}
+
+  private applyStylesToElementByClassName(className: string): void {
+    const elements = this.el.nativeElement.getElementsByClassName(className);
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      this.renderer.setStyle(element, 'width', '100px');
+      this.renderer.setStyle(element, 'border-radius', '5px');
+      this.renderer.setStyle(element, 'margin-left', '2px');
+      this.renderer.setStyle(element, 'margin-right', '2px');
+      this.renderer.setStyle(
+        element,
+        'background-color',
+        'rgb(100 156 245 / 20%)'
+      );
+      this.renderer.setStyle(element, 'padding', '3px 4px');
+    }
+  }
 
   isLoading = false;
   // ng init with method to get url params and display content based on it
@@ -80,6 +98,10 @@ export class CategoryThreadsComponent implements OnInit {
       this.communityCategoryMappingID = id;
     });
     this.loadThreads();
+  }
+
+  ngAfterViewInit() {
+    this.applyStylesToElementByClassName('tags');
   }
 
   loadThreads() {

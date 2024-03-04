@@ -81,9 +81,12 @@
 
                   {
                     value:
-                      '<b>Tags :</b> ' +
-                      '<span>' +
-                      thread.tagNames.join(',') +
+                      '<span class=' +
+                      'tags' +
+                      '>' +
+                      thread.tagNames.join(
+                        '</span><span class=' + 'tags' + '>'
+                      ) +
                       '</span>',
                     isHtml: true
                   }
