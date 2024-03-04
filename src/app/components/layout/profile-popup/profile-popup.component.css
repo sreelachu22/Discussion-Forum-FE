@@ -31,5 +31,42 @@
     margin: 0%;
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 5px;
+  }
+
+  .saved_posts{
+    width: 200px;
+    background-color: white;
+    color: rgb(31, 151, 145);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: smaller;
+  }
+
+  .saved_posts:hover {
+    color: white;
+    background-color: rgb(51, 171, 165);
+  }
+
+  .my_posts{
+    margin-top: 7px;
+    width: 200px;
+    background-color: white;
+    color: rgb(31, 151, 145);
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: smaller;
+  }
+
+  .my_posts:hover {
+    color: white;
+    background-color: rgb(51, 171, 165);
+  }
+
+  .user_dashboard_buttons{
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
