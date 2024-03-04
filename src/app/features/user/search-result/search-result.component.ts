@@ -62,15 +62,12 @@ export class SearchResultComponent {
     });
   }
 
-  ngAfterContentInit() {
-    setTimeout(() => {
-      this.applyStylesToElementByClassName('tags');
-    }, 300);
+  ngAfterViewChecked() {
+    this.applyStylesToElementByClassName('tags');
   }
 
   private applyStylesToElementByClassName(className: string): void {
     const elements = this.el.nativeElement.getElementsByClassName(className);
-    console.log(elements);
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
       this.renderer.setStyle(element, 'width', '100px');
