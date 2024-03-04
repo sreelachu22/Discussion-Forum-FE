@@ -73,4 +73,17 @@ export class ThreadService {
     const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
     return this.http.delete(apiUrl);
   }
+
+  getMyThreads(
+    userID: string | null,
+    pageNumber: number,
+    pageSize: number,
+    filterOption: number,
+    sortOption: number
+  ): Observable<any> {
+    return this.http.get(
+      this.apiurl +
+        `Thread/MyThreads?userId=${userID}&pageNumber=${pageNumber}&pageSize=${pageSize}&filterOption=${filterOption}&sortOption=${sortOption}`
+    );
+  }
 }
