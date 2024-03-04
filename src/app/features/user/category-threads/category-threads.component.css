@@ -40,6 +40,15 @@
   font-size: small;
 }
 
+.pillbox {
+  height: fit-content;
+  width: fit-content;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 20px;
+}
+
 /* pagination */
 .pagination {
   display: flex;

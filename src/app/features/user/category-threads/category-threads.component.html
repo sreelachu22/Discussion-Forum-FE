@@ -94,6 +94,16 @@
               }
             ]"
           >
+            <div
+              [ngStyle]="
+                thread.threadStatusName == 'Open'
+                  ? { 'background-color': 'green' }
+                  : { 'background-color': 'red' }
+              "
+              class="pillbox"
+            >
+              {{ thread.threadStatusName }}
+            </div>
           </app-list>
         </div>
       </div>
