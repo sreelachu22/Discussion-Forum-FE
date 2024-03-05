@@ -30,6 +30,10 @@ export class NotificationService {
     const url = this.apiurl + `Reply/${replyID}/updateHasViewed`;
     return this.http.post(url, {});
   }
+  markAllAsRead(replyIDs: number[]): Observable<any> {
+    const url = this.apiurl + `Reply/updateAllHasViewed`;
+    return this.http.post(url, replyIDs);
+  }
   getNotificationCount(userID: string | null): void {
     if (userID !== null) {
       this.http

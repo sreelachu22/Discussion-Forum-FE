@@ -29,6 +29,8 @@ export class NotificationComponent implements OnInit {
   categoryID: number = 0;
   sortOrder: string = 'desc';
 
+  replyIDs!: number[];
+
   categories: any[] = [];
   parentDropdownOptions: string[] = ['All'];
   sortOptions = ['Oldest', 'Latest'];
@@ -72,6 +74,11 @@ export class NotificationComponent implements OnInit {
           this.notificationCount = data.totalCount;
           this.totalPages = Math.ceil(this.notificationCount / this.pageSize);
           this.getCategories();
+
+          this.replyIDs = new Array<number>(this.notificationCount);
+          for (let i = 0; i < this.notificationCount; i++) {
+            this.replyIDs[i] = this.notifications[i].childReplyID;
+          }
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -103,6 +110,25 @@ export class NotificationComponent implements OnInit {
       },
       (error) => {
         console.error('Error marking reply as read:', error);
+      }
+    );
+  }
+
+  removeNotifications() {
+    console.log(this.replyIDs);
+    this.notificationService.markAllAsRead(this.replyIDs).subscribe(
+      () => {
+        this.getNotifications(
+          this.userId,
+          this.categoryID,
+          this.sortOrder,
+          this.pageNumber,
+          this.pageSize
+        );
+        this.notificationService.getNotificationCount(this.userID);
+      },
+      (error) => {
+        console.error('Error marking all replies as read:', error);
       }
     );
   }
