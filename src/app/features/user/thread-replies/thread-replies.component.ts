@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { switchMap } from 'rxjs';
@@ -30,6 +30,9 @@ interface ThreadReplyWithParent {
   styleUrls: ['./thread-replies.component.css'],
 })
 export class ThreadRepliesComponent {
+  @Output() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount:number }>();
+  @Output()  downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
+  
   bsModalRef: any;
   threadID: any;
   router: any;
@@ -86,7 +89,7 @@ export class ThreadRepliesComponent {
   get sortedReplies(): any[] {
     // Sort threadReplies based on reply_index
     return this.threadReplies.slice().sort((a, b) => a.reply_index - b.reply_index);
-  }
+  }  
   
   loadReplies() {
     let position = 0;    
@@ -130,8 +133,7 @@ export class ThreadRepliesComponent {
         for (let i = startIndex + 1; i < endIndex; i++) {
           this.showNestedReplies[i] = false;
         }
-      };
-  
+      };  
       // Find the index range of child replies in threadReplies array
       const startIndex = index;
       removeNestedReplies(startIndex);
@@ -140,93 +142,85 @@ export class ThreadRepliesComponent {
       this.showNestedReplies[index] = false;
       console.log(this.threadReplies);
     }
-  }    
-
-loadNestedReplies(index: number) {
-  const parentReplyId = this.threadReplies[index].reply.replyID;
-
-  this.threadRepliesService
-    .getReplyByParentID(this.threadId, parentReplyId)
-    .subscribe(
-      (repliesData:any) => {
-        let position = 1; // Start position from 1 to place nested replies right after the parent
-        const insertIndex = index + 1; // Calculate the index where the nested replies will be inserted
-        
-        // Filter out replies that already exist in threadReplies
-        const newReplies: any[] = repliesData.filter((reply: any) => {
-          return !this.threadReplies.some(existingReply => existingReply.reply.replyID === reply.replyID);
-        });
-
-        // Map new replies to ThreadReplyWithParent format
-        const nestedReplies: ThreadReplyWithParent[] = newReplies.map((reply: any) => {            
-          return {         
-            reply: reply,
-            parentReply: reply.parentReplyID,
-            reply_index: this.threadReplies[index].reply_index + position++
-          };                    
-        });
-
-        // Update the indices of replies that were previously at the insertion position
-        for (let i = insertIndex; i < this.threadReplies.length; i++) {
-          this.threadReplies[i].reply_index += newReplies.length;
-        }
-
-        // Insert nested replies at the specified position
-        this.threadReplies.splice(insertIndex, 0, ...nestedReplies);
-      },
-      (error: Error) => {
-        console.log('Error loading nested replies', error);
-      }
-    );
-}
-
-getDepthLevel(reply: ThreadReplyWithParent): number {
-  let depth = 0;
-  let parentReplyId = reply.reply.parentReplyID;
-
-  while (parentReplyId !== "") {
-    depth++;
-    const parentReply = this.threadReplies.find(r => r.reply.replyID === parentReplyId);
-    if (parentReply) {
-      parentReplyId = parentReply.reply.parentReplyID;
-    } else {
-      break;
-    }
   }
+  loadNestedReplies(index: number) {
+    const parentReplyId = this.threadReplies[index].reply.replyID;
 
-  return depth;
-}
-
-  onDeleteReply(reply: ThreadReplies) {
     this.threadRepliesService
-      .deleteReply(reply.replyID, reply.createdBy)
-      .subscribe({
-        next: () => {
-          this.onSubmit(reply);
+      .getReplyByParentID(this.threadId, parentReplyId)
+      .subscribe(
+        (repliesData:any) => {
+          let position = 1; // Start position from 1 to place nested replies right after the parent
+          const insertIndex = index + 1; // Calculate the index where the nested replies will be inserted
+          
+          // Filter out replies that already exist in threadReplies
+          const newReplies: any[] = repliesData.filter((reply: any) => {
+            return !this.threadReplies.some(existingReply => existingReply.reply.replyID === reply.replyID);
+          });
+
+          // Map new replies to ThreadReplyWithParent format
+          const nestedReplies: ThreadReplyWithParent[] = newReplies.map((reply: any) => {            
+            return {         
+              reply: reply,
+              parentReply: reply.parentReplyID,
+              reply_index: this.threadReplies[index].reply_index + position++
+            };                    
+          });
+
+          // Update the indices of replies that were previously at the insertion position
+          for (let i = insertIndex; i < this.threadReplies.length; i++) {
+            this.threadReplies[i].reply_index += newReplies.length;
+          }
+
+          // Insert nested replies at the specified position
+          this.threadReplies.splice(insertIndex, 0, ...nestedReplies);
         },
-        error: (error) => {
-          console.error('Error deleting reply:', error);
-        },
-      });
+        (error: Error) => {
+          console.log('Error loading nested replies', error);
+        }
+      );
   }
 
+  getDepthLevel(reply: ThreadReplyWithParent): number {
+    let depth = 0;
+    let parentReplyId = reply.reply.parentReplyID;
 
-  handleUpvote(vote: Vote) {
+    while (parentReplyId !== "") {
+      depth++;
+      const parentReply = this.threadReplies.find(r => r.reply.replyID === parentReplyId);
+      if (parentReply) {
+        parentReplyId = parentReply.reply.parentReplyID;
+      } else {
+        break;
+      }
+    }
+    return depth;
+  }
+
+  handleUpvote(event: Vote) {
+    const vote = event;
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {},
+      next: (response) => {
+        const data = response;
+        const eventData = { replyID: data.replyID, upvoteCount: data.upvoteCount, downvoteCount: data.downvoteCount };
+        this.upvoteSuccessEvent.emit(eventData);
+      },
       error: (error) => {
-        console.error('Error sending upvote', error);
-        this.loadReplies();
+        console.log(error);
       },
     });
   }
 
-  handleDownvote(vote: Vote) {
+  handleDownvote(event: Vote) {
+    const  vote  = event;
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {},
-      error: (error) => {
-        console.error('Error sending downvote', error);
-        this.loadThread();
+      next: (response) => {        
+        const data = response;
+      const eventData = { replyID: data.replyID, downvoteCount: data.downvoteCount, upvoteCount: data.upvoteCount };
+      this.downvoteSuccessEvent.emit(eventData);     
+      },
+      error: (error) => {      
+        console.log(error)              
       },
     });
   }
@@ -251,6 +245,19 @@ getDepthLevel(reply: ThreadReplyWithParent): number {
     });
   }
 
+  onDeleteReply(reply: ThreadReplies) {
+    this.threadRepliesService
+      .deleteReply(reply.replyID, reply.createdBy)
+      .subscribe({
+        next: () => {
+          this.onSubmit(reply);
+        },
+        error: (error) => {
+          console.error('Error deleting reply:', error);
+        },
+      });
+  }
+  
   onSubmit(reply: ThreadReplies) {
     const content = '-reply deleted by user-';
     this.threadRepliesService

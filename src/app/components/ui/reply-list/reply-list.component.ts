@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-  ThreadReplies,
-  ThreadRepliesService,
+  ThreadReplies
 } from 'src/app/service/HttpServices/thread-replies.service';
-import { VoteService } from 'src/app/service/HttpServices/vote.service';
 import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
@@ -14,61 +12,54 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './reply-list.component.html',
   styleUrls: ['./reply-list.component.css'],
 })
-export class ReplyListComponent {
+
+export class ReplyListComponent { 
   @Input() reply?: ThreadReplies;
-  @Input() isOpenThread?: boolean;
-  // @Output() upvoteEvent = new EventEmitter<Vote>();
-  @Output() upvoteEvent = new EventEmitter<{ reply: ThreadReplies, vote: Vote }>();
+  @Input() isOpenThread?: boolean; 
+  @Input() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount: number  }>();
+  @Input() downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
+  
+  @Output() upvoteEvent = new EventEmitter<Vote>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   @Output() deleteReplyEvent = new EventEmitter<any>();
 
   showReplies: { [key: number]: boolean } = {};
   ActiveUserID: string | null = sessionStorage.getItem('userID');
-  modalService: any;
+  //modalService: any;
   confirmModal!: BsModalRef;
   userID:string | null = sessionStorage.getItem('userID');
 
-  constructor(
-    private voteService: VoteService,
-    private router: Router,
-    private threadRepliesService: ThreadRepliesService
+  constructor(    
+    private router: Router,  
+    private modalService: BsModalService  
   ) {}
 
-//ngonit, on destroy, upvote(M)
 
-  ngOnInit() {
-    // Subscribe to the upvoteEvent emitter
-    this.upvoteEvent.subscribe(({ reply, vote }) => {
-      // Check if the emitted reply matches the current reply
-      if (this.reply && this.reply.replyID === reply.replyID) {
-        // Update the upvote count
-        this.reply.upvoteCount++;
-      }
-    });
+ngOnInit() {  
+  this.upvoteSuccessEvent.subscribe((emittedData: { replyID: number, upvoteCount: number, downvoteCount:number }) => {    
+    if (this.reply && this.reply.replyID === emittedData.replyID) {
+      this.reply.upvoteCount = emittedData.upvoteCount;
+      this.reply.downvoteCount = emittedData.downvoteCount;
+    }
+  });
+  this.downvoteSuccessEvent.subscribe((emittedData: { replyID: number, downvoteCount: number, upvoteCount: number }) => {    
+    if (this.reply && this.reply.replyID === emittedData.replyID) {
+      this.reply.downvoteCount = emittedData.downvoteCount;
+      this.reply.upvoteCount = emittedData.upvoteCount;
+    }
+  });
+}
+
+  emitUpvote(reply: ThreadReplies) {
+    const vote: Vote = {
+      userID: sessionStorage.getItem('userID'),
+      replyID: reply.replyID,
+      isUpVote: true,
+      isDeleted: false,
+    };
+    this.upvoteEvent.emit(vote);
   }
-
-  // emitUpvote(reply: ThreadReplies) {
-  //   const vote: Vote = {
-  //     userID: sessionStorage.getItem('userID'),
-  //     replyID: reply.replyID,
-  //     isUpVote: true,
-  //     isDeleted: false,
-  //   };
-  //   this.upvoteEvent.emit(vote);
-  // }
-
-  emitUpvote(reply: ThreadReplies, vote: Vote) {
-    this.upvoteEvent.emit({ reply, vote });
-  }
-  
-  // handleUpvoteEvent(event: { reply: ThreadReplies, vote: Vote }) {
-  //   // Check if the emitted reply matches the current reply
-  //   if (this.reply && this.reply.replyID === event.reply.replyID) {
-  //     // Update the upvote count
-  //     this.reply.upvoteCount++;
-  //   }
-  // }
   
   emitDownvote(reply: ThreadReplies) {
     const vote: Vote = {
@@ -104,18 +95,20 @@ export class ReplyListComponent {
       confirmFunction: this.confirmDeleteReply.bind(this),
       declineFunction: this.declineDeleteReply.bind(this),
     };
+    if(reply){
     this.confirmModal = this.modalService.show(DeleteModalComponent, {
       initialState,
-    });
+    
+    })};
   }
+
   confirmDeleteReply() {
     this.deleteReplyEvent.emit(this.reply);
   }
+
   declineDeleteReply() {
     this.confirmModal?.hide();
   }
-
-  deleteReply(reply: ThreadReplies) {}
 
   isCurrentUser(reply: ThreadReplies): boolean {
     return this.ActiveUserID === reply.createdBy;
@@ -126,10 +119,6 @@ export class ReplyListComponent {
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
 
-  ngOnDestroy() {
-    // Unsubscribe from the upvoteEvent emitter to prevent memory leaks
-    this.upvoteEvent.unsubscribe();
-  }
 }
 
 

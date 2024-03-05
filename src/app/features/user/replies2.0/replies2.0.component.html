@@ -7,11 +7,14 @@
       <app-reply-list
         [reply]="replyObject.reply"
         [isOpenThread]="isOpenThread"
+        [upvoteSuccessEvent]="upvoteSuccessEvent"
+        [downvoteSuccessEvent]="downvoteSuccessEvent"
         (toggleRepliesEvent)="toggleNestedReplies(i)"
         (upvoteEvent)="handleUpvote($event)"
         (downvoteEvent)="handleDownvote($event)"
         (deleteReplyEvent)="onDeleteReply($event)"
       ></app-reply-list>
+      <br />
     </div>
   </ng-container>
 </div>

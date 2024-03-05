@@ -170,7 +170,7 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: Replies20Component,
+    component: LatestComponent,
     path: 'latest',
     canActivate: [UserRouteGuard],
   },
