@@ -18,6 +18,7 @@
     </div>
   </div>
   <div *ngIf="notifications.length > 0">
+    <button (click)="removeNotifications()">Mark all as read</button>
     <div *ngFor="let notification of notifications">
       <app-notfication-list
         [notification]="notification"
