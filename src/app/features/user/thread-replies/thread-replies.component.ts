@@ -18,6 +18,12 @@ import {
   VoteService,
 } from 'src/app/service/HttpServices/vote.service';
 
+interface ThreadReplyWithParent {
+  reply: ThreadReplies;
+  parentReply: number | string;
+  reply_index:number;
+}
+
 @Component({
   selector: 'app-thread-replies',
   templateUrl: './thread-replies.component.html',
@@ -47,13 +53,13 @@ export class ThreadRepliesComponent {
   threadId: number = 0;
   parent_replyID: number | string = '';
   searchTerm: string = '';
-  threadReplies: ThreadReplies[] = [];
+  threadReplies: ThreadReplyWithParent[] = [];
   showNestedReplies: boolean[] = [];
   thread!: Thread;
   isOpenThread: boolean = true;
   threadRepliesStatus: boolean = true;
-
   isLoading = false;
+
   ngOnInit() {
     this.loadThread();
     this.loaderService.isLoading$.subscribe((isLoading) => {
@@ -76,15 +82,27 @@ export class ThreadRepliesComponent {
           this.isOpenThread = false;
         }
       });
+  } 
+  get sortedReplies(): any[] {
+    // Sort threadReplies based on reply_index
+    return this.threadReplies.slice().sort((a, b) => a.reply_index - b.reply_index);
   }
-
+  
   loadReplies() {
+    let position = 0;    
     this.threadRepliesService
-      .getRepliesOfThread(this.threadId, this.parent_replyID, 1, 20)
+      .getReplyByParentID(this.threadId, this.parent_replyID)
       .subscribe({
         next: (repliesData: any) => {
-          this.threadReplies = repliesData;
-          this.threadRepliesStatus = true;
+          // Iterate over each reply in the repliesData array
+          this.threadReplies = repliesData.map((reply: any) => {            
+            return {         
+              reply: reply,
+              parentReply: reply.parentReplyID,
+              reply_index:position++
+            };                    
+          });          
+          this.threadRepliesStatus = true;          
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -92,6 +110,92 @@ export class ThreadRepliesComponent {
         },
       });
   }
+
+  toggleNestedReplies(index: number) {
+    if (!this.showNestedReplies[index]) {      
+      this.showNestedReplies[index] = true;
+      // Load nested replies and then remove them from threadReplies
+      this.loadNestedReplies(index);
+      
+    } else {
+      // Recursive function to remove nested replies
+      const removeNestedReplies = (startIndex: number) => {
+        let endIndex = startIndex + 1;
+        while (endIndex < this.threadReplies.length && this.threadReplies[endIndex].reply.parentReplyID === this.threadReplies[startIndex].reply.replyID) {
+          removeNestedReplies(endIndex); // Recursively remove child replies
+          endIndex++;
+        }
+        this.threadReplies.splice(startIndex + 1, endIndex - startIndex - 1); // Remove child replies
+        // Set showNestedReplies to false for all removed replies
+        for (let i = startIndex + 1; i < endIndex; i++) {
+          this.showNestedReplies[i] = false;
+        }
+      };
+  
+      // Find the index range of child replies in threadReplies array
+      const startIndex = index;
+      removeNestedReplies(startIndex);
+  
+      // Update showNestedReplies flag for the toggled reply
+      this.showNestedReplies[index] = false;
+      console.log(this.threadReplies);
+    }
+  }    
+
+loadNestedReplies(index: number) {
+  const parentReplyId = this.threadReplies[index].reply.replyID;
+
+  this.threadRepliesService
+    .getReplyByParentID(this.threadId, parentReplyId)
+    .subscribe(
+      (repliesData:any) => {
+        let position = 1; // Start position from 1 to place nested replies right after the parent
+        const insertIndex = index + 1; // Calculate the index where the nested replies will be inserted
+        
+        // Filter out replies that already exist in threadReplies
+        const newReplies: any[] = repliesData.filter((reply: any) => {
+          return !this.threadReplies.some(existingReply => existingReply.reply.replyID === reply.replyID);
+        });
+
+        // Map new replies to ThreadReplyWithParent format
+        const nestedReplies: ThreadReplyWithParent[] = newReplies.map((reply: any) => {            
+          return {         
+            reply: reply,
+            parentReply: reply.parentReplyID,
+            reply_index: this.threadReplies[index].reply_index + position++
+          };                    
+        });
+
+        // Update the indices of replies that were previously at the insertion position
+        for (let i = insertIndex; i < this.threadReplies.length; i++) {
+          this.threadReplies[i].reply_index += newReplies.length;
+        }
+
+        // Insert nested replies at the specified position
+        this.threadReplies.splice(insertIndex, 0, ...nestedReplies);
+      },
+      (error: Error) => {
+        console.log('Error loading nested replies', error);
+      }
+    );
+}
+
+getDepthLevel(reply: ThreadReplyWithParent): number {
+  let depth = 0;
+  let parentReplyId = reply.reply.parentReplyID;
+
+  while (parentReplyId !== "") {
+    depth++;
+    const parentReply = this.threadReplies.find(r => r.reply.replyID === parentReplyId);
+    if (parentReply) {
+      parentReplyId = parentReply.reply.parentReplyID;
+    } else {
+      break;
+    }
+  }
+
+  return depth;
+}
 
   onDeleteReply(reply: ThreadReplies) {
     this.threadRepliesService
@@ -106,9 +210,6 @@ export class ThreadRepliesComponent {
       });
   }
 
-  toggleNestedReplies(index: number) {
-    this.showNestedReplies[index] = !this.showNestedReplies[index];
-  }
 
   handleUpvote(vote: Vote) {
     this.voteService.sendVote(vote).subscribe({

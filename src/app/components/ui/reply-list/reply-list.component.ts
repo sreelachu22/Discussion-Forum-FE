@@ -17,7 +17,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ReplyListComponent {
   @Input() reply?: ThreadReplies;
   @Input() isOpenThread?: boolean;
-  @Output() upvoteEvent = new EventEmitter<Vote>();
+  // @Output() upvoteEvent = new EventEmitter<Vote>();
+  @Output() upvoteEvent = new EventEmitter<{ reply: ThreadReplies, vote: Vote }>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   @Output() deleteReplyEvent = new EventEmitter<any>();
@@ -26,6 +27,7 @@ export class ReplyListComponent {
   ActiveUserID: string | null = sessionStorage.getItem('userID');
   modalService: any;
   confirmModal!: BsModalRef;
+  userID:string | null = sessionStorage.getItem('userID');
 
   constructor(
     private voteService: VoteService,
@@ -33,16 +35,41 @@ export class ReplyListComponent {
     private threadRepliesService: ThreadRepliesService
   ) {}
 
-  emitUpvote(reply: ThreadReplies) {
-    const vote: Vote = {
-      userID: sessionStorage.getItem('userID'),
-      replyID: reply.replyID,
-      isUpVote: true,
-      isDeleted: false,
-    };
-    this.upvoteEvent.emit(vote);
+//ngonit, on destroy, upvote(M)
+
+  ngOnInit() {
+    // Subscribe to the upvoteEvent emitter
+    this.upvoteEvent.subscribe(({ reply, vote }) => {
+      // Check if the emitted reply matches the current reply
+      if (this.reply && this.reply.replyID === reply.replyID) {
+        // Update the upvote count
+        this.reply.upvoteCount++;
+      }
+    });
   }
 
+  // emitUpvote(reply: ThreadReplies) {
+  //   const vote: Vote = {
+  //     userID: sessionStorage.getItem('userID'),
+  //     replyID: reply.replyID,
+  //     isUpVote: true,
+  //     isDeleted: false,
+  //   };
+  //   this.upvoteEvent.emit(vote);
+  // }
+
+  emitUpvote(reply: ThreadReplies, vote: Vote) {
+    this.upvoteEvent.emit({ reply, vote });
+  }
+  
+  // handleUpvoteEvent(event: { reply: ThreadReplies, vote: Vote }) {
+  //   // Check if the emitted reply matches the current reply
+  //   if (this.reply && this.reply.replyID === event.reply.replyID) {
+  //     // Update the upvote count
+  //     this.reply.upvoteCount++;
+  //   }
+  // }
+  
   emitDownvote(reply: ThreadReplies) {
     const vote: Vote = {
       userID: sessionStorage.getItem('userID'),
@@ -98,4 +125,11 @@ export class ReplyListComponent {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
+
+  ngOnDestroy() {
+    // Unsubscribe from the upvoteEvent emitter to prevent memory leaks
+    this.upvoteEvent.unsubscribe();
+  }
 }
+
+

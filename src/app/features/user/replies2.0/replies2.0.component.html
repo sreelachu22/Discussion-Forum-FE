@@ -1,28 +1,17 @@
-<div class="container">
-  <div class="header">
-    <div class="centered-container">
-      <div *ngIf="!threadRepliesStatus" class="content">
-        <h3>No Replies Yet. Be the First one to reply✏️</h3>
-        <img
-          src="/assets/images/no-posts.jpg"
-          style="width: 50%; height: 50%"
-        />
-      </div>
+<div class="thread-replies-container" *ngIf="threadRepliesStatus">
+  <ng-container *ngFor="let replyObject of sortedReplies; let i = index">
+    <div
+      class="reply-container"
+      [style.margin-left.px]="getDepthLevel(replyObject) * 40"
+    >
+      <app-reply-list
+        [reply]="replyObject.reply"
+        [isOpenThread]="isOpenThread"
+        (toggleRepliesEvent)="toggleNestedReplies(i)"
+        (upvoteEvent)="handleUpvote($event)"
+        (downvoteEvent)="handleDownvote($event)"
+        (deleteReplyEvent)="onDeleteReply($event)"
+      ></app-reply-list>
     </div>
-    <div *ngIf="threadRepliesStatus">
-      <div class="card1" *ngFor="let reply of threadReplies; let i = index">
-        <app-reply-list
-          [reply]="reply"
-          [isOpenThread]="isOpenThread"
-          (toggleRepliesEvent)="toggleNestedReplies(i)"
-          (upvoteEvent)="handleUpvote($event)"
-          (downvoteEvent)="handleDownvote($event)"
-          (deleteReplyEvent)="onDeleteReply($event)"
-        ></app-reply-list>
-      </div>
-    </div>
-  </div>
-  <ng-container class="container"
-    ><app-loader *ngIf="isLoading"></app-loader
-  ></ng-container>
+  </ng-container>
 </div>

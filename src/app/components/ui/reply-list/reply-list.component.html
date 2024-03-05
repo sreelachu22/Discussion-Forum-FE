@@ -1,7 +1,6 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
     <div class="username">{{ reply.createdUserName }}</div>
-    <div>parent = {{ reply.parentReplyID }}</div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
 
@@ -17,10 +16,25 @@
 
   <div class="reply-footer">
     <div class="votes">
-      <mat-icon
+      <!-- <mat-icon
         *ngIf="!reply.isDeleted"
         class="mat_icons"
         (click)="emitUpvote(reply)"
+        matTooltip="Upvote"
+      >
+        arrow_upward
+      </mat-icon> -->
+      <mat-icon
+        *ngIf="!reply.isDeleted"
+        class="mat_icons"
+        (click)="
+          emitUpvote(reply, {
+            userID: userID,
+            replyID: reply.replyID,
+            isUpVote: true,
+            isDeleted: false
+          })
+        "
         matTooltip="Upvote"
       >
         arrow_upward
@@ -68,7 +82,7 @@
     </div>
 
     <div class="show-replies">
-      <ng-container
+      <!-- <ng-container
         *ngIf="reply.nestedReplies && reply.nestedReplies.length > 0"
       >
         <span class="show-replies-button" (click)="toggleReplies()">
@@ -76,6 +90,15 @@
             reply.nestedReplies.length === 1
               ? "1 Reply"
               : reply.nestedReplies.length + " Replies"
+          }}
+        </span>
+      </ng-container> -->
+      <ng-container *ngIf="reply.childReplyCount > 0">
+        <span class="show-replies-button" (click)="toggleReplies()">
+          {{
+            reply.childReplyCount === 1
+              ? "1 Reply"
+              : reply.childReplyCount + " Replies"
           }}
         </span>
       </ng-container>

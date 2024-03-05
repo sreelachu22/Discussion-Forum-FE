@@ -18,6 +18,7 @@ export interface ThreadReplies {
   modifiedAt: string;
   threadOwnerEmail: string;
   nestedReplies?: ThreadReplies[];
+  childReplyCount:number
 }
 @Injectable({
   providedIn: 'root',
@@ -62,8 +63,16 @@ export class ThreadRepliesService {
     });
   }
 
-  getReplyByParentID(ParentReplyID :number | string):Observable<ThreadReplies>{  
-    const url = `${this.BASE_URL}/Reply/parentReply/${ParentReplyID}`;
+  getReplyByParentID(threadID:number,ParentReplyID :number | string):Observable<ThreadReplies>{      
+    let url = "";
+    if(ParentReplyID == '')
+    {      
+      url = `${this.BASE_URL}/GetRepliesByParentReplyId/${threadID}`;
+    }
+    else{        
+      //https://localhost:7160/api/Reply/GetRepliesByParentReplyId/65?parentReplyID=51
+     url = `${this.BASE_URL}/GetRepliesByParentReplyId/${threadID}?parentReplyID=${ParentReplyID}`;
+  }
     return this.http.get<ThreadReplies>(url);
   }
 }
