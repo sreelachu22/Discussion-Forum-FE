@@ -30,10 +30,12 @@
     </div>
   </div>
 
-  <app-bar-chart
-    *ngIf="categoryChartOptions"
-    [chartOptions]="categoryChartOptions"
-    [width]="'57rem'"
-    [height]="'360px'"
-  ></app-bar-chart>
+  <div *ngIf="categories.length > 0">
+    <app-bar-chart
+      *ngIf="categoryChartOptions"
+      [chartOptions]="categoryChartOptions"
+      [width]="'57rem'"
+      [height]="'360px'"
+    ></app-bar-chart>
+  </div>
 </div>

@@ -55,7 +55,7 @@
     </div>
 
     <br /><br />
-    <div class="pagination mt-3">
+    <div class="pagination mt-3" *ngIf="categoriesList.length > 0">
       <button (click)="prevPage()" class="prevButton">
         <span>Back</span>
       </button>

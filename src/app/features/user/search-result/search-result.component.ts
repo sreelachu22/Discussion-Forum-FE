@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CategoryThreadDto,
@@ -29,11 +29,13 @@ export interface Threads {
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.css'],
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private searchService: searchService
+    private searchService: searchService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {}
 
   breadcrumbs = [
@@ -60,6 +62,26 @@ export class SearchResultComponent implements OnInit {
     });
   }
 
+  ngAfterViewChecked() {
+    this.applyStylesToElementByClassName('tags');
+  }
+
+  private applyStylesToElementByClassName(className: string): void {
+    const elements = this.el.nativeElement.getElementsByClassName(className);
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      this.renderer.setStyle(element, 'width', '100px');
+      this.renderer.setStyle(element, 'border-radius', '5px');
+      this.renderer.setStyle(element, 'margin-left', '2px');
+      this.renderer.setStyle(element, 'margin-right', '2px');
+      this.renderer.setStyle(
+        element,
+        'background-color',
+        'rgb(100 156 245 / 20%)'
+      );
+      this.renderer.setStyle(element, 'padding', '3px 4px');
+    }
+  }
   navigateToThreadReplies(threadID: number) {
     this.router.navigate([`/community/post-replies`], {
       queryParams: { threadID: threadID },
@@ -102,13 +124,6 @@ export class SearchResultComponent implements OnInit {
     }
   }
 
-  changePage(newPage: number) {
-    if (newPage >= 1 && newPage <= this.totalPages) {
-      this.currentPage = newPage;
-      this.loadThreads(false);
-    }
-  }
-
   loadThreads(isSearchTag: boolean) {
     if (this.searchTerm) {
       if (isSearchTag == false) {
@@ -130,7 +145,13 @@ export class SearchResultComponent implements OnInit {
       } else {
         this.isSearchTag = true;
         this.searchService
-          .displayThreadsByTags(this.searchTerm, this.pageNumber, this.pageSize)
+          .displaySearchedThreads(
+            this.searchTerm,
+            this.pageNumber,
+            this.pageSize,
+            this.selectedFilterOption,
+            this.selectedSortOption
+          )
           .subscribe({
             next: (results: IsSearchThreadResult) => {
               this.threads = results.searchThreadDtoList;
@@ -145,5 +166,30 @@ export class SearchResultComponent implements OnInit {
           });
       }
     }
+  }
+
+  filterOptions: string[] = ['Replies', 'Votes', 'Date Posted'];
+
+  selectedFilterOption: number = 0;
+  selectedSortOption: number = 2;
+  dateSelected: boolean = false;
+
+  onFilterSelectionChange(event: string) {
+    const lowerCaseSelectedOption = event.toLowerCase();
+    const lowerCaseFilterOptions = this.filterOptions.map((option) =>
+      option.toLowerCase()
+    );
+    this.selectedFilterOption = lowerCaseFilterOptions.indexOf(
+      lowerCaseSelectedOption
+    );
+    this.selectedFilterOption == 2
+      ? (this.dateSelected = true)
+      : (this.dateSelected = false);
+    this.loadThreads(this.isSearchTag);
+  }
+
+  onSortSelectionChange(event: number) {
+    this.selectedSortOption = event;
+    this.loadThreads(this.isSearchTag);
   }
 }

@@ -1,6 +1,17 @@
 .container {
   width: 100%;
 }
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.content {
+  text-align: center;
+}
+
 hr {
   width: 95%;
 }

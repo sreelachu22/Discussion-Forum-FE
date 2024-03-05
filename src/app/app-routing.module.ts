@@ -30,6 +30,7 @@ import { SuperAdminRouteGuard } from './guard/superadmin.guard';
 import { UserRouteGuard } from './guard/user.guard';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
+import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
 
 const routes: Routes = [
@@ -178,6 +179,12 @@ const routes: Routes = [
     path: 'notifications',
     canActivate: [UserRouteGuard],
   },
+  {
+    component: MyPostsComponent,
+    path: 'my-posts',
+    canActivate: [UserRouteGuard],
+  },
+
   {
     component: HomePageComponent,
     path: '',

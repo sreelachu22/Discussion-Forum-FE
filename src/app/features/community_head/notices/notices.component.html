@@ -6,57 +6,65 @@
   <br />
 
   <app-page-header
-    pageHeaderTitle="Notices"
+    pageHeaderTitle="Announcements"
     (ButtonClick)="openCreateNoticeModal()"
-    ButtonName="Create Notice"
+    ButtonName="Create New"
     navClass="navbar navbar-dark bg-secondary Page_header"
   ></app-page-header>
 
   <!-- dislays active notices -->
-  <div *ngFor="let notice of notices">
-    <app-notice-list
-      [sections]="[
-        {
-          title: 'Notice Details',
-          metadataItems: [
-            {
-              name: 'Title',
-              value: notice.title,
-              style: { color: '#64A2F5', fontSize: '16px' }
-            },
-            { name: 'Content', value: notice.content }
-          ]
-        },
-        {
-          title: 'Timestamps',
-          metadataItems: [
-            {
-              name: 'Created At',
-              value: notice.createdAt | date : 'dd-MM-yyyy'
-            },
-            {
-              name: 'Modified At',
-              value: notice.modifiedAt | date : 'dd-MM-yyyy'
-            },
-            {
-              name: 'Expires At',
-              value: notice.expiresAt | date : 'dd-MM-yyyy'
-            }
-          ]
-        }
-      ]"
-    >
-      <app-icon
-        class="notices_body_edit_icon"
-        [iconName]="faEdit"
-        (click)="openUpdateNoticeModal(notice)"
-      ></app-icon>
-      <app-icon
-        class="notices_body_delete_icon"
-        [iconName]="faDelete"
-        (click)="openDeleteModal(notice)"
-      ></app-icon>
-    </app-notice-list>
-    <hr />
+  <div *ngIf="notices.length <= 0" class="centered-container">
+    <div class="content">
+      <br />
+      <h3>No Announcements Now</h3>
+    </div>
+  </div>
+  <div *ngIf="notices.length > 0">
+    <div *ngFor="let notice of notices">
+      <app-notice-list
+        [sections]="[
+          {
+            title: 'Notice Details',
+            metadataItems: [
+              {
+                name: 'Title',
+                value: notice.title,
+                style: { color: '#64A2F5', fontSize: '16px' }
+              },
+              { name: 'Content', value: notice.content }
+            ]
+          },
+          {
+            title: 'Timestamps',
+            metadataItems: [
+              {
+                name: 'Created At',
+                value: notice.createdAt | date : 'dd-MM-yyyy'
+              },
+              {
+                name: 'Modified At',
+                value: notice.modifiedAt | date : 'dd-MM-yyyy'
+              },
+              {
+                name: 'Expires At',
+                value: notice.expiresAt | date : 'dd-MM-yyyy'
+              }
+            ]
+          }
+        ]"
+      >
+        <app-icon
+          class="notices_body_edit_icon"
+          [iconName]="faEdit"
+          (click)="openUpdateNoticeModal(notice)"
+        ></app-icon>
+        <app-icon
+          class="notices_body_delete_icon"
+          [iconName]="faDelete"
+          (click)="openDeleteModal(notice)"
+        ></app-icon>
+      </app-notice-list>
+      <hr />
+    </div>
   </div>
 </div>

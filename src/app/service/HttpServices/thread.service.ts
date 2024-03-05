@@ -32,11 +32,13 @@ export class ThreadService {
   getThread(
     CommunityCategoryMappingID: number,
     pageNumber: number,
-    pageSize: number
+    pageSize: number,
+    filterOption: number,
+    sortOption: number
   ): Observable<any> {
     return this.http.get(
       this.apiurl +
-        `Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `Thread?CommunityCategoryMappingID=${CommunityCategoryMappingID}&pageNumber=${pageNumber}&pageSize=${pageSize}&filterOption=${filterOption}&sortOption=${sortOption}`
     );
   }
 
@@ -70,5 +72,18 @@ export class ThreadService {
   deleteThread(threadID: number, modifierId: string): Observable<any> {
     const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
     return this.http.delete(apiUrl);
+  }
+
+  getMyThreads(
+    userID: string | null,
+    pageNumber: number,
+    pageSize: number,
+    filterOption: number,
+    sortOption: number
+  ): Observable<any> {
+    return this.http.get(
+      this.apiurl +
+        `Thread/MyThreads?userId=${userID}&pageNumber=${pageNumber}&pageSize=${pageSize}&filterOption=${filterOption}&sortOption=${sortOption}`
+    );
   }
 }
