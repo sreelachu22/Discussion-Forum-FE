@@ -19,6 +19,7 @@ export interface Thread {
   downVoteCount: number;
   tagNames: string[];
   threadOwnerEmail: string;
+  isBookmarked?: boolean;
 }
 
 @Injectable({

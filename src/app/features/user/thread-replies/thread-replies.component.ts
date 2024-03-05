@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { switchMap } from 'rxjs';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
+import { SavedPost } from 'src/app/service/HttpServices/saved.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
@@ -17,6 +18,9 @@ import {
   Vote,
   VoteService,
 } from 'src/app/service/HttpServices/vote.service';
+import {
+  SavedService,
+} from 'src/app/service/HttpServices/saved.service';
 
 @Component({
   selector: 'app-thread-replies',
@@ -34,7 +38,8 @@ export class ThreadRepliesComponent {
     private threadService: ThreadService,
     private voteService: VoteService,
     private loaderService: LoaderService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private savedService: SavedService,
   ) {}
 
   breadcrumbs = [
@@ -85,12 +90,25 @@ export class ThreadRepliesComponent {
         next: (repliesData: any) => {
           this.threadReplies = repliesData;
           this.threadRepliesStatus = true;
+           // Fetch and highlight bookmarked threads
+            this.highlightBookmarkedThreads(this.thread!);
         },
         error: (error: Error) => {
           console.log('Error', error);
           this.threadRepliesStatus = false;
         },
       });
+  }
+
+  highlightBookmarkedThreads(thread : Thread) {
+    const userID= sessionStorage.getItem('userID');
+    this.savedService.getSavedPostsByUserId(userID).subscribe(bookmarks => {
+      bookmarks.forEach(bookmark => {
+        if (thread && thread?.threadID === bookmark.threadID) {
+          thread.isBookmarked = true;
+        }
+      });
+    });
   }
 
   onDeleteReply(reply: ThreadReplies) {
@@ -145,6 +163,16 @@ export class ThreadRepliesComponent {
       next: (response) => {},
       error: (error) => {
         console.error('Error sending downvote', error);
+        this.loadThread();
+      },
+    });
+  }
+
+  handleSavedPost(saved: SavedPost) {
+    this.savedService.savePost(saved).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        console.error('Error saving post', error);
         this.loadThread();
       },
     });

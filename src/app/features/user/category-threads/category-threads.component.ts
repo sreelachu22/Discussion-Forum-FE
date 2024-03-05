@@ -31,6 +31,7 @@ interface Thread {
   downVoteCount: number;
   tagNames: string[];
   replyCount: number;
+  isBookmarked?:boolean;
 }
 
 @Component({
@@ -101,7 +102,6 @@ export class CategoryThreadsComponent implements OnInit {
         },
       });
   }
-
   // paginations logics
 
   changePage(newPage: number) {
