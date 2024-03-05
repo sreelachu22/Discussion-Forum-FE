@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { InvalidPopupComponent } from 'src/app/components/ui/invalid-popup/invalid-popup.component';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { environment } from 'src/app/environments/environment';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
@@ -42,6 +43,8 @@ export class CreateReplyComponent implements OnInit {
   ) {}
 
   isLoading: boolean = false;
+  alertRef?: BsModalRef;
+
   ngOnInit(): void {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -103,7 +106,20 @@ export class CreateReplyComponent implements OnInit {
           this.sendEmailToOwner(this.threadOwnerEmail, this.replyContent);
         },
         error: (error) => {
-          console.error('Error creating thread:', error);
+          if (error.status == 444) {
+            this.alertRef = this.modalService.show(InvalidPopupComponent, {
+              initialState: {
+                message: error.error.message, //make use of reusable success pop up , sends message to it
+              },
+            });
+          }
+          console.error('Error creating reply:', error);
+          const queryParams = {
+            threadID: this.threadID,
+          };
+          this.router.navigate(['community', 'post-replies'], {
+            queryParams: queryParams,
+          });
         },
         complete: () => {
           const queryParams = {

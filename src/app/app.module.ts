@@ -122,6 +122,7 @@ import { HeaderSearchComponent } from './components/ui/header-search/header-sear
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from './environments/environment';
+import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -194,6 +195,7 @@ const isIE =
     EditReplyComponent,
     EditPostComponent,
     HeaderSearchComponent,
+    MyPostsComponent,
   ],
 
   imports: [

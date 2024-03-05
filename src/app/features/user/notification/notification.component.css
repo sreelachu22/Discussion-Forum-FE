@@ -4,9 +4,43 @@
   width: 91%;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.content {
+  text-align: center;
+}
+
 .header_options {
   display: flex;
   justify-content: space-between;
+}
+
+button {
+  background-color: rgb(51, 171, 165);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: rgb(7, 217, 207);
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  transform: scale(0.95);
 }
 
 .pagination {

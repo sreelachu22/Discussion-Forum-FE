@@ -5,13 +5,13 @@
   <!-- bread crumbs -->
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-    <br />
+
     <app-page-header
+      pageHeaderTitle="My Posts"
       navClass="navbar navbar-dark bg-secondary Page_header"
-      [pageHeaderTitle]="CategoryThreads.categoryName"
-      (ButtonClick)="createPost()"
-      ButtonName="Create Post"
-    ></app-page-header>
+      [showButton]="false"
+    />
+    <br />
     <!-- filter options -->
     <div *ngIf="CategoryThreads.totalCount > 0" class="filterClass">
       <button-toggle
@@ -94,16 +94,6 @@
               }
             ]"
           >
-            <div
-              [ngStyle]="
-                thread.threadStatusName == 'Open'
-                  ? { 'background-color': 'green' }
-                  : { 'background-color': 'red' }
-              "
-              class="pillbox"
-            >
-              {{ thread.threadStatusName }}
-            </div>
           </app-list>
         </div>
       </div>

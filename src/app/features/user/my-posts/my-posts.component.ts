@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
@@ -30,16 +30,14 @@ interface Thread {
   downVoteCount: number;
   tagNames: string[];
   replyCount: number;
-  isBookmarked?:boolean;
 }
 
 @Component({
-  selector: 'app-category-threads',
-  templateUrl: './category-threads.component.html',
-  styleUrls: ['./category-threads.component.css'],
+  selector: 'app-my-posts',
+  templateUrl: './my-posts.component.html',
+  styleUrls: ['./my-posts.component.css'],
 })
-export class CategoryThreadsComponent implements OnInit {
-  // templete variables
+export class MyPostsComponent {
   CategoryThreads!: ThreadResponse;
   communityCategoryMappingID!: number;
   communityID!: number;
@@ -50,10 +48,9 @@ export class CategoryThreadsComponent implements OnInit {
 
   breadcrumbs = [
     { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
     {
-      label: 'Category',
-      route: '/community/category-posts',
+      label: 'My Posts',
+      route: '/my-posts',
     },
   ];
 
@@ -85,6 +82,7 @@ export class CategoryThreadsComponent implements OnInit {
     }
   }
 
+  userID: string | null = '';
   isLoading = false;
   // ng init with method to get url params and display content based on it
 
@@ -98,17 +96,18 @@ export class CategoryThreadsComponent implements OnInit {
     this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
     });
-    this.loadThreads();
+    this.userID = sessionStorage.getItem('userID');
+    this.loadMyThreads();
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewInit() {
     this.applyStylesToElementByClassName('tags');
   }
 
-  loadThreads() {
+  loadMyThreads() {
     this.threadService
-      .getThread(
-        this.communityCategoryMappingID,
+      .getMyThreads(
+        this.userID,
         this.currentPage,
         this.pageSize,
         this.selectedFilterOption,
@@ -126,12 +125,13 @@ export class CategoryThreadsComponent implements OnInit {
         },
       });
   }
+
   // paginations logics
 
   changePage(newPage: number) {
     if (newPage >= 1 && newPage <= this.totalPages) {
       this.currentPage = newPage;
-      this.loadThreads();
+      this.loadMyThreads();
     }
   }
 
@@ -207,11 +207,11 @@ export class CategoryThreadsComponent implements OnInit {
     this.selectedFilterOption == 2
       ? (this.dateSelected = true)
       : (this.dateSelected = false);
-    this.loadThreads();
+    this.loadMyThreads();
   }
 
   onSortSelectionChange(event: number) {
     this.selectedSortOption = event;
-    this.loadThreads();
+    this.loadMyThreads();
   }
 }

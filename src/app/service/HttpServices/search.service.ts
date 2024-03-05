@@ -31,16 +31,18 @@ export class searchService {
     );
   }
 
-  displayThreadsByTags(
+  displaySearchedThreads(
     term: string,
     pageNumber: number,
-    pageSize: number
+    pageSize: number,
+    filterOption: number,
+    sortOption: number
   ): Observable<any> {
     const url =
       this.apiurl +
-      `Thread/displayThreadsByTags?searchTerm=${encodeURIComponent(
+      `Thread/displaySearchedThreads?searchTerm=${encodeURIComponent(
         term
-      )}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+      )}&pageNumber=${pageNumber}&pageSize=${pageSize}&filterOption=${filterOption}&sortOption=${sortOption}`;
     return this.http.get(url);
   }
 }

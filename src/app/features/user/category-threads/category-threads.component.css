@@ -40,6 +40,15 @@
   font-size: small;
 }
 
+.pillbox {
+  height: fit-content;
+  width: fit-content;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 20px;
+}
+
 /* pagination */
 .pagination {
   display: flex;
@@ -145,4 +154,26 @@
 
 .content {
   text-align: center;
+}
+
+.button_toggle {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.filterClass {
+  position: relative;
+}
+
+.filterClass span {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 4px;
+}
+.filterClass select {
+  position: absolute;
+  margin-left: 87px;
+  font-size: small;
+  padding: 5px;
+  border-color: #d6d6d6;
+  border-radius: 4px;
 }

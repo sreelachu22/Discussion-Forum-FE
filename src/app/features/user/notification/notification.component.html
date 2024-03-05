@@ -10,15 +10,25 @@
       (sortSelectionChange)="onSortSelectionChange($event)"
     ></button-toggle>
   </div>
-  <div *ngFor="let notification of notifications">
-    <app-notfication-list
-      [notification]="notification"
-      (markAsRead)="onMarkAsRead($event)"
-    ></app-notfication-list>
+  <div *ngIf="notifications.length <= 0" class="centered-container">
+    <div class="content">
+      <br />
+      <h3>No New Notifications</h3>
+      <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%" />
+    </div>
+  </div>
+  <div *ngIf="notifications.length > 0">
+    <button (click)="removeNotifications()">Mark all as read</button>
+    <div *ngFor="let notification of notifications">
+      <app-notfication-list
+        [notification]="notification"
+        (markAsRead)="onMarkAsRead($event)"
+      ></app-notfication-list>
+    </div>
   </div>
 
   <!-- Pagination buttons -->
-  <div class="pagination mt-3">
+  <div class="pagination mt-3" *ngIf="notifications.length > 0">
     <button (click)="prevPage()" class="prevButton">
       <span>Back</span>
     </button>
