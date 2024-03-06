@@ -1,0 +1,85 @@
+<div class="container">
+  <!-- bread crumbs -->
+  <div class="top_nav">
+    <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  </div>
+  <app-page-header
+      pageHeaderTitle="Bookmarks"
+      navClass="navbar navbar-dark bg-secondary Page_header"
+      [showButton]="false"
+    />
+    <br />
+  <!-- post displayed here -->
+  <div class="page_body mt-3">
+    <div *ngIf="savedPosts.length > 0">
+      <div *ngFor="let savedPost of savedPosts">
+        <!-- Same HTML structure as CategoryThreadsComponent to display bookmarked threads -->
+        <app-list
+    (click)="navigateToThreadReplies(savedPost.threadID)"
+    [sections]="[
+      {
+        title: 'Column 1',
+        metadataItems: [
+          { value: savedPost.thread!.createdByUser },
+          { value: 'Asked ' + formatDate(savedPost.thread!.createdAt.toString()) },
+          {
+            value:
+              '<b>' +
+              (savedPost.thread!.replyCount > 0
+                ? savedPost.thread!.replyCount + ' replies'
+                : '0 reply') +
+              '</b>',
+            isHtml: true
+          },
+          {
+            value:
+              '🡹 ' +
+              savedPost.thread!.upVoteCount +
+              '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🡻 ' +
+              savedPost.thread!.downVoteCount,
+            isHtml: true
+          }
+        ]
+      },
+      {
+        title: 'Column 2',
+        metadataItems: [
+          { value: savedPost.thread!.title },
+          {
+            value:
+              '<i>' +
+              (savedPost.thread!.content.length > 90
+                ? savedPost.thread!.content.slice(0, 90) + '...'
+                : savedPost.thread!.content) +
+              '</i>',
+            isHtml: true
+          },
+          {
+            value:
+              '<span class=' +
+              'tags' +
+              '>' +
+              savedPost.thread!.tagNames.join(
+                '</span><span class=' + 'tags' + '>'
+              ) +
+              '</span>',
+            isHtml: true
+          }
+        ]
+      }
+    ]"
+  >
+  </app-list>
+      </div>
+    </div>
+    <div *ngIf="savedPosts.length === 0" class="centered-container">
+      <div class="content">
+        <h3>No Bookmarked Threads Yet. ✏️</h3>
+        <img
+            src="/assets/images/no-posts.jpg"
+            style="width: 50%; height: 50%"
+          />
+      </div>
+    </div>
+  </div>
+</div>

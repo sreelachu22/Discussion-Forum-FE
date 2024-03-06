@@ -31,6 +31,7 @@ import { UserRouteGuard } from './guard/user.guard';
 import { EditReplyComponent } from './features/user/edit-reply/edit-reply.component';
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
+import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -183,7 +184,11 @@ const routes: Routes = [
     path: 'my-posts',
     canActivate: [UserRouteGuard],
   },
-
+  {
+    component: BookmarksComponent,
+    path: 'bookmarks',
+    canActivate: [UserRouteGuard],
+  },
   {
     component: HomePageComponent,
     path: '',

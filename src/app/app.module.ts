@@ -123,6 +123,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from './environments/environment';
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
+import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -196,6 +197,7 @@ const isIE =
     EditPostComponent,
     HeaderSearchComponent,
     MyPostsComponent,
+    BookmarksComponent,
   ],
 
   imports: [

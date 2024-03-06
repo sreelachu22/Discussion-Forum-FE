@@ -20,6 +20,7 @@ export interface Thread {
   tagNames: string[];
   threadOwnerEmail: string;
   isBookmarked?: boolean;
+  replyCount: number;
 }
 
 @Injectable({
