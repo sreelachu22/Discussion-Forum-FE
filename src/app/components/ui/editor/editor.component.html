@@ -19,18 +19,24 @@
   <div class="editor-body" *ngIf="showBody">
     <label *ngIf="showSpan"> Body </label>
     <br />
+
     <span *ngIf="showSpan">
       This is the body of your post.Describe in detail,be specific.Words should
       not exceed more that 250 words.
     </span>
-    <editor [init]="editorInit"></editor>
+
+    <!-- <textarea>{{ this.placeholderContent }}</textarea> -->
+    <editor [init]="editorInit"> </editor>
+
     <div *ngIf="!isContentValid" class="error-message">
       {{ contentErrorMessage }}
     </div>
   </div>
+
   <div class="editor-tags" *ngIf="showTag">
     <label> Tags </label>
     <br />
+
     <span>
       Add upto 5 tags related to your post. <br />
       Guidelines for Adding Tags: <br />
@@ -44,6 +50,7 @@
       post. <br />
       * You cannot add invalid or inappropriate tags. <br />
     </span>
+
     <div class="thread_tags">
       <tag-input
         [(ngModel)]="tags"

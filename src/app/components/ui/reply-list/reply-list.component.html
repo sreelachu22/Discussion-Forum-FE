@@ -50,7 +50,7 @@
       <mat-icon
         *ngIf="isCurrentUser(reply) && !reply.isDeleted && isOpenThread"
         class="your_reply_icon"
-        (click)="editReply(reply.replyID)"
+        (click)="editReply(reply)"
         matTooltip="Edit Reply"
       >
         edit
