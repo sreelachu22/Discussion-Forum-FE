@@ -259,7 +259,7 @@ export class ThreadRepliesComponent {
   }
   
   onSubmit(reply: ThreadReplies) {
-    const content = '-reply deleted by user-';
+    const content = '<b><i>This reply was deleted</i></b>';
     this.threadRepliesService
       .editReply(reply.replyID, reply.createdBy, content)
       .subscribe({
