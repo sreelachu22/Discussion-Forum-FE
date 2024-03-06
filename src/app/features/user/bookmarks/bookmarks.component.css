@@ -1,0 +1,40 @@
+/* category-threads.component.css */
+
+.container {
+  width: 95%;
+}
+
+.navbar {
+  align-items: center;
+  border-radius: 5px;
+  height: 100px;
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.content {
+  text-align: center;
+}
+
+.filterClass {
+  position: relative;
+}
+
+.filterClass span {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 4px;
+}
+.filterClass select {
+  position: absolute;
+  margin-left: 87px;
+  font-size: small;
+  padding: 5px;
+  border-color: #d6d6d6;
+  border-radius: 4px;
+}

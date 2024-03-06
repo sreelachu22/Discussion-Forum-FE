@@ -13,6 +13,10 @@ import {
 } from 'src/app/service/HttpServices/vote.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { SavedPost } from 'src/app/service/HttpServices/saved.service';
+import {
+  SavedService,
+} from 'src/app/service/HttpServices/saved.service';
 
 @Component({
   selector: 'app-thread-view',
@@ -23,9 +27,9 @@ export class ThreadViewComponent {
   @Input() thread?: Thread;
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
+  @Output() savedPostEvent = new EventEmitter<SavedPost>();
   ActiveUserID: string | null = sessionStorage.getItem('userID');
   isAdmin?: boolean = false;
-
   confirmModal!: BsModalRef;
   successModal!: BsModalRef;
   constructor(
@@ -34,7 +38,8 @@ export class ThreadViewComponent {
     private router: Router,
     private userService: UserService,
     private threadService: ThreadService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private savedService: SavedService
   ) {}
 
   communityCategoryMappingID!: number;
@@ -74,6 +79,23 @@ export class ThreadViewComponent {
       isDeleted: false,
     };
     this.downvoteEvent.emit(vote);
+  }
+
+  toggleBookmark(thread : Thread) {
+    thread.isBookmarked = !thread.isBookmarked;
+    const saved: SavedPost = {
+      userID: sessionStorage.getItem('userID'),
+      threadID: thread.threadID,
+    };
+    if (thread.isBookmarked) {
+    this.savedPostEvent.emit(saved);
+    }
+    else {
+      // If the bookmark is toggled off, call the deleteSavedPost method
+      this.savedService.deleteSavedPost(saved.userID, saved.threadID).subscribe(response => {
+        // Do any additional logic if needed
+      });
+    }
   }
 
   postReply(threadID: number) {

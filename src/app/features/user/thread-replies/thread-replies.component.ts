@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { switchMap } from 'rxjs';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
+import { SavedPost, SavedService } from 'src/app/service/HttpServices/saved.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
@@ -43,7 +44,8 @@ export class ThreadRepliesComponent {
     private threadService: ThreadService,
     private voteService: VoteService,
     private loaderService: LoaderService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private savedService: SavedService
   ) {}
 
   breadcrumbs = [
@@ -105,7 +107,10 @@ export class ThreadRepliesComponent {
               reply_index:position++
             };                    
           });          
-          this.threadRepliesStatus = true;          
+          this.threadRepliesStatus = true; 
+          // Fetch and highlight bookmarked threads
+          this.highlightBookmarkedThreads(this.thread!);
+         
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -278,4 +283,26 @@ export class ThreadRepliesComponent {
         },
       });
   }
+
+  highlightBookmarkedThreads(thread : Thread) {
+    const userID= sessionStorage.getItem('userID');
+    this.savedService.getSavedPostsByUserId(userID).subscribe(bookmarks => {
+      bookmarks.forEach(bookmark => {
+        if (thread && thread?.threadID === bookmark.threadID) {
+          thread.isBookmarked = true;
+        }
+      });
+    });
+  }
+
+  handleSavedPost(saved: SavedPost) {
+    this.savedService.savePost(saved).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        console.error('Error saving post', error);
+        this.loadThread();
+      },
+    });
+  }
+
 }
