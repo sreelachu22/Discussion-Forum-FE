@@ -22,9 +22,11 @@ export interface ThreadVote {
 })
 export class VoteService {
   apiurl: string = environment.apiUrl;
-  URL = this.apiurl + 'ReplyVote/vote'; // Replace with your actual API endpoint
+  URL = this.apiurl + 'ReplyVote/vote';
+
   constructor(private http: HttpClient) {}
-  sendVote(voteData: Vote): Observable<Vote> {
+
+  sendVote(voteData: Vote): Observable<any> {
     return this.http.post<any>(`${this.URL}`, voteData);
   }
 

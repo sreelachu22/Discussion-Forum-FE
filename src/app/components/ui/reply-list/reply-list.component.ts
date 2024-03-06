@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-  ThreadReplies,
-  ThreadRepliesService,
+  ThreadReplies
 } from 'src/app/service/HttpServices/thread-replies.service';
-import { VoteService } from 'src/app/service/HttpServices/vote.service';
 import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
@@ -14,9 +12,13 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   templateUrl: './reply-list.component.html',
   styleUrls: ['./reply-list.component.css'],
 })
-export class ReplyListComponent {
+
+export class ReplyListComponent { 
   @Input() reply?: ThreadReplies;
-  @Input() isOpenThread?: boolean;
+  @Input() isOpenThread?: boolean; 
+  @Input() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount: number  }>();
+  @Input() downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
+  
   @Output() upvoteEvent = new EventEmitter<Vote>();
   @Output() downvoteEvent = new EventEmitter<Vote>();
   @Output() toggleRepliesEvent = new EventEmitter<void>();
@@ -24,14 +26,30 @@ export class ReplyListComponent {
 
   showReplies: { [key: number]: boolean } = {};
   ActiveUserID: string | null = sessionStorage.getItem('userID');
-  modalService: any;
+  //modalService: any;
   confirmModal!: BsModalRef;
+  userID:string | null = sessionStorage.getItem('userID');
 
-  constructor(
-    private voteService: VoteService,
-    private router: Router,
-    private threadRepliesService: ThreadRepliesService
+  constructor(    
+    private router: Router,  
+    private modalService: BsModalService  
   ) {}
+
+
+ngOnInit() {  
+  this.upvoteSuccessEvent.subscribe((emittedData: { replyID: number, upvoteCount: number, downvoteCount:number }) => {    
+    if (this.reply && this.reply.replyID === emittedData.replyID) {
+      this.reply.upvoteCount = emittedData.upvoteCount;
+      this.reply.downvoteCount = emittedData.downvoteCount;
+    }
+  });
+  this.downvoteSuccessEvent.subscribe((emittedData: { replyID: number, downvoteCount: number, upvoteCount: number }) => {    
+    if (this.reply && this.reply.replyID === emittedData.replyID) {
+      this.reply.downvoteCount = emittedData.downvoteCount;
+      this.reply.upvoteCount = emittedData.upvoteCount;
+    }
+  });
+}
 
   emitUpvote(reply: ThreadReplies) {
     const vote: Vote = {
@@ -42,7 +60,7 @@ export class ReplyListComponent {
     };
     this.upvoteEvent.emit(vote);
   }
-
+  
   emitDownvote(reply: ThreadReplies) {
     const vote: Vote = {
       userID: sessionStorage.getItem('userID'),
@@ -77,18 +95,20 @@ export class ReplyListComponent {
       confirmFunction: this.confirmDeleteReply.bind(this),
       declineFunction: this.declineDeleteReply.bind(this),
     };
+    if(reply){
     this.confirmModal = this.modalService.show(DeleteModalComponent, {
       initialState,
-    });
+    
+    })};
   }
+
   confirmDeleteReply() {
     this.deleteReplyEvent.emit(this.reply);
   }
+
   declineDeleteReply() {
     this.confirmModal?.hide();
   }
-
-  deleteReply(reply: ThreadReplies) {}
 
   isCurrentUser(reply: ThreadReplies): boolean {
     return this.ActiveUserID === reply.createdBy;
@@ -98,4 +118,7 @@ export class ReplyListComponent {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
   }
+
 }
+
+
