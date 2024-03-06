@@ -27,7 +27,7 @@
       <img src="/assets/images/no-posts.jpg" style="width: 50%; height: 50%" />
     </div>
   </div>
-  <div *ngIf="threadRepliesStatus">
+  <!-- <div *ngIf="threadRepliesStatus">
     <div class="card1" *ngFor="let reply of threadReplies; let i = index">
       <app-reply-list
         [reply]="reply"
@@ -55,6 +55,25 @@
       </div>
       <br />
     </div>
+  </div> -->
+  <div class="thread-replies-container" *ngIf="threadRepliesStatus">
+    <ng-container *ngFor="let replyObject of sortedReplies; let i = index">
+      <div
+        class="reply-container"
+        [style.margin-left.px]="getDepthLevel(replyObject) * 40"
+      >
+        <app-reply-list
+          [reply]="replyObject.reply"
+          [isOpenThread]="isOpenThread"
+          [upvoteSuccessEvent]="upvoteSuccessEvent"
+          [downvoteSuccessEvent]="downvoteSuccessEvent"
+          (toggleRepliesEvent)="toggleNestedReplies(i)"
+          (upvoteEvent)="handleUpvote($event)"
+          (downvoteEvent)="handleDownvote($event)"
+          (deleteReplyEvent)="onDeleteReply($event)"
+        ></app-reply-list>
+      </div>
+    </ng-container>
   </div>
 </div>
 <ng-container class="container"

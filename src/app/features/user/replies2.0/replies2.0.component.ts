@@ -1,22 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { switchMap } from 'rxjs';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
-import { LoaderService } from 'src/app/service/HttpServices/loader.service';
-import {
-  ThreadReplies,
-  ThreadRepliesService,
-} from 'src/app/service/HttpServices/thread-replies.service';
-import {
-  Thread,
-  ThreadService,
-} from 'src/app/service/HttpServices/thread.service';
-import {
-  ThreadVote,
-  Vote,
-  VoteService,
-} from 'src/app/service/HttpServices/vote.service';
+import { ThreadRepliesService, ThreadReplies } from 'src/app/service/HttpServices/thread-replies.service';
+import { VoteService, Vote} from 'src/app/service/HttpServices/vote.service';
 
 interface ThreadReplyWithParent {
   reply: ThreadReplies;
@@ -25,72 +11,75 @@ interface ThreadReplyWithParent {
 }
 
 @Component({
-  selector: 'app-thread-replies',
-  templateUrl: './thread-replies.component.html',
-  styleUrls: ['./thread-replies.component.css'],
+  selector: 'app-replies2.0',
+  templateUrl: './replies2.0.component.html',
+  styleUrls: ['./replies2.0.component.css']
 })
-export class ThreadRepliesComponent {
-  @Output() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount:number }>();
-  @Output()  downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
-  
+
+export class Replies20Component {
   bsModalRef: any;
   threadID: any;
   router: any;
 
+  @Output() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount:number }>();
+  @Output()  downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
+
   constructor(
-    private threadRepliesService: ThreadRepliesService,
-    private activateRoute: ActivatedRoute,
-    private threadService: ThreadService,
-    private voteService: VoteService,
-    private loaderService: LoaderService,
+    private threadRepliesService: ThreadRepliesService,  
+    private voteService: VoteService,    
     private modalService: BsModalService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
-    { label: 'Post', route: '/community/post-replies' },
-  ];
-
-  threadId: number = 0;
-  parent_replyID: number | string = '';
+  threadId: number = 65 ;
+  parent_replyID: number | string = "";
   searchTerm: string = '';
   threadReplies: ThreadReplyWithParent[] = [];
-  showNestedReplies: boolean[] = [];
-  thread!: Thread;
-  isOpenThread: boolean = true;
+  showNestedReplies: boolean[] = [];    
   threadRepliesStatus: boolean = true;
+  isOpenThread: boolean = true;
   isLoading = false;
-
+  currentObject!:ThreadReplyWithParent;
+  
   ngOnInit() {
-    this.loadThread();
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
+    this.loadReplies();    
+  }
+
+  handleUpvote(event: Vote) {
+  const vote = event;
+  this.voteService.sendVote(vote).subscribe({
+    next: (response) => {
+      const data = response;
+      const eventData = { replyID: data.replyID, upvoteCount: data.upvoteCount, downvoteCount: data.downvoteCount };
+      this.upvoteSuccessEvent.emit(eventData);
+    },
+    error: (error) => {
+      console.log(error);
+    },
+  });
+}
+
+
+  handleDownvote(event: Vote) {
+    const  vote  = event;
+    this.voteService.sendVote(vote).subscribe({
+      next: (response) => {        
+        const data = response;
+      const eventData = { replyID: data.replyID, downvoteCount: data.downvoteCount, upvoteCount: data.upvoteCount };
+      this.downvoteSuccessEvent.emit(eventData);     
+      },
+      error: (error) => {      
+        console.log(error)              
+      },
     });
   }
 
-  loadThread() {
-    this.activateRoute.queryParams
-      .pipe(
-        switchMap((params) => {
-          this.threadId = params['threadID'];
-          return this.threadService.getSingleThread(this.threadId);
-        })
-      )
-      .subscribe((data: any) => {
-        this.thread = data;
-        this.loadReplies();
-        if (this.thread.threadStatusName === 'Closed') {
-          this.isOpenThread = false;
-        }
-      });
-  } 
+  
+
   get sortedReplies(): any[] {
     // Sort threadReplies based on reply_index
     return this.threadReplies.slice().sort((a, b) => a.reply_index - b.reply_index);
   }  
-  
+
   loadReplies() {
     let position = 0;    
     this.threadRepliesService
@@ -113,7 +102,6 @@ export class ThreadRepliesComponent {
         },
       });
   }
-
   toggleNestedReplies(index: number) {
     if (!this.showNestedReplies[index]) {      
       this.showNestedReplies[index] = true;
@@ -196,55 +184,7 @@ export class ThreadRepliesComponent {
     }
     return depth;
   }
-
-  handleUpvote(event: Vote) {
-    const vote = event;
-    this.voteService.sendVote(vote).subscribe({
-      next: (response) => {
-        const data = response;
-        const eventData = { replyID: data.replyID, upvoteCount: data.upvoteCount, downvoteCount: data.downvoteCount };
-        this.upvoteSuccessEvent.emit(eventData);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
-  handleDownvote(event: Vote) {
-    const  vote  = event;
-    this.voteService.sendVote(vote).subscribe({
-      next: (response) => {        
-        const data = response;
-      const eventData = { replyID: data.replyID, downvoteCount: data.downvoteCount, upvoteCount: data.upvoteCount };
-      this.downvoteSuccessEvent.emit(eventData);     
-      },
-      error: (error) => {      
-        console.log(error)              
-      },
-    });
-  }
-
-  handleThreadUpvote(vote: ThreadVote) {
-    this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {},
-      error: (error) => {
-        console.error('Error sending upvote', error);
-        this.loadThread();
-      },
-    });
-  }
-
-  handleThreadDownvote(vote: ThreadVote) {
-    this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {},
-      error: (error) => {
-        console.error('Error sending downvote', error);
-        this.loadThread();
-      },
-    });
-  }
-
+  
   onDeleteReply(reply: ThreadReplies) {
     this.threadRepliesService
       .deleteReply(reply.replyID, reply.createdBy)
@@ -256,10 +196,10 @@ export class ThreadRepliesComponent {
           console.error('Error deleting reply:', error);
         },
       });
-  }
-  
+  }  
+
   onSubmit(reply: ThreadReplies) {
-    const content = '<b><i>This reply was deleted</i></b>';
+    const content = '-reply deleted by user-';
     this.threadRepliesService
       .editReply(reply.replyID, reply.createdBy, content)
       .subscribe({
@@ -278,4 +218,5 @@ export class ThreadRepliesComponent {
         },
       });
   }
+  
 }
