@@ -6,12 +6,12 @@
     <br />
     <span> Give a short specific title for your Post </span>
 
-    <app-input
-      placeholder="Enter the title"
+    <app-edit-input-field
+      placeholder="{{ this.placeholderTitle }}"
       inputClass="thread_title"
       (inputChange)="onInputChange($event)"
       (inputBlur)="validateTitle()"
-    ></app-input>
+    ></app-edit-input-field>
     <div *ngIf="!isTitleValid" class="error-message">
       {{ titleErrorMessage }}
     </div>

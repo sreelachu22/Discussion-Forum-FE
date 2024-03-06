@@ -35,6 +35,7 @@ export class EditorComponent {
   @Input() firstButtonName: string = '';
   @Input() secondButtonName: string = '';
   @Input() placeholderContent:string = "";
+  @Input() placeholderTitle:string = "";
 
   @Output() onFirstButtonClick: EventEmitter<{
     title: string;
