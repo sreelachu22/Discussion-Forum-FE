@@ -6,6 +6,8 @@ import { Vote } from 'src/app/service/HttpServices/vote.service';
 import { Router } from '@angular/router';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Thread } from '../search/search.component';
+import { ReplyContentService } from 'src/app/service/DataServices/replyContent.service';
 
 @Component({
   selector: 'app-reply-list',
@@ -32,7 +34,8 @@ export class ReplyListComponent {
 
   constructor(    
     private router: Router,  
-    private modalService: BsModalService  
+    private modalService: BsModalService  ,
+    private replyContentService :ReplyContentService
   ) {}
 
 
@@ -82,9 +85,10 @@ ngOnInit() {
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
 
-  editReply(replyID: number) {
+  editReply(reply: ThreadReplies) {
+    this.replyContentService.setContent(reply.content);
     const queryParams = {
-      replyID: replyID,
+      replyID: reply.replyID,
     };
     this.router.navigate(['thread-replies/edit-reply'], { queryParams });
   }

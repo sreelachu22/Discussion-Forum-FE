@@ -15,6 +15,7 @@ import { SuccessPopupComponent } from '../success-popup/success-popup.component'
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { SavedPost } from 'src/app/service/HttpServices/saved.service';
 import { SavedService } from 'src/app/service/HttpServices/saved.service';
+import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
 
 @Component({
   selector: 'app-thread-view',
@@ -37,7 +38,8 @@ export class ThreadViewComponent {
     private userService: UserService,
     private threadService: ThreadService,
     private modalService: BsModalService,
-    private savedService: SavedService
+    private savedService: SavedService,
+    private threadContentService : ThreadContentService
   ) {}
 
   communityCategoryMappingID!: number;
@@ -129,13 +131,22 @@ export class ThreadViewComponent {
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
 
-  editThread(threadID: number) {
-    const queryParams = {
-      threadID: threadID,
-      communityCategoryMappingID: this.communityCategoryMappingID,
-    };
-    this.router.navigate(['category-posts/edit-posts'], { queryParams });
-  }
+  editThread(thread: Thread) {
+  const contentDoc = new DOMParser().parseFromString(thread.content, 'text/html');
+  const titleDoc = new DOMParser().parseFromString(thread.title, 'text/html');
+  
+  const plainContent = contentDoc.body.textContent || '';
+  const plainTitle = titleDoc.body.textContent || '';
+  
+  this.threadContentService.setContent(plainTitle, plainContent);
+
+  const queryParams = {
+    threadID: thread.threadID,
+    communityCategoryMappingID: this.communityCategoryMappingID,
+  };
+  this.router.navigate(['category-posts/edit-posts'], { queryParams });
+}
+
 
   threadID!: number;
   openCloseModal(threadID: number) {

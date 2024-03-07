@@ -35,20 +35,6 @@ export class BookmarksComponent {
     this.applyStylesToElementByClassName('tags');
   }
 
-  // getSavedPosts(userID: string | null) {
-  //   this.savedService.getSavedPostsByUserId(userID)
-  //     .subscribe((savedPosts: SavedPost[]) => {
-  //       this.savedPosts = savedPosts;
-  //       console.log(this.savedPosts)
-  //         // Iterate over saved posts to fetch corresponding thread details
-  //         this.savedPosts.forEach(savedPost => {
-  //           this.threadService.getSingleThread(savedPost.threadID)
-  //             .subscribe((thread: Thread) => {
-  //               savedPost.thread = thread; // Attach fetched thread details to the saved post
-  //             });
-  //         });
-  //       });
-  // }
   getSavedPosts(userID: string | null) {
     this.savedService.getSavedPostsByUserId(userID)
       .subscribe((savedPosts: SavedPost[]) => {

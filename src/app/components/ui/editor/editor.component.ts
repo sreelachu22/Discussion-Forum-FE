@@ -34,6 +34,8 @@ export class EditorComponent {
   @Input() heading: string = '';
   @Input() firstButtonName: string = '';
   @Input() secondButtonName: string = '';
+  @Input() placeholderContent:string = "";
+  @Input() placeholderTitle:string = "";
 
   @Output() onFirstButtonClick: EventEmitter<{
     title: string;
@@ -87,17 +89,32 @@ export class EditorComponent {
         // Programmatically trigger a click event on the input element to open the file picker dialog
         input.click();
       },
-      setup: (editor: {
-        on: (arg0: string, arg1: () => void) => void;
-        getContent: () => any;
-      }) => {
+      // setup: (editor: {
+      //   on: (arg0: string, arg1: () => void) => void;
+      //   getContent: () => any;
+      // }) => {        
+      //   // The editor parameter is an object with two properties: 'on' and 'getContent'.
+      //   // 'on' is a method to attach an event listener to the editor.
+      //   // It takes an event name (arg0: string) and a callback function (arg1: () => void).
+      //   // In this case, it's listening for the 'change' event and updating 'editorContent'.
+
+      //   editor.on('change', () => {
+      //     // Event listener for the 'change' event in the editor          
+      //     this.editorContent = editor.getContent();
+      //     // Update the component's 'editorContent' property with the current content of the editor
+      //   });
+      // },
+      setup: (editor:any) => {   
+        editor.on('init', () => {          
+          this.editorContent = editor.setContent(this.placeholderContent)
+        })     
         // The editor parameter is an object with two properties: 'on' and 'getContent'.
         // 'on' is a method to attach an event listener to the editor.
         // It takes an event name (arg0: string) and a callback function (arg1: () => void).
         // In this case, it's listening for the 'change' event and updating 'editorContent'.
 
         editor.on('change', () => {
-          // Event listener for the 'change' event in the editor
+          // Event listener for the 'change' event in the editor          
           this.editorContent = editor.getContent();
           // Update the component's 'editorContent' property with the current content of the editor
         });
@@ -163,7 +180,9 @@ export class EditorComponent {
   }
 
   public validateTitle(): boolean {
+    console.log(this.title.length)
     if (
+      
       this.title.length < this.minTitleLength ||
       this.title.length > this.maxTitleLength ||
       this.title.trim()[0] === '#'

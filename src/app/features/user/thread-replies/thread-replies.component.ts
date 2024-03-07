@@ -59,12 +59,8 @@ export class ThreadRepliesComponent {
     private savedService: SavedService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
-    { label: 'Post', route: '/community/post-replies' },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
 
   threadId: number = 0;
   parent_replyID: number | string = '';
@@ -81,6 +77,13 @@ export class ThreadRepliesComponent {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
+    this.communityName = sessionStorage.getItem('communityName');
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Category', route: '/community/category-posts' },
+      { label: 'Post', route: '/community/post-replies' },
+    ];
   }
 
   loadThread() {

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { environment } from 'src/app/environments/environment';
+import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
 @Component({
@@ -19,21 +20,21 @@ export class EditPostComponent {
   tagsAsStringArray: any;
   existingTags!: { display: string; value: string }[];
   threadID!: number;
+  placeholderContent:string = "";
+  placeholderTitle:string = "";
 
   constructor(
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private http: HttpClient,
     private router: Router,
-    private tags: TagService
+    private tags: TagService,
+    private threadContentService: ThreadContentService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
-    { label: 'Edit Post', route: '/category-posts/edit-posts' },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
+
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -47,6 +48,18 @@ export class EditPostComponent {
         value: tag.tagName,
       }));
     });
+
+    this.threadContentService.getContent().subscribe(({ title, content }) => {
+      this.placeholderTitle = title;
+      this.placeholderContent = content;
+    });
+    this.communityName = sessionStorage.getItem('communityName');
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Category', route: '/community/category-posts' },
+      { label: 'Edit Post', route: '/category-posts/edit-posts' },
+    ];
   }
 
   goBack() {
