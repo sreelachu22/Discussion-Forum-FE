@@ -28,27 +28,15 @@ export class UserEditComponent {
     private singleUserService: SingleUserService,
     private loaderService: LoaderService
   ) {}
-
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Community Management', route: '/community-management-dashboard' },
-    {
-      label: 'User Management',
-      route: '/community-management-dashboard/user-management',
-    },
-    {
-      label: 'User Edit',
-      route:
-        '/community-management-dashboard/user-management/user-edit/:userID',
-    },
-  ];
+  breadcrumbs: { label: string; route: string; }[] = [];
   //templeate variables
   user!: SingleUser;
   userRoleToggle: boolean = false;
   userRoles!: [{ roleID: number; roleName: string }];
   selectedRoleID!: number;
   modifiedBy: any;
+  communityName : string | null = '';
+  
   //change user role
   editUserRole() {
     this.userRoleToggle = !this.userRoleToggle;
@@ -82,7 +70,7 @@ export class UserEditComponent {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-
+    this.communityName = sessionStorage.getItem('communityName');
     let userID: string;
 
     this.activatedroute.params.subscribe((params) => {
@@ -120,5 +108,19 @@ export class UserEditComponent {
         }
       });
     });
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Community Management', route: '/community-management-dashboard' },
+      {
+        label: 'User Management',
+        route: '/community-management-dashboard/user-management',
+      },
+      {
+        label: 'User Edit',
+        route:
+          '/community-management-dashboard/user-management/user-edit/:userID',
+      },
+    ];
   }
 }

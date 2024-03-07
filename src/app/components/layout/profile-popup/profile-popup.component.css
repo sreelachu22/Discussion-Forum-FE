@@ -70,3 +70,28 @@
     align-items: center;
     text-align: center;
   }
+
+  .logout-wrapper {
+    margin-top: 15px;
+    align-items: center;
+  }
+  
+  .material-icons.logout {
+    font-size: 24px; /* Set the font size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: transform 0.3s, background-color 0.3s; /* Add transition effects */
+    color: rgba(0, 0, 0, 0.667); /* Set icon color */
+    padding: 8px; /* Add padding to the icon */
+  }
+  
+  .material-icons.logout:hover {
+    cursor: pointer;
+    transform: scale(1.1); /* Increase size on hover */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Add shadow */
+    background: linear-gradient(
+      135deg,
+      #cde7ee,
+      #9df5f4
+    ); /* Add gradient background */
+    border-radius: 50%; /* Make it round */
+  }

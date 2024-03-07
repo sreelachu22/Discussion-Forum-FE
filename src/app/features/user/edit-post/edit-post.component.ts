@@ -32,12 +32,9 @@ export class EditPostComponent {
     private threadContentService: ThreadContentService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
-    { label: 'Edit Post', route: '/category-posts/edit-posts' },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
+
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -56,6 +53,13 @@ export class EditPostComponent {
       this.placeholderTitle = title;
       this.placeholderContent = content;
     });
+    this.communityName = sessionStorage.getItem('communityName');
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Category', route: '/community/category-posts' },
+      { label: 'Edit Post', route: '/category-posts/edit-posts' },
+    ];
   }
 
   goBack() {

@@ -34,16 +34,12 @@ export class CommunityPageComponent {
     private communityDataService: CommunityDataService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-  ];
 
   communityID: number = 1;
   community!: CommunityDetails;
 
   communityName!: string;
-
+  breadcrumbs: { label: string; route: string; }[] = [];
   isLoading = false;
   isAdmin: boolean = false;
   ngOnInit(): void {
@@ -54,11 +50,16 @@ export class CommunityPageComponent {
       this.communityID = params['communityID'];
       this.communityName = params['communityName'] || 'PM-Hub';
     });
+    sessionStorage.setItem('communityName', this.communityName);
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
     this.loadCategories();
     this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+    ];
   }
 
   loadCommunity() {
