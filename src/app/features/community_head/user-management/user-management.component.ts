@@ -17,16 +17,9 @@ export class UserManagementComponent implements OnInit {
   users: any[] = [];
   currentPage: number = 1;
   pageCount: number = 1;
-
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Community Management', route: '/community-management-dashboard' },
-    {
-      label: 'User Management',
-      route: '/community-management/user-management',
-    },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
+  
 
   constructor(
     private userService: UserService,
@@ -40,7 +33,17 @@ export class UserManagementComponent implements OnInit {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
+    this.communityName = sessionStorage.getItem('communityName');
     this.loadUsers();
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Community Management', route: '/community-management-dashboard' },
+      {
+        label: 'User Management',
+        route: '/community-management/user-management',
+      },
+    ];
   }
 
   getSingleUser(searchText: string) {

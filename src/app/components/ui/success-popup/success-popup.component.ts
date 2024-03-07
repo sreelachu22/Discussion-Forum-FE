@@ -12,6 +12,12 @@ export class SuccessPopupComponent {
 
   constructor(public bsModalRef: BsModalRef) {}
 
+  ngOnInit(): void {
+    // Automatically close the modal after 5 seconds
+    setTimeout(() => {
+      this.close();
+    }, 2500);
+  }
   close() {
     this.bsModalRef.hide();
   }

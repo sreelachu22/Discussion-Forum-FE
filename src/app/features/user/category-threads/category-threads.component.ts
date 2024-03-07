@@ -47,15 +47,8 @@ export class CategoryThreadsComponent implements OnInit {
   pageSize: number = 10;
   totalPages: number = 0;
   creatorId!: string;
-
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    {
-      label: 'Category',
-      route: '/community/category-posts',
-    },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
 
   constructor(
     private threadService: ThreadService,
@@ -98,7 +91,16 @@ export class CategoryThreadsComponent implements OnInit {
     this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
     });
+    this.communityName = sessionStorage.getItem('communityName');
     this.loadThreads();
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      {
+        label: 'Category',
+        route: '/community/category-posts',
+      },
+    ];
   }
 
   ngAfterViewChecked() {

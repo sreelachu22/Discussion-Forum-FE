@@ -39,12 +39,8 @@ export class CreatePostComponent {
     private categoryMappingService: CategoryMappingService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
-    { label: 'Create Post', route: '/category-posts/create-posts' },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
 
   isLoading: boolean = false;
   ngOnInit() {
@@ -54,13 +50,19 @@ export class CreatePostComponent {
     this.categoryMappingService.communityCategoryMappingID$.subscribe((id) => {
       this.communityCategoryMappingID = id;
     });
-
+    this.communityName = sessionStorage.getItem('communityName');
     this.tags.getAllTags().subscribe((data) => {
       this.existingTags = data.map((tag: { tagName: any }) => ({
         display: tag.tagName,
         value: tag.tagName,
       }));
     });
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Category', route: '/community/category-posts' },
+      { label: 'Create Post', route: '/category-posts/create-posts' },
+    ];
   }
 
   goBack() {
