@@ -44,11 +44,16 @@ export class ThreadRepliesComponent {
     downvoteCount: number;
     upvoteCount: number;
   }>();
-
-  @Output() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount:number }>();
-  @Output()  downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
-  @Output() threadUpvoteSuccessEvent = new EventEmitter<{ threadID:number, upVoteCount:number, downVoteCount:number }>();
-  @Output() threadDownvoteSuccessEvent = new EventEmitter<{ threadID:number, downVoteCount: number, upVoteCount: number }>();
+  @Output() threadUpvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    upVoteCount: number;
+    downVoteCount: number;
+  }>();
+  @Output() threadDownvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    downVoteCount: number;
+    upVoteCount: number;
+  }>();
 
   bsModalRef: any;
   threadID: any;
@@ -270,9 +275,13 @@ export class ThreadRepliesComponent {
   handleThreadUpvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
       next: (response) => {
-        const data = response;        
-      const eventData = { threadID: data.threadID, upVoteCount: data.upvoteCount,  downVoteCount: data.downvoteCount, };
-      this.threadUpvoteSuccessEvent.emit(eventData);      
+        const data = response;
+        const eventData = {
+          threadID: data.threadID,
+          upVoteCount: data.upvoteCount,
+          downVoteCount: data.downvoteCount,
+        };
+        this.threadUpvoteSuccessEvent.emit(eventData);
       },
       error: (error) => {
         console.error('Error sending upvote', error);
@@ -284,9 +293,13 @@ export class ThreadRepliesComponent {
   handleThreadDownvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
       next: (response) => {
-        const data = response;        
-      const eventData = { threadID: data.threadID, upVoteCount: data.upvoteCount,  downVoteCount: data.downvoteCount, };
-      this.threadDownvoteSuccessEvent.emit(eventData);      
+        const data = response;
+        const eventData = {
+          threadID: data.threadID,
+          upVoteCount: data.upvoteCount,
+          downVoteCount: data.downvoteCount,
+        };
+        this.threadDownvoteSuccessEvent.emit(eventData);
       },
       error: (error) => {
         console.error('Error sending upvote', error);
@@ -355,7 +368,6 @@ export class ThreadRepliesComponent {
     this.threadService
       .getDuplicate(this.thread.threadID)
       .subscribe((originalThreadId) => {
-        console.log(originalThreadId);
         if (originalThreadId === 0) {
           this.thread.isDuplicate = false;
         } else {

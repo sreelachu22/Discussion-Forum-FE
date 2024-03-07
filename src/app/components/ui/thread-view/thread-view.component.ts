@@ -16,6 +16,7 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { SavedPost } from 'src/app/service/HttpServices/saved.service';
 import { SavedService } from 'src/app/service/HttpServices/saved.service';
 import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
+import { MarkDuplicateModalComponent } from '../mark-duplicate-modal/mark-duplicate-modal.component';
 
 @Component({
   selector: 'app-thread-view',
@@ -24,8 +25,17 @@ import { ThreadContentService } from 'src/app/service/DataServices/threadContent
 })
 export class ThreadViewComponent {
   @Input() thread!: Thread;
-  @Input() threadUpvoteSuccessEvent = new EventEmitter<{ threadID:number, upVoteCount:number, downVoteCount:number }>();
-  @Input() threadDownvoteSuccessEvent = new EventEmitter<{ threadID:number, downVoteCount: number, upVoteCount: number }>();
+  @Input() threadUpvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    upVoteCount: number;
+    downVoteCount: number;
+  }>();
+  @Input() threadDownvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    downVoteCount: number;
+    upVoteCount: number;
+  }>();
+  @Input() threadMarkedAsDuplicate = new EventEmitter<number>();
 
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
@@ -41,9 +51,10 @@ export class ThreadViewComponent {
     private router: Router,
     private userService: UserService,
     private threadService: ThreadService,
+    private modalRef: BsModalRef,
     private modalService: BsModalService,
     private savedService: SavedService,
-    private threadContentService : ThreadContentService
+    private threadContentService: ThreadContentService
   ) {}
 
   communityCategoryMappingID!: number;
@@ -53,25 +64,37 @@ export class ThreadViewComponent {
     });
     this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
 
-    this.threadUpvoteSuccessEvent.subscribe((emittedData: { threadID: number, upVoteCount: number, downVoteCount:number }) => {    
-      if (this.thread && this.thread.threadID === emittedData.threadID) {
-        //console.log(emittedData.downVoteCount)
-        this.thread.upVoteCount = emittedData.upVoteCount;
-        this.thread.downVoteCount = emittedData.downVoteCount;
+    this.threadUpvoteSuccessEvent.subscribe(
+      (emittedData: {
+        threadID: number;
+        upVoteCount: number;
+        downVoteCount: number;
+      }) => {
+        if (this.thread && this.thread.threadID === emittedData.threadID) {
+          //console.log(emittedData.downVoteCount)
+          this.thread.upVoteCount = emittedData.upVoteCount;
+          this.thread.downVoteCount = emittedData.downVoteCount;
+        }
       }
-    });
-    this.threadDownvoteSuccessEvent.subscribe((emittedData: { threadID: number, downVoteCount: number, upVoteCount: number }) => {    
-      if (this.thread && this.thread.threadID === emittedData.threadID) {
-        this.thread.downVoteCount = emittedData.downVoteCount;
-        this.thread.upVoteCount = emittedData.upVoteCount;
+    );
+    this.threadDownvoteSuccessEvent.subscribe(
+      (emittedData: {
+        threadID: number;
+        downVoteCount: number;
+        upVoteCount: number;
+      }) => {
+        if (this.thread && this.thread.threadID === emittedData.threadID) {
+          this.thread.downVoteCount = emittedData.downVoteCount;
+          this.thread.upVoteCount = emittedData.upVoteCount;
+        }
       }
-    });
+    );
   }
   user!: User;
   getUserName(thread: Thread) {
     this.userService.getUserByID(thread.createdBy).subscribe((data: User) => {
       this.user = data;
-    });    
+    });
   }
 
   isCurrentUser(thread: Thread): boolean {
@@ -99,21 +122,28 @@ export class ThreadViewComponent {
     this.downvoteEvent.emit(vote);
   }
 
-  markDuplicate() {
-    this.thread.isDuplicate = !this.thread.isDuplicate;
-    if (this.thread.isDuplicate) {
-      this.threadService
-        .markAsDuplicateThread(
-          this.thread.threadID,
-          this.thread.threadID + 1,
-          this.ActiveUserID
-        )
-        .subscribe({
-          error: (error: Error) => {
-            console.log(error);
-          },
-        });
-    }
+  openMarkDuplicateModal() {
+    this.modalRef = this.modalService.show(MarkDuplicateModalComponent);
+    this.modalRef.content.threadMarkedAsDuplicate.subscribe(
+      (originalThreadId: number) => {
+        this.markDuplicate(originalThreadId);
+      }
+    );
+  }
+
+  markDuplicate(originalThreadId: number) {
+    this.thread.isDuplicate = true;
+    this.threadService
+      .markAsDuplicateThread(
+        this.thread.threadID,
+        originalThreadId,
+        this.ActiveUserID
+      )
+      .subscribe({
+        error: (error: Error) => {
+          console.log(error);
+        },
+      });
   }
 
   redirectToOriginal(threadID: number) {
@@ -150,21 +180,23 @@ export class ThreadViewComponent {
   }
 
   editThread(thread: Thread) {
-  const contentDoc = new DOMParser().parseFromString(thread.content, 'text/html');
-  const titleDoc = new DOMParser().parseFromString(thread.title, 'text/html');
-  
-  const plainContent = contentDoc.body.textContent || '';
-  const plainTitle = titleDoc.body.textContent || '';
-  
-  this.threadContentService.setContent(plainTitle, plainContent);
+    const contentDoc = new DOMParser().parseFromString(
+      thread.content,
+      'text/html'
+    );
+    const titleDoc = new DOMParser().parseFromString(thread.title, 'text/html');
 
-  const queryParams = {
-    threadID: thread.threadID,
-    communityCategoryMappingID: this.communityCategoryMappingID,
-  };
-  this.router.navigate(['category-posts/edit-posts'], { queryParams });
-}
+    const plainContent = contentDoc.body.textContent || '';
+    const plainTitle = titleDoc.body.textContent || '';
 
+    this.threadContentService.setContent(plainTitle, plainContent);
+
+    const queryParams = {
+      threadID: thread.threadID,
+      communityCategoryMappingID: this.communityCategoryMappingID,
+    };
+    this.router.navigate(['category-posts/edit-posts'], { queryParams });
+  }
 
   threadID!: number;
   openCloseModal(threadID: number) {
