@@ -54,6 +54,7 @@ export class CommunityPageComponent {
       this.communityID = params['communityID'];
       this.communityName = params['communityName'] || 'PM-Hub';
     });
+    sessionStorage.setItem('communityName', this.communityName);
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });

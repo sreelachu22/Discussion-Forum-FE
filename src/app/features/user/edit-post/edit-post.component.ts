@@ -28,12 +28,9 @@ export class EditPostComponent {
     private tags: TagService
   ) {}
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Category', route: '/community/category-posts' },
-    { label: 'Edit Post', route: '/category-posts/edit-posts' },
-  ];
+  communityName : string | null = '';
+  breadcrumbs: { label: string; route: string; }[] = [];
+
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -47,6 +44,13 @@ export class EditPostComponent {
         value: tag.tagName,
       }));
     });
+    this.communityName = sessionStorage.getItem('communityName');
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Category', route: '/community/category-posts' },
+      { label: 'Edit Post', route: '/category-posts/edit-posts' },
+    ];
   }
 
   goBack() {
