@@ -180,7 +180,9 @@ export class EditorComponent {
   }
 
   public validateTitle(): boolean {
+    console.log(this.title.length)
     if (
+      
       this.title.length < this.minTitleLength ||
       this.title.length > this.maxTitleLength ||
       this.title.trim()[0] === '#'
