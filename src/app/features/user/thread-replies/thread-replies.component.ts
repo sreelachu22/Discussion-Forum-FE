@@ -124,7 +124,6 @@ export class ThreadRepliesComponent {
             };
           });
           this.threadRepliesStatus = true;
-          this.getDuplicateStatus();
           // Fetch and highlight bookmarked threads
           this.highlightBookmarkedThreads(this.thread!);
         },
@@ -324,6 +323,7 @@ export class ThreadRepliesComponent {
         if (thread && thread?.threadID === bookmark.threadID) {
           thread.isBookmarked = true;
         }
+        this.getDuplicateStatus();
       });
     });
   }
