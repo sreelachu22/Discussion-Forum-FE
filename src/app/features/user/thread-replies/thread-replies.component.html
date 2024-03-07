@@ -25,6 +25,8 @@
   <br />
   <app-thread-view
     [thread]="thread"
+    [threadUpvoteSuccessEvent]="threadUpvoteSuccessEvent"
+    [threadDownvoteSuccessEvent]="threadDownvoteSuccessEvent"
     (upvoteEvent)="handleThreadUpvote($event)"
     (downvoteEvent)="handleThreadDownvote($event)"
     (savedPostEvent)="handleSavedPost($event)"
