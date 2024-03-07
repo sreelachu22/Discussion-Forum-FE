@@ -33,7 +33,9 @@ interface ThreadReplyWithParent {
 export class ThreadRepliesComponent {
   @Output() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount:number }>();
   @Output()  downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
-  
+  @Output() threadUpvoteSuccessEvent = new EventEmitter<{ threadID:number, upVoteCount:number, downVoteCount:number }>();
+  @Output() threadDownvoteSuccessEvent = new EventEmitter<{ threadID:number, downVoteCount: number, upVoteCount: number }>();
+
   bsModalRef: any;
   threadID: any;
   router: any;
@@ -235,20 +237,28 @@ export class ThreadRepliesComponent {
 
   handleThreadUpvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {},
+      next: (response) => {
+        const data = response;        
+      const eventData = { threadID: data.threadID, upVoteCount: data.upvoteCount,  downVoteCount: data.downvoteCount, };
+      this.threadUpvoteSuccessEvent.emit(eventData);      
+      },
       error: (error) => {
         console.error('Error sending upvote', error);
-        this.loadThread();
+        //this.loadThread();
       },
     });
   }
 
   handleThreadDownvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
-      next: (response) => {},
+      next: (response) => {
+        const data = response;        
+      const eventData = { threadID: data.threadID, upVoteCount: data.upvoteCount,  downVoteCount: data.downvoteCount, };
+      this.threadDownvoteSuccessEvent.emit(eventData);      
+      },
       error: (error) => {
-        console.error('Error sending downvote', error);
-        this.loadThread();
+        console.error('Error sending upvote', error);
+        //this.loadThread();
       },
     });
   }

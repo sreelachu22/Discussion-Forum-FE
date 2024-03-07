@@ -100,6 +100,7 @@ export class EditPostComponent {
       })
       .subscribe({
         next: (response) => {
+          console.log(this.tagsAsStringArray)
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Post edited successfully',

@@ -26,9 +26,13 @@ import { ThreadContentService } from 'src/app/service/DataServices/threadContent
 })
 export class ThreadViewComponent {
   @Input() thread?: Thread;
+  @Input() threadUpvoteSuccessEvent = new EventEmitter<{ threadID:number, upVoteCount:number, downVoteCount:number }>();
+  @Input() threadDownvoteSuccessEvent = new EventEmitter<{ threadID:number, downVoteCount: number, upVoteCount: number }>();
+
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
   @Output() savedPostEvent = new EventEmitter<SavedPost>();
+
   ActiveUserID: string | null = sessionStorage.getItem('userID');
   isAdmin?: boolean = false;
   confirmModal!: BsModalRef;
@@ -50,12 +54,26 @@ export class ThreadViewComponent {
       this.communityCategoryMappingID = +params['communityCategoryMappingID'];
     });
     this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+
+    this.threadUpvoteSuccessEvent.subscribe((emittedData: { threadID: number, upVoteCount: number, downVoteCount:number }) => {    
+      if (this.thread && this.thread.threadID === emittedData.threadID) {
+        //console.log(emittedData.downVoteCount)
+        this.thread.upVoteCount = emittedData.upVoteCount;
+        this.thread.downVoteCount = emittedData.downVoteCount;
+      }
+    });
+    this.threadDownvoteSuccessEvent.subscribe((emittedData: { threadID: number, downVoteCount: number, upVoteCount: number }) => {    
+      if (this.thread && this.thread.threadID === emittedData.threadID) {
+        this.thread.downVoteCount = emittedData.downVoteCount;
+        this.thread.upVoteCount = emittedData.upVoteCount;
+      }
+    });
   }
   user!: User;
   getUserName(thread: Thread) {
     this.userService.getUserByID(thread.createdBy).subscribe((data: User) => {
       this.user = data;
-    });
+    });    
   }
 
   isCurrentUser(thread: Thread): boolean {
