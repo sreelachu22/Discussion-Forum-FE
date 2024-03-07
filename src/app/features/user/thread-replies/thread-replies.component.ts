@@ -59,8 +59,8 @@ export class ThreadRepliesComponent {
     private savedService: SavedService
   ) {}
 
-  communityName : string | null = '';
-  breadcrumbs: { label: string; route: string; }[] = [];
+  communityName: string | null = '';
+  breadcrumbs: { label: string; route: string }[] = [];
 
   threadId: number = 0;
   parent_replyID: number | string = '';
