@@ -4,7 +4,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { switchMap } from 'rxjs';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { LoaderService } from 'src/app/service/HttpServices/loader.service';
-import { SavedPost, SavedService } from 'src/app/service/HttpServices/saved.service';
+import {
+  SavedPost,
+  SavedService,
+} from 'src/app/service/HttpServices/saved.service';
 import {
   ThreadReplies,
   ThreadRepliesService,
@@ -22,7 +25,7 @@ import {
 interface ThreadReplyWithParent {
   reply: ThreadReplies;
   parentReply: number | string;
-  reply_index:number;
+  reply_index: number;
 }
 
 @Component({
@@ -31,10 +34,26 @@ interface ThreadReplyWithParent {
   styleUrls: ['./thread-replies.component.css'],
 })
 export class ThreadRepliesComponent {
-  @Output() upvoteSuccessEvent = new EventEmitter<{ replyID: number, upvoteCount: number, downvoteCount:number }>();
-  @Output()  downvoteSuccessEvent = new EventEmitter<{ replyID: number, downvoteCount: number, upvoteCount: number }>();
-  @Output() threadUpvoteSuccessEvent = new EventEmitter<{ threadID:number, upVoteCount:number, downVoteCount:number }>();
-  @Output() threadDownvoteSuccessEvent = new EventEmitter<{ threadID:number, downVoteCount: number, upVoteCount: number }>();
+  @Output() upvoteSuccessEvent = new EventEmitter<{
+    replyID: number;
+    upvoteCount: number;
+    downvoteCount: number;
+  }>();
+  @Output() downvoteSuccessEvent = new EventEmitter<{
+    replyID: number;
+    downvoteCount: number;
+    upvoteCount: number;
+  }>();
+  @Output() threadUpvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    upVoteCount: number;
+    downVoteCount: number;
+  }>();
+  @Output() threadDownvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    downVoteCount: number;
+    upVoteCount: number;
+  }>();
 
   bsModalRef: any;
   threadID: any;
@@ -50,8 +69,8 @@ export class ThreadRepliesComponent {
     private savedService: SavedService
   ) {}
 
-  communityName : string | null = '';
-  breadcrumbs: { label: string; route: string; }[] = [];
+  communityName: string | null = '';
+  breadcrumbs: { label: string; route: string }[] = [];
 
   threadId: number = 0;
   parent_replyID: number | string = '';
@@ -92,30 +111,31 @@ export class ThreadRepliesComponent {
           this.isOpenThread = false;
         }
       });
-  } 
+  }
   get sortedReplies(): any[] {
     // Sort threadReplies based on reply_index
-    return this.threadReplies.slice().sort((a, b) => a.reply_index - b.reply_index);
-  }  
-  
+    return this.threadReplies
+      .slice()
+      .sort((a, b) => a.reply_index - b.reply_index);
+  }
+
   loadReplies() {
-    let position = 0;    
+    let position = 0;
     this.threadRepliesService
       .getReplyByParentID(this.threadId, this.parent_replyID)
       .subscribe({
         next: (repliesData: any) => {
           // Iterate over each reply in the repliesData array
-          this.threadReplies = repliesData.map((reply: any) => {            
-            return {         
+          this.threadReplies = repliesData.map((reply: any) => {
+            return {
               reply: reply,
               parentReply: reply.parentReplyID,
-              reply_index:position++
-            };                    
-          });          
-          this.threadRepliesStatus = true; 
+              reply_index: position++,
+            };
+          });
+          this.threadRepliesStatus = true;
           // Fetch and highlight bookmarked threads
           this.highlightBookmarkedThreads(this.thread!);
-         
         },
         error: (error: Error) => {
           console.log('Error', error);
@@ -125,16 +145,19 @@ export class ThreadRepliesComponent {
   }
 
   toggleNestedReplies(index: number) {
-    if (!this.showNestedReplies[index]) {      
+    if (!this.showNestedReplies[index]) {
       this.showNestedReplies[index] = true;
       // Load nested replies and then remove them from threadReplies
       this.loadNestedReplies(index);
-      
     } else {
       // Recursive function to remove nested replies
       const removeNestedReplies = (startIndex: number) => {
         let endIndex = startIndex + 1;
-        while (endIndex < this.threadReplies.length && this.threadReplies[endIndex].reply.parentReplyID === this.threadReplies[startIndex].reply.replyID) {
+        while (
+          endIndex < this.threadReplies.length &&
+          this.threadReplies[endIndex].reply.parentReplyID ===
+            this.threadReplies[startIndex].reply.replyID
+        ) {
           removeNestedReplies(endIndex); // Recursively remove child replies
           endIndex++;
         }
@@ -143,11 +166,11 @@ export class ThreadRepliesComponent {
         for (let i = startIndex + 1; i < endIndex; i++) {
           this.showNestedReplies[i] = false;
         }
-      };  
+      };
       // Find the index range of child replies in threadReplies array
       const startIndex = index;
       removeNestedReplies(startIndex);
-  
+
       // Update showNestedReplies flag for the toggled reply
       this.showNestedReplies[index] = false;
       console.log(this.threadReplies);
@@ -159,23 +182,27 @@ export class ThreadRepliesComponent {
     this.threadRepliesService
       .getReplyByParentID(this.threadId, parentReplyId)
       .subscribe(
-        (repliesData:any) => {
+        (repliesData: any) => {
           let position = 1; // Start position from 1 to place nested replies right after the parent
           const insertIndex = index + 1; // Calculate the index where the nested replies will be inserted
-          
+
           // Filter out replies that already exist in threadReplies
           const newReplies: any[] = repliesData.filter((reply: any) => {
-            return !this.threadReplies.some(existingReply => existingReply.reply.replyID === reply.replyID);
+            return !this.threadReplies.some(
+              (existingReply) => existingReply.reply.replyID === reply.replyID
+            );
           });
 
           // Map new replies to ThreadReplyWithParent format
-          const nestedReplies: ThreadReplyWithParent[] = newReplies.map((reply: any) => {            
-            return {         
-              reply: reply,
-              parentReply: reply.parentReplyID,
-              reply_index: this.threadReplies[index].reply_index + position++
-            };                    
-          });
+          const nestedReplies: ThreadReplyWithParent[] = newReplies.map(
+            (reply: any) => {
+              return {
+                reply: reply,
+                parentReply: reply.parentReplyID,
+                reply_index: this.threadReplies[index].reply_index + position++,
+              };
+            }
+          );
 
           // Update the indices of replies that were previously at the insertion position
           for (let i = insertIndex; i < this.threadReplies.length; i++) {
@@ -195,9 +222,11 @@ export class ThreadRepliesComponent {
     let depth = 0;
     let parentReplyId = reply.reply.parentReplyID;
 
-    while (parentReplyId !== "") {
+    while (parentReplyId !== '') {
       depth++;
-      const parentReply = this.threadReplies.find(r => r.reply.replyID === parentReplyId);
+      const parentReply = this.threadReplies.find(
+        (r) => r.reply.replyID === parentReplyId
+      );
       if (parentReply) {
         parentReplyId = parentReply.reply.parentReplyID;
       } else {
@@ -212,7 +241,11 @@ export class ThreadRepliesComponent {
     this.voteService.sendVote(vote).subscribe({
       next: (response) => {
         const data = response;
-        const eventData = { replyID: data.replyID, upvoteCount: data.upvoteCount, downvoteCount: data.downvoteCount };
+        const eventData = {
+          replyID: data.replyID,
+          upvoteCount: data.upvoteCount,
+          downvoteCount: data.downvoteCount,
+        };
         this.upvoteSuccessEvent.emit(eventData);
       },
       error: (error) => {
@@ -222,15 +255,19 @@ export class ThreadRepliesComponent {
   }
 
   handleDownvote(event: Vote) {
-    const  vote  = event;
+    const vote = event;
     this.voteService.sendVote(vote).subscribe({
-      next: (response) => {        
+      next: (response) => {
         const data = response;
-      const eventData = { replyID: data.replyID, downvoteCount: data.downvoteCount, upvoteCount: data.upvoteCount };
-      this.downvoteSuccessEvent.emit(eventData);     
+        const eventData = {
+          replyID: data.replyID,
+          downvoteCount: data.downvoteCount,
+          upvoteCount: data.upvoteCount,
+        };
+        this.downvoteSuccessEvent.emit(eventData);
       },
-      error: (error) => {      
-        console.log(error)              
+      error: (error) => {
+        console.log(error);
       },
     });
   }
@@ -238,9 +275,13 @@ export class ThreadRepliesComponent {
   handleThreadUpvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
       next: (response) => {
-        const data = response;        
-      const eventData = { threadID: data.threadID, upVoteCount: data.upvoteCount,  downVoteCount: data.downvoteCount, };
-      this.threadUpvoteSuccessEvent.emit(eventData);      
+        const data = response;
+        const eventData = {
+          threadID: data.threadID,
+          upVoteCount: data.upvoteCount,
+          downVoteCount: data.downvoteCount,
+        };
+        this.threadUpvoteSuccessEvent.emit(eventData);
       },
       error: (error) => {
         console.error('Error sending upvote', error);
@@ -252,9 +293,13 @@ export class ThreadRepliesComponent {
   handleThreadDownvote(vote: ThreadVote) {
     this.voteService.sendThreadVote(vote).subscribe({
       next: (response) => {
-        const data = response;        
-      const eventData = { threadID: data.threadID, upVoteCount: data.upvoteCount,  downVoteCount: data.downvoteCount, };
-      this.threadDownvoteSuccessEvent.emit(eventData);      
+        const data = response;
+        const eventData = {
+          threadID: data.threadID,
+          upVoteCount: data.upvoteCount,
+          downVoteCount: data.downvoteCount,
+        };
+        this.threadDownvoteSuccessEvent.emit(eventData);
       },
       error: (error) => {
         console.error('Error sending upvote', error);
@@ -275,7 +320,7 @@ export class ThreadRepliesComponent {
         },
       });
   }
-  
+
   onSubmit(reply: ThreadReplies) {
     const content = '<b><i>This reply was deleted</i></b>';
     this.threadRepliesService
@@ -297,13 +342,14 @@ export class ThreadRepliesComponent {
       });
   }
 
-  highlightBookmarkedThreads(thread : Thread) {
-    const userID= sessionStorage.getItem('userID');
-    this.savedService.getSavedPostsByUserId(userID).subscribe(bookmarks => {
-      bookmarks.forEach(bookmark => {
+  highlightBookmarkedThreads(thread: Thread) {
+    const userID = sessionStorage.getItem('userID');
+    this.savedService.getSavedPostsByUserId(userID).subscribe((bookmarks) => {
+      bookmarks.forEach((bookmark) => {
         if (thread && thread?.threadID === bookmark.threadID) {
           thread.isBookmarked = true;
         }
+        this.getDuplicateStatus();
       });
     });
   }
@@ -318,4 +364,15 @@ export class ThreadRepliesComponent {
     });
   }
 
+  getDuplicateStatus() {
+    this.threadService
+      .getDuplicate(this.thread.threadID)
+      .subscribe((originalThreadId) => {
+        if (originalThreadId === 0) {
+          this.thread.isDuplicate = false;
+        } else {
+          this.thread.isDuplicate = true;
+        }
+      });
+  }
 }

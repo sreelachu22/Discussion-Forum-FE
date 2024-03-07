@@ -1,16 +1,25 @@
 <div class="container">
   <div class="header">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-    <div
-      [ngStyle]="
-        isOpenThread
-          ? { 'background-color': 'green' }
-          : { 'background-color': 'red' }
-      "
-      class="pillbox"
-      matTooltip="Thread Status"
-    >
-      {{ thread.threadStatusName }}
+    <div [ngStyle]="{ display: 'flex' }">
+      <div
+        *ngIf="thread.isDuplicate"
+        [ngStyle]="{ 'background-color': 'orange' }"
+        class="pillbox"
+      >
+        Duplicate
+      </div>
+      <div
+        [ngStyle]="
+          isOpenThread
+            ? { 'background-color': 'green' }
+            : { 'background-color': 'red' }
+        "
+        class="pillbox"
+        matTooltip="Thread Status"
+      >
+        {{ thread.threadStatusName }}
+      </div>
     </div>
   </div>
   <br />

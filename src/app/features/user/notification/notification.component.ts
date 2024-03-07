@@ -106,6 +106,7 @@ export class NotificationComponent implements OnInit {
           this.pageNumber,
           this.pageSize
         );
+        this.userNotificationService.setNotificationCount(0);
         this.notificationService.getNotificationCount(this.userID);
       },
       (error) => {

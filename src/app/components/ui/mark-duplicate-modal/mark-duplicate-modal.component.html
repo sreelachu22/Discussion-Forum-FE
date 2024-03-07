@@ -1,0 +1,31 @@
+<!-- mark-thread-duplicate.component.html -->
+<div class="modal-header">
+  <h4 class="modal-title">Mark Thread as Duplicate</h4>
+  <button mat-icon-button class="close-icon" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="markThreadAsDuplicate()" #threadForm="ngForm">
+    <div class="form-group">
+      <label for="originalThreadLink">Original Thread Link:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="originalThreadLink"
+        [(ngModel)]="originalThreadLink"
+        required
+      />
+    </div>
+    <br />
+    <div class="buttons">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!threadForm.valid"
+      >
+        Mark as Duplicate
+      </button>
+    </div>
+  </form>
+</div>

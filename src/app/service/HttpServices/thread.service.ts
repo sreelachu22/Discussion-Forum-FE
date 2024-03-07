@@ -21,6 +21,7 @@ export interface Thread {
   threadOwnerEmail: string;
   isBookmarked?: boolean;
   replyCount: number;
+  isDuplicate?: boolean;
 }
 
 @Injectable({
@@ -61,17 +62,17 @@ export class ThreadService {
     return this.http.get(`${this.singleThreadURL}/${threadID}`);
   }
 
-  closeThread(threadID: number, modifierId: string): Observable<any> {
+  closeThread(threadID: number, modifierId: string | null): Observable<any> {
     const apiUrl = `${this.singleThreadURL}/CloseThread/${threadID}?ModifierId=${modifierId}`;
     return this.http.put(apiUrl, null);
   }
 
-  reopenThread(threadID: number, modifierId: string): Observable<any> {
+  reopenThread(threadID: number, modifierId: string | null): Observable<any> {
     const apiUrl = `${this.singleThreadURL}/ReopenThread/${threadID}?ModifierId=${modifierId}`;
     return this.http.put(apiUrl, null);
   }
 
-  deleteThread(threadID: number, modifierId: string): Observable<any> {
+  deleteThread(threadID: number, modifierId: string | null): Observable<any> {
     const apiUrl = `${this.singleThreadURL}/${threadID}?ModifierId=${modifierId}`;
     return this.http.delete(apiUrl);
   }
@@ -87,5 +88,21 @@ export class ThreadService {
       this.apiurl +
         `Thread/MyThreads?userId=${userID}&pageNumber=${pageNumber}&pageSize=${pageSize}&filterOption=${filterOption}&sortOption=${sortOption}`
     );
+  }
+
+  markAsDuplicateThread(
+    duplicateThreadId: number,
+    originalThreadId: number,
+    creatorId: string | null
+  ): Observable<any> {
+    const apiUrl =
+      this.apiurl +
+      `Thread/MarkDuplicate/${duplicateThreadId}/${originalThreadId}?createdBy=${creatorId}`;
+    return this.http.post(apiUrl, null);
+  }
+
+  getDuplicate(threadID: number): Observable<number> {
+    const apiUrl = this.apiurl + `Thread/CheckDuplicate/${threadID}`;
+    return this.http.get<number>(apiUrl);
   }
 }
