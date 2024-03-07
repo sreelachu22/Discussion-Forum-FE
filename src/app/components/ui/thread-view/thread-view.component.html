@@ -63,12 +63,25 @@
           matTooltip="Bookmark"
           [ngStyle]="{ color: thread.isBookmarked ? 'green' : 'inherit' }"
         >
-          {{ thread.isBookmarked ? "bookmark" : "bookmark_border" }}
+          {{ thread.isBookmarked ? "bookmark_added" : "bookmark_add" }}
         </mat-icon>
       </div>
-      <div class="user-control">
-        <mat-icon class="your_icon" matTooltip="Duplicate">
+      <div class="user-control" *ngIf="!thread.isDuplicate">
+        <mat-icon
+          class="your_icon"
+          (click)="markDuplicate()"
+          matTooltip="Mark as Duplicate"
+        >
           copyright
+        </mat-icon>
+      </div>
+      <div class="user-control" *ngIf="thread.isDuplicate">
+        <mat-icon
+          class="your_icon"
+          (click)="redirectToOriginal(thread.threadID)"
+          matTooltip="Redirect to Original Thread"
+        >
+          arrow_outward
         </mat-icon>
       </div>
     </div>
