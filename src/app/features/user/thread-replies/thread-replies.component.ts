@@ -81,6 +81,7 @@ export class ThreadRepliesComponent {
   isOpenThread: boolean = true;
   threadRepliesStatus: boolean = true;
   isLoading = false;
+  bestAnswerId!: number;
 
   ngOnInit() {
     this.loadThread();
@@ -373,6 +374,27 @@ export class ThreadRepliesComponent {
         } else {
           this.thread.isDuplicate = true;
         }
+        this.getBestAnswer(this.thread.threadID);
+      });
+  }
+
+  markAsBestAnswer(event: number) {
+    const creatorID = sessionStorage.getItem('userID');
+    this.threadRepliesService
+      .markReplyAsBestAnswer(event, creatorID)
+      .subscribe({
+        next: (response) => {},
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  getBestAnswer(threadID: number) {
+    this.threadRepliesService
+      .getBestAnswer(threadID)
+      .subscribe((bestAnswerId) => {
+        this.bestAnswerId = bestAnswerId;
       });
   }
 }

@@ -18,7 +18,7 @@ export interface ThreadReplies {
   modifiedAt: string;
   threadOwnerEmail: string;
   nestedReplies?: ThreadReplies[];
-  childReplyCount:number
+  childReplyCount: number;
 }
 @Injectable({
   providedIn: 'root',
@@ -63,16 +63,30 @@ export class ThreadRepliesService {
     });
   }
 
-  getReplyByParentID(threadID:number,ParentReplyID :number | string):Observable<ThreadReplies>{      
-    let url = "";
-    if(ParentReplyID == '')
-    {      
+  getReplyByParentID(
+    threadID: number,
+    ParentReplyID: number | string
+  ): Observable<ThreadReplies> {
+    let url = '';
+    if (ParentReplyID == '') {
       url = `${this.BASE_URL}/GetRepliesByParentReplyId/${threadID}`;
-    }
-    else{        
+    } else {
       //https://localhost:7160/api/Reply/GetRepliesByParentReplyId/65?parentReplyID=51
-     url = `${this.BASE_URL}/GetRepliesByParentReplyId/${threadID}?parentReplyID=${ParentReplyID}`;
-  }
+      url = `${this.BASE_URL}/GetRepliesByParentReplyId/${threadID}?parentReplyID=${ParentReplyID}`;
+    }
     return this.http.get<ThreadReplies>(url);
+  }
+
+  markReplyAsBestAnswer(
+    replyId: number,
+    creatorId: string | null
+  ): Observable<any> {
+    const url = `${this.BASE_URL}/MarkAsBestAnswer/${replyId}?createdBy=${creatorId}`;
+    return this.http.post(url, null);
+  }
+
+  getBestAnswer(threadId: number): Observable<number> {
+    const url = `${this.BASE_URL}/GetBestAnswer/${threadId}`;
+    return this.http.get<number>(url);
   }
 }
