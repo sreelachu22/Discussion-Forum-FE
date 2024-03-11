@@ -388,6 +388,7 @@ export class ThreadRepliesComponent {
           console.log(error);
         },
       });
+    this.loadThread();
   }
 
   getBestAnswer(threadID: number) {
