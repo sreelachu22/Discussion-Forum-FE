@@ -55,73 +55,78 @@
         [innerHTML]="thread.content"
       ></div>
     </div>
-    <div class="user-controls right" *ngIf="!isCurrentUser(thread)">
-      <div class="user-control">
-        <mat-icon
-          class="your_icon"
-          (click)="toggleBookmark(thread)"
-          matTooltip="Bookmark"
-          [ngStyle]="{ color: thread.isBookmarked ? 'green' : 'inherit' }"
+    <div class="controls right">
+      <div class="user-controls">
+        <div class="user-control" *ngIf="!isCurrentUser(thread)">
+          <mat-icon
+            class="your_icon"
+            (click)="toggleBookmark(thread)"
+            matTooltip="Bookmark"
+            [ngStyle]="{ color: thread.isBookmarked ? 'green' : 'inherit' }"
+          >
+            {{ thread.isBookmarked ? "bookmark_added" : "bookmark_add" }}
+          </mat-icon>
+        </div>
+        <div
+          class="user-control"
+          *ngIf="!thread.isDuplicate && !isCurrentUser(thread)"
         >
-          {{ thread.isBookmarked ? "bookmark_added" : "bookmark_add" }}
-        </mat-icon>
+          <mat-icon
+            class="your_icon"
+            (click)="openMarkDuplicateModal()"
+            matTooltip="Mark as Duplicate"
+          >
+            copyright
+          </mat-icon>
+        </div>
+        <div class="user-control" *ngIf="thread.isDuplicate">
+          <mat-icon
+            class="your_icon"
+            (click)="redirectToOriginal(thread.threadID)"
+            matTooltip="Redirect to Original Thread"
+          >
+            arrow_outward
+          </mat-icon>
+        </div>
       </div>
-      <div class="user-control" *ngIf="!thread.isDuplicate">
-        <mat-icon
-          class="your_icon"
-          (click)="openMarkDuplicateModal()"
-          matTooltip="Mark as Duplicate"
-        >
-          copyright
-        </mat-icon>
+      <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">
+        <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
+          <mat-icon
+            class="your_icon"
+            (click)="editThread(thread)"
+            matTooltip="Edit Thread"
+          >
+            edit
+          </mat-icon>
+        </div>
+        <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
+          <mat-icon
+            class="your_icon"
+            (click)="openCloseModal(thread.threadID)"
+            matTooltip="Close Thread"
+          >
+            cancel
+          </mat-icon>
+        </div>
+        <div *ngIf="thread.threadStatusName == 'Closed'" class="owner-control">
+          <mat-icon
+            class="your_icon"
+            (click)="openReopenModal(thread.threadID)"
+            matTooltip="Reopen Thread"
+          >
+            replay
+          </mat-icon>
+        </div>
+        <!-- <div class="owner-control">
+          <mat-icon
+            class="your_icon"
+            (click)="openDeleteModal(thread.threadID)"
+            matTooltip="Delete Thread"
+          >
+            delete
+          </mat-icon>
+        </div> -->
       </div>
-      <div class="user-control" *ngIf="thread.isDuplicate">
-        <mat-icon
-          class="your_icon"
-          (click)="redirectToOriginal(thread.threadID)"
-          matTooltip="Redirect to Original Thread"
-        >
-          arrow_outward
-        </mat-icon>
-      </div>
-    </div>
-    <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">
-      <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
-        <mat-icon
-          class="your_icon"
-          (click)="editThread(thread)"
-          matTooltip="Edit Thread"
-        >
-          edit
-        </mat-icon>
-      </div>
-      <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
-        <mat-icon
-          class="your_icon"
-          (click)="openCloseModal(thread.threadID)"
-          matTooltip="Close Thread"
-        >
-          cancel
-        </mat-icon>
-      </div>
-      <div *ngIf="thread.threadStatusName == 'Closed'" class="owner-control">
-        <mat-icon
-          class="your_icon"
-          (click)="openReopenModal(thread.threadID)"
-          matTooltip="Reopen Thread"
-        >
-          replay
-        </mat-icon>
-      </div>
-      <!-- <div class="owner-control">
-        <mat-icon
-          class="your_icon"
-          (click)="openDeleteModal(thread.threadID)"
-          matTooltip="Delete Thread"
-        >
-          delete
-        </mat-icon>
-      </div> -->
     </div>
   </div>
 </div>
