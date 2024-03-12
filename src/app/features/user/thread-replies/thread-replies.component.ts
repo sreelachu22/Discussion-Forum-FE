@@ -397,14 +397,15 @@ export class ThreadRepliesComponent {
       .getBestAnswer(threadID)
       .subscribe((bestAnswerId) => {
         this.bestAnswerId = bestAnswerId;
-        this.getBestAnswer(this.bestAnswerId);
+        if (this.bestAnswerId > 0) {
+          this.getBestAnswer(this.bestAnswerId);
+        }
       });
   }
 
   getBestAnswer(replyID: number) {
     this.threadRepliesService.getReplyByID(replyID).subscribe((bestAnswer) => {
       this.bestAnswer = bestAnswer[0];
-      console.log(this.bestAnswer);
     });
   }
 }
