@@ -1,0 +1,33 @@
+<ng-container class="container"
+  ><app-loader *ngIf="isLoading"></app-loader
+></ng-container>
+<div class="container">
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  <br />
+    <div class="view_options">
+    <app-dropdown-select
+      [dropdownOptions]="parentDropdownOptions"
+      (optionSelected)="handleOptionSelected($event)"
+      [labelName]="'Communities'"
+    ></app-dropdown-select>
+    <div class="spacer"></div>
+    <div class="view_options">
+        <app-dropdown-select
+          [dropdownOptions]="childDropdownOptions"
+          (optionSelected)="handleCategorySelected($event)"
+          [labelName]="'Categories'"
+          [disabled]="!categoryDropdownEnabled"
+        ></app-dropdown-select>
+        <div class="spacer"></div>
+    </div>
+<ng-container *ngIf="communityID && communityCategoryID">
+  <app-editor
+    [title]="title"
+    [firstButtonName]="'Post'"
+    [secondButtonName]="'Cancel'"
+    (onFirstButtonClick)="onSubmit($event)"
+    (onSecondButtonClick)="goBack()"
+    [existingTags]="existingTags"
+  ></app-editor>
+</ng-container>
+</div>

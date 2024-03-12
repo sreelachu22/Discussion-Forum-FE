@@ -84,7 +84,7 @@ export class SidenavCustomComponent {
       });
 
       // Start a timer to remind users to check out announcements after 2 minutes if they haven't visited the announcements page
-      this.timerSubscription = timer(3000) // 3 minutes in milliseconds
+      this.timerSubscription = timer(60000) // 2 minutes in milliseconds
         .pipe(takeWhile(() => !this.visitedAnnouncements))
         .subscribe(() => {
           this.showAnnouncementReminder();
