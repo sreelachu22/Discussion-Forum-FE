@@ -33,6 +33,7 @@ import { EditPostComponent } from './features/user/edit-post/edit-post.component
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
+import { TagsComponent } from './features/tags/tags.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -171,7 +172,7 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: LatestComponent,
+    component: TagsComponent,
     path: 'latest',
     canActivate: [UserRouteGuard],
   },
