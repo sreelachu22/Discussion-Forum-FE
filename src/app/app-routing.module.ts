@@ -33,6 +33,7 @@ import { EditPostComponent } from './features/user/edit-post/edit-post.component
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
+import { FirstPostComponent } from './features/user/first-post/first-post.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -189,6 +190,10 @@ const routes: Routes = [
     component: BookmarksComponent,
     path: 'bookmarks',
     canActivate: [UserRouteGuard],
+  },
+  {
+    component: FirstPostComponent,
+    path: 'first-post',
   },
   {
     component: HomePageComponent,

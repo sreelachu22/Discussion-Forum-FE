@@ -48,13 +48,17 @@ export class EditReplyComponent implements OnInit {
       this.parentReplyID = this.reply.replyID;
       this.threadOwnerEmail = this.reply.threadOwnerEmail;
       this.replyCreatedBy = this.reply.createdBy;
-      this.replyData.push({ name: '', value: this.replyContent, isHtml: true });
+      this.replyData.push({ name: '', value: this.removeHtmlTags(this.replyContent).slice(0,100) + '...', isHtml: true });
     });
 
     this.replyContentService.getContent().subscribe(content => {
       this.placeholderContent = content      
     });
   }
+    // Define a function to remove HTML tags
+    removeHtmlTags(html: string): string {
+      return html.replace(/<[^>]*>/g, '');
+    }
 
   onSubmit(content: any) {
     const url = `${this.putBaseURL}/${this.replyID}?modifierId=${this.replyCreatedBy}`;

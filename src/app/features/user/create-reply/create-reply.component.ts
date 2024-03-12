@@ -54,8 +54,8 @@ export class CreateReplyComponent implements OnInit {
       this.threadService.getSingleThread(this.threadID).subscribe((data) => {
         this.thread = data;
         this.replyData.push(
-          { name: '', value: this.thread.title, isHtml: true },
-          { name: '', value: this.thread.content, isHtml: true }
+          { name: '', value: this.thread.title.slice(0,100) + '...', isHtml: true },
+          // { name: '', value: this.thread.content, isHtml: true }
         );
         this.threadOwnerEmail = this.thread.threadOwnerEmail;
       });
@@ -69,12 +69,17 @@ export class CreateReplyComponent implements OnInit {
         this.threadOwnerEmail = this.reply.threadOwnerEmail;
         this.replyData.push({
           name: '',
-          value: this.replyContent,
+          value: this.removeHtmlTags(this.replyContent).slice(0,100) + '...',
           isHtml: true,
         });
       });
     }
   }
+  // Define a function to remove HTML tags
+removeHtmlTags(html: string): string {
+  return html.replace(/<[^>]*>/g, '');
+}
+
 
   onSubmit(content: any) {
     if (this.parentReplyID) {
