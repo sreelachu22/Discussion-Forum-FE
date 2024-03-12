@@ -384,12 +384,13 @@ export class ThreadRepliesComponent {
     this.threadRepliesService
       .markReplyAsBestAnswer(event, creatorID)
       .subscribe({
-        next: (response) => {},
+        next: () => {
+          this.loadThread();
+        },
         error: (error) => {
           console.log(error);
         },
       });
-    this.loadThread();
   }
 
   getBestAnswerId(threadID: number) {
