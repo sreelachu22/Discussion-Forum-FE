@@ -30,12 +30,12 @@
 }
 
 .user-controls {
-  padding-top: 5px;
   font-weight: bolder;
   display: flex;
   flex-direction: column;
 }
 .user-control {
+  padding-top: 5px;
   display: flex;
 }
 
@@ -64,16 +64,12 @@
   font-size: medium;
 } */
 
-.owner-controls {
+.owner-controls,
+.right {
   display: flex;
   flex-direction: column;
   margin-left: auto;
 }
 .owner-control {
   padding-top: 5px;
-}
-
-.owner-bookmark-controls {
-  display: flex;
-  flex-direction: column;
 }

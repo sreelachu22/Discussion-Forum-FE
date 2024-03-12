@@ -1,0 +1,9 @@
+<input
+  #inputField
+  type="text"
+  [placeholder]="placeholder"
+  [ngClass]="inputClass"
+  (input)="onInputChange($event)"
+  (focusout)="onFocusOut()"
+  [(ngModel)]="placeholder"
+/>

@@ -14,9 +14,9 @@ import {
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 import { SavedPost } from 'src/app/service/HttpServices/saved.service';
-import {
-  SavedService,
-} from 'src/app/service/HttpServices/saved.service';
+import { SavedService } from 'src/app/service/HttpServices/saved.service';
+import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
+import { MarkDuplicateModalComponent } from '../mark-duplicate-modal/mark-duplicate-modal.component';
 
 @Component({
   selector: 'app-thread-view',
@@ -24,10 +24,23 @@ import {
   styleUrls: ['./thread-view.component.css'],
 })
 export class ThreadViewComponent {
-  @Input() thread?: Thread;
+  @Input() thread!: Thread;
+  @Input() threadUpvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    upVoteCount: number;
+    downVoteCount: number;
+  }>();
+  @Input() threadDownvoteSuccessEvent = new EventEmitter<{
+    threadID: number;
+    downVoteCount: number;
+    upVoteCount: number;
+  }>();
+  @Input() threadMarkedAsDuplicate = new EventEmitter<number>();
+
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
   @Output() savedPostEvent = new EventEmitter<SavedPost>();
+
   ActiveUserID: string | null = sessionStorage.getItem('userID');
   isAdmin?: boolean = false;
   confirmModal!: BsModalRef;
@@ -38,8 +51,10 @@ export class ThreadViewComponent {
     private router: Router,
     private userService: UserService,
     private threadService: ThreadService,
+    private modalRef: BsModalRef,
     private modalService: BsModalService,
-    private savedService: SavedService
+    private savedService: SavedService,
+    private threadContentService: ThreadContentService
   ) {}
 
   communityCategoryMappingID!: number;
@@ -48,6 +63,32 @@ export class ThreadViewComponent {
       this.communityCategoryMappingID = +params['communityCategoryMappingID'];
     });
     this.isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+
+    this.threadUpvoteSuccessEvent.subscribe(
+      (emittedData: {
+        threadID: number;
+        upVoteCount: number;
+        downVoteCount: number;
+      }) => {
+        if (this.thread && this.thread.threadID === emittedData.threadID) {
+          //console.log(emittedData.downVoteCount)
+          this.thread.upVoteCount = emittedData.upVoteCount;
+          this.thread.downVoteCount = emittedData.downVoteCount;
+        }
+      }
+    );
+    this.threadDownvoteSuccessEvent.subscribe(
+      (emittedData: {
+        threadID: number;
+        downVoteCount: number;
+        upVoteCount: number;
+      }) => {
+        if (this.thread && this.thread.threadID === emittedData.threadID) {
+          this.thread.downVoteCount = emittedData.downVoteCount;
+          this.thread.upVoteCount = emittedData.upVoteCount;
+        }
+      }
+    );
   }
   user!: User;
   getUserName(thread: Thread) {
@@ -63,7 +104,7 @@ export class ThreadViewComponent {
   emitUpvote(thread: Thread) {
     //should change the vote to the person who votes
     const vote: ThreadVote = {
-      userID: sessionStorage.getItem('userID'),
+      userID: this.ActiveUserID,
       threadID: thread.threadID,
       isUpVote: true,
       isDeleted: false,
@@ -73,7 +114,7 @@ export class ThreadViewComponent {
 
   emitDownvote(thread: Thread) {
     const vote: ThreadVote = {
-      userID: sessionStorage.getItem('userID'),
+      userID: this.ActiveUserID,
       threadID: thread.threadID,
       isUpVote: false,
       isDeleted: false,
@@ -81,20 +122,53 @@ export class ThreadViewComponent {
     this.downvoteEvent.emit(vote);
   }
 
-  toggleBookmark(thread : Thread) {
+  openMarkDuplicateModal() {
+    this.modalRef = this.modalService.show(MarkDuplicateModalComponent);
+    this.modalRef.content.threadMarkedAsDuplicate.subscribe(
+      (originalThreadId: number) => {
+        this.markDuplicate(originalThreadId);
+      }
+    );
+  }
+
+  markDuplicate(originalThreadId: number) {
+    this.thread.isDuplicate = true;
+    this.threadService
+      .markAsDuplicateThread(
+        this.thread.threadID,
+        originalThreadId,
+        this.ActiveUserID
+      )
+      .subscribe({
+        error: (error: Error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  redirectToOriginal(threadID: number) {
+    this.threadService.getDuplicate(threadID).subscribe((originalThreadId) => {
+      this.router.navigateByUrl(
+        `/community/post-replies?threadID=${originalThreadId}`
+      );
+    });
+  }
+
+  toggleBookmark(thread: Thread) {
     thread.isBookmarked = !thread.isBookmarked;
     const saved: SavedPost = {
-      userID: sessionStorage.getItem('userID'),
+      userID: this.ActiveUserID,
       threadID: thread.threadID,
     };
     if (thread.isBookmarked) {
-    this.savedPostEvent.emit(saved);
-    }
-    else {
+      this.savedPostEvent.emit(saved);
+    } else {
       // If the bookmark is toggled off, call the deleteSavedPost method
-      this.savedService.deleteSavedPost(saved.userID, saved.threadID).subscribe(response => {
-        // Do any additional logic if needed
-      });
+      this.savedService
+        .deleteSavedPost(saved.userID, saved.threadID)
+        .subscribe((response) => {
+          // Do any additional logic if needed
+        });
     }
   }
 
@@ -105,9 +179,20 @@ export class ThreadViewComponent {
     this.router.navigate(['thread-replies/post-reply'], { queryParams });
   }
 
-  editThread(threadID: number) {
+  editThread(thread: Thread) {
+    const contentDoc = new DOMParser().parseFromString(
+      thread.content,
+      'text/html'
+    );
+    const titleDoc = new DOMParser().parseFromString(thread.title, 'text/html');
+
+    const plainContent = contentDoc.body.textContent || '';
+    const plainTitle = titleDoc.body.textContent || '';
+
+    this.threadContentService.setContent(plainTitle, plainContent);
+
     const queryParams = {
-      threadID: threadID,
+      threadID: thread.threadID,
       communityCategoryMappingID: this.communityCategoryMappingID,
     };
     this.router.navigate(['category-posts/edit-posts'], { queryParams });
@@ -125,8 +210,7 @@ export class ThreadViewComponent {
     });
   }
   confirmCloseThread(): void {
-    const ModifierId = sessionStorage.getItem('userID') || '';
-    this.threadService.closeThread(this.threadID, ModifierId).subscribe({
+    this.threadService.closeThread(this.threadID, this.ActiveUserID).subscribe({
       next: (response) => {
         this.successModal = this.modalService.show(SuccessPopupComponent, {
           initialState: {
@@ -162,26 +246,27 @@ export class ThreadViewComponent {
     });
   }
   confirmReopenThread(): void {
-    const ModifierId = sessionStorage.getItem('userID') || '';
-    this.threadService.reopenThread(this.threadID, ModifierId).subscribe({
-      next: (response) => {
-        this.successModal = this.modalService.show(SuccessPopupComponent, {
-          initialState: {
-            message: 'Thread reopened successfully', //make use of reusable success pop up , sends message to it
-          },
-        });
-      },
-      error: (error) => {
-        console.error('Error reopening thread:', error);
-      },
-      complete: () => {
-        this.router.navigate(['/community/category-posts'], {
-          queryParams: {
-            communityCategoryMappingID: this.communityCategoryMappingID,
-          },
-        });
-      },
-    });
+    this.threadService
+      .reopenThread(this.threadID, this.ActiveUserID)
+      .subscribe({
+        next: (response) => {
+          this.successModal = this.modalService.show(SuccessPopupComponent, {
+            initialState: {
+              message: 'Thread reopened successfully', //make use of reusable success pop up , sends message to it
+            },
+          });
+        },
+        error: (error) => {
+          console.error('Error reopening thread:', error);
+        },
+        complete: () => {
+          this.router.navigate(['/community/category-posts'], {
+            queryParams: {
+              communityCategoryMappingID: this.communityCategoryMappingID,
+            },
+          });
+        },
+      });
   }
   declineReopenThread() {
     this.confirmModal?.hide();
@@ -199,8 +284,7 @@ export class ThreadViewComponent {
   //   });
   // }
   // confirmDeleteThread() {
-  //   const ModifierId = sessionStorage.getItem('userID') || '';
-  //   this.threadService.deleteThread(this.threadID, ModifierId).subscribe({
+  //   this.threadService.deleteThread(this.threadID, this.ActiveUserID).subscribe({
   //     next: (response) => {
   //       this.successModal = this.modalService.show(SuccessPopupComponent, {
   //         initialState: {

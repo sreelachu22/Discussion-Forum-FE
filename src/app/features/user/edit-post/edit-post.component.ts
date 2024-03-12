@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { environment } from 'src/app/environments/environment';
+import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
 @Component({
@@ -19,13 +20,16 @@ export class EditPostComponent {
   tagsAsStringArray: any;
   existingTags!: { display: string; value: string }[];
   threadID!: number;
+  placeholderContent:string = "";
+  placeholderTitle:string = "";
 
   constructor(
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private http: HttpClient,
     private router: Router,
-    private tags: TagService
+    private tags: TagService,
+    private threadContentService: ThreadContentService
   ) {}
 
   communityName : string | null = '';
@@ -43,6 +47,11 @@ export class EditPostComponent {
         display: tag.tagName,
         value: tag.tagName,
       }));
+    });
+
+    this.threadContentService.getContent().subscribe(({ title, content }) => {
+      this.placeholderTitle = title;
+      this.placeholderContent = content;
     });
     this.communityName = sessionStorage.getItem('communityName');
     this.breadcrumbs = [
@@ -91,6 +100,7 @@ export class EditPostComponent {
       })
       .subscribe({
         next: (response) => {
+          console.log(this.tagsAsStringArray)
           this.bsModalRef = this.modalService.show(SuccessPopupComponent, {
             initialState: {
               message: 'Post edited successfully',

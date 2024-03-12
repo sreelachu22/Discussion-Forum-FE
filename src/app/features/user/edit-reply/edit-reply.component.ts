@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SuccessPopupComponent } from 'src/app/components/ui/success-popup/success-popup.component';
 import { environment } from 'src/app/environments/environment';
+import { ReplyContentService } from 'src/app/service/DataServices/replyContent.service';
 import { ThreadRepliesService } from 'src/app/service/HttpServices/thread-replies.service';
 
 @Component({
@@ -26,12 +27,15 @@ export class EditReplyComponent implements OnInit {
   bsModalRef!: BsModalRef;
   baseUrl: string = environment.apiUrl;
   putBaseURL: string = this.baseUrl + 'Reply';
+  placeholderContent:string = ""
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private threadRepliesService: ThreadRepliesService,
     private http: HttpClient,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private replyContentService: ReplyContentService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +49,10 @@ export class EditReplyComponent implements OnInit {
       this.threadOwnerEmail = this.reply.threadOwnerEmail;
       this.replyCreatedBy = this.reply.createdBy;
       this.replyData.push({ name: '', value: this.removeHtmlTags(this.replyContent).slice(0,100) + '...', isHtml: true });
+    });
+
+    this.replyContentService.getContent().subscribe(content => {
+      this.placeholderContent = content      
     });
   }
     // Define a function to remove HTML tags
