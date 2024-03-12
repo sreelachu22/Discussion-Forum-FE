@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { CategoryMappingService } from 'src/app/service/DataServices/category-mapping.service';
 import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
 import {
@@ -21,7 +22,7 @@ export class HomePageComponent {
     private router: Router,
     private accountService: AccountsService,
     private communityDataService: CommunityDataService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
   ) {}
 
   isSuperAdmin: boolean = false;
@@ -54,5 +55,9 @@ export class HomePageComponent {
 
   navigateToAdminDashboard() {
     this.router.navigate(['admin-dashboard']);
+  }
+
+  navigateToFirstPost() {
+    this.router.navigate(['first-post']);
   }
 }

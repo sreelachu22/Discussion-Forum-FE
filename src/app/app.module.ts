@@ -125,6 +125,7 @@ import { environment } from './environments/environment';
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
+import { FirstPostComponent } from './features/user/first-post/first-post.component';
 
 
 const isIE =
@@ -200,7 +201,8 @@ const isIE =
     HeaderSearchComponent,
     MyPostsComponent,
     BookmarksComponent,
-    Replies20Component,    
+    Replies20Component,
+    FirstPostComponent,    
   ],
 
   imports: [
