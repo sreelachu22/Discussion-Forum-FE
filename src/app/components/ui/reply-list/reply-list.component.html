@@ -1,13 +1,33 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
     <div class="username">{{ reply.createdUserName }}</div>
+    <mat-icon
+      *ngIf="
+        isThreadCreator(thread) &&
+        !reply.isDeleted &&
+        bestAnswerId == 0
+      "
+      class="your_icon"
+      (click)="markAsBestAnswer(reply.replyID)"
+      matTooltip="Mark as Best Answer"
+      [ngStyle]="{ color: 'green' }"
+    >
+      done_outline
+    </mat-icon>
+    <mat-icon
+      *ngIf="!reply.isDeleted && reply.replyID == bestAnswerId"
+      class="your_icon"
+      matTooltip="Best Answer"
+      [ngStyle]="{ color: 'green' }"
+    >
+      verified
+    </mat-icon>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
 
   <div class="reply-content" *ngIf="!isHTML(reply.content)">
     {{ reply.content }}
   </div>
-
   <div
     class="reply-content"
     *ngIf="isHTML(reply.content)"
@@ -24,7 +44,9 @@
       >
         arrow_upward
       </mat-icon>
-      <p *ngIf="!reply.isDeleted" class="vote_count">{{ reply.upvoteCount }}</p>
+      <p *ngIf="!reply.isDeleted" class="vote_count">
+        {{ reply.upvoteCount }}
+      </p>
 
       <mat-icon
         *ngIf="!reply.isDeleted"

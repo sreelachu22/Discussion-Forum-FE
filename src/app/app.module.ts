@@ -126,8 +126,8 @@ import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
 import { EditInputFieldComponent } from './components/ui/edit-input-field/edit-input-field.component';
+import { MarkDuplicateModalComponent } from './components/ui/mark-duplicate-modal/mark-duplicate-modal.component';
 import { TagsComponent } from './features/tags/tags.component';
-
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -204,7 +204,8 @@ const isIE =
     BookmarksComponent,
     Replies20Component,
     EditInputFieldComponent,
-    TagsComponent,    
+    MarkDuplicateModalComponent,
+    TagsComponent,
   ],
 
   imports: [
