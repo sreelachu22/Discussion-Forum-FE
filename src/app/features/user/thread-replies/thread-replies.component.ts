@@ -82,6 +82,7 @@ export class ThreadRepliesComponent {
   threadRepliesStatus: boolean = true;
   isLoading = false;
   bestAnswerId!: number;
+  bestAnswer: any;
 
   ngOnInit() {
     this.loadThread();
@@ -374,7 +375,7 @@ export class ThreadRepliesComponent {
         } else {
           this.thread.isDuplicate = true;
         }
-        this.getBestAnswer(this.thread.threadID);
+        this.getBestAnswerId(this.thread.threadID);
       });
   }
 
@@ -391,11 +392,19 @@ export class ThreadRepliesComponent {
     this.loadThread();
   }
 
-  getBestAnswer(threadID: number) {
+  getBestAnswerId(threadID: number) {
     this.threadRepliesService
       .getBestAnswer(threadID)
       .subscribe((bestAnswerId) => {
         this.bestAnswerId = bestAnswerId;
+        this.getBestAnswer(this.bestAnswerId);
       });
+  }
+
+  getBestAnswer(replyID: number) {
+    this.threadRepliesService.getReplyByID(replyID).subscribe((bestAnswer) => {
+      this.bestAnswer = bestAnswer[0];
+      console.log(this.bestAnswer);
+    });
   }
 }

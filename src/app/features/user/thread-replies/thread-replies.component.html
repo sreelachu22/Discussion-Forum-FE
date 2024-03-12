@@ -69,25 +69,17 @@
     </div>
   </div> -->
   <div class="thread-replies-container" *ngIf="threadRepliesStatus">
-    <div
-      class="best-answer"
-      *ngFor="let replyObject of sortedReplies; let i = index"
-    >
-      <div
-        class="reply-container"
-        *ngIf="replyObject.reply.replyID == bestAnswerId"
-      >
-        <app-reply-list
-          [reply]="replyObject.reply"
-          [thread]="thread"
-          [bestAnswerId]="bestAnswerId"
-          [isOpenThread]="isOpenThread"
-          [upvoteSuccessEvent]="upvoteSuccessEvent"
-          [downvoteSuccessEvent]="downvoteSuccessEvent"
-          (upvoteEvent)="handleUpvote($event)"
-          (downvoteEvent)="handleDownvote($event)"
-        ></app-reply-list>
-      </div>
+    <div class="reply-container" *ngIf="bestAnswer">
+      <app-reply-list
+        [reply]="bestAnswer"
+        [thread]="thread"
+        [bestAnswerId]="bestAnswerId"
+        [isOpenThread]="isOpenThread"
+        [upvoteSuccessEvent]="upvoteSuccessEvent"
+        [downvoteSuccessEvent]="downvoteSuccessEvent"
+        (upvoteEvent)="handleUpvote($event)"
+        (downvoteEvent)="handleDownvote($event)"
+      ></app-reply-list>
     </div>
     <ng-container *ngFor="let replyObject of sortedReplies; let i = index">
       <div
