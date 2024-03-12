@@ -16,7 +16,7 @@ export class SuccessPopupComponent {
     // Automatically close the modal after 5 seconds
     setTimeout(() => {
       this.close();
-    }, 2500);
+    }, 2000);
   }
   close() {
     this.bsModalRef.hide();

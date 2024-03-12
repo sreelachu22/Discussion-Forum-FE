@@ -55,9 +55,6 @@ export class FirstPostComponent {
   isLoading: boolean = false;
   categories: any[] = [];
   ngOnInit() {
-    this.loaderService.isLoading$.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
     this.loadCommunities();
     this.getCategories();
     this.tags.getAllTags().subscribe((data) => {
@@ -87,6 +84,7 @@ export class FirstPostComponent {
     if (selectedCommunity) {
       this.communityID = selectedCommunity.communityID;
       this.categoryDropdownEnabled = true; // Enable category dropdown
+      sessionStorage.setItem('communityName', selectedCommunity.communityName || "");
       this.getCategories(); // Load categories for selected community
     } else {
       console.error('Community not found:', option);
