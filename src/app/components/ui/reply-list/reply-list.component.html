@@ -2,12 +2,8 @@
   <div class="reply-header">
     <div class="username">{{ reply.createdUserName }}</div>
     <mat-icon
-      *ngIf="
-        isThreadCreator(thread) &&
-        !reply.isDeleted &&
-        bestAnswerId == 0
-      "
-      class="your_icon"
+      *ngIf="isThreadCreator(thread) && !reply.isDeleted && bestAnswerId == 0"
+      class="mat_icons"
       (click)="markAsBestAnswer(reply.replyID)"
       matTooltip="Mark as Best Answer"
       [ngStyle]="{ color: 'green' }"
@@ -16,7 +12,6 @@
     </mat-icon>
     <mat-icon
       *ngIf="!reply.isDeleted && reply.replyID == bestAnswerId"
-      class="your_icon"
       matTooltip="Best Answer"
       [ngStyle]="{ color: 'green' }"
     >
