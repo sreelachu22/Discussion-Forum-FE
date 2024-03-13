@@ -1,21 +1,32 @@
 <div class="container">
   <div class="header">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-    <div
-      [ngStyle]="
-        isOpenThread
-          ? { 'background-color': 'green' }
-          : { 'background-color': 'red' }
-      "
-      class="pillbox"
-      matTooltip="Thread Status"
-    >
-      {{ thread.threadStatusName }}
+    <div [ngStyle]="{ display: 'flex' }">
+      <div
+        *ngIf="thread.isDuplicate"
+        [ngStyle]="{ 'background-color': 'orange' }"
+        class="pillbox"
+      >
+        Duplicate
+      </div>
+      <div
+        [ngStyle]="
+          isOpenThread
+            ? { 'background-color': 'green' }
+            : { 'background-color': 'red' }
+        "
+        class="pillbox"
+        matTooltip="Thread Status"
+      >
+        {{ thread.threadStatusName }}
+      </div>
     </div>
   </div>
   <br />
   <app-thread-view
     [thread]="thread"
+    [threadUpvoteSuccessEvent]="threadUpvoteSuccessEvent"
+    [threadDownvoteSuccessEvent]="threadDownvoteSuccessEvent"
     (upvoteEvent)="handleThreadUpvote($event)"
     (downvoteEvent)="handleThreadDownvote($event)"
     (savedPostEvent)="handleSavedPost($event)"
@@ -58,6 +69,18 @@
     </div>
   </div> -->
   <div class="thread-replies-container" *ngIf="threadRepliesStatus">
+    <div class="reply-container bestAnswer" *ngIf="bestAnswer">
+      <app-reply-list
+        [reply]="bestAnswer"
+        [thread]="thread"
+        [bestAnswerId]="bestAnswerId"
+        [isOpenThread]="isOpenThread"
+        [upvoteSuccessEvent]="upvoteSuccessEvent"
+        [downvoteSuccessEvent]="downvoteSuccessEvent"
+        (upvoteEvent)="handleUpvote($event)"
+        (downvoteEvent)="handleDownvote($event)"
+      ></app-reply-list>
+    </div>
     <ng-container *ngFor="let replyObject of sortedReplies; let i = index">
       <div
         class="reply-container"
@@ -65,6 +88,8 @@
       >
         <app-reply-list
           [reply]="replyObject.reply"
+          [thread]="thread"
+          [bestAnswerId]="bestAnswerId"
           [isOpenThread]="isOpenThread"
           [upvoteSuccessEvent]="upvoteSuccessEvent"
           [downvoteSuccessEvent]="downvoteSuccessEvent"
@@ -72,6 +97,7 @@
           (upvoteEvent)="handleUpvote($event)"
           (downvoteEvent)="handleDownvote($event)"
           (deleteReplyEvent)="onDeleteReply($event)"
+          (markAsBestAnswerEvent)="markAsBestAnswer($event)"
         ></app-reply-list>
       </div>
     </ng-container>

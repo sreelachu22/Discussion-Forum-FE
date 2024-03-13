@@ -26,12 +26,7 @@ export class CommunityManagementDashboardComponent {
     private loaderService: LoaderService,
     private communityDataService: CommunityDataService
   ) {}
-
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Community Management', route: '/community-management-dashboard' },
-  ];
+  breadcrumbs: { label: string; route: string; }[] = [];
   // array for card data in ui
 
   cardTitles: { title: string; path: string; imageSrc: string }[] = [
@@ -69,6 +64,7 @@ export class CommunityManagementDashboardComponent {
 
   isLoading: boolean = false;
   communityID: number = 0;
+  communityName : string | null = '';
   ngOnInit() {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -76,7 +72,13 @@ export class CommunityManagementDashboardComponent {
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
+    this.communityName = sessionStorage.getItem('communityName');
     this.getCategoriesInCommunity();
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Community Management', route: '/community-management-dashboard' },
+    ];
   }
 
   categories: CommunityCategory[] = [];

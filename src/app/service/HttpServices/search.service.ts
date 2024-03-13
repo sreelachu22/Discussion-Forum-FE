@@ -41,7 +41,7 @@ export class searchService {
     const url =
       this.apiurl +
       `Thread/displaySearchedThreads?searchTerm=${encodeURIComponent(
-        term
+        '#' + term
       )}&pageNumber=${pageNumber}&pageSize=${pageSize}&filterOption=${filterOption}&sortOption=${sortOption}`;
     return this.http.get(url);
   }

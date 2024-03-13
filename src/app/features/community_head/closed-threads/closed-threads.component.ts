@@ -42,19 +42,8 @@ export class ClosedThreadsComponent {
   pageSize: number = 5;
   totalPages: number = 0;
   creatorId!: string;
+  breadcrumbs: { label: string; route: string; }[] = [];
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    {
-      label: 'Community Management',
-      route: `/community-management-dashboard`,
-    },
-    {
-      label: 'Closed Threads',
-      route: '/closed-threads',
-    },
-  ];
 
   constructor(
     private threadService: ThreadService,
@@ -66,6 +55,7 @@ export class ClosedThreadsComponent {
 
   isLoading = false;
   communityID: number = 0;
+  communityName : string | null = '';
   // ng init with method to get url params and display content based on it
   ngOnInit() {
     this.loaderService.isLoading$.subscribe((isLoading) => {
@@ -77,7 +67,20 @@ export class ClosedThreadsComponent {
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
+    this.communityName = sessionStorage.getItem('communityName');
     this.loadThreads();
+    this.breadcrumbs = [
+    { label: 'Home', route: '/home' },
+    { label: this.communityName || '', route: '/community' },
+    {
+      label: 'Community Management',
+      route: `/community-management-dashboard`,
+    },
+    {
+      label: 'Closed Threads',
+      route: '/closed-threads',
+    },
+  ];
   }
 
   loadThreads() {

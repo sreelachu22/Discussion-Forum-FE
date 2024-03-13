@@ -10,6 +10,7 @@
   color: white;
   font-weight: bold;
   padding: 5px;
+  margin-left: 5px;
   border-radius: 20px;
 }
 
@@ -82,4 +83,8 @@
 
 .reply-container {
   margin-bottom: 20px;
+}
+
+.bestAnswer {
+  background-color: #e0f4f2;
 }

@@ -55,6 +55,8 @@
 
 .pagination {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .prevButton {
@@ -134,9 +136,4 @@
 .nextButton:hover span:after {
   opacity: 1;
   right: 0;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
 }

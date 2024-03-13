@@ -30,7 +30,7 @@ export class VoteService {
     return this.http.post<any>(`${this.URL}`, voteData);
   }
 
-  sendThreadVote(voteData: ThreadVote): Observable<ThreadVote> {
+  sendThreadVote(voteData: ThreadVote): Observable<any> {    
     return this.http.post<any>(this.apiurl + 'ThreadVote/vote', voteData);
   }
 }

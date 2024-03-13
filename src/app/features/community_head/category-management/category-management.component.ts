@@ -52,6 +52,7 @@ export class CategoryManagementComponent implements OnInit {
   ];
 
   displayedNames: string[] = ['Category', 'Description', 'Created Date'];
+  breadcrumbs: { label: string; route: string; }[] = [];
   constructor(
     private httpService: CategoryService,
     private modalService: BsModalService,
@@ -64,6 +65,8 @@ export class CategoryManagementComponent implements OnInit {
 
   isLoading: boolean = false;
   communityID: number = 0;
+  communityName : string | null = '';
+
   ngOnInit(): void {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -71,19 +74,30 @@ export class CategoryManagementComponent implements OnInit {
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
+    this.communityName = sessionStorage.getItem('communityName');
     this.sortType = 'communityCategoryName';
     this.loadCategories();
+    // Initialize breadcrumbs after communityName is fetched
+    this.breadcrumbs = [
+      { label: 'Home', route: '/home' },
+      { label: this.communityName || '', route: '/community' },
+      { label: 'Community Management', route: '/community-management-dashboard' },
+      {
+        label: 'Category Management',
+        route: '/community-management-dashboard/category-management',
+      },
+    ];
   }
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    { label: 'Community', route: '/community' },
-    { label: 'Community Management', route: '/community-management-dashboard' },
-    {
-      label: 'Category Management',
-      route: '/community-management-dashboard/category-management',
-    },
-  ];
+  // breadcrumbs = [
+  //   { label: 'Home', route: '/home' },
+  //   { label: this.communityName || '', route: '/community' },
+  //   { label: 'Community Management', route: '/community-management-dashboard' },
+  //   {
+  //     label: 'Category Management',
+  //     route: '/community-management-dashboard/category-management',
+  //   },
+  // ];
 
   getSingleCategory() {
     if (this.searchText == '') {

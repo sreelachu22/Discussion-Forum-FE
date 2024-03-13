@@ -125,6 +125,11 @@ import { environment } from './environments/environment';
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
+import { EditInputFieldComponent } from './components/ui/edit-input-field/edit-input-field.component';
+import { MarkDuplicateModalComponent } from './components/ui/mark-duplicate-modal/mark-duplicate-modal.component';
+import { FirstPostComponent } from './features/user/first-post/first-post.component';
+import { TagsComponent } from './features/tags/tags.component';
+import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
 
 const isIE =
@@ -202,6 +207,13 @@ const isIE =
     BookmarksComponent,
     Replies20Component,
     ScoreManagementComponent,
+    Replies20Component,
+    EditInputFieldComponent,
+    MarkDuplicateModalComponent,
+    FirstPostComponent,
+    MarkDuplicateModalComponent,
+    TagsComponent,
+    TagThreadsComponent,
   ],
 
   imports: [

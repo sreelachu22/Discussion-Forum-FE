@@ -36,7 +36,7 @@ export class SidenavCustomComponent {
   }
   private visitedAnnouncements = false; // Flag to track if the user has visited announcements
   private timerSubscription: Subscription | undefined;
-  
+
   menuItems = signal<MenuItem[]>([
     {
       icon: 'home',
@@ -84,7 +84,7 @@ export class SidenavCustomComponent {
       });
 
       // Start a timer to remind users to check out announcements after 2 minutes if they haven't visited the announcements page
-      this.timerSubscription = timer(180000) // 3 minutes in milliseconds
+      this.timerSubscription = timer(60000) // 2 minutes in milliseconds
         .pipe(takeWhile(() => !this.visitedAnnouncements))
         .subscribe(() => {
           this.showAnnouncementReminder();
@@ -98,7 +98,7 @@ export class SidenavCustomComponent {
   async showAnnouncementReminder() {
     // Show a SweetAlert2 modal to remind users to check out announcements
     Swal.fire({
-      title: 'Don\'t Miss Out!',
+      title: "Don't Miss Out!",
       html: `
         <div style="text-align: center;">
           <img src="assets/images/happy-face.png" alt="Announcement Image" style="max-width: 20%; height: auto;">
@@ -115,44 +115,42 @@ export class SidenavCustomComponent {
       confirmButtonColor: 'rgb(51, 171, 165)',
     });
   }
-  
-  
 
-  userId!: string | null;
-  async handleLogOut() {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to log out?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Logout',
-      cancelButtonText: 'Cancel',
-    }).then(async (result: any) => {
-      if (result.isConfirmed) {
-        this.userId = sessionStorage.getItem('userID');
-        // this.userId = 'A889A62C-CC6F-4362-927E-17207875BA25'
-        if (this.userId) {
-          try {
-            this.accountService.logoutBackend(this.userId).subscribe(
-              () => {
-                this.authService.logoutRedirect({
-                  postLogoutRedirectUri: environment.postLogoutRedirectUri,
-                });
-                this.tokenHandler.removeToken();
-                sessionStorage.clear();
-                this.router.navigateByUrl('/logout');
-              },
-              (error) => {
-                console.error('Logout failed:', error);
-              }
-            );
-          } catch (error) {
-            console.error('An error occurred:', error);
-          }
-        } else {
-          console.error('User ID not found in sessionStorage');
-        }
-      }
-    });
-  }
+  // userId!: string | null;
+  // async handleLogOut() {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'Do you want to log out?',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Logout',
+  //     cancelButtonText: 'Cancel',
+  //   }).then(async (result: any) => {
+  //     if (result.isConfirmed) {
+  //       this.userId = sessionStorage.getItem('userID');
+  //       // this.userId = 'A889A62C-CC6F-4362-927E-17207875BA25'
+  //       if (this.userId) {
+  //         try {
+  //           this.accountService.logoutBackend(this.userId).subscribe(
+  //             () => {
+  //               this.authService.logoutRedirect({
+  //                 postLogoutRedirectUri: environment.postLogoutRedirectUri,
+  //               });
+  //               this.tokenHandler.removeToken();
+  //               sessionStorage.clear();
+  //               this.router.navigateByUrl('/logout');
+  //             },
+  //             (error) => {
+  //               console.error('Logout failed:', error);
+  //             }
+  //           );
+  //         } catch (error) {
+  //           console.error('An error occurred:', error);
+  //         }
+  //       } else {
+  //         console.error('User ID not found in sessionStorage');
+  //       }
+  //     }
+  //   });
+  // }
 }
