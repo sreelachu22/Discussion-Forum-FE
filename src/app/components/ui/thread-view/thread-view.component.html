@@ -29,11 +29,14 @@
         <mat-icon
           class="your_icon"
           (click)="postReply(thread.threadID)"
-          style="margin-left: 10px"
+          style="margin-bottom: 10px"
           matTooltip="Reply"
         >
           reply
         </mat-icon>
+      </div>
+      <div class="user-control" [class.highlighted]="isHighlighted">
+        <mat-icon (click)="copyLink(thread.threadID)" matTooltip="Copy Link">content_copy</mat-icon>
       </div>
     </div>
     <div class="content">
@@ -87,9 +90,6 @@
           >
             arrow_outward
           </mat-icon>
-        </div>
-        <div class="user-control" [class.highlighted]="isHighlighted">
-          <mat-icon (click)="copyLink(thread.threadID)" matTooltip="Copy Link">content_copy</mat-icon>
         </div>
       </div>
       <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">

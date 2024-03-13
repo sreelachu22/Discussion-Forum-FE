@@ -54,8 +54,8 @@ export class CreateReplyComponent implements OnInit {
       this.threadService.getSingleThread(this.threadID).subscribe((data) => {
         this.thread = data;
         this.replyData.push(
-          { name: '', value: this.thread.title.slice(0,100) + '...', isHtml: true },
-          // { name: '', value: this.thread.content, isHtml: true }
+          { name: '', value: this.thread.content.slice(0,100) + '...', isHtml: true },
+          // { name: '', value: this.thread.title, isHtml: true }
         );
         this.threadOwnerEmail = this.thread.threadOwnerEmail;
       });
@@ -197,8 +197,8 @@ const emailHtmlContent = `
     <div class="content"><br>
           ${
             replyContent
-              ? `<p>A new reply has been posted under your thread reply:</p> <p>"${truncatedContent}"</p>`
-              : `<p>A new reply has been posted on your thread:</p> <p>"${truncatedContent}"</p>`
+              ? `<p>A new reply has been posted under your thread reply:</p> <p><em>"${truncatedContent}"</em></p>`
+              : `<p>A new reply has been posted on your thread:</p> <p><em>"${truncatedContent}"</em></p>`
           }<br>
           <p>Visit <a href="https://localhost:4200">Discussit</a> to view more.</p>
           <img src="https://iili.io/JW1H3F4.jpg" width="50%" height="50%"/>
