@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline" style="height: auto">
-  <mat-label style="font-size: smaller; padding: 0px">Category</mat-label>
+  <mat-label style="font-size: smaller; padding: 0px">{{ labelName }}</mat-label>
   <mat-select
     (selectionChange)="selectOption($event.value)"
     style="font-size: smaller"

@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['dropdown-select.component.css'],
 })
 export class DropdownSelectComponent {
+  @Input() labelName: string = 'Category'; // Default label name
   @Input() dropdownOptions: string[] = [];
   @Output() optionSelected: EventEmitter<string> = new EventEmitter<string>();
 
