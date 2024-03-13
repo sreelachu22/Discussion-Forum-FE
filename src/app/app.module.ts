@@ -128,6 +128,7 @@ import { Replies20Component } from './features/user/replies2.0/replies2.0.compon
 import { EditInputFieldComponent } from './components/ui/edit-input-field/edit-input-field.component';
 import { MarkDuplicateModalComponent } from './components/ui/mark-duplicate-modal/mark-duplicate-modal.component';
 import { TagsComponent } from './features/tags/tags.component';
+import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -206,6 +207,7 @@ const isIE =
     EditInputFieldComponent,
     MarkDuplicateModalComponent,
     TagsComponent,
+    TagThreadsComponent,
   ],
 
   imports: [

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { searchService } from 'src/app/service/HttpServices/search.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 
@@ -16,7 +17,8 @@ export class TagsComponent implements OnInit {
 
   constructor(
     private tagService: TagService,
-    private searchService: searchService
+    private searchService: searchService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,11 +55,6 @@ export class TagsComponent implements OnInit {
 
   getTaggedThreads(tagName: string) {
     console.log('hi');
-    this.searchService.searchThreads(tagName, 1, 40).subscribe({
-      next: (data: any) => {
-        this.threads = data;
-        console.log(this.threads.searchThreadDtoList);
-      },
-    });
+    this.router.navigate([`/latest/tag-threads/${tagName}`]); // Assuming you want to navigate to a specific tagged thread
   }
 }

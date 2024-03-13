@@ -34,6 +34,7 @@ import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
 import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
 import { TagsComponent } from './features/tags/tags.component';
+import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -172,8 +173,18 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: TagsComponent,
+    component: LatestComponent,
     path: 'latest',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    path: 'latest',
+    children: [
+      {
+        path: 'tag-threads/:tagName', // Note the ':tagName' parameter
+        component: TagThreadsComponent,
+      },
+    ],
     canActivate: [UserRouteGuard],
   },
   {
