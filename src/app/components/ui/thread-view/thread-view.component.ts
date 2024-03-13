@@ -17,6 +17,7 @@ import { SavedPost } from 'src/app/service/HttpServices/saved.service';
 import { SavedService } from 'src/app/service/HttpServices/saved.service';
 import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
 import { MarkDuplicateModalComponent } from '../mark-duplicate-modal/mark-duplicate-modal.component';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-thread-view',
@@ -43,6 +44,7 @@ export class ThreadViewComponent {
 
   ActiveUserID: string | null = sessionStorage.getItem('userID');
   isAdmin?: boolean = false;
+  isHighlighted: boolean = false;
   confirmModal!: BsModalRef;
   successModal!: BsModalRef;
   constructor(
@@ -54,7 +56,8 @@ export class ThreadViewComponent {
     private modalRef: BsModalRef,
     private modalService: BsModalService,
     private savedService: SavedService,
-    private threadContentService: ThreadContentService
+    private threadContentService: ThreadContentService,
+    private clipboard: Clipboard
   ) {}
 
   communityCategoryMappingID!: number;
@@ -312,5 +315,17 @@ export class ThreadViewComponent {
   isHTML(content: string): boolean {
     const doc = new DOMParser().parseFromString(content, 'text/html');
     return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
+  }
+
+  // Method to copy the link
+  copyLink(threadID: number) {
+    const url = `${window.location.origin}/community/post-replies?threadID=${threadID}`;
+    this.clipboard.copy(url);
+    // Toggle highlighting
+    this.isHighlighted = true;
+    // Reset highlighting after a certain period
+    setTimeout(() => {
+      this.isHighlighted = false;
+    }, 1000); // Change the timeout duration as needed
   }
 }

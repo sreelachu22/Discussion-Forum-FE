@@ -88,6 +88,9 @@
             arrow_outward
           </mat-icon>
         </div>
+        <div class="user-control" [class.highlighted]="isHighlighted">
+          <mat-icon (click)="copyLink(thread.threadID)" matTooltip="Copy Link">content_copy</mat-icon>
+        </div>
       </div>
       <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">
         <div *ngIf="thread.threadStatusName == 'Open'" class="owner-control">
