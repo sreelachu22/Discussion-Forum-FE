@@ -55,6 +55,11 @@ export class CommunityManagementDashboardComponent {
       path: 'closed-threads',
       imageSrc: 'assets/images/settings.png',
     },
+    {
+      title: 'Score Management',
+      path: 'score-management',
+      imageSrc: 'assets/images/settings.png',
+    },
   ];
 
   navigateToCard(path: string) {
