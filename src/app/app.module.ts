@@ -128,6 +128,8 @@ import { Replies20Component } from './features/user/replies2.0/replies2.0.compon
 import { EditInputFieldComponent } from './components/ui/edit-input-field/edit-input-field.component';
 import { MarkDuplicateModalComponent } from './components/ui/mark-duplicate-modal/mark-duplicate-modal.component';
 import { FirstPostComponent } from './features/user/first-post/first-post.component';
+import { TagsComponent } from './features/tags/tags.component';
+import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const isIE =
@@ -205,8 +207,11 @@ const isIE =
     BookmarksComponent,
     Replies20Component,
     EditInputFieldComponent,
-    MarkDuplicateModalComponent,   
-    FirstPostComponent, 
+    MarkDuplicateModalComponent,
+    FirstPostComponent,
+    MarkDuplicateModalComponent,
+    TagsComponent,
+    TagThreadsComponent,
   ],
 
   imports: [

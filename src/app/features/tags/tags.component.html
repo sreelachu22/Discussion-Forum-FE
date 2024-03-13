@@ -1,0 +1,28 @@
+<div class="card-container">
+  <div *ngFor="let tag of tags" (click)="getTaggedThreads(tag.tagName)">
+    <app-card
+      [metadataItems]="[
+        {
+          name: '',
+          value: '',
+          imageSrc: 'assets/images/edit.png'
+        },
+        { name: '', value: tag.tagName }
+      ]"
+      [marginTop]="'-5px'"
+      [defaultImageWidth]="'20px'"
+      [defaultImageHeight]="'20px'"
+      [matTooltip]="'Click to edit'"
+    ></app-card>
+  </div>
+</div>
+
+<!-- Pagination buttons -->
+<div class="pagination mt-3" *ngIf="tags.length > 0">
+  <button (click)="prevPage()" class="prevButton">
+    <span>Back</span>
+  </button>
+  <button (click)="nextPage()" class="nextButton">
+    <span>Next</span>
+  </button>
+</div>
