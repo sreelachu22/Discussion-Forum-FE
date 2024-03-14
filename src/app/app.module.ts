@@ -129,6 +129,7 @@ import { FirstPostComponent } from './features/user/first-post/first-post.compon
 import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -264,6 +265,7 @@ const isIE =
     SweetAlert2Module.forRoot(),
     MatTooltipModule,
     BsDropdownModule.forRoot(),
+    ClipboardModule
   ],
   providers: [
     CategoryService,
