@@ -1,6 +1,31 @@
+<app-page-header
+  [pageHeaderTitle]="'#' + tagName"
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  [showButton]="false"
+/>
 <div class="page_body mt-3">
+  <div *ngIf="threads.length > 0" class="filterClass">
+    <button-toggle
+      [sortOptions]="filterOptions"
+      (sortSelectionChange)="onFilterSelectionChange($event)"
+    ></button-toggle>
+    <select
+      name="sortOptions"
+      id="sortOptions"
+      [(ngModel)]="selectedSortOption"
+      (ngModelChange)="onSortSelectionChange($event)"
+    >
+      <option value="1">
+        {{ this.dateSelected ? "Newest" : "Least to Most" }}
+      </option>
+      <option value="2">
+        {{ this.dateSelected ? "Oldest" : "Most to Least" }}
+      </option>
+    </select>
+  </div>
+
   <div *ngIf="threads.length > 0">
-    <div *ngFor="let thread of threads">
+    <div class="threads_container" *ngFor="let thread of threads">
       <app-list
         (click)="navigateToThreadReplies(thread.threadID)"
         [sections]="[
@@ -62,6 +87,6 @@
     </div>
   </div>
   <div *ngIf="threads.length === 0">
-    <p>No search results found.</p>
+    <p>No post made with this tag!.</p>
   </div>
 </div>
