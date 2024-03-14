@@ -130,6 +130,7 @@ import { MarkDuplicateModalComponent } from './components/ui/mark-duplicate-moda
 import { FirstPostComponent } from './features/user/first-post/first-post.component';
 import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
+import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -204,6 +205,8 @@ const isIE =
     HeaderSearchComponent,
     MyPostsComponent,
     BookmarksComponent,
+    Replies20Component,
+    ScoreManagementComponent,
     Replies20Component,
     EditInputFieldComponent,
     MarkDuplicateModalComponent,

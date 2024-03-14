@@ -36,6 +36,7 @@ import { Replies20Component } from './features/user/replies2.0/replies2.0.compon
 import { FirstPostComponent } from './features/user/first-post/first-post.component';
 import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
+import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -138,6 +139,17 @@ const routes: Routes = [
     ],
     canActivate: [AdminRouteGuard],
   },
+  {
+    path: 'community-management-dashboard',
+    children: [
+      {
+        path: 'score-management',
+        component: ScoreManagementComponent,
+      },
+    ],
+    canActivate: [AdminRouteGuard],
+  },
+
   {
     component: UserNoticesComponent,
     path: 'notices',
