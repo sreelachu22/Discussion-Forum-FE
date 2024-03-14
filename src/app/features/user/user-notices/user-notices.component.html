@@ -1,11 +1,11 @@
 <!-- notices.component.html -->
+<br />
+<app-page-header
+  pageHeaderTitle="Announcements"
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  [showButton]="false"
+></app-page-header>
 <div class="container">
-  <br />
-  <app-page-header
-    pageHeaderTitle="Announcements"
-    navClass="navbar navbar-dark bg-secondary Page_header"
-    [showButton]="false"
-  ></app-page-header>
   <br />
   <div *ngIf="notices.length <= 0" class="centered-container">
     <div class="content">
