@@ -174,7 +174,7 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    component: LatestComponent,
+    component: TagsComponent,
     path: 'latest',
     canActivate: [UserRouteGuard],
   },
