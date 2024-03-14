@@ -1,131 +1,38 @@
 <div class="container">
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  <br />
+  <app-page-header
+    pageHeaderTitle="Closed Threads"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [showButton]="false"
+  />
+  <br />
   <div>
-    <!-- <app-input
-      placeholder="ThreadCreated"
-      [(ngModel)]="score.threadCreated"
-    ></app-input>
-    <app-input
-      placeholder="threadUpdated"
-      [(ngModel)]="score.threadUpdated"
-    ></app-input>
-    <app-input
-      placeholder="threadDeleted"
-      [(ngModel)]="score.threadDeleted"
-    ></app-input>
-    <app-input
-      placeholder="threadUpvotedBy"
-      [(ngModel)]="score.threadUpvotedBy"
-    ></app-input>
-    <app-input
-      placeholder="threadUpvotedOn"
-      [(ngModel)]="score.threadUpvotedOn"
-    ></app-input>
-    <app-input
-      placeholder="threadDownvotedBy"
-      [(ngModel)]="score.threadDownvotedBy"
-    ></app-input>
-    <app-input
-      placeholder="threadDownvotedOn"
-      [(ngModel)]="score.threadDownvotedOn"
-    ></app-input>
-    <app-input
-      placeholder="removeThreadUpvoteBy"
-      [(ngModel)]="score.removeThreadUpvoteBy"
-    ></app-input>
-    <app-input
-      placeholder="removeThreadUpvoteOn"
-      [(ngModel)]="score.removeThreadUpvoteOn"
-    ></app-input>
-    <app-input
-      placeholder="removeThreadDownvoteBy"
-      [(ngModel)]="score.removeThreadDownvoteBy"
-    ></app-input>
-    <app-input
-      placeholder="removeThreadDownvoteOn"
-      [(ngModel)]="score.removeThreadDownvoteOn"
-    ></app-input>
-    <app-input
-      placeholder="replyCreated"
-      [(ngModel)]="score.replyCreated"
-    ></app-input>
-    <app-input
-      placeholder="replyUpdated"
-      [(ngModel)]="score.replyUpdated"
-    ></app-input>
-    <app-input
-      placeholder="replyDeleted"
-      [(ngModel)]="score.replyDeleted"
-    ></app-input>
-    <app-input
-      placeholder="replyUpvotedBy"
-      [(ngModel)]="score.replyUpvotedBy"
-    ></app-input>
-    <app-input
-      placeholder="replyUpvotedOn"
-      [(ngModel)]="score.replyUpvotedOn"
-    ></app-input>
-    <app-input
-      placeholder="replyDownvotedBy"
-      [(ngModel)]="score.replyDownvotedBy"
-    ></app-input>
-    <app-input
-      placeholder="replyDownvotedOn"
-      [(ngModel)]="score.replyDownvotedOn"
-    ></app-input>
-    <app-input
-      placeholder="removeReplyUpvoteBy"
-      [(ngModel)]="score.removeReplyUpvoteBy"
-    ></app-input>
-    <app-input
-      placeholder="removeReplyUpvoteOn"
-      [(ngModel)]="score.removeReplyUpvoteOn"
-    ></app-input>
-    <app-input
-      placeholder="removeReplyDownvoteBy"
-      [(ngModel)]="score.removeReplyDownvoteBy"
-    ></app-input>
-    <app-input
-      placeholder="removeReplyDownvoteOn"
-      [(ngModel)]="score.removeReplyDownvoteOn"
-    ></app-input>
-  </div>
-  <button (click)="submit()">Submit</button> -->
-    <form
-      (ngSubmit)="updateForm()"
-      #scoreForm="ngForm"
-      (keydown.enter)="$event.preventDefault()"
-    >
-      <div>
-        <div class="form-group">
-          <label for="scoreSystem"
-            ><span class="required">*</span>Score :
-          </label>
-          <input
-            type="number"
-            class="form-control"
-            name="scoreSystem"
-            [(ngModel)]="scoreSystem"
-            required
-            minlength="1"
-            maxlength="3"
-            #scoreSystemInput="ngModel"
-            #scoreSystemField="ngModel"
-          />
-          <div
-            *ngIf="
-              scoreSystemInput?.invalid &&
-              (scoreSystemInput?.dirty || scoreSystemInput?.touched)
-            "
-            class="error-message"
-          >
-            <div *ngIf="scoreSystemInput.errors?.['required']">
-              Please fill out this field.
-            </div>
-            <div *ngIf="scoreSystemInput.errors?.['minlength']">
-              Score must be at least a single digit.
-            </div>
-            <div *ngIf="scoreSystemInput.errors?.['maxlength']">
-              Score cannot exceed 3 digits.
+    <form (ngSubmit)="updateForm()" #scoreForm="ngForm">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let field of scoreFields">
+          <br />
+          <div class="form-group">
+            <label for="{{ field.field }}">{{ field.label }}:</label>
+            <input
+              type="number"
+              class="form-control"
+              [name]="field.field"
+              [(ngModel)]="score[field.field]"
+              required
+              min="0"
+              #input="ngModel"
+            />
+            <div
+              *ngIf="input.invalid && (input.dirty || input.touched)"
+              class="error-message"
+            >
+              <div *ngIf="input.errors?.['required']">
+                Please fill out this field.
+              </div>
+              <div *ngIf="input.errors?.['min']">
+                {{ field.label }} must be at least a single digit.
+              </div>
             </div>
           </div>
         </div>
@@ -141,19 +48,16 @@
           hoverTextColor="white"
           [disableButton]="scoreForm.invalid"
         ></app-button>
-        <span></span>
-        <span>
-          <app-button
-            buttonClass="button"
-            buttonName="Close"
-            buttonColor="#6c757d"
-            buttonType="button"
-            textColor="white"
-            hoverColor="#5c636a"
-            hoverTextColor="white"
-            (buttonClick)="close()"
-          ></app-button>
-        </span>
+        <app-button
+          buttonClass="button"
+          buttonName="Close"
+          buttonColor="#6c757d"
+          buttonType="button"
+          textColor="white"
+          hoverColor="#5c636a"
+          hoverTextColor="white"
+          (buttonClick)="close()"
+        ></app-button>
       </div>
     </form>
   </div>

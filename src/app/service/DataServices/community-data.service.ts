@@ -6,11 +6,13 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CommunityDataService {
-  private communityIDSubject = new BehaviorSubject<number>(0);
+  private communityIDSubject = new BehaviorSubject<number>(1);
 
   communityID$ = this.communityIDSubject.asObservable();
 
   setCommunityData(communityID: number): void {
-    this.communityIDSubject.next(communityID);
+    if (communityID > 0) {
+      this.communityIDSubject.next(communityID);
+    }
   }
 }
