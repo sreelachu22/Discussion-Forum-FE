@@ -28,10 +28,10 @@
               class="error-message"
             >
               <div *ngIf="input.errors?.['required']">
-                Please fill out this field.
+                Field can not be empty.
               </div>
               <div *ngIf="input.errors?.['min']">
-                {{ field.label }} must be at least a single digit.
+                {{ field.label }} must be positive number.
               </div>
             </div>
           </div>
