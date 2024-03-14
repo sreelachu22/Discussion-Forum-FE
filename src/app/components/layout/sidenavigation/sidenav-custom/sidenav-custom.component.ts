@@ -46,7 +46,12 @@ export class SidenavCustomComponent {
     {
       icon: 'bolt',
       label: 'Latest',
-      routes: '/latest',
+      routes: 'latest',
+    },
+    {
+      icon: 'tag',
+      label: 'Tags',
+      routes: 'tags',
     },
     {
       icon: 'announcement',

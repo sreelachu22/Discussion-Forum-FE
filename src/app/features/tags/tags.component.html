@@ -1,3 +1,8 @@
+<app-page-header
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  [pageHeaderTitle]="'Tags'"
+  [showButton]="false"
+></app-page-header>
 <div class="card-container">
   <div *ngFor="let tag of tags" (click)="getTaggedThreads(tag.tagName)">
     <app-card

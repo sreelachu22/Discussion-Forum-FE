@@ -54,6 +54,6 @@ export class TagsComponent implements OnInit {
   }
 
   getTaggedThreads(tagName: string) {
-    this.router.navigate([`/latest/tag-threads/${tagName}`]); // Assuming you want to navigate to a specific tagged thread
+    this.router.navigate([`/tags/tag-threads/${tagName}`]); // Assuming you want to navigate to a specific tagged thread
   }
 }
