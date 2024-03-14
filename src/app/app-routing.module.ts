@@ -191,10 +191,15 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    path: 'latest',
+    component: TagsComponent,
+    path: 'tags',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    path: 'tags',
     children: [
       {
-        path: 'tag-threads/:tagName', // Note the ':tagName' parameter
+        path: 'tag-threads/:tagName',
         component: TagThreadsComponent,
       },
     ],
