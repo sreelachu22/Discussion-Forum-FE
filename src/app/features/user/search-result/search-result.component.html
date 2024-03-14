@@ -22,10 +22,10 @@
       (ngModelChange)="onSortSelectionChange($event)"
     >
       <option value="1">
-        {{ this.dateSelected ? "Oldest" : "Least to Most" }}
+        {{ this.dateSelected ? "Newest" : "Least to Most" }}
       </option>
       <option value="2">
-        {{ this.dateSelected ? "Newest" : "Most to Least" }}
+        {{ this.dateSelected ? "Oldest" : "Most to Least" }}
       </option>
     </select>
   </div>

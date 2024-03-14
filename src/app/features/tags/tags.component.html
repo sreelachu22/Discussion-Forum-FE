@@ -1,3 +1,8 @@
+<app-page-header
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  [pageHeaderTitle]="'Tags'"
+  [showButton]="false"
+></app-page-header>
 <div class="card-container">
   <div *ngFor="let tag of tags" (click)="getTaggedThreads(tag.tagName)">
     <app-card
@@ -5,14 +10,13 @@
         {
           name: '',
           value: '',
-          imageSrc: 'assets/images/edit.png'
+          imageSrc: 'assets/images/hashtag.png'
         },
         { name: '', value: tag.tagName }
       ]"
       [marginTop]="'-5px'"
-      [defaultImageWidth]="'20px'"
-      [defaultImageHeight]="'20px'"
-      [matTooltip]="'Click to edit'"
+      [defaultImageWidth]="'30px'"
+      [defaultImageHeight]="'30px'"
     ></app-card>
   </div>
 </div>
