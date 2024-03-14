@@ -5,7 +5,7 @@
   <!-- bread crumbs -->
   <div class="top_nav">
     <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-    <br />
+
     <app-page-header
       navClass="navbar navbar-dark bg-secondary Page_header"
       [pageHeaderTitle]="CategoryThreads.categoryName"
@@ -97,8 +97,8 @@
             <div
               [ngStyle]="
                 thread.threadStatusName == 'Open'
-                  ? { 'background-color': 'green' }
-                  : { 'background-color': 'red' }
+                  ? { 'background-color': 'rgb(51, 171, 165)' }
+                  : { 'background-color': '#ba5047' }
               "
               class="pillbox"
             >

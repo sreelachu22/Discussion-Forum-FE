@@ -86,7 +86,7 @@
       </app-list>
     </div>
   </div>
-  <div *ngIf="threads.length === 0">
-    <p style="margin-left: 20px;">No post has yet been made with this tag</p>
+  <div class="no_tags_container" *ngIf="threads.length === 0">
+    <p>No post made with this tag!.</p>
   </div>
 </div>
