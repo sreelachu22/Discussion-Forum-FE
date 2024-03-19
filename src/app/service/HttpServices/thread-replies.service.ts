@@ -89,4 +89,12 @@ export class ThreadRepliesService {
     const url = `${this.BASE_URL}/GetBestAnswer/${threadId}`;
     return this.http.get<number>(url);
   }
+
+  unmarkReplyAsBestAnswer(
+    replyId: number,
+    modifierId: string | null
+  ): Observable<any> {
+    const url = `${this.BASE_URL}/UnmarkBestAnswer/${replyId}?modifiedBy=${modifierId}`;
+    return this.http.post(url, null);
+  }
 }
