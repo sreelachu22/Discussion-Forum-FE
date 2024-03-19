@@ -1,6 +1,11 @@
 <div class="thread-container" *ngIf="thread">
   <div class="thread-header">
-    <div class="username">{{ thread.createdByUser }}</div>
+    <div class="username">
+      {{ thread.createdByUser }}
+      <div *ngIf="thread.modifiedAt" class="edited_info_container">
+        <span>✒️edited</span>
+      </div>
+    </div>
     <div class="date">{{ thread.createdAt | timeDifference }}</div>
   </div>
   <div class="thread-data">

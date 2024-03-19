@@ -1,6 +1,14 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
-    <div class="username">{{ reply.createdUserName }}</div>
+    <div class="username">
+      {{ reply.createdUserName }}
+      <div
+        *ngIf="!reply.isDeleted && reply.modifiedAt"
+        class="edited_info_container"
+      >
+        <span>✒️edited</span>
+      </div>
+    </div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
   <div

@@ -20,7 +20,16 @@
 .username {
   font-weight: bold;
   color: green;
+  display: flex;
 }
+
+.edited_info_container span {
+  font-size: smaller;
+  color: black;
+  font-style: italic;
+  margin-left: 20px;
+}
+
 .date {
   color: green;
 }
@@ -74,5 +83,5 @@
   padding-top: 5px;
 }
 .highlighted {
-  color:green;
+  color: green;
 }
