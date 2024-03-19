@@ -37,6 +37,7 @@ import { FirstPostComponent } from './features/user/first-post/first-post.compon
 import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
+import { BadgeManagementComponent } from './features/community_head/badge-management/badge-management.component';
 
 const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
@@ -149,7 +150,16 @@ const routes: Routes = [
     ],
     canActivate: [AdminRouteGuard],
   },
-
+  {
+    path: 'community-management-dashboard',
+    children: [
+      {
+        path: 'badge-management',
+        component: BadgeManagementComponent,
+      },
+    ],
+    canActivate: [AdminRouteGuard],
+  },
   {
     component: UserNoticesComponent,
     path: 'notices',

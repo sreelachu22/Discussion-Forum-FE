@@ -2,7 +2,7 @@
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
   <app-page-header
-    pageHeaderTitle="Score Management"
+    pageHeaderTitle="Badge Management"
     navClass="navbar navbar-dark bg-secondary Page_header"
     [showButton]="false"
   />
@@ -10,15 +10,17 @@
   <div>
     <form (ngSubmit)="updateForm()" #scoreForm="ngForm">
       <div class="row">
-        <div class="col-md-4" *ngFor="let field of scoreFields">
+        <div class="col-md-4" *ngFor="let field of badgeFields">
           <br />
           <div class="form-group">
-            <label for="{{ field.field }}">{{ field.label }}:</label>
+            <label for="{{ field.field }}" class="label_width"
+              >{{ field.label }}:</label
+            >
             <input
               type="number"
               class="form-control"
               [name]="field.field"
-              [(ngModel)]="score[field.field]"
+              [(ngModel)]="badge[field.field]"
               required
               min="0"
               #input="ngModel"
