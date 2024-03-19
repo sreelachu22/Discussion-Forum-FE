@@ -12,8 +12,8 @@
       <div
         [ngStyle]="
           isOpenThread
-            ? { 'background-color': 'green' }
-            : { 'background-color': 'red' }
+            ? { 'background-color': 'rgb(51, 171, 165)' }
+            : { 'background-color': '#ba5047' }
         "
         class="pillbox"
         matTooltip="Thread Status"
@@ -79,6 +79,7 @@
         [downvoteSuccessEvent]="downvoteSuccessEvent"
         (upvoteEvent)="handleUpvote($event)"
         (downvoteEvent)="handleDownvote($event)"
+        (unmarkAsBestAnswerEvent)="unmarkAsBestAnswer($event)"
       ></app-reply-list>
     </div>
     <ng-container *ngFor="let replyObject of sortedReplies; let i = index">
@@ -98,6 +99,7 @@
           (downvoteEvent)="handleDownvote($event)"
           (deleteReplyEvent)="onDeleteReply($event)"
           (markAsBestAnswerEvent)="markAsBestAnswer($event)"
+          (unmarkAsBestAnswerEvent)="unmarkAsBestAnswer($event)"
         ></app-reply-list>
       </div>
     </ng-container>
