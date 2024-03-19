@@ -379,10 +379,10 @@ export class ThreadRepliesComponent {
       });
   }
 
-  markAsBestAnswer(event: number) {
+  markAsBestAnswer(replyID: number) {
     const creatorID = sessionStorage.getItem('userID');
     this.threadRepliesService
-      .markReplyAsBestAnswer(event, creatorID)
+      .markReplyAsBestAnswer(replyID, creatorID)
       .subscribe({
         next: () => {
           this.loadThread();

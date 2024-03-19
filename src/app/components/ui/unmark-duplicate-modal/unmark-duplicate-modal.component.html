@@ -1,0 +1,46 @@
+<!-- mark-thread-duplicate.component.html -->
+<div class="modal-header">
+  <h4 class="modal-title">Mark Thread as Duplicate</h4>
+  <button mat-icon-button class="close-icon" (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <form (ngSubmit)="editThreadAsDuplicate()" #threadForm="ngForm">
+    <div class="form-group">
+      <label for="originalThreadLink">Updated Original Thread Link:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="originalThreadLink"
+        [(ngModel)]="originalThreadLink"
+        required
+      />
+    </div>
+    <br />
+    <div style="display: flex; justify-content: space-between">
+      <div class="buttons">
+        <app-button
+          buttonClass="button"
+          buttonName="Mark as Duplicate"
+          buttonColor="rgb(51, 171, 165)"
+          textColor="white"
+          hoverColor="rgb(31, 151, 145)"
+          hoverTextColor="white"
+          [disabled]="!threadForm.valid"
+        ></app-button>
+      </div>
+      <div class="buttons">
+        <app-button
+          buttonClass="button"
+          buttonName="Unmark as Duplicate"
+          buttonColor="#ba5047"
+          textColor="white"
+          hoverColor="rgb(139, 0, 0)"
+          hoverTextColor="white"
+          (buttonClick)="unmarkThreadAsDuplicate()"
+        ></app-button>
+      </div>
+    </div>
+  </form>
+</div>

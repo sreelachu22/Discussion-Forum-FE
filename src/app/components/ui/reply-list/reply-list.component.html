@@ -11,7 +11,6 @@
     </div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
-
   <div
     style="display: flex; flex-direction: row; justify-content: space-between"
   >
@@ -31,7 +30,7 @@
         matTooltip="Mark as Best Answer"
         [ngStyle]="{ color: 'black' }"
       >
-        done_outline
+        verified
       </mat-icon>
       <mat-icon
         *ngIf="!reply.isDeleted && reply.replyID == bestAnswerId"

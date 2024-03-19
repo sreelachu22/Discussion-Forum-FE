@@ -89,14 +89,28 @@
             copyright
           </mat-icon>
         </div>
-        <div class="user-control" *ngIf="thread.isDuplicate">
-          <mat-icon
-            class="your_icon"
-            (click)="redirectToOriginal(thread.threadID)"
-            matTooltip="Redirect to related thread"
+        <div style="display: flex">
+          <div class="user-control" *ngIf="thread.isDuplicate">
+            <mat-icon
+              class="your_icon"
+              (click)="redirectToOriginal(thread.threadID)"
+              matTooltip="Redirect to related thread"
+            >
+              arrow_outward
+            </mat-icon>
+          </div>
+          <div
+            class="owner-control"
+            *ngIf="thread.isDuplicate && (isCurrentUser(thread) || isAdmin)"
           >
-            arrow_outward
-          </mat-icon>
+            <mat-icon
+              class="your_icon"
+              (click)="openUnmarkDuplicateModal()"
+              matTooltip="Unmark as duplicate thread"
+            >
+              close
+            </mat-icon>
+          </div>
         </div>
       </div>
       <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">

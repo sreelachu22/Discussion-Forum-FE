@@ -130,6 +130,7 @@ import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { UnmarkDuplicateModalComponent } from './components/ui/unmark-duplicate-modal/unmark-duplicate-modal.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -210,6 +211,7 @@ const isIE =
     MarkDuplicateModalComponent,
     TagsComponent,
     TagThreadsComponent,
+    UnmarkDuplicateModalComponent,
   ],
 
   imports: [

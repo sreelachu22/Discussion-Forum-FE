@@ -101,6 +101,27 @@ export class ThreadService {
     return this.http.post(apiUrl, null);
   }
 
+  editDuplicateThread(
+    duplicateThreadId: number,
+    originalThreadId: number,
+    modifierId: string | null
+  ): Observable<any> {
+    const apiUrl =
+      this.apiurl +
+      `Thread/EditDuplicate/${duplicateThreadId}/${originalThreadId}?modifiedBy=${modifierId}`;
+    return this.http.put(apiUrl, null);
+  }
+
+  unmarkDuplicateThread(
+    duplicateThreadId: number,
+    modifierId: string | null
+  ): Observable<any> {
+    const apiUrl =
+      this.apiurl +
+      `Thread/UnmarkDuplicate/${duplicateThreadId}?modifiedBy=${modifierId}`;
+    return this.http.delete(apiUrl);
+  }
+
   getDuplicate(threadID: number): Observable<number> {
     const apiUrl = this.apiurl + `Thread/CheckDuplicate/${threadID}`;
     return this.http.get<number>(apiUrl);
