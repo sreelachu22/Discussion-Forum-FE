@@ -1,12 +1,17 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
-    <div class="username">{{ reply.createdUserName }}</div>
+    <div class="username">
+      {{ reply.createdUserName }}
+      <div
+        *ngIf="!reply.isDeleted && reply.modifiedAt"
+        class="edited_info_container"
+      >
+        <span>✒️edited</span>
+      </div>
+    </div>
+
     <mat-icon
-      *ngIf="
-        isThreadCreator(thread) &&
-        !reply.isDeleted &&
-        bestAnswerId == 0
-      "
+      *ngIf="isThreadCreator(thread) && !reply.isDeleted && bestAnswerId == 0"
       class="your_icon"
       (click)="markAsBestAnswer(reply.replyID)"
       matTooltip="Mark as Best Answer"
