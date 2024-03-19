@@ -1,38 +1,60 @@
 <div class="reply-container" *ngIf="reply">
   <div class="reply-header">
-    <div class="username">{{ reply.createdUserName }}</div>
-    <mat-icon
-      *ngIf="
-        isThreadCreator(thread) &&
-        !reply.isDeleted &&
-        bestAnswerId == 0
-      "
-      class="your_icon"
-      (click)="markAsBestAnswer(reply.replyID)"
-      matTooltip="Mark as Best Answer"
-      [ngStyle]="{ color: 'green' }"
-    >
-      done_outline
-    </mat-icon>
-    <mat-icon
-      *ngIf="!reply.isDeleted && reply.replyID == bestAnswerId"
-      class="your_icon"
-      matTooltip="Best Answer"
-      [ngStyle]="{ color: 'green' }"
-    >
-      verified
-    </mat-icon>
+    <div class="username">
+      {{ reply.createdUserName }}
+      <div
+        *ngIf="!reply.isDeleted && reply.modifiedAt"
+        class="edited_info_container"
+      >
+        <span>✒️edited</span>
+      </div>
+    </div>
     <div class="date">{{ reply.createdAt | timeDifference }}</div>
   </div>
-
-  <div class="reply-content" *ngIf="!isHTML(reply.content)">
-    {{ reply.content }}
-  </div>
   <div
-    class="reply-content"
-    *ngIf="isHTML(reply.content)"
-    [innerHTML]="reply.content"
-  ></div>
+    style="display: flex; flex-direction: row; justify-content: space-between"
+  >
+    <div class="reply-content" *ngIf="!isHTML(reply.content)">
+      {{ reply.content }}
+    </div>
+    <div
+      class="reply-content"
+      *ngIf="isHTML(reply.content)"
+      [innerHTML]="reply.content"
+    ></div>
+    <div style="margin-top: 10px">
+      <mat-icon
+        *ngIf="isThreadCreator(thread) && !reply.isDeleted && bestAnswerId == 0"
+        class="your_icon"
+        (click)="markAsBestAnswer(reply.replyID)"
+        matTooltip="Mark as Best Answer"
+        [ngStyle]="{ color: 'black' }"
+      >
+        verified
+      </mat-icon>
+      <mat-icon
+        *ngIf="!reply.isDeleted && reply.replyID == bestAnswerId"
+        class="your_icon"
+        matTooltip="Best Answer"
+        [ngStyle]="{ color: 'rgb(51, 171, 165)' }"
+      >
+        verified
+      </mat-icon>
+      <mat-icon
+        *ngIf="
+          isThreadCreator(thread) &&
+          !reply.isDeleted &&
+          reply.replyID == bestAnswerId
+        "
+        class="your_icon"
+        (click)="unmarkAsBestAnswer(reply.replyID)"
+        matTooltip="Unmark as Best Answer"
+        [ngStyle]="{ color: '#ba5047' }"
+      >
+        close
+      </mat-icon>
+    </div>
+  </div>
 
   <div class="reply-footer">
     <div class="votes">

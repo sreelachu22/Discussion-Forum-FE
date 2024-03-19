@@ -32,7 +32,7 @@ import { EditReplyComponent } from './features/user/edit-reply/edit-reply.compon
 import { EditPostComponent } from './features/user/edit-post/edit-post.component';
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
-import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
+
 import { FirstPostComponent } from './features/user/first-post/first-post.component';
 import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
@@ -201,10 +201,15 @@ const routes: Routes = [
     canActivate: [UserRouteGuard],
   },
   {
-    path: 'latest',
+    component: TagsComponent,
+    path: 'tags',
+    canActivate: [UserRouteGuard],
+  },
+  {
+    path: 'tags',
     children: [
       {
-        path: 'tag-threads/:tagName', // Note the ':tagName' parameter
+        path: 'tag-threads/:tagName',
         component: TagThreadsComponent,
       },
     ],

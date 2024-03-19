@@ -52,7 +52,6 @@ import { ThreadRepliesComponent } from './features/user/thread-replies/thread-re
 import { ThreadReplyComponent } from './components/ui/thread-reply/thread-reply.component';
 import { BreadcrumbsComponent } from './components/ui/breadcrumbs/breadcrumbs.component';
 import { BreadcrumbButtonComponent } from './components/ui/breadcrumb-button/breadcrumb-button.component';
-import { NestedRepliesComponent } from './features/user/nested-replies/nested-replies.component';
 import { CategoryCardComponent } from './components/ui/category-card/category-card.component';
 import { TableComponent } from './components/ui/table/table.component';
 import { CategoryEditModalComponent } from './components/ui/category-edit-modal/category-edit-modal.component';
@@ -124,13 +123,14 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { environment } from './environments/environment';
 import { MyPostsComponent } from './features/user/my-posts/my-posts.component';
 import { BookmarksComponent } from './features/user/bookmarks/bookmarks.component';
-import { Replies20Component } from './features/user/replies2.0/replies2.0.component';
 import { EditInputFieldComponent } from './components/ui/edit-input-field/edit-input-field.component';
 import { MarkDuplicateModalComponent } from './components/ui/mark-duplicate-modal/mark-duplicate-modal.component';
 import { FirstPostComponent } from './features/user/first-post/first-post.component';
 import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { UnmarkDuplicateModalComponent } from './components/ui/unmark-duplicate-modal/unmark-duplicate-modal.component';
 import { BadgeManagementComponent } from './features/community_head/badge-management/badge-management.component';
 
 const isIE =
@@ -167,7 +167,6 @@ const isIE =
     ThreadReplyComponent,
     BreadcrumbsComponent,
     BreadcrumbButtonComponent,
-    NestedRepliesComponent,
     CategoryCardComponent,
     TableComponent,
     DateFormatPipe,
@@ -206,16 +205,14 @@ const isIE =
     HeaderSearchComponent,
     MyPostsComponent,
     BookmarksComponent,
-    Replies20Component,
     ScoreManagementComponent,
-    Replies20Component,
     EditInputFieldComponent,
     MarkDuplicateModalComponent,
     FirstPostComponent,
     MarkDuplicateModalComponent,
     TagsComponent,
     TagThreadsComponent,
-    BadgeManagementComponent,
+    UnmarkDuplicateModalComponent,
   ],
 
   imports: [
@@ -271,6 +268,7 @@ const isIE =
     SweetAlert2Module.forRoot(),
     MatTooltipModule,
     BsDropdownModule.forRoot(),
+    ClipboardModule,
   ],
   providers: [
     CategoryService,

@@ -33,6 +33,7 @@ export class ReplyListComponent {
   @Output() toggleRepliesEvent = new EventEmitter<void>();
   @Output() deleteReplyEvent = new EventEmitter<any>();
   @Output() markAsBestAnswerEvent = new EventEmitter<number>();
+  @Output() unmarkAsBestAnswerEvent = new EventEmitter<number>();
 
   showReplies: { [key: number]: boolean } = {};
   ActiveUserID: string | null = sessionStorage.getItem('userID');
@@ -143,6 +144,10 @@ export class ReplyListComponent {
 
   markAsBestAnswer(replyID: number) {
     this.markAsBestAnswerEvent.emit(replyID);
+  }
+
+  unmarkAsBestAnswer(replyID: number) {
+    this.unmarkAsBestAnswerEvent.emit(replyID);
   }
 
   isHTML(content: string): boolean {

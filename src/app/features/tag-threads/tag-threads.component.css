@@ -1,0 +1,36 @@
+.threads_container {
+  margin-left: 20px;
+}
+
+.filterClass {
+  position: relative;
+  margin-bottom: 20px;
+  margin-left: 30px;
+}
+
+.filterClass span {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 4px;
+}
+.filterClass select {
+  position: absolute;
+  margin-left: 87px;
+  font-size: small;
+  padding: 5px;
+  border-color: #d6d6d6;
+  border-radius: 4px;
+}
+.page_body {
+  display: flex;
+  flex-direction: column;
+}
+
+#sortOptions {
+  margin-left: 35px;
+  margin-top: 15px;
+}
+
+.no_tags_container {
+  margin-left: 30px;
+}
