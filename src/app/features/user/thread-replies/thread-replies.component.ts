@@ -393,6 +393,21 @@ export class ThreadRepliesComponent {
       });
   }
 
+  unmarkAsBestAnswer(event: number) {
+    this.bestAnswer = null;
+    const modifierID = sessionStorage.getItem('userID');
+    this.threadRepliesService
+      .unmarkReplyAsBestAnswer(event, modifierID)
+      .subscribe({
+        next: () => {
+          this.loadThread();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
   getBestAnswerId(threadID: number) {
     this.threadRepliesService
       .getBestAnswer(threadID)

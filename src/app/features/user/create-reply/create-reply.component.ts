@@ -54,8 +54,8 @@ export class CreateReplyComponent implements OnInit {
       this.threadService.getSingleThread(this.threadID).subscribe((data) => {
         this.thread = data;
         this.replyData.push(
-          { name: '', value: this.thread.title.slice(0,100) + '...', isHtml: true },
-          // { name: '', value: this.thread.content, isHtml: true }
+          { name: '', value: this.thread.content.slice(0,100) + '...', isHtml: true },
+          // { name: '', value: this.thread.title, isHtml: true }
         );
         this.threadOwnerEmail = this.thread.threadOwnerEmail;
       });
@@ -140,15 +140,81 @@ removeHtmlTags(html: string): string {
   sendEmailToOwner(threadOwnerEmail: string, replyContent: string) {
     const emailContent = replyContent ? replyContent : this.thread.content;
     const plainTextContent = emailContent.replace(/<[^>]+>/g, '');
-    // Slice plainTextContent after 20 characters and add ellipsis
+    // Slice plainTextContent after 100 characters and add ellipsis
     const truncatedContent =
-      plainTextContent.length > 20
-        ? plainTextContent.slice(0, 20) + '...'
+      plainTextContent.length > 100
+        ? plainTextContent.slice(0, 100) + '...'
         : plainTextContent;
+    // Define the HTML content template
+const emailHtmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Reply Notification</title>
+  <style>
+    /* CSS Styles */
+    body {
+      font-family: "Montserrat" !important;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .header {
+      background-color: #707fff;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .content, .footer {
+      padding: 10px;
+      text-align: center;
+      background-color:#dbe7f7;
+    }
+    .title{
+      color:#707fff
+    }
+    a{
+      text-decoration:none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>New Reply Notification</h2>
+    </div>
+    <div class="content"><br>
+          ${
+            replyContent
+              ? `<p>A new reply has been posted under your thread reply:</p> <p><em>"${truncatedContent}"</em></p>`
+              : `<p>A new reply has been posted on your thread:</p> <p><em>"${truncatedContent}"</em></p>`
+          }<br>
+          <p>Visit <a href="https://localhost:4200">Discussit</a> to view more.</p>
+          <img src="https://iili.io/JW1H3F4.jpg" width="50%" height="50%"/>
+        </div>
+    <div class="footer">
+      <p>Thank you for using our service!</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
     const emailModel: EmailModel = {
       toEmail: threadOwnerEmail,
       subject: 'New Reply on Your Thread',
-      body: `A new reply has been posted on your thread - " ${truncatedContent}"     visit  Discussit!  to view more`,
+      body: emailHtmlContent,
     };
     this.http
       .post(this.baseUrl + 'Email', emailModel, {

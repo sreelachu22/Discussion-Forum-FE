@@ -1,0 +1,35 @@
+<br />
+<app-page-header
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  [pageHeaderTitle]="'Tags'"
+  [showButton]="false"
+></app-page-header>
+<div class="tag-container">
+<div class="card-container">
+  <div *ngFor="let tag of tags" (click)="getTaggedThreads(tag.tagName)">
+    <app-card
+      [metadataItems]="[
+        {
+          name: '',
+          value: '',
+          imageSrc: 'assets/images/hashtag.png'
+        },
+        { name: '', value: tag.tagName }
+      ]"
+      [marginTop]="'-15px'"
+      [defaultImageWidth]="'50px'"
+      [defaultImageHeight]="'50px'"
+    ></app-card>
+  </div>
+</div>
+
+<!-- Pagination buttons -->
+<div class="pagination mt-3" *ngIf="tags.length > 0">
+  <button (click)="prevPage()" class="prevButton">
+    <span>Back</span>
+  </button>
+  <button (click)="nextPage()" class="nextButton">
+    <span>Next</span>
+  </button>
+</div>
+</div>

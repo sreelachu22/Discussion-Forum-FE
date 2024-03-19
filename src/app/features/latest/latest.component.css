@@ -1,13 +1,17 @@
 .latest_container {
-  margin-top: 30px;
+  margin-top: 15px;
   margin-left: 50px;
   width: 91%;
 }
 .view_options {
-  margin-top: 20px;
   display: flex;
+  justify-content: start;
 }
 
-.spacer {
+/* .spacer {
   flex: 1;
+} */
+.button_toggle {
+  margin-left: 20px;
+  margin-top: 8px;
 }

@@ -10,6 +10,7 @@ import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 import { TagService } from 'src/app/service/HttpServices/tag.service';
 import { CommunityDetails, CommunityService } from 'src/app/service/HttpServices/community.service';
 import { CategoryService } from 'src/app/service/HttpServices/category.service';
+import { catchError, retry, throwError } from 'rxjs';
 
 export interface Tag {
   tagId: number;
@@ -70,12 +71,26 @@ export class FirstPostComponent {
   }
 
   loadCommunities() {
-    this.httpService.getAllCommunities().subscribe((data) => {
+    this.httpService.getAllCommunities().pipe(
+      retry(3), // Retry the request up to 3 times if it fails
+      catchError((error: any) => {
+        console.error('Error loading communities:', error);
+        // Optionally, you can show an error message to the user
+        // Handle the error gracefully
+        return throwError(error); // Rethrow the error to propagate it to the subscriber
+      })
+    ).subscribe((data) => {
       this.communities = data;
-      this.parentDropdownOptions = data.map(
-        (community) => community.communityName
-      );
+      console.log(this.communities);
+      this.parentDropdownOptions = data.map((community) => community.communityName);
     });
+    // this.httpService.getAllCommunities().subscribe((data) => {
+    //   this.communities = data;
+    //   console.log(this.communities)
+    //   this.parentDropdownOptions = data.map(
+    //     (community) => community.communityName
+    //   );
+    // });
   }
   handleOptionSelected(option: string) {
     const selectedCommunity = this.communities.find(

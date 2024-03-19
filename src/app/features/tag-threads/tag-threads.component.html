@@ -1,0 +1,92 @@
+<app-page-header
+  [pageHeaderTitle]="'#' + tagName"
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  [showButton]="false"
+/>
+<div class="page_body mt-3">
+  <div *ngIf="threads.length > 0" class="filterClass">
+    <button-toggle
+      [sortOptions]="filterOptions"
+      (sortSelectionChange)="onFilterSelectionChange($event)"
+    ></button-toggle>
+    <select
+      name="sortOptions"
+      id="sortOptions"
+      [(ngModel)]="selectedSortOption"
+      (ngModelChange)="onSortSelectionChange($event)"
+    >
+      <option value="1">
+        {{ this.dateSelected ? "Newest" : "Least to Most" }}
+      </option>
+      <option value="2">
+        {{ this.dateSelected ? "Oldest" : "Most to Least" }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="threads.length > 0">
+    <div class="threads_container" *ngFor="let thread of threads">
+      <app-list
+        (click)="navigateToThreadReplies(thread.threadID)"
+        [sections]="[
+          {
+            title: 'Column 1',
+            metadataItems: [
+              { value: thread.createdByUser },
+              { value: 'Asked ' + formatDate(thread.createdAt) },
+              {
+                value:
+                  '<b>' +
+                  (thread.replyCount > 0
+                    ? thread.replyCount + ' replies'
+                    : '0 reply') +
+                  '</b>',
+                isHtml: true
+              },
+              {
+                value:
+                  '🡹 ' +
+                  thread.upVoteCount +
+                  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🡻 ' +
+                  thread.downVoteCount,
+                isHtml: true
+              }
+            ]
+          },
+          {
+            title: 'Column 2',
+            metadataItems: [
+              {
+                value:
+                  thread.title.length > 45
+                    ? thread.title.slice(0, 45) + '...'
+                    : thread.title
+              },
+              {
+                value:
+                  thread.content.length > 90
+                    ? thread.content.slice(0, 90) + '...'
+                    : thread.content,
+                isHtml: true
+              },
+
+              {
+                value:
+                  '<span class=' +
+                  'tags' +
+                  '>' +
+                  thread.tagNames.join('</span><span class=' + 'tags' + '>') +
+                  '</span>',
+                isHtml: true
+              }
+            ]
+          }
+        ]"
+      >
+      </app-list>
+    </div>
+  </div>
+  <div class="no_tags_container" *ngIf="threads.length === 0">
+    <p>No post has been made yet with this tag!</p>
+  </div>
+</div>

@@ -14,14 +14,6 @@ export class LatestComponent implements OnInit {
   parentDropdownOptions: string[] = [];
   categories: any[] = [];
 
-  breadcrumbs = [
-    { label: 'Home', route: '/home' },
-    {
-      label: 'Latest',
-      route: '/latest',
-    },
-  ];
-
   latestPosts: any[] = [];
   communityCategoryID: number = 1;
   sortType: string = 'vote';

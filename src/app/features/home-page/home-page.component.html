@@ -1,21 +1,22 @@
 <ng-container class="container"
   ><app-loader *ngIf="isLoading"></app-loader
 ></ng-container>
+<br />
+<app-page-header
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  pageHeaderTitle="Communities"
+  (ButtonClick)="navigateToAdminDashboard()"
+  ButtonName="Admin Dashboard"
+  *ngIf="isSuperAdmin"
+></app-page-header>
+<app-page-header
+  navClass="navbar navbar-dark bg-secondary Page_header"
+  pageHeaderTitle="Communities"
+  *ngIf="!isSuperAdmin"
+  (ButtonClick)="navigateToFirstPost()"
+  ButtonName="Create Post"
+></app-page-header>
 <div class="container">
-  <app-page-header
-    navClass="navbar navbar-dark bg-secondary Page_header"
-    pageHeaderTitle="Communities"
-    (ButtonClick)="navigateToAdminDashboard()"
-    ButtonName="Admin Dashboard"
-    *ngIf="isSuperAdmin"
-  ></app-page-header>
-  <app-page-header
-    navClass="navbar navbar-dark bg-secondary Page_header"
-    pageHeaderTitle="Communities"
-    *ngIf="!isSuperAdmin"
-    (ButtonClick)="navigateToFirstPost()"
-    ButtonName="Create Post"
-  ></app-page-header>
   <br />
   <div *ngIf="communities.length <= 0" class="centered-container">
     <div class="content">
