@@ -70,6 +70,7 @@ export class ThreadRepliesComponent {
   ) {}
 
   communityName: string | null = '';
+  categoryName: string | null = '';
   breadcrumbs: { label: string; route: string }[] = [];
 
   threadId: number = 0;
@@ -90,10 +91,11 @@ export class ThreadRepliesComponent {
       this.isLoading = isLoading;
     });
     this.communityName = sessionStorage.getItem('communityName');
+    this.categoryName = sessionStorage.getItem('categoryName');
     this.breadcrumbs = [
       { label: 'Home', route: '/home' },
       { label: this.communityName || '', route: '/community' },
-      { label: 'Category', route: '/community/category-posts' },
+      { label: this.categoryName || '', route: '/community/category-posts' },
       { label: 'Post', route: '/community/post-replies' },
     ];
   }

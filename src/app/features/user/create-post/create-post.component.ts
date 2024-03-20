@@ -40,6 +40,7 @@ export class CreatePostComponent {
   ) {}
 
   communityName : string | null = '';
+  categoryName : string | null = '';
   breadcrumbs: { label: string; route: string; }[] = [];
 
   isLoading: boolean = false;
@@ -57,10 +58,11 @@ export class CreatePostComponent {
         value: tag.tagName,
       }));
     });
+    this.categoryName = sessionStorage.getItem('categoryName');
     this.breadcrumbs = [
       { label: 'Home', route: '/home' },
       { label: this.communityName || '', route: '/community' },
-      { label: 'Category', route: '/community/category-posts' },
+      { label: this.categoryName || '', route: '/community/category-posts' },
       { label: 'Create Post', route: '/category-posts/create-posts' },
     ];
   }

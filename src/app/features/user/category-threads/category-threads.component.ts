@@ -93,14 +93,6 @@ export class CategoryThreadsComponent implements OnInit {
     });
     this.communityName = sessionStorage.getItem('communityName');
     this.loadThreads();
-    this.breadcrumbs = [
-      { label: 'Home', route: '/home' },
-      { label: this.communityName || '', route: '/community' },
-      {
-        label: 'Category',
-        route: '/community/category-posts',
-      },
-    ];
   }
 
   ngAfterViewChecked() {
@@ -122,6 +114,15 @@ export class CategoryThreadsComponent implements OnInit {
           this.totalPages = Math.ceil(
             this.CategoryThreads.totalCount / this.pageSize
           );
+          sessionStorage.setItem('categoryName', this.CategoryThreads.categoryName);
+          this.breadcrumbs = [
+            { label: 'Home', route: '/home' },
+            { label: this.communityName || '', route: '/community' },
+            {
+              label: this.CategoryThreads.categoryName || '',
+              route: '/community/category-posts',
+            },
+          ];
         },
         error: (error: Error) => {
           console.log('Error', error);
