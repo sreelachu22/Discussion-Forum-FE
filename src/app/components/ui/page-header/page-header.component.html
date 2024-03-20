@@ -1,9 +1,12 @@
 <div class="inside">
+  <div class="left-content">
   <app-text
     *ngIf="showText"
     [text]="pageHeaderTitle"
     textclass="Page-header-title"
   ></app-text>
+  <img *ngIf="showImage" [src]="imageSrc" alt="Image" class="page-header-image">
+  </div>
   <app-button
     *ngIf="showButton"
     [buttonName]="ButtonName"

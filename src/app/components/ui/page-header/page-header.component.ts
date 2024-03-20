@@ -14,6 +14,8 @@ export class PageHeaderComponent {
   @Input() ButtonName: string = '';
   @Input() ButtonClass: string = 'Functional_button';
 
+  @Input() showImage: boolean = false; // New input for showing image
+  @Input() imageSrc: string | undefined; // New input for image source
   onButtonClick() {
     this.ButtonClick.emit();
   }

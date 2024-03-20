@@ -55,14 +55,14 @@
             isHtml: true
           },
           {
-            value:
+            value: savedPost.thread!.tagNames.length > 0 ? 
               '<span class=' +
               'tags' +
               '>' +
               savedPost.thread!.tagNames.join(
                 '</span><span class=' + 'tags' + '>'
               ) +
-              '</span>',
+              '</span>' : '',
             isHtml: true
           }
         ]

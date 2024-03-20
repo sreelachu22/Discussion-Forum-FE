@@ -5,19 +5,25 @@
   <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
   <br />
     <div class="view_options">
+    <div class="dropdown-container">
+        <label class="dropdown-label">Choose</label>
     <app-dropdown-select
       [dropdownOptions]="parentDropdownOptions"
       (optionSelected)="handleOptionSelected($event)"
-      [labelName]="'Communities'"
+      [labelName]="'Community'"
     ></app-dropdown-select>
+    </div>
     <div class="spacer"></div>
-    <div class="view_options">
+
+      <div class="dropdown-container">
+        <label class="dropdown-label">Choose</label>
         <app-dropdown-select
           [dropdownOptions]="childDropdownOptions"
           (optionSelected)="handleCategorySelected($event)"
-          [labelName]="'Categories'"
+          [labelName]="'Category'"
           [disabled]="!categoryDropdownEnabled"
         ></app-dropdown-select>
+      </div>
         <div class="spacer"></div>
     </div>
 <ng-container *ngIf="communityID && communityCategoryID">

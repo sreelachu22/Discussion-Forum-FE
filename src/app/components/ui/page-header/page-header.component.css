@@ -5,3 +5,8 @@
   justify-content: space-between;
   margin-bottom: -10px;
 }
+.left-content {
+  display: flex; /* Ensures the text and image are aligned horizontally */
+  align-items: center; /* Vertically center the text and image */
+  width:50%;
+}
