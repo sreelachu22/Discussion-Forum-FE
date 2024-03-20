@@ -114,10 +114,6 @@ export class ScoreManagementComponent {
 
   getPointsByCommunity() {
     this.pointService.getPoints(this.communityID).subscribe((data) => {
-      // for (const field of this.scoreFields) {
-      //   field.value = data[field.field];
-      // }
-      // console.log(this.scoreFields);
       this.score = data;
     });
   }

@@ -18,6 +18,7 @@ import { SavedService } from 'src/app/service/HttpServices/saved.service';
 import { ThreadContentService } from 'src/app/service/DataServices/threadContent.service';
 import { MarkDuplicateModalComponent } from '../mark-duplicate-modal/mark-duplicate-modal.component';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { UnmarkDuplicateModalComponent } from '../unmark-duplicate-modal/unmark-duplicate-modal.component';
 
 @Component({
   selector: 'app-thread-view',
@@ -37,6 +38,7 @@ export class ThreadViewComponent {
     upVoteCount: number;
   }>();
   @Input() threadMarkedAsDuplicate = new EventEmitter<number>();
+  @Input() threadEditedAsDuplicate = new EventEmitter<number>();
 
   @Output() upvoteEvent = new EventEmitter<ThreadVote>();
   @Output() downvoteEvent = new EventEmitter<ThreadVote>();
@@ -53,7 +55,8 @@ export class ThreadViewComponent {
     private router: Router,
     private userService: UserService,
     private threadService: ThreadService,
-    private modalRef: BsModalRef,
+    private markDuplicateModal: BsModalRef,
+    private unmarkDuplicateModal: BsModalRef,
     private modalService: BsModalService,
     private savedService: SavedService,
     private threadContentService: ThreadContentService,
@@ -126,8 +129,10 @@ export class ThreadViewComponent {
   }
 
   openMarkDuplicateModal() {
-    this.modalRef = this.modalService.show(MarkDuplicateModalComponent);
-    this.modalRef.content.threadMarkedAsDuplicate.subscribe(
+    this.markDuplicateModal = this.modalService.show(
+      MarkDuplicateModalComponent
+    );
+    this.markDuplicateModal.content.threadMarkedAsDuplicate.subscribe(
       (originalThreadId: number) => {
         this.markDuplicate(originalThreadId);
       }
@@ -142,6 +147,47 @@ export class ThreadViewComponent {
         originalThreadId,
         this.ActiveUserID
       )
+      .subscribe({
+        error: (error: Error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  openUnmarkDuplicateModal() {
+    this.unmarkDuplicateModal = this.modalService.show(
+      UnmarkDuplicateModalComponent
+    );
+    this.unmarkDuplicateModal.content.threadEditedAsDuplicate.subscribe(
+      (originalThreadId: number) => {
+        if (originalThreadId > 0) {
+          this.editDuplicate(originalThreadId);
+        } else {
+          this.unmarkDuplicate();
+        }
+      }
+    );
+  }
+
+  editDuplicate(originalThreadId: number) {
+    this.thread.isDuplicate = true;
+    this.threadService
+      .editDuplicateThread(
+        this.thread.threadID,
+        originalThreadId,
+        this.ActiveUserID
+      )
+      .subscribe({
+        error: (error: Error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  unmarkDuplicate() {
+    this.thread.isDuplicate = false;
+    this.threadService
+      .unmarkDuplicateThread(this.thread.threadID, this.ActiveUserID)
       .subscribe({
         error: (error: Error) => {
           console.log(error);

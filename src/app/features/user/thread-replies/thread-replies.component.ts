@@ -379,10 +379,25 @@ export class ThreadRepliesComponent {
       });
   }
 
-  markAsBestAnswer(event: number) {
+  markAsBestAnswer(replyID: number) {
     const creatorID = sessionStorage.getItem('userID');
     this.threadRepliesService
-      .markReplyAsBestAnswer(event, creatorID)
+      .markReplyAsBestAnswer(replyID, creatorID)
+      .subscribe({
+        next: () => {
+          this.loadThread();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  unmarkAsBestAnswer(event: number) {
+    this.bestAnswer = null;
+    const modifierID = sessionStorage.getItem('userID');
+    this.threadRepliesService
+      .unmarkReplyAsBestAnswer(event, modifierID)
       .subscribe({
         next: () => {
           this.loadThread();

@@ -10,7 +10,9 @@ import { MsalService } from '@azure/msal-angular';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { environment } from 'src/app/environments/environment';
 import { SingleUser } from 'src/app/features/community_head/user-edit/user-edit.component';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
 import { AccountsService } from 'src/app/service/HttpServices/account.service';
+import { BadgeService } from 'src/app/service/HttpServices/badge.service';
 import { TokenHandler } from 'src/app/util/tokenHandler';
 import Swal from 'sweetalert2';
 
@@ -24,18 +26,26 @@ export class ProfilePopupComponent {
     private router: Router,
     private tokenHandler: TokenHandler,
     private authService: MsalService,
-    private accountService: AccountsService
+    private accountService: AccountsService,
+    private badgeService: BadgeService,
+    private communityDataService: CommunityDataService
   ) {}
   @Input() user!: SingleUser;
+  communityID: number = 0;
+
+  ngOnInit() {
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
+    this.badgeService
+      .getBadgeScoreRanges(this.communityID)
+      .subscribe((scoreRanges) => {
+        this.badgeService.setBadgeScoreRanges(scoreRanges);
+      });
+  }
 
   getBadge(score: number): string {
-    if (score >= 100) {
-      return '../../../assets/images/gold_medal.png';
-    } else if (score >= 50) {
-      return '../../../assets/images/silver_medal.png';
-    } else {
-      return '../../../assets/images/bronze_medal.png';
-    }
+    return this.badgeService.getBadgeByScore(score);
   }
 
   userId!: string | null;

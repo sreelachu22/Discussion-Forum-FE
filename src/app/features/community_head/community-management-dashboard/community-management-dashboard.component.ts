@@ -26,7 +26,7 @@ export class CommunityManagementDashboardComponent {
     private loaderService: LoaderService,
     private communityDataService: CommunityDataService
   ) {}
-  breadcrumbs: { label: string; route: string; }[] = [];
+  breadcrumbs: { label: string; route: string }[] = [];
   // array for card data in ui
 
   cardTitles: { title: string; path: string; imageSrc: string }[] = [
@@ -55,6 +55,11 @@ export class CommunityManagementDashboardComponent {
       path: 'score-management',
       imageSrc: 'assets/images/settings.png',
     },
+    {
+      title: 'Badge Management',
+      path: 'badge-management',
+      imageSrc: 'assets/images/settings.png',
+    },
   ];
 
   navigateToCard(path: string) {
@@ -64,7 +69,7 @@ export class CommunityManagementDashboardComponent {
 
   isLoading: boolean = false;
   communityID: number = 0;
-  communityName : string | null = '';
+  communityName: string | null = '';
   ngOnInit() {
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -77,7 +82,10 @@ export class CommunityManagementDashboardComponent {
     this.breadcrumbs = [
       { label: 'Home', route: '/home' },
       { label: this.communityName || '', route: '/community' },
-      { label: 'Community Management', route: '/community-management-dashboard' },
+      {
+        label: 'Community Management',
+        route: '/community-management-dashboard',
+      },
     ];
   }
 

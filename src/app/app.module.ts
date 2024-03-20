@@ -130,6 +130,8 @@ import { TagsComponent } from './features/tags/tags.component';
 import { TagThreadsComponent } from './features/tag-threads/tag-threads.component';
 import { ScoreManagementComponent } from './features/community_head/score-management/score-management.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { UnmarkDuplicateModalComponent } from './components/ui/unmark-duplicate-modal/unmark-duplicate-modal.component';
+import { BadgeManagementComponent } from './features/community_head/badge-management/badge-management.component';
 
 const isIE =
   window.navigator.userAgent.indexOf('MSIE') > -1 ||
@@ -210,6 +212,8 @@ const isIE =
     MarkDuplicateModalComponent,
     TagsComponent,
     TagThreadsComponent,
+    UnmarkDuplicateModalComponent,
+    BadgeManagementComponent,
   ],
 
   imports: [
@@ -265,7 +269,7 @@ const isIE =
     SweetAlert2Module.forRoot(),
     MatTooltipModule,
     BsDropdownModule.forRoot(),
-    ClipboardModule
+    ClipboardModule,
   ],
   providers: [
     CategoryService,

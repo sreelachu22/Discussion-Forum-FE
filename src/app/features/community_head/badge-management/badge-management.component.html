@@ -1,0 +1,66 @@
+<div class="container">
+  <app-breadcrumbs [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
+  <br />
+  <app-page-header
+    pageHeaderTitle="Badge Management"
+    navClass="navbar navbar-dark bg-secondary Page_header"
+    [showButton]="false"
+  />
+  <br />
+  <div>
+    <form (ngSubmit)="updateForm()" #scoreForm="ngForm">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let field of badgeFields">
+          <br />
+          <div class="form-group">
+            <label for="{{ field.field }}" class="label_width"
+              >{{ field.label }}:</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              [name]="field.field"
+              [(ngModel)]="badge[field.field]"
+              required
+              min="0"
+              #input="ngModel"
+            />
+            <div
+              *ngIf="input.invalid && (input.dirty || input.touched)"
+              class="error-message"
+            >
+              <div *ngIf="input.errors?.['required']">
+                Field can not be empty.
+              </div>
+              <div *ngIf="input.errors?.['min']">
+                {{ field.label }} must be positive number.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="buttons">
+        <app-button
+          buttonClass="button"
+          buttonName="Submit"
+          buttonColor="rgb(31, 151, 145)"
+          textColor="white"
+          hoverColor="rgb(51, 171, 165)"
+          hoverTextColor="white"
+          [disableButton]="scoreForm.invalid"
+        ></app-button>
+        <app-button
+          buttonClass="button"
+          buttonName="Close"
+          buttonColor="#6c757d"
+          buttonType="button"
+          textColor="white"
+          hoverColor="#5c636a"
+          hoverTextColor="white"
+          (buttonClick)="close()"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommunityDataService } from 'src/app/service/DataServices/community-data.service';
+import { BadgeService } from 'src/app/service/HttpServices/badge.service';
 import {
   LeaderboardService,
   TopUsers,
@@ -13,11 +15,17 @@ import { LoaderService } from 'src/app/service/HttpServices/loader.service';
 export class LeaderboardComponent implements OnInit {
   constructor(
     private leaderboardService: LeaderboardService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private badgeService: BadgeService,
+    private communityDataService: CommunityDataService
   ) {}
   topUsers: TopUsers[] = [];
   isLoading: boolean = false;
+  communityID: number = 0;
   ngOnInit(): void {
+    this.communityDataService.communityID$.subscribe((id) => {
+      this.communityID = id;
+    });
     this.loaderService.isLoading$.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
@@ -29,6 +37,11 @@ export class LeaderboardComponent implements OnInit {
     this.leaderboardService.getTopUsers(limit).subscribe({
       next: (data: TopUsers[]) => {
         this.topUsers = data;
+        this.badgeService
+          .getBadgeScoreRanges(this.communityID)
+          .subscribe((scoreRanges) => {
+            this.badgeService.setBadgeScoreRanges(scoreRanges);
+          });
       },
       error: (error: any) => {
         console.error('Error getting top users:', error);
@@ -38,12 +51,6 @@ export class LeaderboardComponent implements OnInit {
 
   //assign badges based on levels
   getBadge(score: number): string {
-    if (score >= 100) {
-      return '../../../assets/images/gold_medal.png';
-    } else if (score >= 50) {
-      return '../../../assets/images/silver_medal.png';
-    } else {
-      return '../../../assets/images/bronze_medal.png';
-    }
+    return this.badgeService.getBadgeByScore(score);
   }
 }

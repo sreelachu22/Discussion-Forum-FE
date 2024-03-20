@@ -1,6 +1,11 @@
 <div class="thread-container" *ngIf="thread">
   <div class="thread-header">
-    <div class="username">{{ thread.createdByUser }}</div>
+    <div class="username">
+      {{ thread.createdByUser }}
+      <div *ngIf="thread.modifiedAt" class="edited_info_container">
+        <span>✒️edited</span>
+      </div>
+    </div>
     <div class="date">{{ thread.createdAt | timeDifference }}</div>
   </div>
   <div class="thread-data">
@@ -36,7 +41,9 @@
         </mat-icon>
       </div>
       <div class="user-control" [class.highlighted]="isHighlighted">
-        <mat-icon (click)="copyLink(thread.threadID)" matTooltip="Copy Link">content_copy</mat-icon>
+        <mat-icon (click)="copyLink(thread.threadID)" matTooltip="Copy Link"
+          >content_copy</mat-icon
+        >
       </div>
     </div>
     <div class="content">
@@ -77,19 +84,33 @@
           <mat-icon
             class="your_icon"
             (click)="openMarkDuplicateModal()"
-            matTooltip="Mark as Duplicate"
+            matTooltip="Mark as duplicate thread"
           >
             copyright
           </mat-icon>
         </div>
-        <div class="user-control" *ngIf="thread.isDuplicate">
-          <mat-icon
-            class="your_icon"
-            (click)="redirectToOriginal(thread.threadID)"
-            matTooltip="Redirect to Original Thread"
+        <div style="display: flex">
+          <div class="user-control" *ngIf="thread.isDuplicate">
+            <mat-icon
+              class="your_icon"
+              (click)="redirectToOriginal(thread.threadID)"
+              matTooltip="Redirect to related thread"
+            >
+              arrow_outward
+            </mat-icon>
+          </div>
+          <div
+            class="owner-control"
+            *ngIf="thread.isDuplicate && (isCurrentUser(thread) || isAdmin)"
           >
-            arrow_outward
-          </mat-icon>
+            <mat-icon
+              class="your_icon"
+              (click)="openUnmarkDuplicateModal()"
+              matTooltip="Unmark as duplicate thread"
+            >
+              close
+            </mat-icon>
+          </div>
         </div>
       </div>
       <div class="owner-controls" *ngIf="isCurrentUser(thread) || isAdmin">
