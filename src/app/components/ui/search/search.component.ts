@@ -196,6 +196,7 @@ export class SearchComponent {
       !this.dropdown.nativeElement.contains(event.target)
     ) {
       this.inputComponent.inputValue = '';
+      this.searchTerm="";
     }
   }
 }

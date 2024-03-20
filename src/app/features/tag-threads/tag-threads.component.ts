@@ -32,10 +32,8 @@ export class TagThreadsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.tagName = params['tagName'];
-      this.searchTerm = this.tagName;
-      console.log('Tag name:', this.tagName);
+      this.loadThreads();
     });
-    this.getTaggedThreads(this.tagName);
   }
 
   ngAfterViewChecked() {
@@ -59,20 +57,11 @@ export class TagThreadsComponent implements OnInit {
     }
   }
 
-  getTaggedThreads(tagName: string) {
-    this.searchService.searchThreads(tagName, 1, 40).subscribe({
-      next: (data: any) => {
-        this.threads = data.searchThreadDtoList;
-      },
-    });
-  }
-
   loadThreads() {
-    console.log(this.searchTerm);
-    if (this.searchTerm) {
+    if (this.tagName) {
       this.searchService
         .displaySearchedThreads(
-          this.searchTerm,
+          this.tagName,
           this.pageNumber,
           this.pageSize,
           this.selectedFilterOption,

@@ -26,31 +26,22 @@ export class TagsComponent implements OnInit {
   }
 
   loadTags(): void {
-    this.tagService
-      .getTagsWithSearchAndSort(this.sortOrder, this.currentPage)
-      .subscribe({
-        next: (data: any) => {
-          this.tags = data.tagDtos;
-          this.pageCount = data.totalPages;
-        },
-        error: (error: Error) => {
-          console.log('Error has occurred' + error.message);
-        },
-      });
-  }
-
-  nextPage() {
-    if (this.currentPage <= this.pageCount - 1) {
-      this.currentPage++;
-      this.loadTags();
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadTags();
-    }
+    this.tagService.getAllTags().subscribe({
+      next: (data: any[]) => {
+        // Map each tag to include count in the name
+        this.tags = data.map(tag => ({ name: tag.tagName, value: `used in ${tag.tagCount} posts` }));
+  
+        // Sort the tags array based on tagCount in descending order
+        this.tags.sort((a: { tagCount: number; }, b: { tagCount: number; }) => b.tagCount - a.tagCount);
+  
+        // Select the first 12 tags
+        this.tags = this.tags.slice(0, 12);
+  
+      },
+      error: (error: Error) => {
+        console.log('Error fetching tags', error);
+      }
+    });
   }
 
   getTaggedThreads(tagName: string) {

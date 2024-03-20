@@ -1,0 +1,17 @@
+.view_options {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dropdown-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.dropdown-label {
+    margin-right: 5%; 
+}
+
+.spacer {
+    flex: 1; /* Flexible space to push the next dropdown to the right */
+}

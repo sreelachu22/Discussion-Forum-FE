@@ -71,12 +71,12 @@
               },
 
               {
-                value:
+                value:thread.tagNames.length > 0 ? 
                   '<span class=' +
                   'tags' +
                   '>' +
                   thread.tagNames.join('</span><span class=' + 'tags' + '>') +
-                  '</span>',
+                  '</span>' : '',
                 isHtml: true
               }
             ]
