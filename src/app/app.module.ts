@@ -213,6 +213,7 @@ const isIE =
     TagsComponent,
     TagThreadsComponent,
     UnmarkDuplicateModalComponent,
+    BadgeManagementComponent,
   ],
 
   imports: [
