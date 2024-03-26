@@ -33,6 +33,7 @@ export class EditPostComponent {
   ) {}
 
   communityName : string | null = '';
+  categoryName : string | null = '';
   breadcrumbs: { label: string; route: string; }[] = [];
 
 
@@ -54,10 +55,11 @@ export class EditPostComponent {
       this.placeholderContent = content;
     });
     this.communityName = sessionStorage.getItem('communityName');
+    this.categoryName = sessionStorage.getItem('categoryName');
     this.breadcrumbs = [
       { label: 'Home', route: '/home' },
-      { label: this.communityName || '', route: '/community' },
-      { label: 'Category', route: '/community/category-posts' },
+      { label: this.communityName || 'Community', route: '/community' },
+      { label: this.categoryName || 'Category', route: '/community/category-posts' },
       { label: 'Edit Post', route: '/category-posts/edit-posts' },
     ];
   }
