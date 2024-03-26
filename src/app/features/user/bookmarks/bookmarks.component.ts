@@ -28,6 +28,7 @@ export class BookmarksComponent {
   ngOnInit() {
     // Assuming you have the user ID stored in some variable, replace 'yourUserIdVariable' with the actual user ID
     const userID = sessionStorage.getItem('userID');
+    sessionStorage.setItem('categoryName', "Category");
     this.getSavedPosts(userID);
   }
 

@@ -97,6 +97,7 @@ export class MyPostsComponent {
       this.communityCategoryMappingID = id;
     });
     this.userID = sessionStorage.getItem('userID');
+    sessionStorage.setItem('categoryName', "Category");
     this.loadMyThreads();
   }
 

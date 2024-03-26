@@ -23,6 +23,7 @@ export class TagsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTags();
+    sessionStorage.setItem('categoryName', "Category");
   }
 
   loadTags(): void {

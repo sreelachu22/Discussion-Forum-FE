@@ -94,8 +94,8 @@ export class ThreadRepliesComponent {
     this.categoryName = sessionStorage.getItem('categoryName');
     this.breadcrumbs = [
       { label: 'Home', route: '/home' },
-      { label: this.communityName || '', route: '/community' },
-      { label: this.categoryName || '', route: '/community/category-posts' },
+      { label: this.communityName || 'Community', route: '/community' },
+      { label: this.categoryName || 'Category', route: '/community/category-posts' },
       { label: 'Post', route: '/community/post-replies' },
     ];
   }

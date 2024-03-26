@@ -31,6 +31,7 @@ export class LatestComponent implements OnInit {
     this.communityDataService.communityID$.subscribe((id) => {
       this.communityID = id;
     });
+    sessionStorage.setItem('categoryName', "Category");
     this.subscribeToLatestPosts();
   }
 
@@ -68,6 +69,7 @@ export class LatestComponent implements OnInit {
       );
       if (selectedCategory) {
         this.communityCategoryID = selectedCategory.communityCategoryID;
+        sessionStorage.setItem('categoryName', selectedCategory.communityCategoryName || "");
       } else {
         console.error('Category not found:', option);
         return;
